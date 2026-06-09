@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STOP! — Speaking Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,500&family=Raleway:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1a2744;
+    --navy2:#223257;
+    --rose:#e7a3b8;
+    --rose-deep:#c8909e;
+    --wine:#a8536f;
+    --gold:#e8c98a;
+    --cream:#f7f1ee;
+    --line:rgba(231,163,184,.22);
+    --green:#7fd6a0;
+    --red:#e88a8a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Raleway',sans-serif;
+    background:
+      radial-gradient(1000px 500px at 85% -10%, rgba(200,144,158,.3), transparent 60%),
+      radial-gradient(800px 450px at -5% 110%, rgba(232,201,138,.14), transparent 55%),
+      linear-gradient(160deg,#141d33,#1a2744 50%,#223257);
+    background-attachment:fixed;
+    color:var(--cream);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:24px 18px 70px}
+  header{text-align:center;padding:20px 0 6px}
+  .kicker{font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+  h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.6rem,11vw,4.4rem);line-height:.95;letter-spacing:-1px}
+  h1 .bang{color:var(--rose)}
+  .tag{font-size:.9rem;color:rgba(247,241,238,.7);font-weight:300;margin-top:8px}
+
+  .panel{background:linear-gradient(165deg,rgba(34,50,87,.85),rgba(26,39,68,.92));border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:18px;box-shadow:0 22px 55px rgba(0,0,0,.4)}
+
+  /* LETTER */
+  .letterbox{text-align:center}
+  .letter-label{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+  .letter{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(5rem,26vw,9rem);line-height:1;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:4px 0 6px;transition:.2s}
+  .letter.spin{animation:pop .35s ease}
+  @keyframes pop{0%{transform:scale(.6);opacity:.3}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+  /* TIMER */
+  .timer{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;text-align:center;margin:6px 0;letter-spacing:1px}
+  .timer.warn{color:var(--gold)}
+  .timer.zero{color:var(--rose);animation:flash .5s infinite alternate}
+  @keyframes flash{to{opacity:.4}}
+  .bar{height:8px;border-radius:8px;background:rgba(247,241,238,.12);overflow:hidden;margin:6px 0 14px}
+  .bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--rose));transition:width 1s linear}
+
+  /* BUTTONS */
+  .btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:inherit;cursor:pointer;border:none;border-radius:50px;padding:13px 24px;font-size:.95rem;font-weight:700;letter-spacing:.04em;transition:.2s;color:#fff}
+  .btn:active{transform:scale(.96)}
+  .btn.gold{background:linear-gradient(90deg,var(--rose-deep),var(--gold));color:var(--navy)}
+  .btn.gold:hover{box-shadow:0 10px 26px rgba(200,144,158,.45);transform:translateY(-2px)}
+  .btn.stop{background:linear-gradient(90deg,#e0556f,#b83b5e);font-size:1.5rem;padding:16px 46px;font-family:'Playfair Display',serif;letter-spacing:3px}
+  .btn.stop:hover{box-shadow:0 12px 30px rgba(224,85,111,.5);transform:translateY(-2px)}
+  .btn.ghost{background:rgba(247,241,238,.08);border:1px solid var(--line);color:var(--cream)}
+  .btn.ghost:hover{background:rgba(247,241,238,.16)}
+  .btn.small{padding:9px 16px;font-size:.82rem}
+
+  /* TIME PICKER */
+  .timepick{display:flex;gap:6px;justify-content:center;margin-top:14px}
+  .timepick button{background:rgba(247,241,238,.06);border:1px solid var(--line);color:var(--cream);border-radius:50px;padding:6px 16px;font-size:.8rem;cursor:pointer;font-family:inherit;transition:.2s}
+  .timepick button.on{background:var(--wine);border-color:var(--wine);color:#fff}
+
+  /* CATEGORIES */
+  .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:8px}
+  .cat{background:linear-gradient(160deg,#2a3a5e,#1f2e4f);border:1px solid var(--line);border-radius:16px;padding:16px 12px;text-align:center}
+  .cat .ic{font-size:2rem}
+  .cat .en{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-top:4px}
+  .cat .pt{font-size:.72rem;color:rgba(247,241,238,.5);font-style:italic}
+
+  /* SCOREBOARD */
+  .score-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;text-align:center;margin-bottom:4px}
+  .score-sub{text-align:center;font-size:.78rem;color:rgba(247,241,238,.55);margin-bottom:14px}
+  .player{display:flex;align-items:center;gap:12px;background:rgba(247,241,238,.05);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+  .player input{flex:1;background:transparent;border:none;color:var(--cream);font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;outline:none;min-width:0}
+  .player input:focus{border-bottom:1px dashed var(--rose)}
+  .pts{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;min-width:46px;text-align:center;color:var(--gold)}
+  .pm{display:flex;gap:6px}
+  .pm button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(247,241,238,.06);color:var(--cream);font-size:1.3rem;cursor:pointer;transition:.15s;line-height:1}
+  .pm button.plus:hover{background:var(--green);color:var(--navy);border-color:var(--green)}
+  .pm button.minus:hover{background:var(--red);color:var(--navy);border-color:var(--red)}
+  .crown{color:var(--gold)}
+
+  .rules{font-size:.85rem;color:rgba(247,241,238,.7);background:rgba(232,201,138,.08);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:12px 14px;margin-top:16px}
+  .rules b{color:var(--gold)}
+  .center{text-align:center;margin-top:16px}
+  .footer{text-align:center;margin-top:34px;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,241,238,.35)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">English by Neves · Speaking Game</div>
+    <h1>STOP<span class="bang">!</span></h1>
+    <p class="tag">Say a word for every category — fastest player wins the round ☝️</p>
+  </header>
+
+  <!-- LETTER + TIMER -->
+  <div class="panel">
+    <div class="letterbox">
+      <div class="letter-label">Your letter</div>
+      <div class="letter" id="letter">?</div>
+    </div>
+
+    <div class="timer" id="timer">0:60</div>
+    <div class="bar"><i id="barFill"></i></div>
+
+    <div class="btns">
+      <button class="btn gold" id="newBtn" onclick="newRound()">🎲 New Letter</button>
+      <button class="btn stop" id="stopBtn" onclick="stopRound()">STOP</button>
+    </div>
+
+    <div class="timepick" id="timepick">
+      <button data-t="30">30s</button>
+      <button data-t="60" class="on">60s</button>
+      <button data-t="90">90s</button>
+      <button data-t="0">No timer</button>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="panel">
+    <div class="cats" id="cats"></div>
+  </div>
+
+  <!-- SCOREBOARD -->
+  <div class="panel">
+    <div class="score-title">Scoreboard</div>
+    <div class="score-sub">+1 for each correct word · the crown 👑 is winning</div>
+    <div id="players"></div>
+    <div class="center"><button class="btn ghost small" onclick="resetScores()">↺ Reset scores</button></div>
+  </div>
+
+  <div class="rules">
+    <b>How to play:</b> Tap <b>New Letter</b>. Everyone races to <b>say out loud</b> one word for each category starting with that letter. First to finish shouts <b>STOP!</b> Then give a point for every correct, different word. New letter, play again!
+  </div>
+
+  <div class="footer">English by Neves · Speaking STOP</div>
+</div>
+
+<script>
+  /* ---- CATEGORIES (A1-friendly) ---- */
+  const cats=[
+    {ic:'👤',en:'Name',pt:'um nome'},
+    {ic:'🍔',en:'Food',pt:'comida'},
+    {ic:'🐶',en:'Animal',pt:'animal'},
+    {ic:'🎨',en:'Color',pt:'cor'},
+    {ic:'👕',en:'Clothes',pt:'roupa'},
+    {ic:'🏃',en:'Action',pt:'uma ação (verb)'}
+  ];
+  const catBox=document.getElementById('cats');
+  cats.forEach(c=>{
+    const d=document.createElement('div');
+    d.className='cat';
+    d.innerHTML=`<div class="ic">${c.ic}</div><div class="en">${c.en}</div><div class="pt">${c.pt}</div>`;
+    catBox.appendChild(d);
+  });
+
+  /* ---- PLAYERS ---- */
+  const names=['Ester','Teacher','Jordana'];
+  const scores=[0,0,0];
+  const playersBox=document.getElementById('players');
+  function renderPlayers(){
+    const max=Math.max(...scores);
+    playersBox.innerHTML='';
+    names.forEach((n,i)=>{
+      const lead=(scores[i]===max&&max>0)?' 👑':'';
+      const row=document.createElement('div');
+      row.className='player';
+      row.innerHTML=`
+        <input value="${n}" onchange="rename(${i},this.value)">
+        <div class="pm"><button class="minus" onclick="addPt(${i},-1)">−</button></div>
+        <div class="pts">${scores[i]}<span class="crown">${lead}</span></div>
+        <div class="pm"><button class="plus" onclick="addPt(${i},1)">+</button></div>`;
+      playersBox.appendChild(row);
+    });
+  }
+  function rename(i,v){names[i]=v}
+  function addPt(i,d){scores[i]=Math.max(0,scores[i]+d);renderPlayers()}
+  function resetScores(){scores.fill(0);renderPlayers()}
+  renderPlayers();
+
+  /* ---- LETTERS (easy ones only, no X Z Q V J K U Y) ---- */
+  const pool='ABCDEFGHILMNOPRSTW'.split('');
+  let last='';
+  const letterEl=document.getElementById('letter');
+  function pickLetter(){
+    let l;do{l=pool[Math.floor(Math.random()*pool.length)]}while(l===last);
+    last=l;
+    letterEl.textContent=l;
+    letterEl.classList.remove('spin');void letterEl.offsetWidth;letterEl.classList.add('spin');
+  }
+
+  /* ---- TIMER ---- */
+  let dur=60,remain=60,tick=null;
+  const timerEl=document.getElementById('timer'),barFill=document.getElementById('barFill');
+  document.querySelectorAll('#timepick button').forEach(b=>{
+    b.onclick=()=>{
+      document.querySelectorAll('#timepick button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      dur=+b.dataset.t;
+      stopTimer();showTime(dur);
+    };
+  });
+  function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+  function showTime(s){
+    timerEl.classList.remove('warn','zero');
+    if(dur===0){timerEl.textContent='∞';barFill.style.width='100%';return}
+    timerEl.textContent=fmt(s);
+    barFill.style.width=(s/dur*100)+'%';
+    if(s<=10&&s>0)timerEl.classList.add('warn');
+    if(s===0)timerEl.classList.add('zero');
+  }
+  function stopTimer(){if(tick){clearInterval(tick);tick=null}}
+  function runTimer(){
+    if(dur===0){showTime(0);return}
+    remain=dur;showTime(remain);
+    stopTimer();
+    tick=setInterval(()=>{
+      remain--;showTime(remain);
+      if(remain<=0){stopTimer();timeUp()}
+    },1000);
+  }
+  function timeUp(){chime();timerEl.textContent="TIME!";timerEl.classList.add('zero')}
+
+  /* ---- gentle chime ---- */
+  function chime(){
+    try{
+      const ctx=new (window.AudioContext||window.webkitAudioContext)();
+      [880,660].forEach((f,i)=>{
+        const o=ctx.createOscillator(),g=ctx.createGain();
+        o.frequency.value=f;o.type='sine';
+        o.connect(g);g.connect(ctx.destination);
+        const t=ctx.currentTime+i*.18;
+        g.gain.setValueAtTime(.0001,t);
+        g.gain.exponentialRampToValueAtTime(.2,t+.02);
+        g.gain.exponentialRampToValueAtTime(.0001,t+.35);
+        o.start(t);o.stop(t+.4);
+      });
+    }catch(e){}
+  }
+
+  /* ---- ROUND CONTROL ---- */
+  function newRound(){pickLetter();runTimer()}
+  function stopRound(){stopTimer();chime();if(dur!==0){timerEl.textContent='STOP!';timerEl.classList.add('zero')}}
+
+  showTime(dur);
+</script>
+</body>
+</html>

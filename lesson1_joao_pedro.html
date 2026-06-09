@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 01 — Minds, Motives & You · João Pedro</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.47.0/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --a:#B87820;
+  --bg:#FAFAF8;
+  --sf:#F2EDE5;
+  --sf2:#ECEAE4;
+  --bd:rgba(0,0,0,0.09);
+  --bd2:rgba(0,0,0,0.14);
+  --t:#1A1410;
+  --t2:#6B5E4E;
+  --t3:#C4B8A8;
+}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--t);min-height:100vh;padding:48px 24px 72px;}
+.wrap{max-width:780px;margin:0 auto;}
+
+/* HERO */
+.hero{border:1px solid var(--bd);border-radius:14px;background:var(--sf);display:grid;grid-template-columns:1fr 190px;overflow:hidden;margin-bottom:28px;min-height:224px;}
+.hl{padding:36px 42px;display:flex;flex-direction:column;justify-content:flex-end;}
+.htag{font-size:9px;font-weight:600;letter-spacing:4.5px;text-transform:uppercase;color:var(--a);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.htag::after{content:'';display:block;width:24px;height:1px;background:var(--a);}
+h1{font-family:'Playfair Display',serif;font-size:54px;font-weight:400;line-height:.9;color:var(--t);letter-spacing:-1.5px;}
+h1 em{font-style:italic;color:var(--a);}
+.hr{display:flex;align-items:center;justify-content:center;background:var(--sf2);border-left:1px solid var(--bd);}
+
+/* SECTION HEAD */
+.sh{display:flex;align-items:center;gap:12px;margin:28px 0 16px;}
+.sl{font-size:9px;font-weight:600;letter-spacing:4.5px;text-transform:uppercase;color:var(--a);white-space:nowrap;}
+.sr{flex:1;height:1px;background:var(--bd);}
+
+/* FRAMES */
+.frames{border:1px solid var(--bd);border-left:2.5px solid var(--a);border-radius:0 10px 10px 0;overflow:hidden;background:#fff;}
+.fr{display:grid;grid-template-columns:1fr 1fr;}
+.fr:not(:last-child){border-bottom:1px solid var(--bd);}
+.fc{padding:13px 20px;display:flex;align-items:center;gap:11px;}
+.fc:not(:last-child){border-right:1px solid var(--bd);}
+.fc.full{grid-column:span 2;}
+.fd{width:5px;height:5px;border-radius:50%;background:var(--a);flex-shrink:0;}
+.ft{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--t);}
+
+/* STATEMENTS */
+.stmts{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--bd);border-radius:14px;overflow:hidden;}
+.card{background:#fff;padding:30px 28px;position:relative;}
+.cnum{font-family:'Playfair Display',serif;font-size:64px;font-weight:700;line-height:.95;color:#E8E3DA;margin-bottom:8px;user-select:none;}
+.ctxt{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--t);line-height:1.5;margin-bottom:12px;}
+.ctag{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--a);}
+.cico{position:absolute;top:18px;right:20px;font-size:17px;color:var(--t3);}
+
+/* HOMEWORK */
+.hw{margin-top:28px;border:1px solid var(--bd);border-radius:14px;background:var(--sf);padding:36px 42px;display:grid;grid-template-columns:1fr 56px;gap:20px;align-items:center;}
+.hwlbl{font-size:9px;font-weight:600;letter-spacing:4.5px;text-transform:uppercase;color:var(--a);margin-bottom:12px;}
+h2{font-family:'Playfair Display',serif;font-size:36px;font-weight:400;line-height:1.05;color:var(--t);margin-bottom:16px;}
+h2 em{font-style:italic;color:var(--a);}
+.hwq{font-family:'Playfair Display',serif;font-size:19px;font-style:italic;color:var(--t);line-height:1.5;border-left:2px solid var(--a);padding-left:18px;margin-bottom:14px;}
+.hwn{font-size:13px;line-height:1.7;color:var(--t2);}
+.hwn strong{color:var(--t);font-weight:500;}
+.hwico{font-size:44px;color:var(--a);opacity:.2;text-align:center;}
+
+/* FOOTER */
+.footer{margin-top:40px;padding-top:18px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;}
+.fname{font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--t2);}
+.fpage{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--t3);}
+
+@media print{
+  body{background:#fff;padding:32px 24px;}
+  .hero{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .stmts{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+@media(max-width:560px){
+  .hero{grid-template-columns:1fr;}
+  .hr{display:none;}
+  h1{font-size:42px;}
+  .stmts{grid-template-columns:1fr;}
+  .hw{grid-template-columns:1fr;}
+  .hwico{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hl">
+      <div class="htag">Lesson 01 · João Pedro</div>
+      <h1>Minds,<br>Motives<br><em>&amp; You</em></h1>
+    </div>
+    <div class="hr">
+      <svg width="120" height="158" viewBox="0 0 120 158" fill="none">
+        <ellipse cx="60" cy="62" rx="42" ry="48" fill="white" stroke="rgba(0,0,0,0.13)" stroke-width="1"/>
+        <circle cx="60" cy="36" r="5" fill="#B87820"/>
+        <circle cx="40" cy="51" r="3.5" fill="#B87820" opacity=".65"/>
+        <circle cx="80" cy="51" r="3.5" fill="#B87820" opacity=".65"/>
+        <circle cx="46" cy="72" r="3" fill="#B87820" opacity=".45"/>
+        <circle cx="74" cy="70" r="3" fill="#B87820" opacity=".45"/>
+        <circle cx="60" cy="86" r="3.5" fill="#B87820" opacity=".3"/>
+        <line x1="60" y1="36" x2="40" y2="51" stroke="#B87820" stroke-width="1" opacity=".4"/>
+        <line x1="60" y1="36" x2="80" y2="51" stroke="#B87820" stroke-width="1" opacity=".4"/>
+        <line x1="40" y1="51" x2="46" y2="72" stroke="#B87820" stroke-width="1" opacity=".28"/>
+        <line x1="80" y1="51" x2="74" y2="70" stroke="#B87820" stroke-width="1" opacity=".28"/>
+        <line x1="46" y1="72" x2="60" y2="86" stroke="#B87820" stroke-width="1" opacity=".18"/>
+        <line x1="74" y1="70" x2="60" y2="86" stroke="#B87820" stroke-width="1" opacity=".18"/>
+        <rect x="53" y="107" width="14" height="18" rx="3" fill="white" stroke="rgba(0,0,0,0.13)" stroke-width="1"/>
+        <line x1="24" y1="138" x2="96" y2="138" stroke="#B87820" stroke-width="1.5" opacity=".22"/>
+        <circle cx="60" cy="138" r="2.5" fill="#B87820" opacity=".4"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="sh"><span class="sl">Tools for Today</span><div class="sr"></div></div>
+
+  <div class="frames">
+    <div class="fr">
+      <div class="fc"><div class="fd"></div><span class="ft">I agree because...</span></div>
+      <div class="fc"><div class="fd"></div><span class="ft">I disagree because...</span></div>
+    </div>
+    <div class="fr">
+      <div class="fc"><div class="fd"></div><span class="ft">I think that...</span></div>
+      <div class="fc"><div class="fd"></div><span class="ft">In my opinion...</span></div>
+    </div>
+    <div class="fr">
+      <div class="fc full"><div class="fd"></div><span class="ft">I'm not sure, but I think...</span></div>
+    </div>
+  </div>
+
+  <div class="sh"><span class="sl">Agree or Disagree?</span><div class="sr"></div></div>
+
+  <div class="stmts">
+    <div class="card">
+      <i class="ti ti-fingerprint cico" aria-hidden="true"></i>
+      <div class="cnum">01</div>
+      <p class="ctxt">People who commit crimes always had a difficult childhood.</p>
+      <div class="ctag">Crime · Psychology</div>
+    </div>
+    <div class="card">
+      <i class="ti ti-users cico" aria-hidden="true"></i>
+      <div class="cnum">02</div>
+      <p class="ctxt">It's possible to understand someone without agreeing with them.</p>
+      <div class="ctag">Empathy · Perspective</div>
+    </div>
+    <div class="card">
+      <i class="ti ti-heart cico" aria-hidden="true"></i>
+      <div class="cnum">03</div>
+      <p class="ctxt">Most people are afraid to be honest about their feelings.</p>
+      <div class="ctag">Mental Health · Society</div>
+    </div>
+    <div class="card">
+      <i class="ti ti-messages cico" aria-hidden="true"></i>
+      <div class="cnum">04</div>
+      <p class="ctxt">The best way to learn English is to stop being afraid of making mistakes.</p>
+      <div class="ctag">Learning · Growth</div>
+    </div>
+  </div>
+
+  <div class="hw">
+    <div>
+      <div class="hwlbl">Your Challenge</div>
+      <h2>Record a<br><em>voice note.</em></h2>
+      <div class="hwq">"What did you think about our first class? What was easy? What was hard?"</div>
+      <p class="hwn"><strong>30–40 seconds.</strong> Send it on WhatsApp before Friday.<br>It doesn't need to be perfect — just speak.</p>
+    </div>
+    <div class="hwico"><i class="ti ti-microphone" aria-hidden="true"></i></div>
+  </div>
+
+  <div class="footer">
+    <span class="fname">Teacher Ester Neves</span>
+    <span class="fpage">Lesson 01</span>
+  </div>
+
+</div>
+</body>
+</html>

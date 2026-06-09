@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1ª Aula · João Pedro — Painel da Professora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#140f20; --bg2:#1b1430; --surface:#231a3c; --surface2:#2b2048;
+    --ink:#f4eefc; --muted:#b1a3cf; --faint:#7d719b;
+    --purple:#9b6dff; --rose:#ff7ab0; --gold:#ffce6b; --green:#6be0a8;
+    --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.05);
+    --grad:linear-gradient(120deg,var(--purple),var(--rose));
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(1100px 600px at 12% -8%, rgba(155,109,255,.16), transparent 60%),
+      radial-gradient(900px 520px at 100% 0%, rgba(255,122,176,.12), transparent 55%),
+      var(--bg);
+    color:var(--ink); font-family:'Raleway',system-ui,sans-serif;
+    line-height:1.55; min-height:100vh; padding:38px 20px 90px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto}
+  .fade{opacity:0;transform:translateY(14px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+
+  /* Header */
+  header{margin-bottom:30px}
+  .eyebrow{font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;color:var(--rose);font-weight:700;margin-bottom:12px}
+  h1{font-family:'Playfair Display',serif;font-weight:700;font-size:2.65rem;line-height:1.05;letter-spacing:-.01em}
+  h1 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{font-size:.75rem;font-weight:600;letter-spacing:.04em;padding:6px 13px;border:1px solid var(--line);border-radius:99px;color:var(--muted);background:rgba(255,255,255,.02)}
+  .chip b{color:var(--ink);font-weight:700}
+
+  /* Mission strip */
+  .mission{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:26px 0 34px}
+  .m{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 13px;position:relative;overflow:hidden}
+  .m::before{content:"";position:absolute;inset:0 auto 0 0;width:3px;background:var(--grad)}
+  .m .n{font-family:'Playfair Display',serif;font-size:.95rem;color:var(--rose);font-weight:700}
+  .m p{font-size:.82rem;color:var(--muted);margin-top:5px;line-height:1.4}
+
+  /* Stopwatch */
+  .clock{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin-bottom:14px}
+  .clock .t{font-family:'Playfair Display',serif;font-size:1.9rem;font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:118px}
+  .clock button{font-family:'Raleway';font-weight:600;font-size:.82rem;letter-spacing:.03em;color:var(--ink);background:rgba(255,255,255,.05);border:1px solid var(--line);padding:9px 15px;border-radius:10px;cursor:pointer;transition:.2s}
+  .clock button:hover{background:rgba(255,255,255,.1)}
+  .clock .hint{font-size:.76rem;color:var(--faint);margin-left:auto;text-align:right}
+
+  /* Stage tabs */
+  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{flex:1;min-width:140px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:13px 15px;cursor:pointer;transition:.22s;color:var(--muted)}
+  .tab:hover{transform:translateY(-2px);border-color:rgba(155,109,255,.4)}
+  .tab .tm{font-size:.7rem;letter-spacing:.08em;font-weight:700;color:var(--faint)}
+  .tab .tt{font-family:'Playfair Display',serif;font-size:1.02rem;color:var(--ink);margin-top:3px;font-weight:600}
+  .tab.active{background:var(--grad);border-color:transparent;color:#fff}
+  .tab.active .tm,.tab.active .tt{color:#fff}
+
+  /* Stage panels */
+  .stage{display:none;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px;animation:rise .45s ease forwards}
+  .stage.show{display:block}
+  .stage h2{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:600;margin-bottom:4px}
+  .stage .sub{color:var(--rose);font-weight:600;font-size:.82rem;letter-spacing:.04em;margin-bottom:20px}
+  .lead{color:var(--muted);font-size:.96rem;margin-bottom:20px}
+  .lead b{color:var(--ink)}
+
+  .block{margin:20px 0}
+  .label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);font-weight:700;margin-bottom:11px}
+  .say{background:var(--bg2);border:1px solid var(--line2);border-left:3px solid var(--rose);border-radius:0 12px 12px 0;padding:13px 17px;margin:9px 0;font-size:1.02rem}
+  .say .en{font-weight:600;color:var(--ink)}
+  .say .pt{display:block;font-size:.8rem;color:var(--faint);margin-top:4px;font-style:italic}
+  .note{background:rgba(255,206,107,.08);border:1px solid rgba(255,206,107,.25);border-radius:12px;padding:13px 16px;font-size:.9rem;color:#f5e3bd;margin:16px 0}
+  .note b{color:var(--gold)}
+  .danger{background:rgba(255,122,176,.09);border:1px solid rgba(255,122,176,.28);border-radius:12px;padding:13px 16px;font-size:.9rem;color:#ffd4e6;margin:16px 0}
+  .danger b{color:var(--rose)}
+
+  ul.q{list-style:none;display:flex;flex-direction:column;gap:8px}
+  ul.q li{background:var(--bg2);border:1px solid var(--line2);border-radius:11px;padding:12px 15px;font-size:1rem;font-weight:500;display:flex;gap:11px;align-items:flex-start}
+  ul.q li::before{content:"›";color:var(--purple);font-weight:700;font-size:1.2rem;line-height:1.1}
+  ul.q li small{display:block;color:var(--faint);font-weight:400;font-style:italic;margin-top:3px;font-size:.78rem}
+
+  /* Baseline */
+  .baseline{margin-top:34px;background:linear-gradient(180deg,var(--surface),var(--bg2));border:1px solid var(--line);border-radius:20px;padding:30px}
+  .baseline h2{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:600}
+  .baseline .sub{color:var(--green);font-weight:600;font-size:.82rem;margin:4px 0 20px}
+  .field{margin-bottom:15px}
+  .field label{display:block;font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:7px}
+  .field label span{color:var(--faint);font-weight:400;font-style:italic}
+  .field textarea,.field input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;color:var(--ink);font-family:'Raleway';font-size:.92rem;padding:11px 13px;resize:vertical}
+  .field textarea{min-height:46px}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--purple)}
+  .copybar{display:flex;gap:10px;margin-top:8px;align-items:center}
+  .copybar button{font-family:'Raleway';font-weight:600;font-size:.82rem;color:#fff;background:var(--grad);border:none;padding:11px 20px;border-radius:10px;cursor:pointer}
+  .copybar .ok{font-size:.8rem;color:var(--green);opacity:0;transition:.3s}
+  .copybar .ok.show{opacity:1}
+
+  footer{text-align:center;color:var(--faint);font-size:.78rem;margin-top:40px;letter-spacing:.04em}
+  @media(max-width:640px){
+    h1{font-size:2rem} .mission{grid-template-columns:1fr 1fr}
+    .stage{padding:22px} .clock .t{font-size:1.5rem;min-width:96px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="fade">
+    <div class="eyebrow">English by Neves · Primeira Aula</div>
+    <h1>João Pedro — <em>destravar</em>, não testar</h1>
+    <div class="chips">
+      <span class="chip">Nível: <b>A2–B1</b> (com trava emocional)</span>
+      <span class="chip">Meta: <b>trabalho</b></span>
+      <span class="chip">Duração: <b>50 min</b></span>
+      <span class="chip">Origem: <b>indicação</b></span>
+      <span class="chip">Domina: <b>presente + passado</b></span>
+    </div>
+  </header>
+
+  <div class="mission fade" style="animation-delay:.08s">
+    <div class="m"><div class="n">01</div><p>Diagnosticar o nível <b>real</b> (não o 7/10)</p></div>
+    <div class="m"><div class="n">02</div><p>Quebrar a vergonha no 1º minuto</p></div>
+    <div class="m"><div class="n">03</div><p>Vitória rápida — ele sai pensando "eu falei"</p></div>
+    <div class="m"><div class="n">04</div><p>Registrar a linha de base</p></div>
+  </div>
+
+  <div class="clock fade" style="animation-delay:.14s">
+    <div class="t" id="t">00:00</div>
+    <button id="go">▶ Iniciar</button>
+    <button id="rst">Zerar</button>
+    <div class="hint">Aula de 50 min<br>Blocos: 5 · 15 · 25 · 5</div>
+  </div>
+
+  <div class="tabs fade" style="animation-delay:.2s" id="tabs">
+    <button class="tab active" data-s="0"><div class="tm">0–5 MIN</div><div class="tt">Tira a pressão</div></button>
+    <button class="tab" data-s="1"><div class="tm">5–20 MIN</div><div class="tt">Diagnóstico</div></button>
+    <button class="tab" data-s="2"><div class="tm">20–45 MIN</div><div class="tt">Debate temático</div></button>
+    <button class="tab" data-s="3"><div class="tm">45–50 MIN</div><div class="tt">Fechamento</div></button>
+  </div>
+
+  <!-- STAGE 1 -->
+  <section class="stage show" data-stage="0">
+    <h2>Tira a pressão</h2>
+    <div class="sub">0–5 MIN · Quebra-gelo</div>
+    <p class="lead">Nada de <b>"let's speak English now"</b>. Comece leve, devagar, em clima de papo. Deixe claro que hoje <b>não tem teste, nem certo nem errado</b> — você só quer conhecer como ele fala pra montar as aulas. Depois solte uma pergunta fácil que ele responde no automático.</p>
+    <div class="block">
+      <div class="label">O que dizer</div>
+      <div class="say"><span class="en">"Today there's no test, no right or wrong. I just want to get to know you and how you speak. Relax — okay?"</span><span class="pt">Tira o peso logo de cara.</span></div>
+      <div class="say"><span class="en">"So… how was your weekend? What did you do?"</span><span class="pt">Pergunta automática, pessoal, sem ameaça.</span></div>
+    </div>
+    <div class="danger"><b>Regra de ouro:</b> não corrija NADA neste bloco. Se ele errar, sorri e segue o papo. Correção agora = trava confirmada.</div>
+  </section>
+
+  <!-- STAGE 2 -->
+  <section class="stage" data-stage="1">
+    <h2>Diagnóstico disfarçado</h2>
+    <div class="sub">5–20 MIN · Conversa, não exame</div>
+    <p class="lead">Papo sobre os interesses dele, você conduzindo com <b>wh-questions abertas</b>. Você <b>não corrige</b> — só mantém o papo e <b>observa</b> (anota na seção de baixo). O objetivo é ouvir ele falar de verdade pra calibrar o nível.</p>
+    <div class="block">
+      <div class="label">Perguntas prontas</div>
+      <ul class="q">
+        <li>"What have you been watching lately?"<small>gancho pra Mindhunter / séries</small></li>
+        <li>"What do you like about it?"</li>
+        <li>"Tell me about your work — what do you do?"</li>
+        <li>"Why do you want to improve your English?"<small>a meta entra AQUI, natural</small></li>
+        <li>"What work situations do you need English for?"<small>meta + temas das próximas aulas de uma vez</small></li>
+        <li>"When was the last time you used English?"</li>
+      </ul>
+    </div>
+    <div class="note"><b>Enquanto ele fala, observe:</b> quanto tempo fala sem travar · faz perguntas ou só responde · onde trava (falta palavra? medo? traduzindo?) · que tempos verbais usa de verdade.</div>
+  </section>
+
+  <!-- STAGE 3 -->
+  <section class="stage" data-stage="2">
+    <h2>Debate temático</h2>
+    <div class="sub">20–45 MIN · Fala contínua = a vitória</div>
+    <p class="lead">Pega um tema que ele <b>ama</b> e joga <b>uma pergunta provocativa</b>. Ele opina. Você <b>discorda de leve</b> pra puxar mais fala. Vira mini-debate sobre algo que ele tem opinião forte — a emoção destrava sozinha. Só dê frase-suporte <b>se</b> ele travar.</p>
+    <div class="block">
+      <div class="label">Banco de perguntas — escolha 1 ou 2</div>
+      <ul class="q">
+        <li>"Can someone be <i>born</i> evil, or do they become evil?"</li>
+        <li>"Should serial killers be studied by scientists, or just punished?"</li>
+        <li>"Is it dangerous to understand a criminal too much?"</li>
+        <li>"Does true crime content make society better or worse?"</li>
+        <li>"Do people really change, or do they stay the same?"</li>
+        <li>"Is mental health taken seriously enough today?"</li>
+      </ul>
+    </div>
+    <div class="block">
+      <div class="label">Como puxar mais fala (discordar de leve)</div>
+      <div class="say"><span class="en">"Really? But what about people who had a hard childhood?"</span></div>
+      <div class="say"><span class="en">"Hmm, I see it differently. Tell me more — why do you think that?"</span></div>
+    </div>
+    <div class="block">
+      <div class="label">Frases de apoio — só se ele travar</div>
+      <div class="say"><span class="en">"I think… because…" · "In my opinion…" · "It depends on…" · "On the other hand…"</span></div>
+    </div>
+    <div class="danger"><b>Não vire aula de gramática.</b> Se ele errar mas você entendeu, deixa passar. Hoje é fluência e confiança, não acurácia.</div>
+  </section>
+
+  <!-- STAGE 4 -->
+  <section class="stage" data-stage="3">
+    <h2>Fechamento</h2>
+    <div class="sub">45–50 MIN · Sair com confiança + homework</div>
+    <p class="lead">Afirme uma vitória <b>específica</b> (não "você foi bem"). Depois apresenta o homework de shadowing em 1 min e combina os áudios.</p>
+    <div class="block">
+      <div class="label">Afirmação específica</div>
+      <div class="say"><span class="en">"You spoke for almost a minute about [tema] without stopping. That's exactly what we're building — and you just did it."</span><span class="pt">Troca [tema] pelo que ele falou de verdade.</span></div>
+    </div>
+    <div class="block">
+      <div class="label">Apresentar o homework (shadowing)</div>
+      <div class="say"><span class="en">"This week you'll do something called shadowing — you repeat scenes you like, copying the rhythm. No translating, no inventing. I'll send you everything."</span></div>
+    </div>
+    <div class="note"><b>Combina os áudios:</b> ele te manda áudio só <b>sexta</b> (shadowing lendo) e <b>terça</b> (livre). Abre o arquivo <i>home-practice-joao-pedro.html</i> com ele rapidinho se der tempo.</div>
+  </section>
+
+  <!-- BASELINE -->
+  <div class="baseline fade">
+    <h2>Linha de base</h2>
+    <div class="sub">Preencha logo depois da aula — é o que vai provar evolução</div>
+    <div class="field"><label>Tempo de fala contínua sem travar <span>(em segundos, aproximado)</span></label><input id="b1" type="text" placeholder="ex: ~40s no debate, ~15s no início"></div>
+    <div class="field"><label>Fez perguntas ou só respondeu?</label><input id="b2" type="text" placeholder="ex: só respondeu; não formulou nenhuma pergunta"></div>
+    <div class="field"><label>Onde travou e por quê</label><textarea id="b3" placeholder="ex: travou ao buscar vocabulário de trabalho; traduz na cabeça antes de falar"></textarea></div>
+    <div class="field"><label>Tempos verbais que usou de verdade vs. errou</label><textarea id="b4" placeholder="ex: present ok; past simple some, but mixed up irregulars (go/went)"></textarea></div>
+    <div class="field"><label>Pronúncia que atrapalhou a compreensão</label><input id="b5" type="text" placeholder="ex: TH, final -ed"></div>
+    <div class="field"><label>Próximo foco (1 linha)</label><input id="b6" type="text" placeholder="ex: ampliar fala contínua + soltar perguntas"></div>
+    <div class="copybar">
+      <button id="copy">Copiar anotações</button>
+      <span class="ok" id="ok">copiado ✓ — cola no Notion</span>
+    </div>
+  </div>
+
+  <footer>English by Neves · painel da 1ª aula · feito pra conduzir ao vivo</footer>
+</div>
+
+<script>
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')];
+  const stages=[...document.querySelectorAll('.stage')];
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    stages.forEach(x=>x.classList.remove('show'));
+    t.classList.add('active');
+    stages[+t.dataset.s].classList.add('show');
+    window.scrollTo({top:document.querySelector('.tabs').offsetTop-20,behavior:'smooth'});
+  }));
+
+  // stopwatch
+  let sec=0,timer=null;
+  const tEl=document.getElementById('t'),go=document.getElementById('go'),rst=document.getElementById('rst');
+  const fmt=s=>String((s/60|0)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  go.addEventListener('click',()=>{
+    if(timer){clearInterval(timer);timer=null;go.textContent='▶ Continuar';}
+    else{timer=setInterval(()=>{sec++;tEl.textContent=fmt(sec);},1000);go.textContent='⏸ Pausar';}
+  });
+  rst.addEventListener('click',()=>{clearInterval(timer);timer=null;sec=0;tEl.textContent='00:00';go.textContent='▶ Iniciar';});
+
+  // copy notes
+  document.getElementById('copy').addEventListener('click',()=>{
+    const g=id=>document.getElementById(id).value.trim()||'—';
+    const txt=`LINHA DE BASE — João Pedro (1ª aula)\n`+
+      `Fala contínua: ${g('b1')}\n`+
+      `Perguntas vs respostas: ${g('b2')}\n`+
+      `Onde travou: ${g('b3')}\n`+
+      `Tempos verbais: ${g('b4')}\n`+
+      `Pronúncia: ${g('b5')}\n`+
+      `Próximo foco: ${g('b6')}`;
+    navigator.clipboard.writeText(txt).then(()=>{
+      const ok=document.getElementById('ok');ok.classList.add('show');
+      setTimeout(()=>ok.classList.remove('show'),2200);
+    });
+  });
+</script>
+</body>
+</html>

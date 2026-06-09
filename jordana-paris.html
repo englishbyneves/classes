@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Day in Paris — Jordana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum:#1d1426;
+    --plum2:#2a1c38;
+    --rose:#e7a3b8;
+    --rose-deep:#c75d83;
+    --gold:#e8c98a;
+    --cream:#f7eee9;
+    --navy:#241a3a;
+    --line:rgba(231,163,184,.22);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Raleway',sans-serif;
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(199,93,131,.28), transparent 60%),
+      radial-gradient(900px 500px at 0% 110%, rgba(232,201,138,.16), transparent 55%),
+      linear-gradient(160deg,#160f1e 0%, #1d1426 45%, #241a3a 100%);
+    background-attachment:fixed;
+    color:var(--cream);
+    min-height:100vh;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:22px 18px 90px}
+
+  /* HEADER */
+  header{text-align:center;padding:30px 10px 10px}
+  .kicker{font-size:.72rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+  h1{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(2.2rem,7vw,3.6rem);line-height:1.02;letter-spacing:-.5px}
+  h1 .it{font-style:italic;font-weight:500;color:var(--rose)}
+  .sub{font-size:.95rem;color:rgba(247,238,233,.7);margin-top:14px;font-weight:300}
+  .student-tag{display:inline-block;margin-top:18px;padding:7px 18px;border:1px solid var(--line);border-radius:50px;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rose)}
+
+  /* PROGRESS */
+  .progress{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:26px 0 8px}
+  .dot{width:30px;height:5px;border-radius:5px;background:rgba(247,238,233,.15);transition:.4s;cursor:pointer}
+  .dot.active{background:linear-gradient(90deg,var(--rose-deep),var(--gold));width:46px}
+  .dot.done{background:var(--rose)}
+
+  /* STAGE */
+  .stage{display:none;animation:fade .5s ease}
+  .stage.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .card{
+    background:linear-gradient(165deg, rgba(42,28,56,.9), rgba(29,20,38,.92));
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:26px 22px;
+    margin-top:18px;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+    backdrop-filter:blur(6px);
+  }
+  .stage-no{font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+  .stage-time{float:right;font-size:.7rem;letter-spacing:.15em;color:rgba(247,238,233,.5);border:1px solid var(--line);padding:3px 10px;border-radius:50px}
+  h2{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,5vw,2rem);font-weight:700;margin:10px 0 6px;line-height:1.1}
+  h2 .it{font-style:italic;color:var(--rose)}
+  .lead{color:rgba(247,238,233,.78);font-weight:300;font-size:1rem;margin-bottom:6px}
+
+  .goal{display:flex;gap:10px;align-items:flex-start;background:rgba(199,93,131,.12);border-left:3px solid var(--rose-deep);padding:12px 14px;border-radius:0 12px 12px 0;margin-top:14px;font-size:.92rem}
+  .goal b{color:var(--gold);font-weight:600}
+
+  /* MOVE CALLOUT */
+  .move{display:flex;align-items:center;gap:12px;background:rgba(232,201,138,.1);border:1px dashed rgba(232,201,138,.4);border-radius:14px;padding:12px 14px;margin-top:16px;font-size:.9rem}
+  .move .ic{font-size:1.5rem;line-height:1}
+  .move b{color:var(--gold)}
+
+  /* TAP CARDS GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px}
+  .flip{perspective:1000px;height:118px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+  .flip.flipped .flip-in{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;border:1px solid var(--line)}
+  .face.front{background:linear-gradient(160deg,#33223f,#241834)}
+  .face.front .emoji{font-size:2.3rem}
+  .face.front .hint{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,238,233,.45);margin-top:8px}
+  .face.back{background:linear-gradient(160deg,var(--rose-deep),#7e3b66);transform:rotateY(180deg);color:#fff}
+  .face.back .en{font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:700}
+  .face.back .pt{font-size:.78rem;opacity:.85;margin-top:5px;font-style:italic}
+
+  /* PATTERN BOX */
+  .pattern{text-align:center;margin:18px 0;padding:22px;background:radial-gradient(circle at 50% 0%,rgba(199,93,131,.22),transparent 70%);border-radius:18px;border:1px solid var(--line)}
+  .pattern .big{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,7vw,2.6rem);font-weight:900}
+  .pattern .big .pink{color:var(--rose)}
+  .pattern .big .gold{color:var(--gold)}
+  .pattern .note{font-size:.8rem;color:rgba(247,238,233,.6);margin-top:10px}
+
+  .ex{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
+  .chip{background:rgba(247,238,233,.07);border:1px solid var(--line);padding:8px 14px;border-radius:50px;font-size:.9rem}
+  .chip b{color:var(--rose)}
+
+  .mistake{display:flex;gap:18px;margin-top:18px;flex-wrap:wrap}
+  .mistake>div{flex:1;min-width:130px;border-radius:14px;padding:12px 14px;font-size:.9rem}
+  .wrong{background:rgba(120,40,40,.25);border:1px solid rgba(220,120,120,.4)}
+  .right{background:rgba(60,120,80,.18);border:1px solid rgba(130,200,150,.4)}
+  .mistake .lbl{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;opacity:.7;margin-bottom:4px}
+  .wrong s{color:#f1a8a8}
+  .right b{color:#a8e6bd}
+
+  /* FRAME */
+  .frame{background:linear-gradient(120deg,rgba(232,201,138,.16),rgba(199,93,131,.16));border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:16px;text-align:center}
+  .frame .label{font-size:.66rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .frame .say{font-family:'Playfair Display',serif;font-size:1.3rem}
+  .frame .say .blank{color:var(--rose);border-bottom:2px dotted var(--rose);padding:0 10px}
+
+  /* QUESTIONS */
+  .q{display:flex;gap:12px;align-items:center;padding:13px 4px;border-bottom:1px solid var(--line)}
+  .q:last-child{border-bottom:none}
+  .q .n{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:1.3rem;min-width:26px}
+  .q .txt{font-size:1.02rem}
+
+  /* INSTA MOCK */
+  .insta{max-width:300px;margin:20px auto 0;background:#120c18;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .insta-top{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .insta-top .av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold))}
+  .insta-top .nm{font-size:.85rem;font-weight:600}
+  .insta-top .nm small{display:block;font-weight:300;font-size:.7rem;opacity:.5}
+  .insta-shot{height:200px;display:flex;align-items:center;justify-content:center;font-size:4.5rem;background:linear-gradient(160deg,#3a2547,#22162f);position:relative}
+  .insta-shot .loc{position:absolute;top:12px;left:12px;font-size:.7rem;background:rgba(0,0,0,.4);padding:4px 10px;border-radius:50px;letter-spacing:.1em}
+  .insta-cap{padding:12px 14px;font-size:.92rem;min-height:46px}
+  .insta-cap .typed{color:var(--rose);font-weight:500}
+  .insta-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+
+  /* BUTTONS */
+  .btn{font-family:'Raleway',sans-serif;cursor:pointer;border:none;border-radius:50px;padding:11px 20px;font-size:.85rem;font-weight:600;letter-spacing:.04em;transition:.25s;color:#fff}
+  .btn.primary{background:linear-gradient(90deg,var(--rose-deep),var(--gold));color:#1d1426}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(199,93,131,.4)}
+  .btn.ghost{background:rgba(247,238,233,.08);border:1px solid var(--line);color:var(--cream)}
+  .btn.ghost:hover{background:rgba(247,238,233,.15)}
+  .btn.small{padding:8px 14px;font-size:.78rem}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;gap:12px}
+
+  .scene-btn{background:rgba(247,238,233,.06);border:1px solid var(--line);color:var(--cream);border-radius:12px;padding:10px 12px;font-size:.85rem;cursor:pointer;transition:.2s;font-family:inherit}
+  .scene-btn:hover{background:var(--rose-deep);border-color:var(--rose-deep)}
+
+  /* HOMEWORK */
+  .hw{display:flex;gap:14px;align-items:flex-start;background:rgba(232,201,138,.1);border:1px solid rgba(232,201,138,.3);border-radius:16px;padding:18px;margin-top:16px}
+  .hw .ic{font-size:2rem}
+  .checkpoint .frame .say{font-size:1.15rem;line-height:1.6}
+
+  .mini{font-size:.82rem;color:rgba(247,238,233,.55);margin-top:8px}
+  ul.clean{list-style:none;margin-top:10px}
+  ul.clean li{padding:7px 0 7px 26px;position:relative;font-size:.95rem}
+  ul.clean li:before{content:'✶';position:absolute;left:0;color:var(--gold)}
+  .footer{text-align:center;margin-top:40px;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(247,238,233,.35)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">English by Neves · Speaking First</div>
+    <h1>A Day in <span class="it">Paris</span></h1>
+    <p class="sub">Tell the world what you're doing right now ☕📸</p>
+    <div class="student-tag">Jordana · Level A1</div>
+  </header>
+
+  <div class="progress" id="progress"></div>
+
+  <!-- ================= STAGE 1 — WARM UP ================= -->
+  <section class="stage show">
+    <div class="card">
+      <span class="stage-no">Stage 1 · Warm-up</span>
+      <span class="stage-time">5 min</span>
+      <h2>Guess the <span class="it">Action</span></h2>
+      <p class="lead">Tap a card. Don't read the back yet — first <b>act it out</b> with your body, then flip it to check.</p>
+      <div class="move"><span class="ic">🎭</span><div><b>Move!</b> Stand up. One of us does the action, the other guesses in English.</div></div>
+
+      <div class="grid" id="warmGrid"></div>
+
+      <div class="nav">
+        <span></span>
+        <button class="btn primary" onclick="go(1)">Bonjour, Paris →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 2 — CONTEXT ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 2 · Welcome to Paris</span>
+      <span class="stage-time">4 min</span>
+      <h2>You just <span class="it">arrived</span> 🇫🇷</h2>
+      <p class="lead">New city. New coffee. New photos. Today you are the star of your own Paris story — and you'll say <b>everything you're doing</b>, out loud, in English.</p>
+
+      <div class="insta">
+        <div class="insta-top"><div class="av"></div><div class="nm">jordana_in_paris<small>Paris, France</small></div></div>
+        <div class="insta-shot">🗼<span class="loc">📍 Paris</span></div>
+        <div class="insta-cap">Living my best life ✨</div>
+      </div>
+
+      <div class="goal"><span>🎯</span><div><b>Today's mission:</b> by the end of class you can narrate a full day in Paris — "I'm walking… I'm drinking coffee… I'm taking a photo…" — without stopping.</div></div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(0)">←</button>
+        <button class="btn primary" onclick="go(2)">Learn the words →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 3 — VOCAB ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 3 · Action Words</span>
+      <span class="stage-time">7 min</span>
+      <h2>Your Paris <span class="it">verbs</span></h2>
+      <p class="lead">Tap each card. <b>Do the action first</b>, say it, then flip to check the meaning.</p>
+      <div class="move"><span class="ic">✋</span><div>Every word = a movement. No movement, no flip!</div></div>
+
+      <div class="grid" id="vocabGrid"></div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(1)">←</button>
+        <button class="btn primary" onclick="go(3)">The magic pattern →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 4 — LANGUAGE FOCUS ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 4 · The Pattern</span>
+      <span class="stage-time">8 min</span>
+      <h2>Happening <span class="it">right now</span></h2>
+      <p class="lead">One little pattern lets you describe anything you're doing this second:</p>
+
+      <div class="pattern">
+        <div class="big"><span class="pink">I'm</span> + <span class="gold">_____ing</span></div>
+        <div class="note">"I'm" = I am · the action gets <b>-ing</b> on the end</div>
+      </div>
+
+      <div class="ex">
+        <span class="chip"><b>I'm</b> walking 🚶‍♀️</span>
+        <span class="chip"><b>I'm</b> drinking coffee ☕</span>
+        <span class="chip"><b>I'm</b> taking a photo 📸</span>
+      </div>
+
+      <div class="mistake">
+        <div class="wrong"><div class="lbl">Careful</div><s>I walking.</s></div>
+        <div class="right"><div class="lbl">Say this</div>I'm <b>walking</b>.</div>
+      </div>
+      <p class="mini">💡 Don't lose the little "I'm" — it's the engine of the sentence.</p>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(2)">←</button>
+        <button class="btn primary" onclick="go(4)">Freeze & Say →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 5 — GUIDED PRACTICE ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 5 · Guided Practice</span>
+      <span class="stage-time">7 min</span>
+      <h2>Freeze &amp; <span class="it">Say</span> 🧊</h2>
+      <p class="lead">Tap the button. Do the action, <b>freeze like a statue</b>, then say the full sentence using the frame.</p>
+
+      <div class="frame">
+        <div class="label">Your sentence frame</div>
+        <div class="say">I'm <span class="blank" id="freezeWord">…</span></div>
+      </div>
+
+      <div class="insta-controls">
+        <button class="scene-btn" onclick="freeze('walking 🚶‍♀️')">walk</button>
+        <button class="scene-btn" onclick="freeze('drinking coffee ☕')">drink coffee</button>
+        <button class="scene-btn" onclick="freeze('taking a photo 📸')">take a photo</button>
+        <button class="scene-btn" onclick="freeze('eating a croissant 🥐')">eat a croissant</button>
+        <button class="scene-btn" onclick="freeze('smiling 😄')">smile</button>
+        <button class="scene-btn" onclick="freeze('waving 👋')">wave</button>
+        <button class="scene-btn" onclick="freeze('shopping 🛍️')">shop</button>
+        <button class="scene-btn" onclick="freeze('dancing 💃')">dance</button>
+      </div>
+      <p class="mini" style="text-align:center">Random one keeping you on your toes? <button class="btn ghost small" onclick="randomFreeze()">🎲 Surprise me</button></p>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(3)">←</button>
+        <button class="btn primary" onclick="go(5)">Talk to me →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 6 — SPEAKING ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 6 · Speaking</span>
+      <span class="stage-time">8 min</span>
+      <h2>What are you <span class="it">doing?</span></h2>
+      <p class="lead">Answer out loud in full sentences. Mime it if it helps the words come out.</p>
+
+      <div class="q"><span class="n">1</span><span class="txt">It's morning in Paris. <b>What are you doing?</b></span></div>
+      <div class="q"><span class="n">2</span><span class="txt">You're in a beautiful café. What are you drinking? eating?</span></div>
+      <div class="q"><span class="n">3</span><span class="txt">You see the Eiffel Tower. What are you doing with your phone?</span></div>
+      <div class="q"><span class="n">4</span><span class="txt">It's a sunny afternoon. Are you shopping or walking?</span></div>
+      <div class="q"><span class="n">5</span><span class="txt">Right now, in this room — what am I doing? 👀</span></div>
+
+      <div class="frame">
+        <div class="label">If you get stuck, start with</div>
+        <div class="say">I'm <span class="blank">…</span></div>
+      </div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(4)">←</button>
+        <button class="btn primary" onclick="go(6)">Post your story →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 7 — MAIN ACTIVITY ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 7 · Main Activity</span>
+      <span class="stage-time">11 min</span>
+      <h2>Your Paris <span class="it">Story</span> 📲</h2>
+      <p class="lead">Build your day, one post at a time. Tap a moment, <b>act it out</b>, then say the caption out loud — "I'm…". Watch your feed fill up.</p>
+
+      <div class="insta">
+        <div class="insta-top"><div class="av"></div><div class="nm">jordana_in_paris<small id="igLoc">Paris, France</small></div></div>
+        <div class="insta-shot" id="igShot">📷<span class="loc" id="igTag">📍 tap below</span></div>
+        <div class="insta-cap" id="igCap">Tap a moment to post →</div>
+      </div>
+
+      <div class="insta-controls">
+        <button class="scene-btn" onclick="post('☕','Café de Flore','I\'m drinking coffee and reading.')">Morning café</button>
+        <button class="scene-btn" onclick="post('🚶‍♀️','Le Marais','I\'m walking in the old streets.')">A walk</button>
+        <button class="scene-btn" onclick="post('🗼','Eiffel Tower','I\'m taking a photo of the tower.')">The tower</button>
+        <button class="scene-btn" onclick="post('🛍️','Champs-Élysées','I\'m shopping for a new dress.')">Shopping</button>
+        <button class="scene-btn" onclick="post('🥐','A boulangerie','I\'m eating a fresh croissant.')">Bakery</button>
+        <button class="scene-btn" onclick="post('💃','A rooftop party','I\'m dancing and smiling.')">Night out</button>
+      </div>
+      <p class="mini" style="text-align:center">Posted <b id="count">0</b>/6 moments. Try to link them: "First I'm… then I'm…"</p>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(5)">←</button>
+        <button class="btn primary" onclick="go(7)">Say it clearly →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 8 — PRONUNCIATION ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 8 · Pronunciation</span>
+      <span class="stage-time">4 min</span>
+      <h2>The <span class="it">-ing</span> sound</h2>
+      <p class="lead">It's soft and at the back: <b>"-ng"</b>, not "-ng-uh". Say each one slowly, then fast.</p>
+
+      <div class="ex" style="margin-top:14px">
+        <span class="chip">walk·<b>ing</b></span>
+        <span class="chip">drink·<b>ing</b></span>
+        <span class="chip">tak·<b>ing</b></span>
+        <span class="chip">smil·<b>ing</b></span>
+        <span class="chip">danc·<b>ing</b></span>
+      </div>
+      <div class="move"><span class="ic">🎵</span><div><b>Trick:</b> say it like a little song — keep your mouth relaxed, no hard "g" at the end.</div></div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(6)">←</button>
+        <button class="btn primary" onclick="go(8)">Final check →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 9 — CHECKPOINT ================= -->
+  <section class="stage">
+    <div class="card checkpoint">
+      <span class="stage-no">Stage 9 · Checkpoint</span>
+      <span class="stage-time">3 min</span>
+      <h2>30-second <span class="it">Paris</span></h2>
+      <p class="lead">No frame on screen this time. Look away, breathe, and narrate your day for 30 seconds. I'm timing you ⏱️</p>
+
+      <div class="frame">
+        <div class="label">You should be able to say things like</div>
+        <div class="say">I'm walking… I'm drinking coffee… I'm taking a photo… I'm smiling 😄</div>
+      </div>
+      <p class="mini" style="text-align:center">Goal: keep talking, don't stop to translate. Mistakes are totally fine.</p>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(7)">←</button>
+        <button class="btn primary" onclick="go(9)">Homework →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STAGE 10 — HOMEWORK ================= -->
+  <section class="stage">
+    <div class="card">
+      <span class="stage-no">Stage 10 · Homework</span>
+      <span class="stage-time">5–10 min</span>
+      <h2>Your real <span class="it">day</span> 🎙️</h2>
+      <p class="lead">Be your own Emily — but at home, at work, anywhere.</p>
+
+      <div class="hw"><span class="ic">🎙️</span><div>
+        <b>Record a 30-second voice note</b> narrating what you're doing during your real day.
+        <ul class="clean">
+          <li>Use "I'm ___ing" at least <b>5 times</b></li>
+          <li>Move while you talk — it helps!</li>
+          <li>Example: "I'm cooking… I'm watching TV… I'm walking my dog…"</li>
+        </ul>
+      </div></div>
+      <p class="mini">Send it to me before our next class. No script — just talk. 💜</p>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="go(8)">←</button>
+        <button class="btn primary" onclick="restart()">↺ Start over</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">English by Neves · A Day in Paris · Jordana</div>
+</div>
+
+<script>
+  /* ---------- WARM-UP CARDS ---------- */
+  const warm=[
+    {e:'☕',en:'drinking',pt:'bebendo'},
+    {e:'🚶‍♀️',en:'walking',pt:'andando'},
+    {e:'📸',en:'taking a photo',pt:'tirando foto'},
+    {e:'💃',en:'dancing',pt:'dançando'}
+  ];
+  /* ---------- VOCAB CARDS ---------- */
+  const vocab=[
+    {e:'🚶‍♀️',en:'to walk',pt:'andar'},
+    {e:'☕',en:'to drink',pt:'beber'},
+    {e:'📸',en:'to take a photo',pt:'tirar foto'},
+    {e:'🥐',en:'to eat',pt:'comer'},
+    {e:'👗',en:'to wear',pt:'vestir / usar'},
+    {e:'🛍️',en:'to shop',pt:'fazer compras'},
+    {e:'😄',en:'to smile',pt:'sorrir'},
+    {e:'📲',en:'to post',pt:'postar'}
+  ];
+
+  function buildGrid(id,arr){
+    const g=document.getElementById(id);
+    arr.forEach(c=>{
+      const d=document.createElement('div');
+      d.className='flip';
+      d.innerHTML=`<div class="flip-in">
+        <div class="face front"><div class="emoji">${c.e}</div><div class="hint">tap to flip</div></div>
+        <div class="face back"><div class="en">${c.en}</div><div class="pt">${c.pt}</div></div>
+      </div>`;
+      d.onclick=()=>d.classList.toggle('flipped');
+      g.appendChild(d);
+    });
+  }
+  buildGrid('warmGrid',warm);
+  buildGrid('vocabGrid',vocab);
+
+  /* ---------- STAGE NAV ---------- */
+  const stages=document.querySelectorAll('.stage');
+  const prog=document.getElementById('progress');
+  let cur=0;
+  stages.forEach((s,i)=>{
+    const dot=document.createElement('div');
+    dot.className='dot'+(i===0?' active':'');
+    dot.onclick=()=>go(i);
+    prog.appendChild(dot);
+  });
+  const dots=document.querySelectorAll('.dot');
+  function go(i){
+    stages[cur].classList.remove('show');
+    cur=i;
+    stages[cur].classList.add('show');
+    dots.forEach((d,j)=>{
+      d.classList.remove('active','done');
+      if(j<i)d.classList.add('done');
+      if(j===i)d.classList.add('active');
+    });
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function restart(){go(0)}
+
+  /* ---------- FREEZE & SAY ---------- */
+  const freezeWord=document.getElementById('freezeWord');
+  function freeze(w){freezeWord.textContent=w;freezeWord.style.animation='none';void freezeWord.offsetWidth;freezeWord.style.animation='fade .4s'}
+  const freezeOpts=['walking 🚶‍♀️','drinking coffee ☕','taking a photo 📸','eating a croissant 🥐','smiling 😄','waving 👋','shopping 🛍️','dancing 💃'];
+  function randomFreeze(){freeze(freezeOpts[Math.floor(Math.random()*freezeOpts.length)])}
+
+  /* ---------- INSTA STORY ---------- */
+  const posted=new Set();
+  function post(emoji,loc,cap){
+    document.getElementById('igShot').firstChild.textContent=emoji;
+    document.getElementById('igTag').textContent='📍 '+loc;
+    document.getElementById('igLoc').textContent=loc;
+    document.getElementById('igCap').innerHTML='<span class="typed">'+cap+'</span>';
+    posted.add(loc);
+    document.getElementById('count').textContent=posted.size;
+  }
+</script>
+</body>
+</html>
