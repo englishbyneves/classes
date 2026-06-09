@@ -1,0 +1,244 @@
+<div class="ebn">
+<h2 class="sr-only">Primeira aula A1: greetings, frases de sobrevivência e introdução em flip cards (inglês na frente, tradução no verso), produção oral e home practice.</h2>
+<style>
+.ebn{--navy:#1e2647;--navy2:#2c3760;--rose:#cf7e93;--rose-d:#a8546b;--rose-l:#f8dee5;--bg:#fbecf0;--cream:#fffdfb;--ink:#2c2c34;--muted:#7e7c87;--line:#efdfe4;--ok:#2f7d54;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);border-radius:18px;padding:22px;line-height:1.6;}
+.ebn *{box-sizing:border-box;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+.hero{background:var(--navy);border-radius:22px;padding:30px 32px;color:#fff;}
+.logo-en{color:#fff;font-weight:800;letter-spacing:.16em;font-size:24px;}
+.logo-row{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.logo-by{color:var(--rose);font-size:12px;}.logo-nv{color:var(--rose);font-weight:800;letter-spacing:.18em;font-size:19px;}
+.logo-line{height:2px;width:15px;background:var(--rose);display:inline-block;}
+.hero-title{font-size:29px;font-weight:800;line-height:1.25;margin:20px 0 12px;}
+.hero-pill{display:inline-block;background:var(--rose-l);color:var(--rose-d);font-size:12px;font-weight:700;letter-spacing:.06em;padding:5px 14px;border-radius:20px;}
+.hero-sub{margin:20px 0 8px;font-size:14px;color:#c8cadb;font-weight:600;letter-spacing:.03em;}
+.hero-goals{list-style:none;margin:0;padding:0;}
+.hero-goals li{margin:7px 0;font-size:16px;}.hero-goals .ck{color:var(--rose);font-weight:800;margin-right:8px;}
+.sec{background:var(--cream);border:1.5px solid var(--line);border-radius:20px;padding:26px 28px;margin:20px 0;}
+.sec-head{display:flex;align-items:center;gap:13px;}
+.sec-num{flex:none;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;}
+.step{flex:none;font-size:11px;font-weight:700;letter-spacing:.08em;padding:4px 10px;border-radius:12px;margin-left:auto;}
+.step.learn{background:var(--rose-l);color:var(--rose-d);}
+.step.speak{background:var(--navy);color:#fff;}
+.sec-title{font-size:20px;font-weight:800;color:var(--navy);}
+.sec-inst{color:var(--muted);font-size:15px;margin:10px 0 14px;}
+.sub{font-size:13px;font-weight:700;color:var(--rose-d);text-transform:uppercase;letter-spacing:.05em;margin:18px 0 8px;}
+.cue{display:inline-flex;align-items:center;gap:7px;background:var(--rose-l);color:var(--rose-d);font-weight:700;font-size:13px;padding:7px 14px;border-radius:20px;margin-bottom:14px;}
+.flipgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:11px;}
+.fc{perspective:900px;height:112px;cursor:pointer;}
+.fc-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,.2,.2,1);}
+.fc.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:13px;padding:12px 14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.fc-front{background:#fff;border:1.5px solid var(--line);}
+.fc-back{background:var(--navy);color:#fff;transform:rotateY(180deg);}
+.fc-front .en{font-size:15px;font-weight:700;color:var(--navy);line-height:1.3;}
+.fc-front .hint{font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.04em;}
+.fc-back .pt{font-size:14px;font-weight:600;line-height:1.35;}
+.fc-back .use{font-size:11px;color:var(--rose);margin-top:5px;}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:12px;padding:12px 22px;font:inherit;font-size:15px;font-weight:700;cursor:pointer;}
+.btn:hover{background:var(--navy2);}
+.btn-rose{background:var(--rose);}.btn-rose:hover{background:var(--rose-d);}
+.btn-ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line);}
+.btn-ghost:hover{border-color:var(--navy);}
+.deck-wrap{perspective:1400px;}
+.deck-card{position:relative;height:230px;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.4,.2,.2,1);}
+.deck-card.flipped{transform:rotateY(180deg);}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+.face.front{background:#fff;border:2px solid var(--navy);}
+.face.back{background:var(--navy);color:#fff;transform:rotateY(180deg);}
+.face-label{font-size:12px;font-weight:700;letter-spacing:.1em;margin-bottom:13px;}
+.front .face-label{color:var(--rose-d);}.back .face-label{color:var(--rose);}
+.face-text{font-size:22px;font-weight:700;color:var(--navy);}
+.back .face-text{color:#fff;font-size:26px;}
+.face-pt{color:#b7b9cc;font-size:15px;margin-top:10px;}
+.say-cue{margin-top:15px;display:inline-flex;align-items:center;gap:7px;color:var(--rose-d);font-weight:700;font-size:14px;}
+.deck-ctrls,.cv-ctrls{display:flex;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap;}
+.deck-count{color:var(--muted);font-size:15px;}.deck-count b{color:var(--navy);font-size:18px;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+.field label{display:block;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+input[type=text],textarea{font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;width:100%;outline:none;font-size:16px;}
+input[type=text]:focus,textarea:focus{border-color:var(--navy);}
+.outbox{background:var(--navy);border-radius:16px;padding:22px 24px;margin-top:18px;font-size:20px;line-height:1.95;color:#fff;}
+.outbox b{color:var(--rose);}
+.read-tag{display:inline-flex;align-items:center;gap:7px;background:var(--rose);color:#fff;font-size:12px;font-weight:700;letter-spacing:.05em;padding:4px 12px;border-radius:14px;margin-bottom:12px;}
+#intro-out-wrap{display:none;}
+.q-bubble{display:inline-block;background:#fff;border:2px solid var(--navy);color:var(--navy);font-size:20px;font-weight:700;padding:14px 20px;border-radius:16px 16px 16px 4px;}
+.model-rev{background:var(--rose-l);border-radius:14px;padding:16px 18px;margin-top:14px;}
+.model-rev .ml{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--rose-d);}
+.model-rev .mt{font-size:19px;font-weight:700;color:var(--navy);margin-top:4px;}
+#cv-m-wrap{display:none;}
+.model-card{border-radius:16px;padding:22px 24px;margin:12px 0;}
+.model-card.full{background:var(--navy);color:#fff;}
+.model-card.easy{background:#fff;border:2px solid var(--rose);color:var(--navy);}
+.model-card .tag{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.full .tag{color:var(--rose);}.easy .tag{color:var(--rose-d);}
+.model-card .body{font-size:19px;line-height:1.95;margin-top:8px;}
+.timer-box{display:flex;align-items:center;gap:18px;background:var(--rose-l);border-radius:18px;padding:20px 24px;margin:16px 0;flex-wrap:wrap;}
+.timer-val{font-size:48px;font-weight:800;color:var(--navy);min-width:120px;text-align:center;}
+.timer-box.done .timer-val{color:var(--rose-d);font-size:30px;}
+.hp{display:flex;flex-direction:column;gap:10px;}
+.hp-item{display:flex;align-items:flex-start;gap:13px;background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:14px 16px;cursor:pointer;}
+.hp-item .box{flex:none;width:24px;height:24px;border-radius:7px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;margin-top:1px;}
+.hp-item.done{background:#f3fbf6;border-color:var(--ok);}
+.hp-item.done .box{background:var(--ok);border-color:var(--ok);}
+.hp-item.done .box::after{content:'✓';}
+.hp-item .txt{font-size:15px;}.hp-item .txt b{color:var(--navy);}
+.foot{text-align:center;color:var(--muted);font-size:12px;letter-spacing:.08em;margin-top:26px;}
+</style>
+
+<div class="hero">
+  <div class="logo-en">ENGLISH</div>
+  <div class="logo-row"><span class="logo-by">by</span><span class="logo-line"></span><span class="logo-nv">NEVES</span><span class="logo-line"></span></div>
+  <div class="hero-title">First Class: English Survival<br>+ Introducing Yourself</div>
+  <span class="hero-pill">A1 · FIRST CLASS</span>
+  <div class="hero-sub">BY THE END OF THIS CLASS, YOU CAN:</div>
+  <ul class="hero-goals">
+    <li><span class="ck">✓</span>Greet someone and say goodbye.</li>
+    <li><span class="ck">✓</span>Ask for help during class.</li>
+    <li><span class="ck">✓</span>Say when you don't understand.</li>
+    <li><span class="ck">✓</span>Introduce yourself in a simple way.</li>
+    <li><span class="ck">✓</span>Answer basic personal questions.</li>
+  </ul>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">1</span><span class="sec-title">Greetings</span><span class="step learn">LEARN</span></div>
+  <p class="sec-inst">These are the words to start and end a conversation.</p>
+  <span class="cue"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v9a3 3 0 0 1-6 0z"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg> Tap a card, then say it out loud</span>
+  <div class="sub">Say hello</div>
+  <div class="flipgrid" id="g-hello"></div>
+  <div class="sub">Ask &amp; answer</div>
+  <div class="flipgrid" id="g-ask"></div>
+  <div class="sub">Say goodbye</div>
+  <div class="flipgrid" id="g-bye"></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">2</span><span class="sec-title">Help phrases — learn them</span><span class="step learn">LEARN</span></div>
+  <p class="sec-inst">Use these when you need help in class.</p>
+  <span class="cue"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v9a3 3 0 0 1-6 0z"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg> Tap a card, then say it out loud</span>
+  <div class="flipgrid" id="help-cards"></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">3</span><span class="sec-title">Help phrases — Say it!</span><span class="step speak">SPEAK</span></div>
+  <p class="sec-inst">Read the situation and <b>say the phrase from memory</b>. Then flip to check.</p>
+  <div class="deck-wrap">
+    <div class="deck-card" id="deck-card">
+      <div class="face front">
+        <div class="face-label">SITUATION</div>
+        <div class="face-text" id="deck-front"></div>
+        <div class="say-cue"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v9a3 3 0 0 1-6 0z"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg> Say it in English</div>
+      </div>
+      <div class="face back">
+        <div class="face-label">YOU SAY</div>
+        <div class="face-text" id="deck-back"></div>
+        <div class="face-pt" id="deck-pt"></div>
+      </div>
+    </div>
+  </div>
+  <div class="deck-ctrls">
+    <button class="btn-ghost btn" onclick="deckPrev()">Back</button>
+    <button class="btn" onclick="deckFlip()">Show answer</button>
+    <button class="btn-rose btn" onclick="deckNext()">Next phrase</button>
+    <span class="deck-count"><b id="deck-i">1</b> / 10</span>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">4</span><span class="sec-title">Introducing yourself — the words</span><span class="step learn">LEARN</span></div>
+  <p class="sec-inst">The phrases to talk about you, and the questions people will ask.</p>
+  <span class="cue"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v9a3 3 0 0 1-6 0z"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg> Tap a card, then say it out loud</span>
+  <div class="sub">Talk about you</div>
+  <div class="flipgrid" id="intro-cards"></div>
+  <div class="sub">Questions people ask</div>
+  <div class="flipgrid" id="q-cards"></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">5</span><span class="sec-title">About me — build &amp; speak</span><span class="step speak">SPEAK</span></div>
+  <p class="sec-inst">Type your real answers. Then read your introduction <b>out loud</b>.</p>
+  <div class="grid2">
+    <div class="field"><label>My name is…</label><input type="text" id="in-name" value="Mariana"></div>
+    <div class="field"><label>I'm … years old</label><input type="text" id="in-age" value="29"></div>
+    <div class="field"><label>I'm from…</label><input type="text" id="in-country" value="Brazil"></div>
+    <div class="field"><label>I'm … (nationality)</label><input type="text" id="in-nat" value="Brazilian"></div>
+    <div class="field"><label>I'm a/an … (job)</label><input type="text" id="in-job" value="designer"></div>
+    <div class="field"><label>I live in…</label><input type="text" id="in-city" value="Niterói"></div>
+    <div class="field"><label>I like…</label><input type="text" id="in-like" value="music"></div>
+  </div>
+  <button class="btn" style="margin-top:16px;" onclick="buildIntro()">Build my introduction</button>
+  <div id="intro-out-wrap"><div class="outbox"><span class="read-tag"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v9a3 3 0 0 1-6 0z"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg> READ ALOUD</span><div id="intro-out"></div></div></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">6</span><span class="sec-title">Your turn — answer out loud</span><span class="step speak">SPEAK</span></div>
+  <p class="sec-inst">Someone asks you a question. <b>Answer out loud first</b>, then check a model.</p>
+  <div class="q-bubble" id="cv-q"></div>
+  <div style="margin-top:14px;"><span class="cue"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6v9a3 3 0 0 1-6 0z"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="22"/></svg> Say your answer</span></div>
+  <div id="cv-m-wrap"><div class="model-rev"><div class="ml">MODEL ANSWER</div><div class="mt" id="cv-m"></div></div></div>
+  <div class="cv-ctrls">
+    <button class="btn-ghost btn" onclick="convoPrev()">Back</button>
+    <button class="btn" onclick="convoReveal()">Show a model</button>
+    <button class="btn-rose btn" onclick="convoNext()">Next question</button>
+    <span class="deck-count"><b id="cv-i">1</b> / 6</span>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">7</span><span class="sec-title">30-second challenge</span><span class="step speak">SPEAK</span></div>
+  <p class="sec-inst">Press start and introduce yourself for 30 seconds. Use the full version — or the easy one if you need it.</p>
+  <div class="timer-box" id="timer-box">
+    <div class="timer-val" id="timer-val">30</div>
+    <div><button class="btn btn-rose" onclick="startTimer()">Start 30s</button> <button class="btn btn-ghost" onclick="resetTimer()">Reset</button></div>
+  </div>
+  <div class="model-card full"><span class="tag">Full version</span>
+    <div class="body">Hi! My name is ______.<br>I'm ______ years old.<br>I'm from ______.<br>I'm ______.<br>I'm a/an ______.<br>I live in ______.<br>I like ______.<br>Nice to meet you!</div></div>
+  <div class="model-card easy"><span class="tag">Easy version</span>
+    <div class="body">Hi! My name is ______.<br>I'm from ______.<br>I'm ______.<br>Nice to meet you!</div></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">8</span><span class="sec-title">Home Practice</span></div>
+  <p class="sec-inst">Do these during the week. Tap each one when it's done.</p>
+  <div class="hp">
+    <div class="hp-item" onclick="hpToggle(this)"><div class="box"></div><div class="txt"><b>Record yourself.</b> Record a 30-second audio introducing yourself. Use at least one help phrase, like "Can you repeat, please?" or "How do you say… in English?"</div></div>
+    <div class="hp-item" onclick="hpToggle(this)"><div class="box"></div><div class="txt"><b>Mirror talk.</b> Say your introduction out loud 3 times in front of the mirror.</div></div>
+    <div class="hp-item" onclick="hpToggle(this)"><div class="box"></div><div class="txt"><b>Name things.</b> Pick 5 objects at home and ask out loud: "How do you say ___ in English?"</div></div>
+    <div class="hp-item" onclick="hpToggle(this)"><div class="box"></div><div class="txt"><b>Sticky note.</b> Write one help phrase on a note and keep it where you study.</div></div>
+  </div>
+</div>
+
+<div class="foot">ENGLISH BY NEVES</div>
+
+<script>
+function flip(el){el.classList.toggle('flipped');}
+function hpToggle(el){el.classList.toggle('done');}
+function fcHTML(c){return '<div class="fc" onclick="flip(this)"><div class="fc-inner"><div class="fc-face fc-front"><div class="en">'+c.en+'</div><div class="hint">tap for meaning</div></div><div class="fc-face fc-back"><div class="pt">'+c.pt+'</div>'+(c.use?'<div class="use">'+c.use+'</div>':'')+'</div></div></div>';}
+function renderFC(id,arr){document.getElementById(id).innerHTML=arr.map(fcHTML).join('');}
+renderFC('g-hello',[{en:"Hi!",pt:"Oi!"},{en:"Hello!",pt:"Olá!"},{en:"Good morning!",pt:"Bom dia!"},{en:"Good afternoon!",pt:"Boa tarde!"},{en:"Good evening!",pt:"Boa noite! (à noite)"}]);
+renderFC('g-ask',[{en:"How are you?",pt:"Como você está?"},{en:"I'm fine, thanks.",pt:"Estou bem, obrigada."},{en:"Nice to meet you.",pt:"Prazer em conhecer você."}]);
+renderFC('g-bye',[{en:"Goodbye!",pt:"Adeus!"},{en:"Bye!",pt:"Tchau!"},{en:"See you!",pt:"Até mais!"}]);
+renderFC('help-cards',[{en:"Can you repeat, please?",pt:"Você pode repetir, por favor?",use:"when you didn't hear it"},{en:"Can you speak slowly, please?",pt:"Você pode falar devagar?",use:"when it's too fast"},{en:"I don't understand.",pt:"Eu não entendo.",use:"when it's not clear"},{en:"I don't know.",pt:"Eu não sei.",use:"when you don't have the answer"},{en:"How do you say ___ in English?",pt:"Como se diz ___ em inglês?",use:"when you know it in Portuguese"},{en:"What does ___ mean?",pt:"O que ___ significa?",use:"when you don't know a word"},{en:"Can you help me?",pt:"Você pode me ajudar?",use:"when you need help"},{en:"One more time, please.",pt:"Mais uma vez, por favor.",use:"to hear it again"},{en:"I have a question.",pt:"Eu tenho uma pergunta.",use:"to ask something"},{en:"Is this correct?",pt:"Isto está correto?",use:"to check"}]);
+renderFC('intro-cards',[{en:"My name is ___.",pt:"Meu nome é ___."},{en:"I'm ___ years old.",pt:"Eu tenho ___ anos."},{en:"I'm from ___.",pt:"Eu sou de ___."},{en:"I'm Brazilian.",pt:"Eu sou brasileira."},{en:"I'm a/an ___.",pt:"Eu sou ___ (profissão)."},{en:"I live in ___.",pt:"Eu moro em ___."},{en:"I like ___.",pt:"Eu gosto de ___."},{en:"Nice to meet you!",pt:"Prazer!"}]);
+renderFC('q-cards',[{en:"What's your name?",pt:"Qual é o seu nome?"},{en:"How old are you?",pt:"Quantos anos você tem?"},{en:"Where are you from?",pt:"De onde você é?"},{en:"What's your nationality?",pt:"Qual é a sua nacionalidade?"},{en:"What do you do?",pt:"O que você faz?"},{en:"What do you like?",pt:"Do que você gosta?"}]);
+var deck=[{s:"Você não ouviu uma palavra.",a:"Can you repeat, please?",pt:"Você pode repetir, por favor?"},{s:"Estão falando rápido demais.",a:"Can you speak slowly, please?",pt:"Você pode falar devagar?"},{s:"Você não entendeu.",a:"I don't understand.",pt:"Eu não entendo."},{s:"Você não sabe a resposta.",a:"I don't know.",pt:"Eu não sei."},{s:"Você sabe a palavra em português.",a:"How do you say ___ in English?",pt:"Como se diz ___ em inglês?"},{s:"Você não conhece uma palavra.",a:"What does ___ mean?",pt:"O que ___ significa?"},{s:"Você precisa de ajuda.",a:"Can you help me?",pt:"Você pode me ajudar?"},{s:"Você quer ouvir de novo.",a:"One more time, please.",pt:"Mais uma vez, por favor."},{s:"Você quer perguntar algo.",a:"I have a question.",pt:"Eu tenho uma pergunta."},{s:"Você quer conferir se está certo.",a:"Is this correct?",pt:"Isto está correto?"}];
+var di=0;
+function deckRender(){var c=deck[di];document.getElementById('deck-front').textContent=c.s;document.getElementById('deck-back').textContent=c.a;document.getElementById('deck-pt').textContent=c.pt;document.getElementById('deck-i').textContent=di+1;document.getElementById('deck-card').classList.remove('flipped');}
+function deckFlip(){document.getElementById('deck-card').classList.toggle('flipped');}
+function deckNext(){di=(di+1)%deck.length;deckRender();}
+function deckPrev(){di=(di-1+deck.length)%deck.length;deckRender();}
+var convo=[{q:"Hi! What's your name?",m:"My name is ___."},{q:"Where are you from?",m:"I'm from ___."},{q:"What's your nationality?",m:"I'm Brazilian."},{q:"How old are you?",m:"I'm ___ years old."},{q:"What do you do?",m:"I'm a/an ___."},{q:"What do you like?",m:"I like ___."}];
+var ci=0;
+function convoRender(){var c=convo[ci];document.getElementById('cv-q').textContent=c.q;document.getElementById('cv-m').textContent=c.m;document.getElementById('cv-m-wrap').style.display='none';document.getElementById('cv-i').textContent=ci+1;}
+function convoReveal(){document.getElementById('cv-m-wrap').style.display='block';}
+function convoNext(){ci=(ci+1)%convo.length;convoRender();}
+function convoPrev(){ci=(ci-1+convo.length)%convo.length;convoRender();}
+function esc(s){return s.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function buildIntro(){var g=function(id){return esc(document.getElementById(id).value.trim())||'______';};document.getElementById('intro-out').innerHTML='Hi! My name is <b>'+g('in-name')+'</b>.<br>I\'m <b>'+g('in-age')+'</b> years old.<br>I\'m from <b>'+g('in-country')+'</b>.<br>I\'m <b>'+g('in-nat')+'</b>.<br>I\'m a/an <b>'+g('in-job')+'</b>.<br>I live in <b>'+g('in-city')+'</b>.<br>I like <b>'+g('in-like')+'</b>.<br>Nice to meet you!';document.getElementById('intro-out-wrap').style.display='block';}
+var tInt=null;
+function startTimer(){if(tInt)return;var left=30;var d=document.getElementById('timer-val');d.textContent='30';document.getElementById('timer-box').classList.remove('done');tInt=setInterval(function(){left--;d.textContent=left;if(left<=0){clearInterval(tInt);tInt=null;d.textContent="Time's up!";document.getElementById('timer-box').classList.add('done');}},1000);}
+function resetTimer(){if(tInt){clearInterval(tInt);tInt=null;}document.getElementById('timer-val').textContent='30';document.getElementById('timer-box').classList.remove('done');}
+deckRender();convoRender();buildIntro();
+</script>
+</div>
