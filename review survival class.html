@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1f2749">
+<title>Review Class: Talking About Me — English by Neves</title>
+<style>
+:root{--navy:#1f2749;--navy2:#2c3760;--rose:#cc7e91;--rose-d:#a85a6d;--rose-l:#f5dee4;--bg:#faf7f4;--ink:#33333b;--muted:#76757f;--line:#ece7e1;--ok:#2f7d54;--ok-l:#e6f1ea;--warn:#b85a6c;--warn-l:#fbe7eb;}
+*{box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;margin:0;padding:24px 16px 48px;}
+.page{max-width:760px;margin:0 auto;}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+.logo-en{display:block;color:var(--navy);font-weight:800;letter-spacing:.16em;font-size:26px;}
+.logo-row{display:flex;align-items:center;gap:8px;margin-top:2px;}
+.logo-by{color:var(--rose);font-size:12px;letter-spacing:.05em;}
+.logo-nv{color:var(--rose);font-weight:800;letter-spacing:.18em;font-size:21px;}
+.logo-line{height:2px;width:16px;background:var(--rose);display:inline-block;}
+.title{font-size:27px;font-weight:700;color:var(--navy);margin:18px 0 6px;}
+.lvl{display:inline-block;background:var(--navy);color:#fff;font-size:12px;font-weight:600;letter-spacing:.05em;padding:4px 12px;border-radius:20px;}
+.goals{background:#fff;border:1.5px solid var(--line);border-left:4px solid var(--rose);border-radius:0 14px 14px 0;padding:16px 20px;margin:18px 0 6px;}
+.goals h3{margin:0 0 8px;color:var(--navy);font-size:15px;font-weight:700;}
+.goals ol{margin:0;padding-left:20px;color:var(--ink);}
+.goals li{margin:3px 0;}
+.sec{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0;}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+.sec-num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;}
+.sec-title{font-size:18px;font-weight:700;color:var(--navy);}
+.sec-inst{color:var(--muted);font-size:14px;margin:2px 0 16px 44px;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+.chip{background:var(--rose-l);color:var(--rose-d);border-radius:20px;padding:6px 14px;font-size:14px;font-weight:600;}
+.q{margin:14px 0;}
+.bubble{display:inline-block;background:var(--navy);color:#fff;padding:8px 16px;border-radius:14px 14px 14px 4px;font-size:16px;font-weight:600;margin-bottom:8px;}
+.q-prompt{font-weight:600;margin:0 0 8px;color:var(--ink);}
+.opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:11px 15px;margin:7px 0;color:var(--ink);font:inherit;cursor:pointer;transition:.15s;}
+.opt:hover:not(:disabled){border-color:var(--navy);background:#f6f5fb;}
+.opt:disabled{cursor:default;}
+.opt.correct{background:var(--ok-l);border-color:var(--ok);color:#1f5a3a;font-weight:600;}
+.opt.wrong{background:var(--warn-l);border-color:var(--warn);color:#8a3a4a;}
+.fb{font-weight:700;font-size:14px;margin:4px 0 0;min-height:18px;}
+.fb.ok{color:var(--ok);}
+.fb.no{color:var(--warn);}
+.field{margin:10px 0;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:5px;}
+input[type=text],textarea{font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:10px 13px;width:100%;outline:none;}
+input[type=text]:focus,textarea:focus{border-color:var(--navy);}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:11px;padding:11px 20px;font:inherit;font-weight:600;cursor:pointer;margin-top:6px;}
+.btn:hover{background:var(--navy2);}
+.btn-rose{background:var(--rose);}
+.btn-rose:hover{background:var(--rose-d);}
+.outbox{background:#f7f9f6;border:1.5px solid var(--ok);border-radius:13px;padding:16px 18px;margin-top:14px;font-size:18px;line-height:1.9;color:var(--navy);}
+.outbox b{color:var(--rose-d);}
+.read-tag{display:inline-block;background:var(--ok);color:#fff;font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 10px;border-radius:14px;margin-bottom:10px;}
+#pi-out-wrap{display:none;}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;}
+.m-col-h{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.m-item{display:block;width:100%;text-align:center;background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:11px;margin:7px 0;font:inherit;font-weight:600;color:var(--ink);cursor:pointer;transition:.15s;}
+.m-item:hover{border-color:var(--navy);}
+.m-item.sel{border-color:var(--navy);background:#eef1f8;}
+.m-item.matched{background:var(--ok-l);border-color:var(--ok);color:#1f5a3a;pointer-events:none;}
+.m-item.bad{background:var(--warn-l);border-color:var(--warn);}
+.gap-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 0;font-size:16px;}
+.gap{width:150px!important;display:inline-block;}
+.gap.good{border-color:var(--ok)!important;background:var(--ok-l)!important;}
+.gap.bad{border-color:var(--warn)!important;background:var(--warn-l)!important;}
+.gfb{font-weight:700;font-size:13px;}
+.sp-out{font-size:30px;font-weight:800;letter-spacing:.08em;color:var(--rose-d);text-align:center;background:var(--rose-l);border-radius:13px;padding:18px;margin-top:12px;}
+.sp-ex{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.sp-ex span{background:#f3f2ee;border-radius:10px;padding:7px 13px;font-size:14px;color:var(--navy);font-weight:600;}
+.alpha{display:grid;grid-template-columns:repeat(auto-fit,minmax(30px,1fr));gap:6px;margin-top:16px;}
+.alpha div{background:var(--navy);color:#fff;border-radius:8px;text-align:center;padding:8px 0;font-weight:700;font-size:15px;}
+.final-card{background:var(--navy);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:14px;}
+.final-card .ch{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--rose);text-transform:uppercase;}
+.final-card .model{font-size:17px;line-height:1.9;margin-top:8px;}
+.final-ta{min-height:120px;}
+.save-btn.saved-btn{background:var(--ok);}
+.score{display:flex;align-items:center;gap:14px;background:var(--navy);color:#fff;border-radius:14px;padding:16px 22px;margin-top:18px;}
+.score b{font-size:30px;font-weight:800;}
+.score .lbl{font-size:13px;letter-spacing:.05em;opacity:.85;}
+#score-msg{display:none;color:var(--rose);font-weight:700;}
+.foot{text-align:center;color:var(--muted);font-size:12px;letter-spacing:.05em;margin-top:28px;}
+</style>
+</head>
+<body>
+<div class="page">
+<h2 class="sr-only">Interactive English review lesson, level A0: talking about yourself, nationality, spelling your name and asking for help in class.</h2>
+
+<div>
+  <span class="logo-en">ENGLISH</span>
+  <span class="logo-row"><span class="logo-by">by</span><span class="logo-line"></span><span class="logo-nv">NEVES</span><span class="logo-line"></span></span>
+</div>
+
+<div class="title">Review Class: Talking About Me</div>
+<span class="lvl">A0 · ABSOLUTE BEGINNER</span>
+
+<div class="goals">
+  <h3>By the end of this class, you can:</h3>
+  <ol>
+    <li>Say your name, age, country and job.</li>
+    <li>Say your nationality.</li>
+    <li>Greet someone and say goodbye.</li>
+    <li>Spell your name.</li>
+    <li>Ask for help in class.</li>
+  </ol>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">1</span><span class="sec-title">Warm-up — Hello Again</span></div>
+  <p class="sec-inst">Choose the best reply.</p>
+  <div class="chips"><span class="chip">Hi!</span><span class="chip">Hello!</span><span class="chip">Good morning!</span><span class="chip">How are you?</span><span class="chip">I'm fine.</span><span class="chip">Nice to meet you.</span></div>
+
+  <div class="q"><span class="bubble">Hello!</span>
+    <button class="opt" data-c="0" onclick="opt(this)">Goodbye</button>
+    <button class="opt" data-c="1" onclick="opt(this)">Hi!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm Brazil</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><span class="bubble">How are you?</span>
+    <button class="opt" data-c="1" onclick="opt(this)">I'm fine, thanks.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">My name is Ana.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Goodbye!</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><span class="bubble">Nice to meet you.</span>
+    <button class="opt" data-c="0" onclick="opt(this)">Thanks, bye.</button>
+    <button class="opt" data-c="1" onclick="opt(this)">Nice to meet you too!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm okay.</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><span class="bubble">Good morning!</span>
+    <button class="opt" data-c="0" onclick="opt(this)">Good night!</button>
+    <button class="opt" data-c="1" onclick="opt(this)">Good morning!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm from Brazil.</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><span class="bubble">Goodbye!</span>
+    <button class="opt" data-c="0" onclick="opt(this)">Hello!</button>
+    <button class="opt" data-c="1" onclick="opt(this)">Bye!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Nice to meet you.</button>
+    <p class="fb"></p></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">2</span><span class="sec-title">Personal Information</span></div>
+  <p class="sec-inst">Type your information. Then read your sentences out loud.</p>
+  <div class="field"><label>My name is…</label><input type="text" id="pi-name" placeholder="…"></div>
+  <div class="field"><label>I am … years old</label><input type="text" id="pi-age" placeholder="…"></div>
+  <div class="field"><label>I am from…</label><input type="text" id="pi-country" placeholder="…"></div>
+  <div class="field"><label>I am … (nationality)</label><input type="text" id="pi-nat" placeholder="…"></div>
+  <div class="field"><label>I am a/an … (job)</label><input type="text" id="pi-job" placeholder="…"></div>
+  <button class="btn" onclick="buildSentences()">Show my sentences</button>
+  <div id="pi-out-wrap"><div class="outbox"><span class="read-tag">READ ALOUD</span><div id="pi-out"></div></div></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">3</span><span class="sec-title">Nationality Practice</span></div>
+  <p class="sec-inst">Match each country with its nationality. Then complete the sentences.</p>
+  <div class="match">
+    <div><div class="m-col-h">Country</div>
+      <button class="m-item m-country" data-id="1" onclick="pickC(this)">Brazil</button>
+      <button class="m-item m-country" data-id="2" onclick="pickC(this)">The USA</button>
+      <button class="m-item m-country" data-id="3" onclick="pickC(this)">England</button>
+      <button class="m-item m-country" data-id="4" onclick="pickC(this)">Canada</button>
+      <button class="m-item m-country" data-id="5" onclick="pickC(this)">France</button>
+      <button class="m-item m-country" data-id="6" onclick="pickC(this)">Italy</button>
+      <button class="m-item m-country" data-id="7" onclick="pickC(this)">Japan</button>
+      <button class="m-item m-country" data-id="8" onclick="pickC(this)">Portugal</button>
+      <button class="m-item m-country" data-id="9" onclick="pickC(this)">Spain</button>
+    </div>
+    <div><div class="m-col-h">Nationality</div>
+      <button class="m-item m-nat" data-id="2" onclick="pickN(this)">American</button>
+      <button class="m-item m-nat" data-id="6" onclick="pickN(this)">Italian</button>
+      <button class="m-item m-nat" data-id="1" onclick="pickN(this)">Brazilian</button>
+      <button class="m-item m-nat" data-id="7" onclick="pickN(this)">Japanese</button>
+      <button class="m-item m-nat" data-id="5" onclick="pickN(this)">French</button>
+      <button class="m-item m-nat" data-id="9" onclick="pickN(this)">Spanish</button>
+      <button class="m-item m-nat" data-id="4" onclick="pickN(this)">Canadian</button>
+      <button class="m-item m-nat" data-id="8" onclick="pickN(this)">Portuguese</button>
+      <button class="m-item m-nat" data-id="3" onclick="pickN(this)">English</button>
+    </div>
+  </div>
+  <div style="margin-top:16px;">
+    <div class="gap-row">I am from Brazil. I am <input type="text" class="gap" data-ans="brazilian" placeholder="…"><span class="gfb"></span></div>
+    <div class="gap-row">She is from Canada. She is <input type="text" class="gap" data-ans="canadian" placeholder="…"><span class="gfb"></span></div>
+    <div class="gap-row">He is from Italy. He is <input type="text" class="gap" data-ans="italian" placeholder="…"><span class="gfb"></span></div>
+    <button class="btn btn-rose" onclick="checkGaps()">Check</button>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">4</span><span class="sec-title">Spelling Practice</span></div>
+  <p class="sec-inst">Type your name and spell it out loud.</p>
+  <div class="chips"><span class="chip">What's your name?</span><span class="chip">My name is…</span><span class="chip">How do you spell it?</span><span class="chip">It's…</span></div>
+  <div class="field"><label>My name is…</label><input type="text" id="sp-name" placeholder="Type your name" oninput="spell()"></div>
+  <div class="sp-out" id="sp-out">…</div>
+  <div class="sp-ex"><span>Lucas → L - U - C - A - S</span><span>Gabriel → G - A - B - R - I - E - L</span><span>Camila → C - A - M - I - L - A</span></div>
+  <div class="alpha">
+    <div>A</div><div>B</div><div>C</div><div>D</div><div>E</div><div>F</div><div>G</div><div>H</div><div>I</div><div>J</div><div>K</div><div>L</div><div>M</div>
+    <div>N</div><div>O</div><div>P</div><div>Q</div><div>R</div><div>S</div><div>T</div><div>U</div><div>V</div><div>W</div><div>X</div><div>Y</div><div>Z</div>
+  </div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">5</span><span class="sec-title">Classroom Help Phrases</span></div>
+  <p class="sec-inst">Read the situation. Choose the right phrase.</p>
+  <div class="chips"><span class="chip">Can you repeat, please?</span><span class="chip">I don't understand.</span><span class="chip">Can you help me?</span><span class="chip">I have a question.</span><span class="chip">Can you speak slowly, please?</span></div>
+
+  <div class="q"><p class="q-prompt">You don't understand.</p>
+    <button class="opt" data-c="0" onclick="opt(this)">I have a question.</button>
+    <button class="opt" data-c="1" onclick="opt(this)">I don't understand.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Nice to meet you.</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><p class="q-prompt">You want to hear it again.</p>
+    <button class="opt" data-c="1" onclick="opt(this)">Can you repeat, please?</button>
+    <button class="opt" data-c="0" onclick="opt(this)">How do you say…?</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm fine.</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><p class="q-prompt">You want a word in English.</p>
+    <button class="opt" data-c="0" onclick="opt(this)">What does it mean?</button>
+    <button class="opt" data-c="1" onclick="opt(this)">How do you say ___ in English?</button>
+    <button class="opt" data-c="0" onclick="opt(this)">One more time, please.</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><p class="q-prompt">The teacher speaks too fast.</p>
+    <button class="opt" data-c="0" onclick="opt(this)">Can you help me?</button>
+    <button class="opt" data-c="1" onclick="opt(this)">Can you speak slowly, please?</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Goodbye.</button>
+    <p class="fb"></p></div>
+
+  <div class="q"><p class="q-prompt">You want to ask something.</p>
+    <button class="opt" data-c="1" onclick="opt(this)">I have a question.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm okay.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I don't understand.</button>
+    <p class="fb"></p></div>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">6</span><span class="sec-title">Final Challenge</span></div>
+  <p class="sec-inst">Talk about yourself. Use the model.</p>
+  <div class="final-card">
+    <span class="ch">Talk about yourself</span>
+    <div class="model">Hi! My name is ______.<br>I am ______ years old.<br>I am from ______.<br>I am ______.<br>I am a/an ______.<br>Nice to meet you!</div>
+  </div>
+  <div class="field"><label>My Final Answer</label><textarea class="final-ta" id="final-ta" placeholder="Write your answer here…"></textarea></div>
+  <button class="btn save-btn" id="save-btn" onclick="saveFinal()">Save my answer</button>
+</div>
+
+<div class="sec">
+  <div class="sec-head"><span class="sec-num">7</span><span class="sec-title">Quick Review Quiz</span></div>
+  <p class="sec-inst">Answer the questions. Get instant feedback.</p>
+
+  <div class="q qz"><span class="bubble">Hello!</span>
+    <button class="opt" data-c="0" onclick="opt(this)">Bye!</button>
+    <button class="opt" data-c="1" onclick="opt(this)">Hi!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Thanks.</button><p class="fb"></p></div>
+
+  <div class="q qz"><span class="bubble">Goodbye!</span>
+    <button class="opt" data-c="1" onclick="opt(this)">Bye!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Good morning!</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Nice to meet you.</button><p class="fb"></p></div>
+
+  <div class="q qz"><span class="bubble">What's your name?</span>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm from Brazil.</button>
+    <button class="opt" data-c="1" onclick="opt(this)">My name is…</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm fine.</button><p class="fb"></p></div>
+
+  <div class="q qz"><span class="bubble">How do you spell your name?</span>
+    <button class="opt" data-c="1" onclick="opt(this)">It's…</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm 20.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Yes, please.</button><p class="fb"></p></div>
+
+  <div class="q qz"><span class="bubble">Where are you from?</span>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm a teacher.</button>
+    <button class="opt" data-c="1" onclick="opt(this)">I'm from…</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm fine.</button><p class="fb"></p></div>
+
+  <div class="q qz"><span class="bubble">What's your nationality?</span>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm from Brazil.</button>
+    <button class="opt" data-c="1" onclick="opt(this)">I'm Brazilian.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">I'm 25.</button><p class="fb"></p></div>
+
+  <div class="q qz"><p class="q-prompt">"Can you repeat, please?" means…</p>
+    <button class="opt" data-c="1" onclick="opt(this)">Ask to say it again.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Say goodbye.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">Ask for a word.</button><p class="fb"></p></div>
+
+  <div class="q qz"><p class="q-prompt">"I don't understand." means…</p>
+    <button class="opt" data-c="1" onclick="opt(this)">You didn't understand.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">You have a question.</button>
+    <button class="opt" data-c="0" onclick="opt(this)">You want to repeat.</button><p class="fb"></p></div>
+
+  <div class="score"><div><div class="lbl">YOUR SCORE</div><b id="score-val">0 / 8</b></div><span id="score-msg">Great job — you finished the review!</span></div>
+</div>
+
+<div class="foot">ENGLISH BY NEVES</div>
+</div>
+
+<script>
+var selC=null;
+function opt(b){var q=b.closest('.q'),fb=q.querySelector('.fb');if(b.dataset.c==='1'){q.querySelectorAll('.opt').forEach(function(o){o.disabled=true;});b.classList.remove('wrong');b.classList.add('correct');fb.textContent='Correct!';fb.className='fb ok';if(q.classList.contains('qz')&&q.dataset.done!=='1'){q.dataset.done='1';updateScore();}}else{b.classList.add('wrong');b.disabled=true;fb.textContent='Try again!';fb.className='fb no';}}
+function pickC(b){if(b.classList.contains('matched'))return;document.querySelectorAll('.m-country').forEach(function(x){x.classList.remove('sel');});b.classList.add('sel');selC=b;}
+function pickN(b){if(b.classList.contains('matched'))return;if(!selC){b.classList.add('bad');setTimeout(function(){b.classList.remove('bad');},400);return;}if(b.dataset.id===selC.dataset.id){b.classList.add('matched');selC.classList.add('matched');selC.classList.remove('sel');selC=null;}else{var c=selC;b.classList.add('bad');c.classList.add('bad');setTimeout(function(){b.classList.remove('bad');c.classList.remove('bad');c.classList.remove('sel');selC=null;},500);}}
+function spell(){var v=document.getElementById('sp-name').value.trim();var out=document.getElementById('sp-out');if(!v){out.textContent='…';return;}out.textContent=v.toUpperCase().split(/\s+/).map(function(w){return w.split('').join(' - ');}).join('   /   ');}
+function esc(s){return s.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function buildSentences(){var g=function(id){return esc(document.getElementById(id).value.trim())||'______';};document.getElementById('pi-out').innerHTML='My name is <b>'+g('pi-name')+'</b>.<br>I am <b>'+g('pi-age')+'</b> years old.<br>I am from <b>'+g('pi-country')+'</b>.<br>I am <b>'+g('pi-nat')+'</b>.<br>I am a/an <b>'+g('pi-job')+'</b>.';document.getElementById('pi-out-wrap').style.display='block';}
+function checkGaps(){document.querySelectorAll('.gap').forEach(function(inp){var fb=inp.closest('.gap-row').querySelector('.gfb');var v=inp.value.trim().toLowerCase();if(!v){fb.textContent='';inp.classList.remove('good','bad');return;}if(v===inp.dataset.ans){inp.classList.add('good');inp.classList.remove('bad');fb.textContent='Correct!';fb.style.color='var(--ok)';}else{inp.classList.add('bad');inp.classList.remove('good');fb.textContent='Try again';fb.style.color='var(--warn)';}});}
+function updateScore(){var total=document.querySelectorAll('.qz').length;var done=document.querySelectorAll('.qz[data-done="1"]').length;document.getElementById('score-val').textContent=done+' / '+total;if(done===total){document.getElementById('score-msg').style.display='inline';}}
+function saveFinal(){var t=document.getElementById('final-ta'),b=document.getElementById('save-btn');if(!t.value.trim())return;b.textContent='Saved ✓';b.classList.add('saved-btn');}
+spell();
+</script>
+</body>
+</html>
