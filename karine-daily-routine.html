@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karine's Daily Routine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --pink: #ff6b9d;
+            --green: #52c77a;
+            --light-pink: #ffe6f0;
+            --light-green: #e8f8f0;
+            --white: #ffffff;
+            --text: #333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--light-pink) 0%, var(--light-green) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: var(--pink);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--green);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .intro {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px var(--shadow);
+            border-left: 5px solid var(--green);
+        }
+
+        .intro p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        .intro strong {
+            color: var(--pink);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--pink), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .day-section {
+            margin-bottom: 35px;
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, var(--pink), #ff9ab8);
+            color: white;
+            padding: 20px 25px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+
+        .day-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .day-time {
+            background: rgba(255, 255, 255, 0.25);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .day-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .activity {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            color: var(--green);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, var(--pink), var(--green));
+            border-radius: 2px;
+        }
+
+        .instruction {
+            background: var(--light-green);
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.8;
+            border-left: 4px solid var(--green);
+        }
+
+        .instruction strong {
+            color: var(--green);
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+
+        .image-card {
+            background: var(--light-pink);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .image-card:hover {
+            border-color: var(--pink);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(255, 107, 157, 0.2);
+        }
+
+        .image-emoji {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .image-label {
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .phrase-display {
+            background: var(--light-green);
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 12px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--green);
+            border: 2px dashed var(--green);
+            text-align: center;
+        }
+
+        .phrase-display.hidden {
+            opacity: 0.3;
+        }
+
+        .input-section {
+            background: var(--light-pink);
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--pink);
+        }
+
+        .input-label {
+            font-size: 13px;
+            color: var(--pink);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--pink);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: #ccc;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+
+        .btn-pink {
+            background: linear-gradient(135deg, var(--pink), #ff9ab8);
+            color: white;
+        }
+
+        .btn-pink:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 157, 0.3);
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, var(--green), #6dd99a);
+            color: white;
+        }
+
+        .btn-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(82, 199, 122, 0.3);
+        }
+
+        .output-box {
+            background: linear-gradient(135deg, #e8f8f0, #fffef5);
+            padding: 16px;
+            border-radius: 10px;
+            border-left: 4px solid var(--green);
+            margin-top: 12px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .output-box.show {
+            display: block;
+        }
+
+        .output-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--green);
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .output-text {
+            color: var(--text);
+        }
+
+        .model-box {
+            background: var(--light-green);
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--green);
+        }
+
+        .model-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--green);
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .model-text {
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.8;
+            background: white;
+            padding: 12px 14px;
+            border-radius: 6px;
+        }
+
+        .questions-list {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        .question-item {
+            padding: 16px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, var(--pink), #ff9ab8);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            flex: 1;
+        }
+
+        .question-text strong {
+            color: var(--text);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: var(--pink);
+            background: #fffbfc;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        .footer p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .footer strong {
+            color: var(--pink);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="emoji">⏰</div>
+            <h1>My Daily Routine</h1>
+            <p class="subtitle">Karine's Weekend Practice</p>
+        </header>
+
+        <div class="intro">
+            <p>
+                <strong>Hi Karine!</strong> This weekend you'll practice talking about your daily routine in English. 
+                You'll learn to say what time you do things and read sentences out loud.
+            </p>
+            <p>
+                Each activity has model sentences. Read them, write your own answers, and read everything 
+                <strong>out loud</strong> (no recording needed!). Let's go! 🌟
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-label">Days</div>
+                <div class="stat-value">2</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Activities</div>
+                <div class="stat-value">4</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Time</div>
+                <div class="stat-value">30 min</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Level</div>
+                <div class="stat-value">A1</div>
+            </div>
+        </div>
+
+        <!-- FRIDAY -->
+        <div class="day-section">
+            <div class="day-header">
+                <h2>Friday Night</h2>
+                <div class="day-time">15 minutes</div>
+            </div>
+            <div class="day-content">
+
+                <!-- Activity 1 -->
+                <div class="activity">
+                    <div class="activity-title">Activity 1 — Match & Repeat</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Click on each picture. The sentence appears. Read it out loud 2 times. Then move to the next one!
+                    </div>
+
+                    <div class="image-grid">
+                        <div class="image-card" onclick="showPhrase(0)">
+                            <div class="image-emoji">🌅</div>
+                            <div class="image-label">Wake up</div>
+                        </div>
+                        <div class="image-card" onclick="showPhrase(1)">
+                            <div class="image-emoji">🥐</div>
+                            <div class="image-label">Breakfast</div>
+                        </div>
+                        <div class="image-card" onclick="showPhrase(2)">
+                            <div class="image-emoji">💼</div>
+                            <div class="image-label">Work</div>
+                        </div>
+                        <div class="image-card" onclick="showPhrase(3)">
+                            <div class="image-emoji">🍽️</div>
+                            <div class="image-label">Lunch</div>
+                        </div>
+                        <div class="image-card" onclick="showPhrase(4)">
+                            <div class="image-emoji">😴</div>
+                            <div class="image-label">Sleep</div>
+                        </div>
+                    </div>
+
+                    <div class="phrase-display hidden" id="phraseDisplay">
+                        Click on an image to see the sentence!
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-pink" onclick="completeFri1()">✅ I Read Everything!</button>
+                    </div>
+                    <div class="output-box" id="fri1-output">
+                        <div class="output-label">✅ Perfect!</div>
+                        <div class="output-text">You practiced reading! You're doing great! 🌟</div>
+                    </div>
+                </div>
+
+                <!-- Activity 2 -->
+                <div class="activity">
+                    <div class="activity-title">Activity 2 — Complete Your Routine</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Fill in the blanks with YOUR times. Use real times from your day!
+                    </div>
+
+                    <div class="model-box">
+                        <div class="model-label">Model:</div>
+                        <div class="model-text">
+                            "I wake up at 7 AM. I have breakfast at 8 AM. I go to work at 9 AM."
+                        </div>
+                    </div>
+
+                    <div class="input-section">
+                        <div class="input-label">Your Routine</div>
+                        <input type="text" class="input-field" id="fri2-q1" placeholder="I wake up at ___ AM.">
+                        <input type="text" class="input-field" id="fri2-q2" placeholder="I have breakfast at ___ AM.">
+                        <input type="text" class="input-field" id="fri2-q3" placeholder="I go to work at ___ AM.">
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-green" onclick="checkFri2()">Check My Answers</button>
+                    </div>
+                    <div class="output-box" id="fri2-output">
+                        <div class="output-label">✅ Good Job!</div>
+                        <div class="output-text" id="fri2-text"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SATURDAY -->
+        <div class="day-section">
+            <div class="day-header">
+                <h2>Saturday</h2>
+                <div class="day-time">15 minutes</div>
+            </div>
+            <div class="day-content">
+
+                <!-- Activity 3 -->
+                <div class="activity">
+                    <div class="activity-title">Activity 3 — Build Your Story</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Use the model and change it with YOUR information. Then read it out loud!
+                    </div>
+
+                    <div class="model-box">
+                        <div class="model-label">Model Story:</div>
+                        <div class="model-text">
+                            "I wake up at 7 AM. I have breakfast. I go to work at 9 AM. I have lunch at 12 PM. I go home at 5 PM. I sleep at 10 PM."
+                        </div>
+                    </div>
+
+                    <div class="input-section">
+                        <div class="input-label">Your Daily Routine Story</div>
+                        <textarea class="input-field" id="sat3-story" placeholder="Write your routine story here. Change the times with yours!" style="height: 100px; resize: vertical;"></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="btn btn-pink" onclick="completeSat3()">✅ I Wrote My Story!</button>
+                    </div>
+                    <div class="output-box" id="sat3-output">
+                        <div class="output-label">✅ Excellent!</div>
+                        <div class="output-text">You created your own routine story! Now read it out loud 2 times. Great work! 🎉</div>
+                    </div>
+                </div>
+
+                <!-- Activity 4 -->
+                <div class="activity">
+                    <div class="activity-title">Activity 4 — Answer Simple Questions</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Answer the questions about YOUR routine. Write short answers!
+                    </div>
+
+                    <div class="questions-list">
+                        <div class="question-item">
+                            <div class="question-number">1</div>
+                            <div class="question-text">
+                                <strong>What time do you wake up?</strong>
+                                <input type="text" class="question-input" id="sat4-q1" placeholder="I wake up at...">
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question-number">2</div>
+                            <div class="question-text">
+                                <strong>What time do you have breakfast?</strong>
+                                <input type="text" class="question-input" id="sat4-q2" placeholder="I have breakfast at...">
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question-number">3</div>
+                            <div class="question-text">
+                                <strong>What time do you go to work?</strong>
+                                <input type="text" class="question-input" id="sat4-q3" placeholder="I go to work at...">
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question-number">4</div>
+                            <div class="question-text">
+                                <strong>What time do you have lunch?</strong>
+                                <input type="text" class="question-input" id="sat4-q4" placeholder="I have lunch at...">
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <div class="question-number">5</div>
+                            <div class="question-text">
+                                <strong>What time do you sleep?</strong>
+                                <input type="text" class="question-input" id="sat4-q5" placeholder="I sleep at...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 16px;">
+                        <button class="btn btn-green" onclick="checkSat4()">Check My Answers</button>
+                    </div>
+                    <div class="output-box" id="sat4-output">
+                        <div class="output-label">✅ Amazing!</div>
+                        <div class="output-text" id="sat4-text"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                <strong>You finished your weekend practice!</strong> 🌟 You learned to talk about your routine in English. 
+                That's amazing, Karine!
+            </p>
+            <p>
+                See you in class! Your teacher is very proud of your effort! 💚
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const phrases = [
+            "I wake up at 7 AM.",
+            "I have breakfast at 8 AM.",
+            "I go to work at 9 AM.",
+            "I have lunch at 12 PM.",
+            "I sleep at 10 PM."
+        ];
+
+        function showPhrase(index) {
+            const display = document.getElementById('phraseDisplay');
+            display.textContent = phrases[index];
+            display.classList.remove('hidden');
+        }
+
+        function completeFri1() {
+            document.getElementById('fri1-output').classList.add('show');
+        }
+
+        function checkFri2() {
+            const q1 = document.getElementById('fri2-q1').value;
+            const q2 = document.getElementById('fri2-q2').value;
+            const q3 = document.getElementById('fri2-q3').value;
+
+            if (!q1 || !q2 || !q3) {
+                document.getElementById('fri2-text').innerHTML = '⚠️ Please fill in all three blanks!';
+            } else {
+                document.getElementById('fri2-text').innerHTML = `<strong>Your routine:</strong><br>${q1}<br>${q2}<br>${q3}<br><br>✅ Perfect! Now read these sentences out loud 2 times. Great job!`;
+            }
+            document.getElementById('fri2-output').classList.add('show');
+        }
+
+        function completeSat3() {
+            const story = document.getElementById('sat3-story').value;
+            if (!story || story.length < 10) {
+                document.getElementById('sat3-output').querySelector('.output-text').innerHTML = '⚠️ Please write your routine story first!';
+            }
+            document.getElementById('sat3-output').classList.add('show');
+        }
+
+        function checkSat4() {
+            const q1 = document.getElementById('sat4-q1').value;
+            const q2 = document.getElementById('sat4-q2').value;
+            const q3 = document.getElementById('sat4-q3').value;
+            const q4 = document.getElementById('sat4-q4').value;
+            const q5 = document.getElementById('sat4-q5').value;
+
+            if (!q1 || !q2 || !q3 || !q4 || !q5) {
+                document.getElementById('sat4-text').innerHTML = '⚠️ Please answer all 5 questions!';
+            } else {
+                const answers = `<strong>Your answers:</strong><br>1. ${q1}<br>2. ${q2}<br>3. ${q3}<br>4. ${q4}<br>5. ${q5}<br><br>✅ You answered all questions perfectly! Read them out loud! 🎉`;
+                document.getElementById('sat4-text').innerHTML = answers;
+            }
+            document.getElementById('sat4-output').classList.add('show');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carolina's Weekend Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: #1a1a1a;
+            color: #333;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #c41e3a 0%, #1a1a1a 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 5px solid #c41e3a;
+        }
+
+        header h1 {
+            font-size: 48px;
+            letter-spacing: 3px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            font-size: 14px;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-style: italic;
+            color: #c41e3a;
+            margin-top: 20px;
+            font-weight: normal;
+        }
+
+        .intro {
+            background: white;
+            padding: 30px;
+            border-left: 5px solid #c41e3a;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .intro h2 {
+            color: #c41e3a;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .intro p {
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            background: white;
+            padding: 16px 24px;
+            border-left: 4px solid #c41e3a;
+            flex: 1;
+            min-width: 150px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #999;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            color: #c41e3a;
+            font-weight: 700;
+        }
+
+        .day-section {
+            margin-bottom: 50px;
+        }
+
+        .day-header {
+            background: #c41e3a;
+            color: white;
+            padding: 24px 30px;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .day-header h2 {
+            font-size: 28px;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .day-time {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .day-content {
+            background: white;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .activity {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            color: #c41e3a;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .activity-title::before {
+            content: '';
+            width: 3px;
+            height: 16px;
+            background: #c41e3a;
+        }
+
+        .instruction {
+            background: #f9f9f9;
+            padding: 16px;
+            border-left: 4px solid #c41e3a;
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .instruction strong {
+            color: #c41e3a;
+        }
+
+        .model-section {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .model-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #999;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .model-text {
+            font-size: 15px;
+            color: #333;
+            line-height: 1.8;
+            background: white;
+            padding: 12px 14px;
+            border-left: 3px solid #c41e3a;
+            margin-bottom: 10px;
+        }
+
+        .your-turn {
+            background: #fff5f5;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid #c41e3a;
+        }
+
+        .your-turn-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #c41e3a;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'Georgia', serif;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #c41e3a;
+            background: #fffbfb;
+        }
+
+        .input-field::placeholder {
+            color: #ccc;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: #c41e3a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #a01830;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e5e5;
+        }
+
+        .output-box {
+            background: #f0faf5;
+            border-left: 4px solid #2d7a4a;
+            padding: 14px;
+            border-radius: 4px;
+            margin-top: 12px;
+            display: none;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .output-box.show {
+            display: block;
+        }
+
+        .output-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #2d7a4a;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .output-text {
+            color: #333;
+        }
+
+        .hint {
+            background: #fff9e6;
+            border-left: 3px solid #d4a574;
+            padding: 12px 14px;
+            margin-top: 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #666;
+            display: none;
+            line-height: 1.6;
+        }
+
+        .hint.show {
+            display: block;
+        }
+
+        .pronunciation-list {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin: 12px 0;
+        }
+
+        .pronunciation-item {
+            padding: 12px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .pronunciation-item:last-child {
+            border-bottom: none;
+        }
+
+        .pronunciation-item strong {
+            color: #c41e3a;
+        }
+
+        .footer {
+            background: white;
+            padding: 30px;
+            border-top: 3px solid #c41e3a;
+            margin-top: 50px;
+            text-align: center;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+        }
+
+        .footer p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        .footer strong {
+            color: #c41e3a;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 18px;
+            }
+
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .stats-bar {
+                flex-direction: column;
+            }
+
+            .stat {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>RUNWAY</h1>
+            <p>A2 English • Weekend Practice</p>
+            <p class="subtitle">Fashion. Power. Practice.</p>
+        </header>
+
+        <div class="intro">
+            <h2>Your Weekend Challenge</h2>
+            <p>
+                <strong>Welcome, Carolina!</strong> This weekend you'll practice what you learned about Runway using 
+                <strong>There is / There are</strong>, making <strong>questions</strong>, and mastering the <strong>TH sound</strong>.
+            </p>
+            <p>
+                Each activity has a <strong>model sentence</strong> for you to follow. After reading it, you write your own version. 
+                Then you <strong>record yourself speaking</strong> — no notes, just you and your voice.
+            </p>
+            <p>
+                <strong>Send your final audios to your teacher on Monday.</strong> You've got this! ✨
+            </p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-label">Duration</div>
+                <div class="stat-value">2 Days</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Activities</div>
+                <div class="stat-value">2/Day</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Time</div>
+                <div class="stat-value">30 min</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Focus</div>
+                <div class="stat-value">Speaking</div>
+            </div>
+        </div>
+
+        <!-- FRIDAY -->
+        <div class="day-section">
+            <div class="day-header">
+                <h2>Friday Night</h2>
+                <div class="day-time">15 min</div>
+            </div>
+            <div class="day-content">
+                
+                <!-- ACTIVITY 1: TH Sound -->
+                <div class="activity">
+                    <div class="activity-title">Activity 1 — The TH Sound</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Practice the TH sound from the lesson. Put your tongue between your teeth and blow gently. You got this!
+                    </div>
+
+                    <div class="model-section">
+                        <div class="model-label">Sentences to Repeat Out Loud:</div>
+                        <div class="pronunciation-list">
+                            <div class="pronunciation-item">1. I <strong>think</strong> this movie is interesting.</div>
+                            <div class="pronunciation-item">2. <strong>There are</strong> three important characters.</div>
+                            <div class="pronunciation-item">3. <strong>Thank you</strong> for this magazine.</div>
+                            <div class="pronunciation-item">4. <strong>That</strong> outfit is beautiful.</div>
+                            <div class="pronunciation-item">5. <strong>They</strong> work with clothes and fashion.</div>
+                        </div>
+                    </div>
+
+                    <div class="your-turn">
+                        <div class="your-turn-label">📝 Your Turn</div>
+                        <div class="instruction">
+                            Read each sentence ALOUD 2 times. Then record yourself saying all 5 sentences (one audio, 30 seconds max).
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="recordTH()">📱 I Recorded It</button>
+                            <button class="btn btn-secondary" onclick="showHintTH()">Hint</button>
+                        </div>
+                        <div class="output-box" id="th-output">
+                            <div class="output-label">✅ Great Job!</div>
+                            <div class="output-text">You practiced the TH sound. Save your audio and send it to your teacher on Monday.</div>
+                        </div>
+                        <div class="hint" id="th-hint">
+                            <strong>Remember:</strong> Tongue between your teeth. Blow gently. Don't worry about perfection — just clarity!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVITY 2: There is / There are -->
+                <div class="activity">
+                    <div class="activity-title">Activity 2 — Describing Runway's Office</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Describe things you see in Runway using <strong>"There is"</strong> and <strong>"There are"</strong>. 
+                        Read the model, then write 2 similar sentences about what's in Andy's office.
+                    </div>
+
+                    <div class="model-section">
+                        <div class="model-label">Model Sentences:</div>
+                        <div class="model-text">
+                            ✓ There is <strong>a big desk</strong> in the reception.<br>
+                            ✓ There are <strong>many magazines</strong> on the tables.<br>
+                            ✓ There is <strong>a coffee machine</strong> near the elevator.
+                        </div>
+                    </div>
+
+                    <div class="your-turn">
+                        <div class="your-turn-label">Write Your Own Sentences</div>
+                        <textarea class="input-field" id="fri-activity2" placeholder="Sentence 1: There is...&#10;Sentence 2: There are..." style="height: 80px; resize: vertical;"></textarea>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="checkFri2()">Check My Sentences</button>
+                            <button class="btn btn-secondary" onclick="showHintFri2()">Hint</button>
+                        </div>
+                        <div class="output-box" id="fri2-output">
+                            <div class="output-label">✅ Feedback</div>
+                            <div class="output-text" id="fri2-text"></div>
+                        </div>
+                        <div class="hint" id="fri2-hint">
+                            <strong>Remember the pattern:</strong><br>
+                            Singular (1 thing): There IS a desk.<br>
+                            Plural (2+ things): There ARE many magazines.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SATURDAY -->
+        <div class="day-section">
+            <div class="day-header">
+                <h2>Saturday</h2>
+                <div class="day-time">15 min</div>
+            </div>
+            <div class="day-content">
+                
+                <!-- ACTIVITY 3: Making Questions -->
+                <div class="activity">
+                    <div class="activity-title">Activity 3 — Ask Questions About Runway</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Create questions using the patterns from class. Read the models, then write your own questions 
+                        about The Devil Wears Prada or Runway.
+                    </div>
+
+                    <div class="model-section">
+                        <div class="model-label">Model Questions:</div>
+                        <div class="model-text">
+                            ✓ <strong>Is there</strong> a coffee machine at Runway?<br>
+                            ✓ <strong>Are there</strong> many magazines in the office?<br>
+                            ✓ <strong>Do</strong> you like fashion?<br>
+                            ✓ <strong>Did</strong> you watch the movie?
+                        </div>
+                    </div>
+
+                    <div class="your-turn">
+                        <div class="your-turn-label">Write 2-3 Questions</div>
+                        <textarea class="input-field" id="sat-activity3" placeholder="Question 1: Is there...?&#10;Question 2: Are there...?&#10;Question 3: Do you...?" style="height: 90px; resize: vertical;"></textarea>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="checkSat3()">Check My Questions</button>
+                            <button class="btn btn-secondary" onclick="showHintSat3()">Hint</button>
+                        </div>
+                        <div class="output-box" id="sat3-output">
+                            <div class="output-label">✅ Good Work!</div>
+                            <div class="output-text" id="sat3-text"></div>
+                        </div>
+                        <div class="hint" id="sat3-hint">
+                            <strong>Question patterns:</strong><br>
+                            • Is there + singular noun?<br>
+                            • Are there + plural noun?<br>
+                            • Do/Does + subject + verb?<br>
+                            • Did + subject + verb?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVITY 4: Speaking Challenge -->
+                <div class="activity">
+                    <div class="activity-title">Activity 4 — Your Final Challenge</div>
+                    
+                    <div class="instruction">
+                        <strong>🎯 Goal:</strong> Tell a short story about The Devil Wears Prada using your new English. 
+                        Use the model as a starting point, then record yourself.
+                    </div>
+
+                    <div class="model-section">
+                        <div class="model-label">Model Story:</div>
+                        <div class="model-text">
+                            "I watched The Devil Wears Prada at the cinema. I liked the movie because it was interesting. 
+                            There is a famous magazine called Runway. There are many beautiful clothes in the office. 
+                            Miranda is very strict. Andy is nervous but intelligent. Do you like fashion movies?"
+                        </div>
+                    </div>
+
+                    <div class="your-turn">
+                        <div class="your-turn-label">Your Story (Write First, Then Record)</div>
+                        <textarea class="input-field" id="sat-activity4" placeholder="Write your own story here. Use: I watched... There is... There are... Do you...?" style="height: 100px; resize: vertical;"></textarea>
+                        <div class="button-group">
+                            <button class="btn btn-primary" onclick="recordSat4()">📱 I Recorded My Story</button>
+                            <button class="btn btn-secondary" onclick="showHintSat4()">Need Help?</button>
+                        </div>
+                        <div class="output-box" id="sat4-output">
+                            <div class="output-label">🎤 Perfect!</div>
+                            <div class="output-text">
+                                You've completed your weekend practice! Send your TH sound audio and this story audio to your teacher on Monday. 
+                                <strong>Your efforts are incredible!</strong> 💪
+                            </div>
+                        </div>
+                        <div class="hint" id="sat4-hint">
+                            <strong>Tips for recording:</strong><br>
+                            • Read your story once silently first<br>
+                            • Then record yourself speaking naturally<br>
+                            • It's OK to pause or repeat — just keep the audio under 60 seconds<br>
+                            • Send it to your teacher via WhatsApp
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                <strong>Your teacher is proud of your effort!</strong> You practiced speaking, asked questions, 
+                and worked with real English structures. That's real progress.
+            </p>
+            <p>
+                Send your audios on Monday. See you in class! 🏃‍♀️
+            </p>
+            <p style="margin-top: 20px; font-size: 12px; color: #999;">
+                A2 English • Vol. 1 • Issue 01<br>
+                for Carol
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function recordTH() {
+            const output = document.getElementById('th-output');
+            output.classList.add('show');
+        }
+
+        function showHintTH() {
+            const hint = document.getElementById('th-hint');
+            hint.classList.toggle('show');
+        }
+
+        function checkFri2() {
+            const text = document.getElementById('fri-activity2').value;
+            const output = document.getElementById('fri2-output');
+            const feedback = document.getElementById('fri2-text');
+
+            if (text.trim().length < 10) {
+                feedback.innerHTML = '⚠️ Please write at least 2 sentences first!';
+            } else if (text.toLowerCase().includes('there is') || text.toLowerCase().includes('there are')) {
+                feedback.innerHTML = '✅ <strong>Great!</strong> You used "There is" and "There are" correctly.<br><br>Now read your sentences out loud 2 times. Then you\'re ready for Saturday!';
+            } else {
+                feedback.innerHTML = '💡 <strong>Tip:</strong> Make sure you use "There is" or "There are" in your sentences!';
+            }
+            output.classList.add('show');
+        }
+
+        function showHintFri2() {
+            const hint = document.getElementById('fri2-hint');
+            hint.classList.toggle('show');
+        }
+
+        function checkSat3() {
+            const text = document.getElementById('sat-activity3').value;
+            const output = document.getElementById('sat3-output');
+            const feedback = document.getElementById('sat3-text');
+
+            if (text.trim().length < 10) {
+                feedback.innerHTML = '⚠️ Please write at least 2 questions first!';
+            } else {
+                feedback.innerHTML = '✅ <strong>Excellent questions!</strong> You\'re asking like a real English speaker now.<br><br>Read each question out loud. Tomorrow you\'ll record your story!';
+            }
+            output.classList.add('show');
+        }
+
+        function showHintSat3() {
+            const hint = document.getElementById('sat3-hint');
+            hint.classList.toggle('show');
+        }
+
+        function recordSat4() {
+            const text = document.getElementById('sat-activity4').value;
+            const output = document.getElementById('sat4-output');
+            
+            if (text.trim().length < 20) {
+                document.getElementById('sat4-output').querySelector('.output-text').innerHTML = '⚠️ Please write your story first!';
+            }
+            output.classList.add('show');
+        }
+
+        function showHintSat4() {
+            const hint = document.getElementById('sat4-hint');
+            hint.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>

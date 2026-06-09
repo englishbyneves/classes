@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Isabela — Introduction to Food</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fdfaf7; color: #2c2c2a; line-height: 1.5; }
+.lesson { max-width: 600px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+.header { text-align: center; margin-bottom: 2rem; padding: 1.5rem 1rem; background: linear-gradient(135deg, #FAECE7 0%, #F5C4B3 100%); border-radius: 12px; }
+.header h1 { font-size: 24px; font-weight: 600; color: #712B13; margin-bottom: 0.5rem; }
+.header p { font-size: 14px; color: #993C1D; }
+.section { margin-bottom: 2.5rem; }
+.section-title { font-size: 18px; font-weight: 600; color: #2c2c2a; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #e8e6e0; }
+.section-subtitle { font-size: 13px; color: #5F5E5A; margin-bottom: 1rem; font-style: italic; }
+
+/* Survival Chunks - verde */
+.chunk-card { background: #EAF3DE; border-left: 4px solid #639922; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; cursor: pointer; transition: all 0.2s; user-select: none; }
+.chunk-card:hover { background: #DCEACA; transform: translateX(2px); }
+.chunk-card:active { transform: scale(0.98); }
+.chunk-en { font-size: 16px; font-weight: 500; color: #3B6D11; }
+.chunk-pt { font-size: 14px; color: #639922; margin-top: 0.5rem; display: none; font-style: italic; }
+.chunk-card.revealed .chunk-pt { display: block; }
+.chunk-hint { font-size: 11px; color: #639922; margin-top: 0.25rem; opacity: 0.7; }
+.chunk-card.revealed .chunk-hint { display: none; }
+
+/* Warm-up tappable */
+.warmup-q { background: white; border: 1px solid #e8e6e0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+.warmup-q-text { font-size: 15px; font-weight: 500; color: #2c2c2a; margin-bottom: 0.75rem; }
+.warmup-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.warmup-btn { background: white; border: 1.5px solid #D85A30; color: #D85A30; padding: 0.5rem 1rem; border-radius: 20px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.warmup-btn:hover { background: #D85A30; color: white; }
+.warmup-btn.selected { background: #D85A30; color: white; }
+
+/* Vocabulary categories */
+.vocab-category { margin-bottom: 1.25rem; }
+.vocab-cat-title { font-size: 14px; font-weight: 600; color: #993C1D; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.vocab-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.vocab-item { background: white; border: 1px solid #e8e6e0; border-radius: 8px; padding: 0.75rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+.vocab-item:hover { border-color: #D85A30; background: #FAECE7; }
+.vocab-emoji { font-size: 28px; display: block; margin-bottom: 0.25rem; }
+.vocab-word { font-size: 14px; font-weight: 500; color: #2c2c2a; }
+
+/* Language Focus */
+.pattern-box { background: white; border: 2px solid #D85A30; border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+.pattern-formula { font-size: 16px; font-weight: 600; color: #D85A30; text-align: center; margin-bottom: 1rem; padding: 0.5rem; background: #FAECE7; border-radius: 6px; }
+.pattern-example { font-size: 15px; color: #2c2c2a; padding: 0.5rem 0; border-bottom: 1px dashed #e8e6e0; }
+.pattern-example:last-child { border-bottom: none; }
+
+/* Sentence frames */
+.frame { background: white; border-left: 3px solid #D85A30; padding: 0.75rem 1rem; margin-bottom: 0.75rem; border-radius: 4px; font-size: 16px; color: #2c2c2a; }
+.frame-blank { display: inline-block; min-width: 60px; border-bottom: 2px solid #D85A30; padding: 0 8px; color: #D85A30; font-weight: 500; }
+
+/* Speaking Challenge */
+.challenge { background: linear-gradient(135deg, #EAF3DE 0%, #C0DD97 100%); border-left: 5px solid #639922; padding: 1.25rem; border-radius: 8px; }
+.challenge-title { font-weight: 600; color: #3B6D11; margin-bottom: 0.5rem; font-size: 17px; }
+.challenge-text { font-size: 15px; color: #3B6D11; margin-bottom: 1rem; }
+.challenge-btn { background: #639922; color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; }
+.challenge-btn:hover { background: #3B6D11; }
+.challenge-btn:disabled { background: #888780; cursor: not-allowed; }
+.timer-display { display: none; margin-top: 1rem; }
+.timer-display.active { display: block; }
+.timer { font-size: 32px; font-weight: 700; text-align: center; color: #3B6D11; margin-bottom: 0.5rem; }
+.progress { width: 100%; height: 6px; background: rgba(255,255,255,0.5); border-radius: 3px; overflow: hidden; }
+.progress-bar { height: 100%; background: #639922; border-radius: 3px; width: 0%; transition: width 0.1s linear; }
+.chunks-reminder { margin-top: 1rem; padding: 0.75rem; background: rgba(255,255,255,0.7); border-radius: 6px; }
+.chunks-reminder-title { font-size: 12px; font-weight: 600; color: #3B6D11; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+.chunks-reminder ul { list-style: none; padding: 0; }
+.chunks-reminder li { font-size: 13px; color: #3B6D11; padding: 0.15rem 0; }
+
+/* Checkpoint */
+.checkpoint { background: white; border: 2px solid #D85A30; border-radius: 8px; padding: 1.25rem; }
+.checkpoint-label { font-size: 11px; font-weight: 600; color: #D85A30; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.checkpoint-q { font-size: 17px; font-weight: 600; color: #2c2c2a; margin-bottom: 1rem; }
+.checkpoint-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.checkpoint-btn { background: #FAECE7; border: 1px solid #D85A30; color: #993C1D; padding: 0.75rem; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.checkpoint-btn:hover { background: #D85A30; color: white; }
+.checkpoint-btn.selected { background: #D85A30; color: white; }
+
+@media (max-width: 400px) {
+  .vocab-grid { grid-template-columns: 1fr; }
+  .checkpoint-options { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="lesson">
+
+  <div class="header">
+    <h1>🍽️ Introduction to Food</h1>
+    <p>Learn food vocabulary and survival phrases</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🛟 Survival phrases</div>
+    <div class="section-subtitle">Tap each phrase to see the translation. Use these when you need help!</div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">Wait, let me think.</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Espera, deixa eu pensar.</div>
+    </div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">How can I say…?</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Como eu digo…?</div>
+    </div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">I don't know the word in English.</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Não sei a palavra em inglês.</div>
+    </div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">Can you repeat?</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Pode repetir?</div>
+    </div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">Can you speak slowly?</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Pode falar devagar?</div>
+    </div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">I mean…</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Quer dizer…</div>
+    </div>
+    <div class="chunk-card" onclick="this.classList.toggle('revealed')">
+      <div class="chunk-en">For example…</div>
+      <div class="chunk-hint">tap to translate</div>
+      <div class="chunk-pt">Por exemplo…</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🎯 Warm-up</div>
+    <div class="warmup-q">
+      <div class="warmup-q-text">Do you like cooking?</div>
+      <div class="warmup-options">
+        <button class="warmup-btn" onclick="selectOption(this)">Yes</button>
+        <button class="warmup-btn" onclick="selectOption(this)">No</button>
+        <button class="warmup-btn" onclick="selectOption(this)">Sometimes</button>
+      </div>
+    </div>
+    <div class="warmup-q">
+      <div class="warmup-q-text">What's your favorite meal?</div>
+      <div class="warmup-options">
+        <button class="warmup-btn" onclick="selectOption(this)">Breakfast</button>
+        <button class="warmup-btn" onclick="selectOption(this)">Lunch</button>
+        <button class="warmup-btn" onclick="selectOption(this)">Dinner</button>
+      </div>
+    </div>
+    <div class="warmup-q">
+      <div class="warmup-q-text">Sweet or salty?</div>
+      <div class="warmup-options">
+        <button class="warmup-btn" onclick="selectOption(this)">🍰 Sweet</button>
+        <button class="warmup-btn" onclick="selectOption(this)">🧂 Salty</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">🥗 Key vocabulary</div>
+
+    <div class="vocab-category">
+      <div class="vocab-cat-title">Fruits</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-emoji">🍎</span><span class="vocab-word">apple</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🍌</span><span class="vocab-word">banana</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🍊</span><span class="vocab-word">orange</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🍓</span><span class="vocab-word">strawberry</span></div>
+      </div>
+    </div>
+
+    <div class="vocab-category">
+      <div class="vocab-cat-title">Vegetables</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-emoji">🍅</span><span class="vocab-word">tomato</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🥔</span><span class="vocab-word">potato</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🧅</span><span class="vocab-word">onion</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🥕</span><span class="vocab-word">carrot</span></div>
+      </div>
+    </div>
+
+    <div class="vocab-category">
+      <div class="vocab-cat-title">Proteins</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-emoji">🍗</span><span class="vocab-word">chicken</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🐟</span><span class="vocab-word">fish</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🥚</span><span class="vocab-word">eggs</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🥩</span><span class="vocab-word">beef</span></div>
+      </div>
+    </div>
+
+    <div class="vocab-category">
+      <div class="vocab-cat-title">Drinks</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-emoji">💧</span><span class="vocab-word">water</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">☕</span><span class="vocab-word">coffee</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🧃</span><span class="vocab-word">juice</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🥛</span><span class="vocab-word">milk</span></div>
+      </div>
+    </div>
+
+    <div class="vocab-category">
+      <div class="vocab-cat-title">Meals</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-emoji">🍳</span><span class="vocab-word">breakfast</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🥗</span><span class="vocab-word">lunch</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🍝</span><span class="vocab-word">dinner</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🍿</span><span class="vocab-word">snack</span></div>
+      </div>
+    </div>
+
+    <div class="vocab-category">
+      <div class="vocab-cat-title">Taste</div>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-emoji">🍰</span><span class="vocab-word">sweet</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🧂</span><span class="vocab-word">salty</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🌶️</span><span class="vocab-word">spicy</span></div>
+        <div class="vocab-item"><span class="vocab-emoji">🍋</span><span class="vocab-word">sour</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">📝 Language focus</div>
+    <div class="pattern-box">
+      <div class="pattern-formula">I like / I don't like / I love / My favorite is</div>
+      <div class="pattern-example">✓ I love coffee in the morning.</div>
+      <div class="pattern-example">✓ I don't like spicy food.</div>
+      <div class="pattern-example">✓ My favorite fruit is strawberry.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">✍️ Your turn — fill in and say it out loud</div>
+    <div class="frame">I love <span class="frame-blank">_____</span> for breakfast.</div>
+    <div class="frame">I don't like <span class="frame-blank">_____</span> because it's too <span class="frame-blank">_____</span>.</div>
+    <div class="frame">My favorite <span class="frame-blank">_____</span> is <span class="frame-blank">_____</span>.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⚡ Speaking challenge</div>
+    <div class="challenge">
+      <div class="challenge-title">Describe your favorite meal</div>
+      <div class="challenge-text">You have 60 seconds. Use as much vocabulary as you can. When you get stuck — use the survival phrases!</div>
+      <button class="challenge-btn" id="start-timer">Start the challenge ⏱️</button>
+      <div class="timer-display" id="timer-display">
+        <div class="timer" id="timer-text">60s</div>
+        <div class="progress"><div class="progress-bar" id="progress"></div></div>
+        <div class="chunks-reminder">
+          <div class="chunks-reminder-title">💡 Stuck? Try these:</div>
+          <ul>
+            <li>• Wait, let me think…</li>
+            <li>• How can I say…?</li>
+            <li>• For example…</li>
+            <li>• I mean…</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="checkpoint">
+      <div class="checkpoint-label">✓ Final checkpoint</div>
+      <div class="checkpoint-q">What's one new word you learned today?</div>
+      <div class="checkpoint-options">
+        <button class="checkpoint-btn" onclick="selectCheckpoint(this)">strawberry</button>
+        <button class="checkpoint-btn" onclick="selectCheckpoint(this)">onion</button>
+        <button class="checkpoint-btn" onclick="selectCheckpoint(this)">spicy</button>
+        <button class="checkpoint-btn" onclick="selectCheckpoint(this)">snack</button>
+        <button class="checkpoint-btn" onclick="selectCheckpoint(this)" style="grid-column: span 2;">Other — I'll tell you!</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function selectOption(btn) {
+  const siblings = btn.parentElement.querySelectorAll('.warmup-btn');
+  siblings.forEach(s => s.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function selectCheckpoint(btn) {
+  const siblings = btn.parentElement.querySelectorAll('.checkpoint-btn');
+  siblings.forEach(s => s.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+let timerInterval;
+document.getElementById('start-timer').addEventListener('click', function() {
+  document.getElementById('timer-display').classList.add('active');
+  this.disabled = true;
+  this.textContent = 'Speaking… 🎤';
+
+  const totalSeconds = 60;
+  let remaining = totalSeconds;
+  const startTime = Date.now();
+
+  timerInterval = setInterval(() => {
+    remaining = Math.max(0, totalSeconds - Math.round((Date.now() - startTime) / 1000));
+    document.getElementById('timer-text').textContent = remaining + 's';
+    document.getElementById('progress').style.width = ((totalSeconds - remaining) / totalSeconds * 100) + '%';
+
+    if (remaining === 0) {
+      clearInterval(timerInterval);
+      document.getElementById('start-timer').disabled = false;
+      document.getElementById('start-timer').textContent = 'Great job! 🎉 Try again?';
+      document.getElementById('timer-text').textContent = '✓ Done!';
+    }
+  }, 100);
+});
+</script>
+
+</body>
+</html>
