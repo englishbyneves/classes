@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Quest · 0 → 30 — English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1e2647; --navy2:#2a3357;
+    --rose:#cf7e93; --rose-deep:#a85870; --rose-soft:#f6e3e8;
+    --yellow:#ffce4f; --mint:#2fc6a8; --coral:#ff8466; --sky:#6c8cff; --lilac:#b388f0;
+    --ink:#1e2647; --muted:#6b7194;
+    --bg:#f5f2fb; --paper:#ffffff; --line:#e8e3f0;
+    --r:22px; --r-sm:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Raleway',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  .blob{position:fixed;border-radius:50%;filter:blur(8px);opacity:.18;z-index:0;pointer-events:none;}
+  .b1{width:280px;height:280px;background:var(--rose);top:-60px;left:-80px;}
+  .b2{width:240px;height:240px;background:var(--mint);bottom:8%;right:-70px;}
+  .b3{width:200px;height:200px;background:var(--yellow);top:42%;left:-70px;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px;position:relative;z-index:1;}
+
+  /* ---- HUD header ---- */
+  .hud{background:var(--navy);color:#fff;border-radius:0 0 28px 28px;padding:22px 0 26px;position:relative;overflow:hidden;}
+  .hud::after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:rgba(207,126,147,.16);right:-60px;top:-70px;}
+  .hud-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+  .wordmark{display:flex;align-items:center;gap:8px;}
+  .wordmark .dot{width:8px;height:8px;border-radius:50%;background:var(--rose);}
+  .wordmark span{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:var(--rose);font-weight:700;}
+  .score{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.08);border:1.5px solid rgba(207,126,147,.4);border-radius:999px;padding:6px 14px;font-weight:700;font-size:15px;}
+  .score .star{color:var(--yellow);font-size:17px;}
+  .hud h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(32px,7vw,54px);margin:14px 0 4px;line-height:1;}
+  .hud h1 .q{color:var(--rose);font-style:italic;}
+  .hud .sub{color:#c7cae3;font-size:14px;margin:0 0 14px;}
+  .dots{display:flex;gap:8px;flex-wrap:wrap;}
+  .dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.18);transition:all .3s;}
+  .dots i.lit{background:var(--yellow);box-shadow:0 0 0 4px rgba(255,206,79,.22);}
+
+  /* ---- intro tap row ---- */
+  .intro{padding:26px 0 4px;}
+  .intro p{font-size:16px;color:var(--muted);max-width:560px;margin:0 0 16px;}
+  .intro p b{color:var(--ink);}
+  .tapnums{display:flex;gap:11px;flex-wrap:wrap;}
+  .tapnum{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(30px,7vw,46px);color:#fff;border:none;border-radius:18px;width:clamp(70px,18vw,92px);height:clamp(70px,18vw,92px);cursor:pointer;transition:transform .2s;}
+  .tapnum:hover{transform:translateY(-5px) rotate(-3deg);}
+  .tapnum:active{transform:scale(.93);}
+
+  /* ---- level ---- */
+  .level{padding:38px 0;}
+  .lv-head{display:flex;align-items:center;gap:14px;margin-bottom:6px;flex-wrap:wrap;}
+  .badge{font-weight:800;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:var(--rose);padding:6px 14px;border-radius:999px;}
+  .badge.b-mint{background:var(--mint);} .badge.b-sky{background:var(--sky);} .badge.b-lilac{background:var(--lilac);} .badge.b-coral{background:var(--coral);} .badge.b-yellow{background:var(--yellow);color:var(--navy);}
+  .lv-time{font-size:12.5px;color:var(--muted);font-weight:600;}
+  .level h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(25px,4.6vw,36px);margin:8px 0 4px;line-height:1.05;}
+  .level .say{color:var(--muted);font-size:15px;margin:0 0 22px;}
+
+  /* card grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:13px;}
+  .card{background:transparent;border:none;padding:0;perspective:1000px;height:134px;cursor:pointer;font-family:inherit;}
+  .ci{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.34,1.4,.5,1);transform-style:preserve-3d;}
+  .card.flipped .ci{transform:rotateY(180deg);}
+  .fc{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;text-align:center;}
+  .front .n{font-family:'Playfair Display',serif;font-weight:800;font-size:40px;line-height:1;}
+  .front .wd{font-family:'Playfair Display',serif;font-weight:700;font-style:italic;font-size:16px;line-height:1.1;margin-top:5px;}
+  .front .ph{position:absolute;bottom:7px;right:9px;font-size:10.5px;font-weight:800;opacity:.55;}
+  .back{background:var(--navy);transform:rotateY(180deg);border:2px solid var(--rose);}
+  .back .exlabel{font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--rose);font-weight:800;margin-bottom:6px;}
+  .back .ex{font-size:12.5px;color:#fff;line-height:1.4;font-weight:500;}
+  .card:hover .front{transform:translateY(-4px) rotate(-2deg);transition:transform .2s;}
+
+  /* trap */
+  .trap{background:var(--navy);border-radius:var(--r);padding:26px 24px;color:#fff;}
+  .trap .badge{background:var(--coral);}
+  .trap h3{font-family:'Playfair Display',serif;font-weight:700;font-size:23px;margin:12px 0 4px;color:#fff;}
+  .trap p{color:#c7cae3;font-size:14.5px;margin:0 0 18px;}
+  .trap-row{display:flex;gap:13px;flex-wrap:wrap;}
+  .tp{flex:1;min-width:150px;border-radius:18px;padding:20px 16px;text-align:center;}
+  .tp.a{background:var(--coral);} .tp.b{background:var(--sky);}
+  .tp .pn{font-family:'Playfair Display',serif;font-weight:800;font-size:42px;color:#fff;}
+  .tp .pw{font-size:16px;color:#fff;font-weight:600;margin-top:2px;}
+  .tp .pw u{text-decoration-thickness:3px;text-underline-offset:3px;}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:8px;font-family:'Raleway',sans-serif;font-weight:700;font-size:14.5px;border-radius:999px;padding:12px 22px;cursor:pointer;border:none;transition:transform .12s,filter .2s;}
+  .btn:active{transform:scale(.96);}
+  .btn:hover{filter:brightness(1.05);}
+  .btn-rose{background:var(--rose);color:#fff;} .btn-navy{background:var(--navy);color:#fff;}
+  .btn-yellow{background:var(--yellow);color:var(--navy);} .btn-mint{background:var(--mint);color:#fff;}
+  .btn-out{background:#fff;color:var(--ink);border:2px solid var(--line);}
+  .btn-out:hover{border-color:var(--rose);}
+  .btn-star{background:var(--yellow);color:var(--navy);}
+  .btn-star.done{background:var(--mint);color:#fff;cursor:default;}
+
+  .lv-foot{margin-top:22px;}
+
+  /* recall */
+  .recall{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:30px 24px;text-align:center;}
+  #spinNum{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(70px,18vw,120px);line-height:1;color:var(--rose);margin:4px 0;}
+  #spinWord{font-family:'Playfair Display',serif;font-style:italic;font-size:26px;color:var(--navy);min-height:34px;margin-bottom:18px;}
+  .recall .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
+  /* mission grid */
+  .missions{display:grid;grid-template-columns:1fr;gap:16px;}
+  .mission{background:var(--paper);border:2px solid var(--line);border-radius:var(--r);padding:24px 22px;}
+  .mission .mtag{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#fff;padding:5px 12px;border-radius:999px;margin-bottom:12px;}
+  .mtag.m1{background:var(--rose);} .mtag.m2{background:var(--sky);} .mtag.m3{background:var(--coral);} .mtag.m4{background:var(--mint);}
+  .mission h3{font-family:'Playfair Display',serif;font-weight:700;font-size:21px;margin:0 0 4px;}
+  .mission .mhint{color:var(--muted);font-size:14px;margin:0 0 14px;}
+  .frame{background:var(--rose-soft);border-radius:12px;padding:11px 15px;margin:9px 0;font-size:15.5px;}
+  .frame b{color:var(--rose-deep);} .frame .bl{color:var(--rose-deep);font-weight:800;letter-spacing:2px;}
+  .reveal{display:none;margin-top:12px;background:var(--navy);color:#fff;border-radius:12px;padding:13px 16px;font-size:14.5px;line-height:1.5;}
+  .reveal.show{display:block;} .reveal .who{color:var(--rose);font-weight:700;}
+
+  .agebox{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:4px 0;}
+  .ageval{font-family:'Playfair Display',serif;font-weight:800;font-size:56px;color:var(--rose);min-width:96px;text-align:center;}
+  .step{width:48px;height:48px;border-radius:50%;border:2px solid var(--line);background:#fff;font-size:24px;color:var(--ink);cursor:pointer;line-height:1;}
+  .step:hover{border-color:var(--rose);color:var(--rose-deep);}
+
+  .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:240px;margin:6px 0;}
+  .key{aspect-ratio:1.5;border:2px solid var(--line);background:#fff;border-radius:14px;font-family:'Playfair Display',serif;font-size:25px;font-weight:700;color:var(--navy);cursor:pointer;}
+  .key:hover{border-color:var(--sky);background:#eef1ff;} .key:active{transform:scale(.94);}
+  #phoneOut{font-family:'Playfair Display',serif;font-size:30px;letter-spacing:5px;color:var(--navy);min-height:42px;margin:6px 0;word-break:break-all;}
+  .pacts{display:flex;gap:9px;flex-wrap:wrap;}
+
+  .menu{list-style:none;margin:4px 0 14px;padding:0;}
+  .menu li{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px dashed var(--line);font-size:16px;}
+  .menu .price{font-family:'Playfair Display',serif;font-weight:700;color:var(--coral);cursor:pointer;border:none;background:none;padding:0;}
+  .menu .price:hover{color:var(--rose-deep);}
+  .menu .price .pr{display:none;font-style:italic;font-size:13px;color:var(--muted);margin-left:8px;font-family:'Raleway';font-weight:600;}
+  .menu .price.shown .pr{display:inline;}
+
+  .times{display:flex;gap:11px;flex-wrap:wrap;margin:4px 0;}
+  .clock{background:#fff;border:2px solid var(--line);border-radius:16px;padding:13px 16px;text-align:center;cursor:pointer;min-width:94px;}
+  .clock:hover{border-color:var(--mint);}
+  .clock .t{font-family:'Playfair Display',serif;font-weight:800;font-size:28px;color:var(--navy);}
+  .clock .lbl{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .clock .say{display:none;font-size:12px;color:var(--mint);font-weight:700;margin-top:4px;font-style:italic;}
+  .clock.shown .say{display:block;}
+
+  /* boss */
+  .boss{background:var(--navy);border-radius:var(--r);padding:28px 24px;color:#fff;}
+  .boss .badge{background:var(--lilac);}
+  .boss h2{font-family:'Playfair Display',serif;color:#fff;}
+  .boss .frame{background:rgba(255,255,255,.07);}
+  .boss .frame b{color:#fff;} .boss .frame .bl{color:var(--rose);}
+
+  /* home */
+  .home{background:var(--rose-soft);border-radius:var(--r);padding:28px 24px;}
+  .home .badge{background:var(--rose);}
+  .home h2{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;margin:12px 0 4px;}
+  .home p{color:var(--rose-deep);margin:0;font-size:15px;}
+  .tasks{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:11px;}
+  .tasks li{display:flex;gap:13px;align-items:flex-start;background:#fff;border-radius:14px;padding:14px 16px;}
+  .tasks .tn{font-family:'Playfair Display',serif;font-weight:800;color:var(--rose);font-size:24px;line-height:1;flex-shrink:0;}
+  .tasks .tt{font-size:15px;color:var(--ink);} .tasks .tt em{color:var(--rose-deep);font-style:italic;}
+
+  footer{text-align:center;padding:30px 0 44px;color:var(--muted);font-size:13px;}
+  footer .s{color:var(--rose);}
+
+  /* celebration */
+  #celebrate{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:80;pointer-events:none;}
+  #celebrate.show{display:flex;}
+  .cele-card{background:var(--navy);color:#fff;border-radius:24px;padding:30px 38px;text-align:center;box-shadow:0 20px 60px rgba(30,38,71,.4);animation:pop .5s cubic-bezier(.34,1.5,.5,1);}
+  .cele-card .big{font-family:'Playfair Display',serif;font-weight:800;font-size:40px;color:var(--yellow);}
+  .cele-card p{margin:6px 0 0;color:#c7cae3;}
+  @keyframes pop{from{transform:scale(.6);opacity:0;}to{transform:scale(1);opacity:1;}}
+  .confetti{position:fixed;width:10px;height:14px;top:-20px;z-index:79;pointer-events:none;border-radius:2px;}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg);}}
+
+  button:focus-visible,.card:focus-visible{outline:3px solid var(--lilac);outline-offset:3px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important;}}
+  @media (max-width:520px){
+    .grid{grid-template-columns:repeat(auto-fill,minmax(96px,1fr));}
+    .front .n{font-size:40px;} .level{padding:30px 0;}
+  }
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+
+<!-- HUD -->
+<header class="hud">
+  <div class="wrap">
+    <div class="hud-top">
+      <div class="wordmark"><span class="dot"></span><span>English by Neves</span></div>
+      <div class="score"><span class="star">★</span><span id="scoreVal">0</span><span style="opacity:.6;font-weight:600;">/6</span></div>
+    </div>
+    <h1>Number <span class="q">Quest</span></h1>
+    <p class="sub">Numbers 0 → 30 · A1 · tap, flip, play</p>
+    <div class="dots" id="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- intro -->
+  <div class="intro">
+    <p>You don't learn numbers to count. You learn them to say your <b>age</b>, your <b>phone number</b>, the <b>price</b>, the <b>time</b>. Ready? Tap a number to start.</p>
+    <div class="tapnums" id="tapnums"></div>
+    <p id="tapCap" style="margin:14px 0 0;font-weight:600;color:var(--rose-deep);min-height:22px;">Tap a number to see its name.</p>
+  </div>
+
+  <!-- LEVEL 1 -->
+  <section class="level" id="lv0">
+    <div class="lv-head"><span class="badge">Level 1</span><span class="lv-time">~6 min</span></div>
+    <h2>Zero to ten</h2>
+    <p class="say">Here are your numbers, with their names. Read each one out loud. Tap a card to see it used in real life.</p>
+    <div class="grid" id="grid1"></div>
+    <div class="lv-foot"><button class="btn btn-star" data-i="0" onclick="markDone(0,this)">★ I learned these</button></div>
+  </section>
+
+  <!-- LEVEL 2 -->
+  <section class="level" id="lv1">
+    <div class="lv-head"><span class="badge b-mint">Level 2</span><span class="lv-time">~6 min</span></div>
+    <h2>Eleven to twenty</h2>
+    <p class="say">These end in <em>-teen</em>. Read each name out loud, then tap for a real example.</p>
+    <div class="grid" id="grid2"></div>
+    <div class="lv-foot"><button class="btn btn-star" data-i="1" onclick="markDone(1,this)">★ I learned these</button></div>
+  </section>
+
+  <!-- LEVEL 3 -->
+  <section class="level" id="lv2">
+    <div class="lv-head"><span class="badge b-sky">Level 3</span><span class="lv-time">~6 min</span></div>
+    <h2>Twenty-one to thirty</h2>
+    <p class="say">Just <em>twenty</em> + a number you already know. Read the names, then tap for an example.</p>
+    <div class="grid" id="grid3"></div>
+    <div class="lv-foot"><button class="btn btn-star" data-i="2" onclick="markDone(2,this)">★ I learned these</button></div>
+  </section>
+
+  <!-- TRAP -->
+  <section class="level" id="trap">
+    <div class="trap">
+      <span class="badge">⚠ Trap</span>
+      <h3>13 or 30?</h3>
+      <p>Everyone mixes these up — and at the café it changes the price! Say each one out loud and make them sound different.</p>
+      <div class="trap-row">
+        <div class="tp a"><div class="pn">13</div><div class="pw">thir·<u>TEEN</u></div></div>
+        <div class="tp b"><div class="pn">30</div><div class="pw"><u>THIR</u>·ty</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECALL -->
+  <section class="level" id="lv3">
+    <div class="lv-head"><span class="badge b-lilac">Speed round</span><span class="lv-time">~5 min</span></div>
+    <h2>Say it before you see it</h2>
+    <p class="say">Hit spin. A number lands — say it out loud in English, then reveal to check.</p>
+    <div class="recall">
+      <div id="spinNum">7</div>
+      <div id="spinWord"></div>
+      <div class="row">
+        <button class="btn btn-rose" onclick="spin()">↻ Spin</button>
+        <button class="btn btn-out" onclick="revealSpin()">Show word</button>
+      </div>
+    </div>
+    <div class="lv-foot"><button class="btn btn-star" data-i="3" onclick="markDone(3,this)">★ I tried it</button></div>
+  </section>
+
+  <!-- MISSIONS -->
+  <section class="level" id="lv4">
+    <div class="lv-head"><span class="badge b-coral">Real-life missions</span><span class="lv-time">~16 min</span></div>
+    <h2>Use your numbers for real</h2>
+    <p class="say">Four missions. Speak out loud each time — the frame helps, the reveal checks.</p>
+    <div class="missions">
+
+      <div class="mission">
+        <span class="mtag m1">Mission 1 · your age</span>
+        <h3>How old are you?</h3>
+        <p class="mhint">Set your age, then say the full sentence out loud.</p>
+        <div class="frame"><b>How old are you?</b> — I'm <span class="bl">___</span> years old.</div>
+        <div class="agebox">
+          <button class="step" onclick="changeAge(-1)" aria-label="Lower">−</button>
+          <div class="ageval" id="ageVal">24</div>
+          <button class="step" onclick="changeAge(1)" aria-label="Raise">+</button>
+          <button class="btn btn-out" onclick="revealAge()">How do I say it?</button>
+        </div>
+        <div class="reveal" id="rAge"></div>
+      </div>
+
+      <div class="mission">
+        <span class="mtag m2">Mission 2 · your number</span>
+        <h3>What's your phone number?</h3>
+        <p class="mhint">In English we say each digit, one by one. Type yours, then read it out loud.</p>
+        <div class="frame"><b>What's your number?</b> — It's <span class="bl">___</span>.</div>
+        <div id="phoneOut" aria-live="polite"></div>
+        <div class="keypad" id="keypad"></div>
+        <div class="pacts">
+          <button class="btn btn-out" onclick="revealPhone()">How do I say it?</button>
+          <button class="btn btn-out" onclick="clearPhone()">Clear</button>
+        </div>
+        <div class="reveal" id="rPhone"></div>
+        <p style="font-size:13px;color:var(--muted);margin:12px 0 0;">Tip: for <b>0</b> say <em>"oh"</em> or <em>"zero"</em>.</p>
+      </div>
+
+      <div class="mission">
+        <span class="mtag m3">Mission 3 · at the café</span>
+        <h3>Order and ask the price</h3>
+        <p class="mhint">Tap a price to see how to say it. Then order out loud.</p>
+        <ul class="menu" id="menu"></ul>
+        <div class="frame"><b>How much is the</b> <span class="bl">___</span><b>?</b> — It's <span class="bl">___</span> reais.</div>
+        <div class="frame">I'll have <span class="bl">___</span> <span class="bl">___</span>, please.</div>
+        <button class="btn btn-out" onclick="toggleReveal('rCafe')">Reveal model</button>
+        <div class="reveal" id="rCafe">
+          <span class="who">You:</span> How much is the coffee?<br>
+          <span class="who">Staff:</span> It's eight reais.<br>
+          <span class="who">You:</span> I'll have two coffees, please.<br>
+          <span class="who">Staff:</span> That's sixteen reais.
+        </div>
+      </div>
+
+      <div class="mission">
+        <span class="mtag m4">Mission 4 · what time?</span>
+        <h3>Talk about your day</h3>
+        <p class="mhint">Tap a time to see how to say it. Then talk about your routine.</p>
+        <div class="times" id="times"></div>
+        <div class="frame"><b>What time do you wake up?</b> — At <span class="bl">___</span>.</div>
+        <button class="btn btn-out" onclick="toggleReveal('rTime')">Reveal model</button>
+        <div class="reveal" id="rTime"><span class="who">A:</span> What time do you start work? &nbsp;<span class="who">B:</span> At nine. I finish at six.</div>
+      </div>
+
+    </div>
+    <div class="lv-foot"><button class="btn btn-star" data-i="4" onclick="markDone(4,this)">★ Missions done</button></div>
+  </section>
+
+  <!-- BOSS -->
+  <section class="level" id="lv5">
+    <div class="boss">
+      <div class="lv-head"><span class="badge">Boss level</span><span class="lv-time" style="color:#aeb2cf;">~3 min</span></div>
+      <h2 style="margin-top:8px;">Put it all together</h2>
+      <p class="say" style="color:#c7cae3;">One quick conversation. Use a number in every single answer. No looking — say it out loud.</p>
+      <div class="frame"><b>How old are you?</b> — I'm <span class="bl">___</span>.</div>
+      <div class="frame"><b>What's your phone number?</b> — It's <span class="bl">___</span>.</div>
+      <div class="frame"><b>What time do you wake up?</b> — At <span class="bl">___</span>.</div>
+      <div class="frame"><b>A coffee is 8 reais. Two coffees?</b> — It's <span class="bl">___</span> reais.</div>
+      <div class="lv-foot"><button class="btn btn-star" data-i="5" onclick="markDone(5,this)">★ I beat the boss</button></div>
+    </div>
+  </section>
+
+  <!-- HOME -->
+  <section class="level" id="home" style="padding-bottom:10px;">
+    <div class="home">
+      <span class="badge">Side quest · home</span>
+      <h2>Record 30 seconds</h2>
+      <p>On WhatsApp, record yourself answering these and send it to me before our next class.</p>
+      <ul class="tasks">
+        <li><span class="tn">1</span><span class="tt">Say your age. <em>"I'm ___ years old."</em></span></li>
+        <li><span class="tn">2</span><span class="tt">Say your phone number — digit by digit.</span></li>
+        <li><span class="tn">3</span><span class="tt">Say when you wake up and sleep. <em>"I wake up at ___. I sleep at ___."</em></span></li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>English by Neves <span class="s">★</span> Number Quest <span class="s">★</span> A1</footer>
+
+<div id="celebrate"><div class="cele-card"><div class="big">Quest complete!</div><p>You used numbers 0–30 in real life. Now go do it for real.</p></div></div>
+
+<script>
+const WORDS=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty','twenty-one','twenty-two','twenty-three','twenty-four','twenty-five','twenty-six','twenty-seven','twenty-eight','twenty-nine','thirty'];
+const EX={0:"I have zero plans today.",1:"I have one brother.",2:"Two coffees, please.",3:"I start work at 3.",4:"A table for four.",5:"Give me five minutes.",6:"I wake up at 6.",7:"See you at 7.",8:"It's eight reais.",9:"The store opens at 9.",10:"Ten reais, please.",11:"My bus is number 11.",12:"Lunch at 12.",13:"It's 13 reais.",14:"Room 14, please.",15:"Fifteen minutes left.",16:"I have 16 messages.",17:"Take bus 17.",18:"You must be 18.",19:"It's 19 degrees.",20:"Twenty reais.",21:"I'm twenty-one.",22:"Apartment 22.",23:"It's 23 reais.",24:"Open twenty-four hours.",25:"Twenty-five minutes.",26:"Take bus 26.",27:"I'm twenty-seven.",28:"It's 28 degrees today.",29:"It's 29 reais.",30:"It's 30 reais — not 13!"};
+const PAL=[
+  {bg:'#cf7e93',ink:'#fff',sm:'#7a2e44'},
+  {bg:'#ffce4f',ink:'#1e2647',sm:'#8a6410'},
+  {bg:'#2fc6a8',ink:'#fff',sm:'#0c5848'},
+  {bg:'#ff8466',ink:'#fff',sm:'#8f3a23'},
+  {bg:'#6c8cff',ink:'#fff',sm:'#23329e'},
+  {bg:'#b388f0',ink:'#fff',sm:'#5a2e9e'}
+];
+
+/* intro tap numbers */
+const tn=document.getElementById('tapnums');
+[7,15,21,30].forEach((n,i)=>{
+  const c=PAL[i%PAL.length];
+  const b=document.createElement('button');
+  b.className='tapnum'; b.textContent=n; b.style.background=c.bg; b.style.color=c.ink;
+  b.setAttribute('aria-label',n+' is '+WORDS[n]);
+  b.onclick=()=>{ b.style.transform='rotate(360deg)'; setTimeout(()=>b.style.transform='',450); document.getElementById('tapCap').innerHTML='<b style="color:var(--navy)">'+n+'</b> = <em>'+WORDS[n]+'</em>'; };
+  tn.appendChild(b);
+});
+
+/* build card grids */
+function build(id,from,to){
+  const g=document.getElementById(id);
+  for(let n=from;n<=to;n++){
+    const c=PAL[n%PAL.length];
+    const card=document.createElement('button');
+    card.className='card'; card.setAttribute('aria-label',n+', '+WORDS[n]);
+    card.innerHTML='<div class="ci"><div class="fc front" style="background:'+c.bg+';color:'+c.ink+'"><span class="n">'+n+'</span><span class="wd">'+WORDS[n]+'</span><span class="ph" style="color:'+c.sm+'">tap ›</span></div><div class="fc back"><span class="exlabel">in real life</span><span class="ex">'+EX[n]+'</span></div></div>';
+    card.addEventListener('click',()=>card.classList.toggle('flipped'));
+    g.appendChild(card);
+  }
+}
+build('grid1',0,10); build('grid2',11,20); build('grid3',21,30);
+
+/* score + dots */
+let score=0; const done=[false,false,false,false,false,false];
+function markDone(i,btn){
+  if(done[i]) return;
+  done[i]=true; score++;
+  document.getElementById('scoreVal').textContent=score;
+  document.querySelectorAll('#dots i')[i].classList.add('lit');
+  btn.classList.add('done'); btn.textContent='✓ Done';
+  if(score===6) setTimeout(celebrate,400);
+}
+
+/* recall spin */
+let cur=7,spinning=false;
+function spin(){
+  if(spinning) return; spinning=true;
+  document.getElementById('spinWord').textContent='';
+  let t=0;const iv=setInterval(()=>{
+    cur=Math.floor(Math.random()*31);
+    document.getElementById('spinNum').textContent=cur;
+    document.getElementById('spinNum').style.color=PAL[cur%PAL.length].bg;
+    if(++t>14){clearInterval(iv);spinning=false;}
+  },70);
+}
+function revealSpin(){ document.getElementById('spinWord').textContent=WORDS[cur]; }
+
+/* age */
+let age=24;
+function changeAge(d){age=Math.max(1,Math.min(99,age+d));document.getElementById('ageVal').textContent=age;document.getElementById('rAge').classList.remove('show');}
+function w(n){if(n<=30)return WORDS[n];const t=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];return n%10===0?t[t.length>Math.floor(n/10)?Math.floor(n/10):0]:t[Math.floor(n/10)]+'-'+WORDS[n%10];}
+function revealAge(){const r=document.getElementById('rAge');r.innerHTML='Say: <b style="color:#fff">"I\'m '+w(age)+' years old."</b>';r.classList.add('show');}
+
+/* phone */
+let phone=[];const kp=document.getElementById('keypad');
+[1,2,3,4,5,6,7,8,9,'',0,''].forEach(d=>{
+  if(d===''){kp.appendChild(document.createElement('span'));return;}
+  const k=document.createElement('button');k.className='key';k.textContent=d;k.setAttribute('aria-label','digit '+d);
+  k.onclick=()=>{if(phone.length<11){phone.push(d);renderP();document.getElementById('rPhone').classList.remove('show');}};
+  kp.appendChild(k);
+});
+function renderP(){document.getElementById('phoneOut').textContent=phone.join(' ');}
+function clearPhone(){phone=[];renderP();document.getElementById('rPhone').classList.remove('show');}
+function revealPhone(){const r=document.getElementById('rPhone');if(!phone.length){r.innerHTML='Type your number first.';}else{r.innerHTML='Say: <b style="color:#fff">'+phone.map(d=>d===0?'oh':WORDS[d]).join(' · ')+'</b>';}r.classList.add('show');}
+
+/* café */
+const items=[['coffee',8],['water',5],['juice',9],['cake',12],['sandwich',15],['ice cream',7]];
+const menu=document.getElementById('menu');
+items.forEach(([name,price])=>{
+  const li=document.createElement('li');
+  li.innerHTML='<span>'+name+'</span><button class="price" aria-label="'+name+' price">R$ '+price+'<span class="pr">→ '+WORDS[price]+' reais</span></button>';
+  li.querySelector('.price').onclick=function(){this.classList.toggle('shown');};
+  menu.appendChild(li);
+});
+
+/* time */
+const T=[['7:00','seven o\u2019clock','wake up'],['9:30','nine thirty','class'],['12:00','twelve o\u2019clock','lunch'],['18:00','six o\u2019clock','finish work'],['22:00','ten o\u2019clock','sleep']];
+const te=document.getElementById('times');
+T.forEach(([t,say,lbl])=>{
+  const c=document.createElement('button');c.className='clock';c.setAttribute('aria-label',say);
+  c.innerHTML='<div class="t">'+t+'</div><div class="lbl">'+lbl+'</div><div class="say">"'+say+'"</div>';
+  c.onclick=function(){this.classList.toggle('shown');};
+  te.appendChild(c);
+});
+
+function toggleReveal(id){document.getElementById(id).classList.toggle('show');}
+
+/* celebration + confetti */
+function celebrate(){
+  const c=document.getElementById('celebrate');c.classList.add('show');
+  const cols=['#cf7e93','#ffce4f','#2fc6a8','#ff8466','#6c8cff','#b388f0'];
+  for(let i=0;i<110;i++){
+    const d=document.createElement('div');d.className='confetti';
+    d.style.left=Math.random()*100+'vw';d.style.background=cols[i%cols.length];
+    d.style.animation='fall '+(2.4+Math.random()*1.8)+'s linear '+(Math.random()*.6)+'s forwards';
+    d.style.opacity=.9;document.body.appendChild(d);setTimeout(()=>d.remove(),5000);
+  }
+  setTimeout(()=>c.classList.remove('show'),3600);
+}
+
+/* dots reveal on scroll */
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';io.unobserve(e.target);}}),{threshold:.1});
+  document.querySelectorAll('.level').forEach(s=>{s.style.opacity=0;s.style.transform='translateY(20px)';s.style.transition='opacity .6s,transform .6s';io.observe(s);});
+}
+</script>
+</body>
+</html>
