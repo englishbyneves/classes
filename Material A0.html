@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inglês da Vida Real · A0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   INGLÊS DA VIDA REAL · A0  —  arquivo único, data-driven
+   Edite só o array LESSONS lá embaixo pra criar/ajustar aulas.
+   ============================================================ */
+:root{
+  --ink:#1F1B2E;        /* texto / cards escuros (plum-tinta) */
+  --ink-soft:#5A5368;   /* texto secundário */
+  --paper:#FBF7F2;      /* fundo papel quente */
+  --card:#FFFFFF;
+  --rose:#C75B7A;       /* acento principal */
+  --rose-deep:#A8345A;
+  --rose-tint:#F7E9EE;
+  --gold:#E0A458;       /* secundário / disponível */
+  --gold-tint:#F8EEDD;
+  --sage:#6E8B7B;       /* concluído / sucesso */
+  --sage-tint:#E6EEE9;
+  --line:#E9DFD4;
+  --shadow:0 10px 30px -12px rgba(31,27,46,.18);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:'Inter',system-ui,sans-serif;color:var(--ink);
+  background:var(--paper);
+  background-image:linear-gradient(rgba(31,27,46,.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(31,27,46,.025) 1px,transparent 1px);
+  background-size:26px 26px;
+  line-height:1.55;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{font-family:'Fraunces',Georgia,serif}
+.hand{font-family:'Caveat',cursive}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(251,247,242,.86);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:16px;height:62px}
+.mark{font-family:'Fraunces';font-weight:700;font-size:19px;letter-spacing:-.01em;display:flex;align-items:center;gap:9px}
+.mark img{height:30px;width:auto;display:block}
+.mark .lvl{background:var(--ink);color:#fff;font-family:'Inter';font-weight:700;font-size:11px;
+  letter-spacing:.12em;padding:3px 8px;border-radius:6px}
+.progress-mini{flex:1;display:flex;align-items:center;gap:10px;max-width:360px}
+.bar{flex:1;height:7px;background:var(--rose-tint);border-radius:99px;overflow:hidden}
+.bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose),var(--gold));
+  border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.pct{font-size:12px;font-weight:700;color:var(--rose-deep);min-width:34px;text-align:right}
+.reset{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);
+  font-size:12px;font-weight:600;padding:7px 12px;border-radius:9px;transition:.2s}
+.reset:hover{border-color:var(--rose);color:var(--rose-deep)}
+
+/* ---------- HOME / trilha ---------- */
+.hero{padding:44px 0 14px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--rose-deep)}
+.hero h1{font-size:clamp(30px,5vw,46px);line-height:1.05;margin:.25em 0 .15em;letter-spacing:-.02em}
+.hero .sub{font-size:17px;color:var(--ink-soft);max-width:60ch}
+.hero .note{font-family:'Caveat';font-size:22px;color:var(--rose);transform:rotate(-1.5deg);display:inline-block;margin-top:8px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px;padding:18px 0 70px}
+.chunk{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px 20px 20px;text-align:left;transition:transform .18s,box-shadow .18s,border-color .18s;
+  display:flex;flex-direction:column;gap:10px;min-height:182px;width:100%}
+.chunk:not(.locked):hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--rose)}
+.chunk .num{position:absolute;top:-13px;left:18px;width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;font-family:'Fraunces';font-weight:700;font-size:16px;
+  background:var(--ink);color:#fff;border:3px solid var(--paper)}
+.chunk.done .num{background:var(--sage)}
+.chunk.open .num{background:var(--rose)}
+.chunk .tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.chunk h3{font-size:19px;line-height:1.2;margin:0;letter-spacing:-.01em}
+.chunk .cando{font-size:13.5px;color:var(--ink-soft);margin-top:auto}
+.chunk .cando b{color:var(--ink);font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
+  padding:5px 10px;border-radius:99px;width:fit-content}
+.pill.lock{background:#F0EBE4;color:#9A8F84}
+.pill.go{background:var(--gold-tint);color:#9A6A1E}
+.pill.ok{background:var(--sage-tint);color:#3F6152}
+.chunk.locked{opacity:.62;cursor:not-allowed;background:#FBF8F4}
+.chunk.locked:hover{border-color:var(--line)}
+.chunk.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.stamp{position:absolute;top:14px;right:14px;font-family:'Caveat';font-weight:700;font-size:18px;
+  color:var(--sage);transform:rotate(7deg);opacity:0;transition:.3s}
+.chunk.done .stamp{opacity:1}
+
+/* ---------- LESSON view ---------- */
+.lesson{display:none;padding:18px 0 90px;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.back{display:inline-flex;align-items:center;gap:7px;border:none;background:none;color:var(--rose-deep);
+  font-weight:600;font-size:14px;padding:6px 0;margin-bottom:8px}
+.back:hover{text-decoration:underline}
+.l-head{border-bottom:2px solid var(--line);padding-bottom:20px;margin-bottom:8px}
+.l-head .tag{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.l-head h2{font-size:clamp(26px,4.5vw,38px);line-height:1.08;margin:.1em 0 .35em;letter-spacing:-.02em}
+.obj{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px}
+.obj div{display:flex;gap:8px;align-items:baseline}
+.obj .k{font-weight:700;color:var(--rose-deep);white-space:nowrap}
+.obj .en{font-style:italic;color:var(--ink-soft)}
+
+section.block{margin-top:30px}
+.b-label{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.b-label .ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:15px;
+  background:var(--rose-tint);color:var(--rose-deep);flex:none}
+.b-label h3{font-size:20px;margin:0;letter-spacing:-.01em}
+.b-label .hint{font-size:13px;color:var(--ink-soft);margin-left:auto;font-style:italic}
+
+/* revisão ribbon */
+.review{background:linear-gradient(180deg,var(--gold-tint),#FBF4E6);border:1px dashed #E2BE80;
+  border-radius:14px;padding:16px 18px}
+.review .rt{font-weight:700;font-size:13px;color:#9A6A1E;letter-spacing:.04em;display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.review p{margin:.2em 0 .6em;font-size:13.5px;color:#7A5A22}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:#fff;border:1px solid #E7CFA0;color:#8A5E1E;font-size:13px;font-weight:600;
+  padding:6px 12px;border-radius:99px}
+
+/* warmup / generic prose card */
+.card-soft{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.card-soft p{margin:.3em 0}
+
+/* vocab */
+.vocab{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.vcard{background:var(--ink);color:#fff;border-radius:14px;padding:16px 14px;text-align:center;
+  cursor:pointer;transition:.2s;user-select:none;min-height:74px;display:grid;place-items:center}
+.vcard:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.vcard .en{font-family:'Fraunces';font-weight:600;font-size:18px}
+.vcard .pt{display:none;color:var(--gold);font-size:15px;font-weight:600}
+.vcard.flip{background:var(--rose)}
+.vcard.flip .en{display:none}
+.vcard.flip .pt{display:block;color:#fff}
+.flip-hint{font-size:12px;color:var(--ink-soft);font-style:italic;margin-top:8px}
+
+/* frases prontas */
+.phrases{display:flex;flex-direction:column;gap:10px}
+.ph{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-left:4px solid var(--rose);border-radius:12px;padding:13px 16px}
+.ph .en{font-family:'Fraunces';font-weight:600;font-size:17px;color:var(--ink)}
+.ph .pt{font-size:13.5px;color:var(--ink-soft)}
+.ph .say{margin-left:auto;flex:none;border:1px solid var(--line);background:#fff;border-radius:9px;
+  font-size:12px;font-weight:600;color:var(--rose-deep);padding:6px 10px;align-self:center}
+.ph .say:hover{background:var(--rose-tint)}
+
+/* steps */
+.steps{counter-reset:s;display:flex;flex-direction:column;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step::before{counter-increment:s;content:counter(s);flex:none;width:26px;height:26px;border-radius:50%;
+  background:var(--rose-tint);color:var(--rose-deep);font-weight:700;font-size:13px;display:grid;place-items:center;margin-top:2px}
+.step p{margin:0;font-size:14.5px}
+.step .mdl{font-family:'Fraunces';font-style:italic;color:var(--rose-deep)}
+
+/* SPEAKING blocks — coração do método */
+.speak{background:var(--ink);color:#fff;border-radius:16px;padding:20px;margin-bottom:14px}
+.speak .top{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap}
+.speak .lbl{font-family:'Fraunces';font-weight:600;font-size:18px}
+.timer{margin-left:auto;display:flex;align-items:center;gap:10px}
+.timer .t{font-variant-numeric:tabular-nums;font-weight:700;font-size:18px;color:var(--gold);min-width:46px}
+.timer button{background:var(--rose);color:#fff;border:none;border-radius:9px;padding:8px 14px;font-weight:700;font-size:13px}
+.timer button:hover{background:var(--rose-deep)}
+.speak .prompt{font-size:15px;color:#EDE7F0}
+.speak .model{margin-top:10px;background:rgba(255,255,255,.08);border-radius:10px;padding:10px 13px;
+  font-family:'Fraunces';font-style:italic;font-size:14.5px;color:#F2D9A8}
+
+/* atividade principal */
+.main-act{background:var(--rose-tint);border:1px solid #EBC9D4;border-radius:16px;padding:20px 22px}
+.main-act h4{font-family:'Fraunces';font-size:18px;margin:0 0 6px;color:var(--rose-deep)}
+.main-act p{margin:.2em 0;font-size:14.5px;color:#6E3349}
+
+/* gramática rebaixada */
+.gram details{background:#F6F2EC;border:1px solid var(--line);border-radius:12px;padding:2px 16px}
+.gram summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--ink-soft);padding:12px 0;list-style:none;
+  display:flex;align-items:center;gap:8px}
+.gram summary::-webkit-details-marker{display:none}
+.gram summary::before{content:'▸';color:var(--gold);transition:.2s}
+.gram details[open] summary::before{transform:rotate(90deg)}
+.gram .gbody{font-style:italic;color:#7A7286;font-size:13.5px;padding:0 0 14px;line-height:1.7}
+.gram .gbody b{color:#5A5368;font-style:normal}
+
+/* homework + sucesso */
+.hw{display:flex;flex-direction:column;gap:8px}
+.hw li{list-style:none;display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+.hw li::before{content:'✎';color:var(--gold);flex:none}
+.success{background:var(--sage-tint);border:1px solid #C9DDD2;border-radius:16px;padding:20px 22px}
+.success h4{font-family:'Fraunces';color:#3F6152;margin:0 0 12px;font-size:18px}
+.check{display:flex;flex-direction:column;gap:9px}
+.check label{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;cursor:pointer}
+.check input{margin-top:3px;width:17px;height:17px;accent-color:var(--sage);flex:none}
+.success .hand{font-size:20px;color:var(--sage);display:block;margin-top:12px}
+
+.finish{margin-top:30px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-done{background:var(--sage);color:#fff;border:none;border-radius:12px;padding:14px 24px;
+  font-weight:700;font-size:15px;box-shadow:var(--shadow);transition:.2s}
+.btn-done:hover{background:#5A7567;transform:translateY(-2px)}
+.btn-done:disabled{background:#C4CBC6;cursor:not-allowed;box-shadow:none;transform:none}
+.finish .msg{font-size:14px;color:var(--ink-soft)}
+.btn-next{background:var(--ink);color:#fff;border:none;border-radius:12px;padding:14px 22px;font-weight:700;font-size:15px}
+.btn-next:hover{background:#332C44}
+
+/* skeleton banner */
+.wip{background:#FFF6E5;border:1px dashed var(--gold);border-radius:12px;padding:12px 16px;
+  font-size:13.5px;color:#8A5E1E;margin-top:20px}
+
+/* toast */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);
+  color:#fff;padding:14px 22px;border-radius:12px;font-size:14px;font-weight:600;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:.35s;z-index:100;display:flex;align-items:center;gap:10px}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--ink-soft);font-size:12.5px;text-align:center}
+
+@media (max-width:540px){
+  .topbar .wrap{height:auto;padding:10px 18px;flex-wrap:wrap}
+  .progress-mini{order:3;max-width:100%;width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="mark"><img src="english-by-neves-logo-white.png" alt="English by Neves"><span class="lvl">A0</span> Inglês da Vida Real</span>
+    <div class="progress-mini">
+      <span class="bar"><i id="barFill"></i></span>
+      <span class="pct" id="barPct">0%</span>
+    </div>
+    <button class="reset" id="resetBtn" title="Zerar progresso (pra reutilizar com outro aluno)">↻ Zerar</button>
+  </div>
+</div>
+
+<!-- ===================== HOME ===================== -->
+<main id="home" class="wrap">
+  <div class="hero">
+    <span class="eyebrow">Trilha 1 · do zero ao primeiro contato</span>
+    <h1>Você vai <em>falar</em> inglês<br>desde a primeira aula.</h1>
+    <p class="sub">Cada aula desbloqueia a próxima. Você termina uma, a seguinte abre. Sempre começamos relembrando o que já apareceu — é assim que gruda.</p>
+    <span class="note hand">um passo de cada vez ✦</span>
+  </div>
+  <div class="grid" id="trilha"></div>
+</main>
+
+<!-- ===================== LESSON ===================== -->
+<main id="lessonView" class="lesson wrap"></main>
+
+<div class="toast" id="toast"></div>
+
+<footer>Inglês da Vida Real · Nível A0 · método fala-primeiro com repetição espaçada</footer>
+
+<script>
+/* ================================================================
+   DADOS — edite só aqui pra criar/ajustar aulas.
+   Aulas 1–5 completas · 6–10 em esqueleto (preencher depois).
+   Campos: n, tag(EN), title(PT), cando, objComm, objEN,
+   review[{from,items[]}], warmup, vocab[{en,pt}], phrases[{en,pt}],
+   guided[{p,model}], speaking[{lbl,sec,prompt,model}],
+   main{title,body[]}, grammar[{html}], homework[], success[], wip(bool)
+   ================================================================ */
+const LESSONS = [
+{
+  n:1, tag:"Welcome", title:"O sistema da escola",
+  cando:"Eu entendo <b>como a aula funciona</b> e o meu papel nela.",
+  objComm:"Entender como funcionam as aulas, a plataforma, o homework e a rotina de estudo.",
+  objEN:"I understand how our classes work.",
+  review:null,
+  warmup:"Antes de tudo: nessas primeiras aulas você não precisa acertar nada. Seu único trabalho é <b>abrir a boca e tentar</b>. Errar aqui é parte do plano.",
+  vocab:[{en:"a class",pt:"uma aula"},{en:"homework",pt:"tarefa de casa"},{en:"flashcards",pt:"cartões de revisão"},{en:"to review",pt:"revisar"},{en:"a doubt",pt:"uma dúvida"}],
+  phrases:[
+    {en:"Hello! Nice to meet you.",pt:"Olá! Prazer em te conhecer."},
+    {en:"I'm ready.",pt:"Estou pronto(a)."},
+    {en:"Let's start.",pt:"Vamos começar."}
+  ],
+  guided:[
+    {p:"Como é a aula: 50 minutos, <b>você falando ~80% do tempo</b>. Eu corrijo pouco e na hora certa — não vou te interromper a cada erro.",model:""},
+    {p:"Onde fica tudo: plataforma de aula, tarefas e os flashcards de revisão. Vou te mostrar agora cada lugar.",model:""},
+    {p:"A rotina que funciona: <b>10 minutos por dia</b> revisando frases > 1 hora no fim de semana. Combinado?",model:"Sounds good!"}
+  ],
+  speaking:[
+    {lbl:"Quebra-gelo (sua 1ª fala)",sec:30,prompt:"Repita comigo, em voz alta, sem medo: “Hello! My name is ___. Nice to meet you.” Diga 3 vezes, cada vez mais natural.",model:"Hello! My name is ___. Nice to meet you."}
+  ],
+  main:{title:"Nossos combinados",body:[
+    "Fechamos juntos 3 combinados: (1) eu tento falar mesmo errado; (2) eu reviso 10 min/dia; (3) eu trago minhas dúvidas pra aula.",
+    "Diga cada combinado em voz alta começando com “I will...” — eu te ajudo com as palavras."
+  ]},
+  grammar:[{html:"Nada de gramática hoje. O objetivo é o aluno entender o sistema e produzir as primeiras fórmulas sociais (<b>Hello / My name is / Nice to meet you</b>) por imitação."}],
+  homework:[
+    "Instalar/abrir a plataforma e mandar uma mensagem de teste pra mim.",
+    "Escolher um lugar e um horário fixo pros seus 10 min diários.",
+    "Treinar “Hello, my name is ___” até sair sem pensar."
+  ],
+  success:["Eu sei como a aula funciona e onde ficam as tarefas.","Eu disse minha primeira frase em inglês em voz alta.","Eu combinei meu horário de estudo diário."]
+},
+{
+  n:2, tag:"Study smart", title:"Como estudar e revisar",
+  cando:"Eu sei <b>revisar sozinho(a)</b> e fazer o inglês grudar.",
+  objComm:"Aprender a estudar fora da aula com repetição espaçada e flashcards.",
+  objEN:"I know how to review and study every day.",
+  review:[{from:"Aula 1",items:["I tento falar mesmo errado","Reviso 10 min/dia","Trago minhas dúvidas","Hello! My name is ___"]}],
+  warmup:"Pergunta rápida em inglês, só pra aquecer: <span class='mdl' style='font-family:Fraunces;font-style:italic;color:var(--rose-deep)'>“Are you ready?”</span> — responda <b>“Yes, I'm ready!”</b>.",
+  vocab:[{en:"every day",pt:"todo dia"},{en:"to remember",pt:"lembrar"},{en:"to forget",pt:"esquecer"},{en:"a word",pt:"uma palavra"},{en:"a phrase",pt:"uma frase"},{en:"again",pt:"de novo"}],
+  phrases:[
+    {en:"Can you repeat, please?",pt:"Pode repetir, por favor?"},
+    {en:"Again, please.",pt:"De novo, por favor."},
+    {en:"I remember this!",pt:"Eu lembro disso!"}
+  ],
+  guided:[
+    {p:"Por que esquecemos: o cérebro joga fora o que não usa. A <b>repetição espaçada</b> revisa a frase pouco antes de você esquecer — por isso toda aula começa relembrando.",model:""},
+    {p:"Como usar flashcards: frente em inglês, verso em português. Você fala em voz alta <b>antes</b> de virar o cartão. Nunca só leia.",model:""},
+    {p:"A regra dos 10 minutos: pouco e todo dia ganha de muito e raramente.",model:""}
+  ],
+  speaking:[
+    {lbl:"Explica de volta",sec:30,prompt:"Sem olhar: me explique em português como você vai revisar essa semana. Depois diga em inglês “I study every day.”",model:"I study every day. I remember my phrases."}
+  ],
+  main:{title:"Monte seu 1º maço de flashcards",body:[
+    "Junto comigo, escolha 5 frases das aulas 1 e 2 e crie os cartões.",
+    "Vire cada cartão e fale em voz alta. Acertou de primeira? Vai pro fim do maço. Travou? Revise amanhã de novo."
+  ]},
+  grammar:[{html:"Sem foco gramatical. Estrutura que já aparece por imitação: <b>I + verbo base</b> (I study, I remember) e <b>can you...?</b> em pedidos. Apenas modele, não explique."}],
+  homework:[
+    "Criar os 5 flashcards e revisar nos próximos 3 dias.",
+    "Fazer 10 min de revisão por dia (marque um ✓ no celular cada dia que cumprir).",
+    "Trazer 1 frase que você ainda acha difícil."
+  ],
+  success:["Eu entendi o que é repetição espaçada.","Eu montei meu primeiro maço de flashcards.","Eu falei as frases em voz alta antes de virar o cartão."]
+},
+{
+  n:3, tag:"Survival English", title:"Sobreviver na aula em inglês",
+  cando:"Eu consigo <b>pedir ajuda em inglês</b> sem voltar pro português.",
+  objComm:"Pedir ajuda durante a aula: repetir, não entendi, como se diz, escreve aí.",
+  objEN:"I can ask for help in English during class.",
+  review:[
+    {from:"Aula 1",items:["Hello! My name is ___","Nice to meet you"]},
+    {from:"Aula 2",items:["Can you repeat, please?","Again, please","I study every day"]}
+  ],
+  warmup:"Ping-pong rápido: eu digo <b>“How are you?”</b>, você responde qualquer coisa. Depois inverte. 4 trocas, sem pensar muito.",
+  vocab:[{en:"sorry",pt:"desculpa / como?"},{en:"slowly",pt:"devagar"},{en:"to understand",pt:"entender"},{en:"to mean",pt:"significar"},{en:"to write",pt:"escrever"},{en:"to say",pt:"dizer"}],
+  phrases:[
+    {en:"Sorry?",pt:"Como? / Não ouvi."},
+    {en:"Can you repeat, please?",pt:"Pode repetir?"},
+    {en:"I don't understand.",pt:"Eu não entendo."},
+    {en:"How do you say ___ in English?",pt:"Como se diz ___ em inglês?"},
+    {en:"What does ___ mean?",pt:"O que significa ___?"},
+    {en:"Can you write it?",pt:"Pode escrever?"},
+    {en:"Slowly, please.",pt:"Devagar, por favor."}
+  ],
+  guided:[
+    {p:"Regra de ouro da aula: quando travar, <b>não fale português</b> — use uma das frases acima. Elas são seu “botão de socorro”.",model:""},
+    {p:"Vou falar uma palavra difícil de propósito. Você reage com a frase certa: travou no som? <span class='mdl' style='font-family:Fraunces;font-style:italic;color:var(--rose-deep)'>“Sorry? Can you repeat?”</span>",model:""},
+    {p:"Não sabe a palavra? <span class='mdl' style='font-family:Fraunces;font-style:italic;color:var(--rose-deep)'>“How do you say [palavra] in English?”</span>",model:""}
+  ],
+  speaking:[
+    {lbl:"Botão de socorro — ping-pong",sec:60,prompt:"Eu vou falar rápido, baixo ou com palavra difícil 6 vezes. A cada vez, você escolhe e fala a frase de ajuda certa. Sem português.",model:"Sorry? · Can you repeat? · I don't understand. · Slowly, please."},
+    {lbl:"Como se diz?",sec:30,prompt:"Pense em 3 objetos perto de você que você não sabe em inglês. Pergunte os 3 usando “How do you say ___ in English?”",model:"How do you say 'caneta' in English?"}
+  ],
+  main:{title:"A aula só em inglês (3 min)",body:[
+    "Combinamos: pelos próximos 3 minutos, qualquer dúvida sai em inglês usando as frases de hoje.",
+    "Cada vez que você usar uma frase de ajuda em vez do português, ganha 1 ponto. Meta: 5 pontos."
+  ]},
+  grammar:[{html:"Foco é função, não forma. Estruturas que aparecem: <b>can you + verbo</b> (pedido), <b>do you...</b> embrionário em “how do you say”, <b>question words</b> (how, what). Modele a entonação de pergunta; não nomeie a gramática."}],
+  homework:[
+    "Colar as 7 frases de ajuda num lugar visível (mesa/celular).",
+    "Usar pelo menos 3 delas na próxima aula.",
+    "Flashcards: adicionar “How do you say ___?” e “What does ___ mean?”."
+  ],
+  success:["Eu peço ajuda em inglês sem travar.","Eu uso a frase certa pra cada situação (repetir, não entendi, como se diz).","Eu evitei o português quando travei."]
+},
+{
+  n:4, tag:"Greetings", title:"Cumprimentar e se despedir",
+  cando:"Eu consigo <b>cumprimentar, responder e me despedir</b> com naturalidade.",
+  objComm:"Cumprimentar, perguntar como vai, responder e se despedir.",
+  objEN:"I can greet people and say goodbye.",
+  review:[
+    {from:"Aula 3",items:["Sorry? Can you repeat?","I don't understand","How do you say ___?","Slowly, please"]}
+  ],
+  warmup:"Eu entro na “sala” e digo <b>“Hi! How are you?”</b>. Você responde do seu jeito. Trocamos de papel. 3 vezes.",
+  vocab:[{en:"Hi / Hello",pt:"Oi / Olá"},{en:"Good morning",pt:"Bom dia"},{en:"Good afternoon",pt:"Boa tarde"},{en:"Good evening",pt:"Boa noite (chegada)"},{en:"fine / good / great",pt:"bem / ótimo"},{en:"so-so",pt:"mais ou menos"},{en:"tired",pt:"cansado(a)"},{en:"Bye / See you",pt:"Tchau / Até mais"}],
+  phrases:[
+    {en:"Hi! How are you?",pt:"Oi! Como você está?"},
+    {en:"I'm good, thanks. And you?",pt:"Estou bem, obrigado(a). E você?"},
+    {en:"I'm fine. / I'm tired today.",pt:"Estou bem. / Estou cansado(a) hoje."},
+    {en:"Nice to see you!",pt:"Que bom te ver!"},
+    {en:"Bye! See you later.",pt:"Tchau! Até mais."},
+    {en:"Take care!",pt:"Se cuida!"}
+  ],
+  guided:[
+    {p:"Cumprimento muda com a hora do dia: de manhã <b>good morning</b>, de tarde <b>good afternoon</b>, à noite <b>good evening</b>. “Good night” é só pra dormir/sair.",model:""},
+    {p:"A resposta tem 2 partes: como você está + devolve a pergunta. <span class='mdl' style='font-family:Fraunces;font-style:italic;color:var(--rose-deep)'>“I'm good, thanks. And you?”</span>",model:""},
+    {p:"Despedida combina humor + próxima vez: <b>Bye! See you later. Take care!</b>",model:""}
+  ],
+  speaking:[
+    {lbl:"Greeting ping-pong",sec:60,prompt:"Vamos cumprimentar 5 “pessoas” diferentes (eu mudo a hora do dia e o humor a cada vez). Você escolhe o cumprimento certo e responde com as 2 partes. Sem parar.",model:"Good morning! How are you? — I'm good, thanks. And you?"},
+    {lbl:"Entra e sai",sec:30,prompt:"Encene: você chega numa reunião (cumprimenta) e depois precisa sair (se despede). Faça os dois sozinho(a), em voz alta.",model:"Hi everyone! How are you? ... Ok, bye! See you later. Take care!"}
+  ],
+  main:{title:"60-Second Hello",body:[
+    "Improviso de 60s: você é o recepcionista simpático de um café em Londres. Cumprimente 4 clientes que chegam em horários diferentes do dia.",
+    "Regra: nenhum cumprimento pode se repetir e cada um precisa de uma pergunta (How are you? / Good to see you!)."
+  ]},
+  grammar:[{html:"Estrutura em uso: <b>verb to be</b> em “I'm / you are” dentro de fórmulas (I'm good, How are you), e contração <b>I am → I'm</b>. Apenas modele; o aluno usa sem conjugar."}],
+  homework:[
+    "Gravar um áudio de 20s cumprimentando e se despedindo de manhã e à noite.",
+    "Usar “How are you? And you?” com alguém de verdade essa semana.",
+    "Flashcards: cumprimentos por hora do dia + respostas (good / so-so / tired)."
+  ],
+  success:["Eu escolho o cumprimento certo pra cada hora do dia.","Eu respondo “How are you?” com 2 partes e devolvo a pergunta.","Eu me despeço de forma natural (não só “bye”)."]
+},
+{
+  n:5, tag:"About me", title:"Nome, idade e país",
+  cando:"Eu consigo <b>me apresentar</b> com nome, idade e de onde sou.",
+  objComm:"Dar informações pessoais básicas: nome, idade, país e nacionalidade.",
+  objEN:"I can introduce myself with basic information.",
+  review:[
+    {from:"Aula 4",items:["Hi! How are you?","I'm good, thanks. And you?","See you later"]},
+    {from:"Aula 3",items:["How do you say ___?","Can you repeat?"]}
+  ],
+  warmup:"Cumprimento + pergunta nova: eu digo <b>“Hi! What's your name?”</b>. Você responde como conseguir. Eu repito devagar pra você copiar.",
+  vocab:[{en:"name",pt:"nome"},{en:"years old",pt:"anos (de idade)"},{en:"country",pt:"país"},{en:"Brazil",pt:"Brasil"},{en:"Brazilian",pt:"brasileiro(a)"},{en:"from",pt:"de (origem)"}],
+  phrases:[
+    {en:"What's your name?",pt:"Qual é o seu nome?"},
+    {en:"My name is ___.",pt:"Meu nome é ___."},
+    {en:"How old are you?",pt:"Quantos anos você tem?"},
+    {en:"I'm ___ years old.",pt:"Eu tenho ___ anos."},
+    {en:"Where are you from?",pt:"De onde você é?"},
+    {en:"I'm from Brazil. I'm Brazilian.",pt:"Eu sou do Brasil. Sou brasileiro(a)."}
+  ],
+  guided:[
+    {p:"3 perguntas que abrem qualquer conversa: <b>name → age → country</b>. Vamos fixar uma de cada vez e depois juntar.",model:""},
+    {p:"Idade em inglês usa “ter” diferente: não é “I have 30”, é <span class='mdl' style='font-family:Fraunces;font-style:italic;color:var(--rose-deep)'>“I'm 30 years old.”</span> (ou só “I'm 30”).",model:""},
+    {p:"País x nacionalidade: <b>I'm from Brazil</b> (país) / <b>I'm Brazilian</b> (nacionalidade). Modele 3-4 países dos interesses do aluno.",model:""}
+  ],
+  speaking:[
+    {lbl:"Pergunta ping-pong",sec:60,prompt:"Alternamos as 3 perguntas em ritmo rápido: você me pergunta, eu respondo, eu te pergunto, você responde. Cobrir name, age e country pelo menos 2 vezes cada.",model:"What's your name? — My name is ___. How old are you? — I'm ___."},
+    {lbl:"30-Second Self-Intro",sec:30,prompt:"Sozinho(a), sem parar por 30 segundos: diga nome, idade, país e nacionalidade — e termine com um cumprimento da aula 4.",model:"Hi! My name is ___. I'm ___ years old. I'm from Brazil. I'm Brazilian. Nice to meet you!"}
+  ],
+  main:{title:"Conhecer um “estranho”",body:[
+    "Encene: você senta ao lado de alguém num voo internacional. Puxe conversa usando as 3 perguntas — e responda quando eu perguntar de volta.",
+    "Meta: manter a troca viva por 1 minuto, usando greeting (aula 4) + as 3 perguntas pessoais. Travou? Use o botão de socorro da aula 3."
+  ]},
+  grammar:[{html:"Em uso: <b>verb to be</b> (I'm / you are / it is) para identidade e origem; <b>question words</b> what / how old / where; possessivo <b>your/my</b>; <b>from + país</b>. Tudo modelado em bloco; o aluno reproduz frases inteiras, não conjuga."}],
+  homework:[
+    "Gravar sua self-intro de 30s e me mandar.",
+    "Aprender o nome de 3 países dos seus interesses (séries/jogos/viagem) e a nacionalidade de cada.",
+    "Flashcards: as 3 perguntas + as 3 respostas pessoais."
+  ],
+  success:["Eu me apresento com nome, idade, país e nacionalidade sem travar.","Eu faço as 3 perguntas pessoais a outra pessoa.","Eu mantive uma troca de ~1 min juntando cumprimento + apresentação."]
+},
+
+/* ---------- 6 a 10: ESQUELETO (preencher no mesmo padrão) ---------- */
+{
+  n:6, tag:"My life", title:"Profissão, cidade e idiomas", wip:true,
+  cando:"Eu consigo dizer <b>o que faço, onde moro e que idiomas falo</b>.",
+  objComm:"Falar profissão, cidade onde mora e idiomas.",
+  objEN:"I can talk about my job, my city and the languages I speak.",
+  review:[{from:"Aula 5",items:["My name is ___","I'm ___ years old","I'm from Brazil"]}],
+  warmup:"Self-intro relâmpago da aula 5 antes de adicionar a informação nova.",
+  vocab:[{en:"a teacher / a student",pt:"professor(a) / estudante"},{en:"to work",pt:"trabalhar"},{en:"to live",pt:"morar"},{en:"to speak",pt:"falar (idioma)"},{en:"Portuguese / English",pt:"português / inglês"}],
+  phrases:[
+    {en:"I'm a teacher. / I'm a student.",pt:"Sou professor(a). / Sou estudante."},
+    {en:"I live in ___.",pt:"Eu moro em ___."},
+    {en:"I speak Portuguese. I study English.",pt:"Eu falo português. Estudo inglês."}
+  ],
+  guided:[{p:"Esqueleto: completar prática guiada (job → city → languages), no padrão das aulas 1–5.",model:""}],
+  speaking:[{lbl:"30-sec Self-Intro 2.0",sec:30,prompt:"Junte a apresentação da aula 5 + profissão, cidade e idiomas, sem parar.",model:"My name is ___. I'm a student. I live in ___. I speak Portuguese and I study English."}],
+  main:{title:"(a completar)",body:["Atividade principal a definir no mesmo molde — fala contínua testando o objetivo."]},
+  grammar:[{html:"Em uso: <b>a/an + profissão</b>, present simple <b>I work/live/speak</b>. (Detalhar ao finalizar.)"}],
+  homework:["(a completar)"],
+  success:["Eu digo minha profissão, cidade e idiomas numa frase conectada."]
+},
+{
+  n:7, tag:"Spelling", title:"Alfabeto e soletrar", wip:true,
+  cando:"Eu consigo <b>soletrar meu nome e e-mail</b> em inglês.",
+  objComm:"Soletrar informações pessoais (nome, e-mail, palavras simples).",
+  objEN:"I can spell my name and email.",
+  review:[{from:"Aula 6",items:["I'm a ___","I live in ___","I speak ___"]}],
+  warmup:"Cantar/dizer o alfabeto uma vez, relaxado.",
+  vocab:[{en:"to spell",pt:"soletrar"},{en:"a letter",pt:"uma letra"},{en:"an email",pt:"um e-mail"},{en:"double (LL)",pt:"dois (LL)"},{en:"at / dot",pt:"arroba / ponto"}],
+  phrases:[
+    {en:"How do you spell that?",pt:"Como se soletra isso?"},
+    {en:"It's ___, ___, ___...",pt:"É ___, ___, ___..."}
+  ],
+  guided:[{p:"Esqueleto: letras difíceis pro brasileiro (G/J, E/I, H, W, Y, R), depois soletrar nome e e-mail.",model:""}],
+  speaking:[{lbl:"Spell-it Challenge",sec:60,prompt:"Soletre seu nome completo, depois seu e-mail, depois 3 palavras que eu disser.",model:"My name is Ester — E-S-T-E-R."}],
+  main:{title:"(a completar)",body:["Jogo de soletrar — completar no molde."]},
+  grammar:[{html:"Sem foco gramatical; pronúncia de letras. (Detalhar ao finalizar.)"}],
+  homework:["(a completar)"],
+  success:["Eu soletro meu nome e e-mail sem ajuda."]
+},
+{
+  n:8, tag:"Numbers", title:"Números 0–100", wip:true,
+  cando:"Eu entendo e digo <b>números</b>: idade, telefone, preços simples.",
+  objComm:"Entender e dizer números básicos no dia a dia.",
+  objEN:"I can understand and say numbers.",
+  review:[{from:"Aulas 5 e 7",items:["I'm ___ years old","How do you spell ___?","soletrar e-mail"]}],
+  warmup:"Contar 0–20 em voz alta, depois de 10 em 10 até 100.",
+  vocab:[{en:"a number",pt:"um número"},{en:"a phone number",pt:"um telefone"},{en:"a price",pt:"um preço"},{en:"How much?",pt:"Quanto custa?"}],
+  phrases:[
+    {en:"My phone number is ___.",pt:"Meu telefone é ___."},
+    {en:"How much is it?",pt:"Quanto custa?"}
+  ],
+  guided:[{p:"Esqueleto: armadilhas 13 vs 30, 14 vs 40, etc.; depois idade, telefone e preço.",model:""}],
+  speaking:[{lbl:"Number ping-pong",sec:60,prompt:"Eu digo um número, você repete e me diz o próximo; depois você dita seu telefone bem devagar.",model:"My phone number is nine, eight..."}],
+  main:{title:"(a completar)",body:["Ditado de números / preços — completar no molde."]},
+  grammar:[{html:"Sem foco gramatical. (Detalhar ao finalizar.)"}],
+  homework:["(a completar)"],
+  success:["Eu digo idade, telefone e um preço simples com números corretos."]
+},
+{
+  n:9, tag:"Week & routine", title:"Dias da semana e rotina de aula", wip:true,
+  cando:"Eu falo os <b>dias da semana</b> e quando tenho aula.",
+  objComm:"Falar dias da semana e a rotina semanal simples.",
+  objEN:"I can talk about the days of my week.",
+  review:[{from:"Aula 8",items:["números 0–100","My phone number is ___"]}],
+  warmup:"Dizer os 7 dias em ordem, depois “hoje é...”.",
+  vocab:[{en:"Monday…Sunday",pt:"segunda…domingo"},{en:"today",pt:"hoje"},{en:"tomorrow",pt:"amanhã"},{en:"yesterday",pt:"ontem"},{en:"on Monday",pt:"na segunda"}],
+  phrases:[
+    {en:"Today is ___.",pt:"Hoje é ___."},
+    {en:"I have a class on ___.",pt:"Eu tenho aula na ___."}
+  ],
+  guided:[{p:"Esqueleto: dias, today/tomorrow/yesterday, “on + dia”.",model:""}],
+  speaking:[{lbl:"My week",sec:60,prompt:"Diga que dia é hoje, amanhã e ontem, e em que dias você tem aula/trabalho.",model:"Today is Monday. I have a class on Wednesday."}],
+  main:{title:"(a completar)",body:["Falar a semana — completar no molde."]},
+  grammar:[{html:"Em uso: preposição <b>on + dia</b>, “I have”. (Detalhar ao finalizar.)"}],
+  homework:["(a completar)"],
+  success:["Eu digo os dias da semana e quando tenho meus compromissos."]
+},
+{
+  n:10, tag:"Time", title:"Horas e partes do dia", wip:true,
+  cando:"Eu digo <b>horários simples</b> e as partes do dia.",
+  objComm:"Falar horários simples e partes do dia.",
+  objEN:"I can tell the time in a simple way.",
+  review:[{from:"Aula 9",items:["dias da semana","Today is ___","on Monday"]}],
+  warmup:"Apontar partes do dia: morning / afternoon / evening / night.",
+  vocab:[{en:"morning",pt:"manhã"},{en:"afternoon",pt:"tarde"},{en:"evening",pt:"noite (início)"},{en:"night",pt:"noite (tarde)"},{en:"at 7 / at 8:30",pt:"às 7 / às 8:30"}],
+  phrases:[
+    {en:"What time is it?",pt:"Que horas são?"},
+    {en:"It's 8 o'clock. / It's 8:30.",pt:"São 8 horas. / São 8:30."},
+    {en:"My class is at ___.",pt:"Minha aula é às ___."}
+  ],
+  guided:[{p:"Esqueleto: o'clock, half past (básico), “at + hora”, partes do dia.",model:""}],
+  speaking:[{lbl:"My day's times",sec:60,prompt:"Diga a que horas você acorda, come e tem aula — com a parte do dia.",model:"My class is at 7 in the evening."}],
+  main:{title:"(a completar)",body:["Falar horários do dia — completar no molde."]},
+  grammar:[{html:"Em uso: <b>at + hora</b>, <b>in the morning/afternoon</b>. (Detalhar ao finalizar.)"}],
+  homework:["(a completar)"],
+  success:["Eu digo horas simples e a que horas acontecem meus compromissos."]
+}
+];
+
+/* ================================================================
+   ENGINE — render, trava, progresso. Não precisa editar abaixo.
+   ================================================================ */
+const KEY='ivr_a0_progress';
+const mem={};
+const store={
+  get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return mem[k]}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){mem[k]=v}}
+};
+let done = store.get(KEY) || {}; // {1:true,2:true,...}
+
+const $=s=>document.querySelector(s);
+const home=$('#home'), lessonView=$('#lessonView'), trilha=$('#trilha');
+
+function isDone(n){return !!done[n]}
+function isUnlocked(n){return n===1 || isDone(n-1)}
+function status(n){return isDone(n)?'done':(isUnlocked(n)?'open':'locked')}
+
+function updateProgress(){
+  const total=LESSONS.length, d=LESSONS.filter(l=>isDone(l.n)).length;
+  const pct=Math.round(d/total*100);
+  $('#barFill').style.width=pct+'%';
+  $('#barPct').textContent=pct+'%';
+}
+
+function renderTrilha(){
+  trilha.innerHTML='';
+  LESSONS.forEach(l=>{
+    const st=status(l.n);
+    const b=document.createElement('button');
+    b.className='chunk '+st;
+    const pill = st==='done'?'<span class="pill ok">✓ Concluída</span>'
+              : st==='open'?'<span class="pill go">▶ Disponível</span>'
+              : '<span class="pill lock">🔒 Bloqueada</span>';
+    b.innerHTML=`
+      <span class="num">${l.n}</span>
+      <span class="stamp">você conseguiu! ✦</span>
+      <span class="tag">${l.tag}</span>
+      <h3>${l.title}</h3>
+      <p class="cando">${l.cando}</p>
+      ${pill}`;
+    b.addEventListener('click',()=>{
+      if(st==='locked'){ b.classList.add('shake'); setTimeout(()=>b.classList.remove('shake'),420);
+        toast('🔒 Conclua a aula anterior pra desbloquear.'); return; }
+      openLesson(l.n);
+    });
+    trilha.appendChild(b);
+  });
+  updateProgress();
+}
+
+function openLesson(n){
+  const l=LESSONS.find(x=>x.n===n); if(!l) return;
+  window.scrollTo({top:0});
+  home.style.display='none';
+  lessonView.style.display='block';
+
+  const reviewHTML = l.review ? `
+   <section class="block">
+     <div class="review">
+       <div class="rt">🔁 Relembrar antes de começar</div>
+       <p>Diga em voz alta o que já apareceu — é a repetição espaçada fazendo o conteúdo grudar.</p>
+       ${l.review.map(r=>`<div style="margin:.4em 0 .2em;font-size:12px;font-weight:700;color:#9A6A1E">${r.from}</div>
+         <div class="chips">${r.items.map(i=>`<span class="chip">${i}</span>`).join('')}</div>`).join('')}
+     </div>
+   </section>`:'';
+
+  const vocabHTML = l.vocab?`
+   <section class="block">
+     <div class="b-label"><span class="ic">🗂️</span><h3>Vocabulário útil</h3><span class="hint">clique pra virar EN ↔ PT</span></div>
+     <div class="vocab">
+       ${l.vocab.map(v=>`<div class="vcard"><span class="en">${v.en}</span><span class="pt">${v.pt}</span></div>`).join('')}
+     </div>
+     <p class="flip-hint">Fale em inglês antes de virar o cartão.</p>
+   </section>`:'';
+
+  const phrasesHTML = l.phrases?`
+   <section class="block">
+     <div class="b-label"><span class="ic">💬</span><h3>Frases prontas</h3></div>
+     <div class="phrases">
+       ${l.phrases.map(p=>`<div class="ph"><div><div class="en">${p.en}</div><div class="pt">${p.pt}</div></div></div>`).join('')}
+     </div>
+   </section>`:'';
+
+  const guidedHTML = l.guided?`
+   <section class="block">
+     <div class="b-label"><span class="ic">🧭</span><h3>Prática guiada</h3><span class="hint">professora modela, aluno repete</span></div>
+     <div class="steps">
+       ${l.guided.map(g=>`<div class="step"><p>${g.p}${g.model?` <span class="mdl">“${g.model}”</span>`:''}</p></div>`).join('')}
+     </div>
+   </section>`:'';
+
+  const speakHTML = l.speaking?`
+   <section class="block">
+     <div class="b-label"><span class="ic">🎙️</span><h3>Speaking practice</h3><span class="hint">fala contínua — o coração da aula</span></div>
+     ${l.speaking.map((s,i)=>`
+       <div class="speak">
+         <div class="top">
+           <span class="lbl">${s.lbl}</span>
+           <span class="timer"><span class="t" id="t${n}_${i}">0:${String(s.sec).padStart(2,'0')}</span>
+             <button data-sec="${s.sec}" data-tid="t${n}_${i}">▶ ${s.sec}s</button></span>
+         </div>
+         <div class="prompt">${s.prompt}</div>
+         ${s.model?`<div class="model">Modelo: ${s.model}</div>`:''}
+       </div>`).join('')}
+   </section>`:'';
+
+  const mainHTML = l.main?`
+   <section class="block">
+     <div class="b-label"><span class="ic">⭐</span><h3>Atividade principal</h3></div>
+     <div class="main-act">
+       <h4>${l.main.title}</h4>
+       ${l.main.body.map(p=>`<p>${p}</p>`).join('')}
+     </div>
+   </section>`:'';
+
+  const gramHTML = l.grammar?`
+   <section class="block gram">
+     <details>
+       <summary>📎 Apoio da professora — estruturas que entram em uso (não é conteúdo do aluno)</summary>
+       <div class="gbody">${l.grammar.map(g=>g.html).join('<br>')}</div>
+     </details>
+   </section>`:'';
+
+  const hwHTML = l.homework?`
+   <section class="block">
+     <div class="b-label"><span class="ic">🏠</span><h3>Homework</h3></div>
+     <ul class="hw" style="padding-left:0;margin:0">${l.homework.map(h=>`<li>${h}</li>`).join('')}</ul>
+   </section>`:'';
+
+  const successHTML = l.success?`
+   <section class="block">
+     <div class="success">
+       <h4>Critério de sucesso — eu sei que consegui quando…</h4>
+       <div class="check">
+         ${l.success.map((s,i)=>`<label><input type="checkbox" class="succhk" /> ${s}</label>`).join('')}
+       </div>
+       <span class="hand">marque tudo antes de concluir ✦</span>
+     </div>
+   </section>`:'';
+
+  const wipHTML = l.wip?`<div class="wip">🚧 Esta aula está em <b>esqueleto</b> — estrutura pronta no mesmo molde das aulas 1–5, falta preencher o conteúdo final.</div>`:'';
+
+  const next=LESSONS.find(x=>x.n===n+1);
+  const finishHTML=`
+   <div class="finish">
+     <button class="btn-done" id="markDone">✓ Marcar aula como concluída</button>
+     <span class="msg" id="finishMsg">Marque os critérios de sucesso acima pra liberar.</span>
+     <span id="nextSlot"></span>
+   </div>`;
+
+  lessonView.innerHTML=`
+    <button class="back" id="back">← Voltar pra trilha</button>
+    <div class="l-head">
+      <span class="tag">Aula ${l.n} · ${l.tag}</span>
+      <h2>${l.title}</h2>
+      <div class="obj">
+        <div><span class="k">Objetivo:</span><span>${l.objComm}</span></div>
+        <div><span class="k">Goal:</span><span class="en">${l.objEN}</span></div>
+      </div>
+    </div>
+    ${reviewHTML}
+    ${l.warmup?`<section class="block"><div class="b-label"><span class="ic">☀️</span><h3>Warm-up</h3></div><div class="card-soft"><p>${l.warmup}</p></div></section>`:''}
+    ${vocabHTML}${phrasesHTML}${guidedHTML}${speakHTML}${mainHTML}${gramHTML}${hwHTML}${successHTML}
+    ${wipHTML}
+    ${finishHTML}`;
+
+  // back
+  $('#back').addEventListener('click',goHome);
+  // vocab flip
+  lessonView.querySelectorAll('.vcard').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flip')));
+  // timers
+  lessonView.querySelectorAll('.timer button').forEach(btn=>{
+    btn.addEventListener('click',()=>startTimer(btn));
+  });
+  // success gating
+  const chks=[...lessonView.querySelectorAll('.succhk')];
+  const markBtn=$('#markDone'), msg=$('#finishMsg');
+  function refresh(){
+    const all = chks.length>0 && chks.every(c=>c.checked);
+    markBtn.disabled=!all;
+    msg.textContent = isDone(n) ? 'Aula já concluída ✓ — pode revisar à vontade.'
+                    : all ? 'Tudo pronto! Pode concluir.' : 'Marque os critérios de sucesso acima pra liberar.';
+  }
+  chks.forEach(c=>c.addEventListener('change',refresh));
+  if(isDone(n)){ chks.forEach(c=>c.checked=true); }
+  refresh();
+  markBtn.addEventListener('click',()=>{
+    done[n]=true; store.set(KEY,done);
+    refresh(); renderNext(n); updateProgress();
+    toast(next?`✓ Aula ${n} concluída! Aula ${n+1} liberada.`:'✓ Você concluiu o A0! 🎉');
+    confettiStamp();
+  });
+  renderNext(n);
+}
+
+function renderNext(n){
+  const slot=$('#nextSlot'); if(!slot) return;
+  const next=LESSONS.find(x=>x.n===n+1);
+  if(isDone(n) && next){
+    slot.innerHTML=`<button class="btn-next" id="goNext">Ir pra Aula ${next.n}: ${next.title} →</button>`;
+    $('#goNext').addEventListener('click',()=>openLesson(next.n));
+  } else { slot.innerHTML=''; }
+}
+
+let activeTimer=null;
+function startTimer(btn){
+  if(activeTimer){clearInterval(activeTimer.id); activeTimer.btn.textContent='▶ '+activeTimer.sec+'s';}
+  let sec=+btn.dataset.sec, left=sec;
+  const t=document.getElementById(btn.dataset.tid);
+  btn.textContent='■ stop';
+  const tick=()=>{ t.textContent='0:'+String(left).padStart(2,'0');
+    if(left<=0){clearInterval(id); btn.textContent='✓ feito'; t.textContent='0:00'; activeTimer=null; return;}
+    left--; };
+  tick(); const id=setInterval(tick,1000);
+  activeTimer={id,btn,sec};
+  btn.onclick=()=>{clearInterval(id); btn.textContent='▶ '+sec+'s'; t.textContent='0:'+String(sec).padStart(2,'0'); activeTimer=null;
+    btn.onclick=null; btn.addEventListener('click',()=>startTimer(btn));};
+}
+
+function goHome(){
+  lessonView.style.display='none';
+  home.style.display='block';
+  renderTrilha();
+  window.scrollTo({top:0});
+}
+
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),2600);
+}
+function confettiStamp(){ /* leve: o stamp já aparece no card ao voltar */ }
+
+$('#resetBtn').addEventListener('click',()=>{
+  if(confirm('Zerar todo o progresso? (use isso pra reaproveitar o material com outro aluno)')){
+    done={}; store.set(KEY,done); goHome(); toast('Progresso zerado.');
+  }
+});
+
+renderTrilha();
+</script>
+</body>
+</html>
