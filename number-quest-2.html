@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Quest II · Big Numbers · English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,500;1,600&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --navy2:#2A3358; --navy-row:#28315A;
+  --bg:#F0EFF6; --rose:#CF7E93; --rose-soft:#F7DEE4; --rose-card:#F7E4E8;
+  --yellow:#F4C542; --teal:#33A98D; --orange:#EE7A54; --blue:#6E82D6; --purple:#A98FC9;
+  --ink:#1E2647; --muted:#8B8CA3; --white:#fff; --line:#EAE9F2; --ok:#2FA98C; --no:#E0654F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Raleway',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px 60px}
+.serif{font-family:'Playfair Display',serif}
+
+/* HEADER */
+.hero{background:var(--navy);color:#fff;border-radius:0 0 22px 22px;padding:26px 30px 22px;margin-bottom:26px;position:relative}
+.hero .brand{color:var(--rose);font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase}
+.hero .brand::before{content:"● "}
+.hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:44px;line-height:1.05;margin-top:8px}
+.hero h1 em{color:var(--rose);font-style:italic;font-weight:600}
+.hero .sub{font-size:13px;color:#AEB4CE;margin-top:6px;letter-spacing:.3px}
+.score{position:absolute;top:26px;right:30px;background:#2A3358;border:1px solid #3A4573;color:#fff;border-radius:30px;padding:6px 14px;font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+.score .st{color:var(--yellow)}
+.dots{margin-top:14px;display:flex;gap:7px}
+.dots i{width:7px;height:7px;border-radius:50%;background:#4A5480;display:block}
+.dots i.on{background:var(--rose)}
+
+/* INTRO */
+.intro{font-size:15px;color:#5B5C74;margin:0 4px 30px}
+.intro b{color:var(--ink)}
+
+/* SECTION HEAD */
+.lvl{margin:34px 4px 12px;display:flex;align-items:center;gap:12px}
+.pill{display:inline-block;color:#fff;font-weight:800;font-size:10.5px;letter-spacing:1.3px;text-transform:uppercase;padding:5px 13px;border-radius:30px}
+.pill.rose{background:var(--rose)}.pill.teal{background:var(--teal)}.pill.orange{background:var(--orange)}
+.pill.blue{background:var(--blue)}.pill.purple{background:var(--purple)}.pill.yellow{background:var(--yellow);color:var(--navy)}
+.mins{color:var(--muted);font-size:12px;font-weight:600}
+h2.sec{font-family:'Playfair Display',serif;font-weight:700;font-size:27px;margin:2px 4px 4px}
+.lead{color:#6E6F86;font-size:14px;margin:0 4px 16px}
+.lead b{color:var(--ink)}
+
+/* TILES */
+.grid{display:flex;flex-wrap:wrap;gap:12px;margin:4px 0 6px}
+.tile{width:94px;height:94px;border-radius:18px;position:relative;cursor:pointer;perspective:600px;background:transparent;border:none;padding:0;font-family:inherit}
+.tile .face{position:absolute;inset:0;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;transition:transform .5s;padding:6px}
+.tile .front{transform:rotateY(0)}
+.tile .back{transform:rotateY(180deg);background:var(--navy);color:#fff;text-align:center}
+.tile.flip .front{transform:rotateY(180deg)}
+.tile.flip .back{transform:rotateY(360deg)}
+.tile .num{font-family:'Playfair Display',serif;font-weight:800;font-size:26px;line-height:1;color:#fff}
+.tile .nm{font-family:'Playfair Display',serif;font-style:italic;font-size:12.5px;color:#fff;margin-top:5px;opacity:.95;text-align:center;line-height:1.1}
+.tile .tap{position:absolute;right:8px;bottom:6px;font-size:9px;color:#fff;opacity:.7;font-weight:600}
+.tile .ex{font-size:10.5px;line-height:1.25;padding:0 4px}
+.tile.c0 .front{background:var(--rose)} .tile.c1 .front{background:var(--yellow)}
+.tile.c2 .front{background:var(--teal)} .tile.c3 .front{background:var(--orange)}
+.tile.c4 .front{background:var(--blue)} .tile.c5 .front{background:var(--purple)}
+.tile.c1 .num,.tile.c1 .nm,.tile.c1 .tap{color:var(--navy)}
+.tile.wide{width:132px}
+
+.note{background:#fff;border:1px solid var(--line);border-left:4px solid var(--rose);border-radius:12px;padding:12px 16px;margin:14px 4px 4px;font-size:13.5px;color:#54556C}
+.note b{color:var(--ink)}
+.note.uk{border-left-color:var(--blue)}
+
+.learned{background:var(--yellow);color:var(--navy);border:none;border-radius:30px;padding:9px 18px;font-weight:800;font-size:12.5px;cursor:pointer;margin:14px 4px 0;font-family:inherit;letter-spacing:.3px}
+.learned:disabled{opacity:.55;cursor:default}
+.learned::before{content:"★ "}
+
+/* CARDS */
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px;margin:16px 0;box-shadow:0 2px 10px rgba(30,38,71,.04)}
+.card h3{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;margin-bottom:3px}
+.card .csub{color:#7C7D92;font-size:13px;margin-bottom:14px}
+.frame{background:var(--rose-soft);color:#9C4A61;border-radius:11px;padding:12px 16px;font-size:14px;font-weight:600;margin:12px 0}
+.frame b{color:#7E3850}
+
+/* MACHINE */
+.machine{background:var(--navy);color:#fff;border-radius:20px;padding:26px 26px 24px;margin:18px 0}
+.machine h2{font-family:'Playfair Display',serif;font-size:25px;margin-bottom:4px}
+.machine .msub{color:#AEB4CE;font-size:13.5px;margin-bottom:18px}
+.machine .inrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.numinput{font-family:'Playfair Display',serif;font-weight:700;font-size:30px;width:190px;max-width:60vw;padding:10px 16px;border-radius:13px;border:2px solid #3A4573;background:#2A3358;color:#fff;outline:none}
+.numinput:focus{border-color:var(--rose)}
+.btn{background:var(--rose);color:#fff;border:none;border-radius:12px;padding:12px 18px;font-weight:800;font-size:13.5px;cursor:pointer;font-family:inherit;letter-spacing:.3px}
+.btn.ghost{background:transparent;border:1.5px solid #4A5480;color:#fff}
+.btn.sm{padding:8px 14px;font-size:12.5px}
+.btn.say::before{content:"🔊 "}
+.words{font-family:'Playfair Display',serif;font-size:26px;line-height:1.25;margin-top:20px;min-height:34px;color:#fff}
+.words .ph{color:#6A73A0;font-style:italic;font-size:18px}
+.hintline{color:#AEB4CE;font-size:12.5px;margin-top:10px}
+
+/* MISSION widgets */
+.stepper{display:flex;align-items:center;gap:16px;margin-top:6px}
+.stepbtn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:#fff;font-size:22px;cursor:pointer;color:var(--ink);font-family:inherit}
+.stepval{font-family:'Playfair Display',serif;font-weight:800;font-size:34px;color:var(--rose);min-width:64px;text-align:center}
+.reveal{color:var(--ink);border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:9px 15px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+.out{margin-top:12px;font-family:'Playfair Display',serif;font-size:19px;color:var(--teal);min-height:26px}
+.out.big{font-size:22px}
+.mini{font-size:12px;color:var(--muted);margin-top:8px}
+
+.priceList{margin-top:6px}
+.priceList .row{display:flex;justify-content:space-between;align-items:center;padding:11px 2px;border-bottom:1px dashed var(--line);cursor:pointer}
+.priceList .row:last-child{border-bottom:none}
+.priceList .it{font-size:14.5px;color:var(--ink)}
+.priceList .pr{color:var(--orange);font-weight:700;font-size:13.5px}
+.priceList .row.open .say{color:var(--teal);font-family:'Playfair Display',serif;font-size:13.5px;font-style:italic}
+
+.timegrid{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 4px}
+.timecard{border:1.5px solid var(--line);border-radius:13px;padding:12px 8px;text-align:center;min-width:78px;cursor:pointer;background:#fff}
+.timecard .tt{font-family:'Playfair Display',serif;font-weight:800;font-size:19px}
+.timecard .tl{font-size:10.5px;color:var(--muted);margin-top:2px}
+.timecard.open{border-color:var(--teal)}
+
+/* QUIZ */
+.quiz .q{padding:14px 0;border-bottom:1px solid var(--line)}
+.quiz .q:last-child{border-bottom:none}
+.quiz .prompt{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:9px}
+.quiz .qin{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.quiz input{font-family:'Raleway',sans-serif;font-weight:700;font-size:16px;width:150px;padding:9px 13px;border-radius:10px;border:1.5px solid var(--line);outline:none;color:var(--ink)}
+.quiz input:focus{border-color:var(--rose)}
+.fb{font-weight:700;font-size:14px;padding-left:2px}
+.fb.ok{color:var(--ok)} .fb.no{color:var(--no)}
+.fb.ok::before{content:"✓ "} .fb.no::before{content:"✗ "}
+
+/* BOSS */
+.boss{background:var(--navy);color:#fff;border-radius:20px;padding:26px;margin:22px 0}
+.boss h2{font-family:'Playfair Display',serif;font-size:25px;margin-bottom:4px}
+.boss .bsub{color:#AEB4CE;font-size:13.5px;margin-bottom:16px}
+.boss .brow{background:var(--navy-row);border-radius:11px;padding:13px 16px;margin-bottom:10px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.boss .brow .sayb{color:var(--rose);font-size:12px;font-weight:700;white-space:nowrap}
+.boss .brow.open{background:#323C6B}
+.boss .brow .ans{display:block;color:var(--teal);font-family:'Playfair Display',serif;font-style:italic;font-size:13.5px;margin-top:6px}
+
+/* SIDE QUEST */
+.side{background:var(--rose-card);border-radius:20px;padding:24px 26px;margin:22px 0}
+.side h2{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:3px}
+.side .ssub{color:#9A6474;font-size:13px;margin-bottom:14px}
+.side .srow{background:#fff;border-radius:12px;padding:12px 16px;margin-bottom:10px;font-size:14px;display:flex;gap:12px;align-items:flex-start}
+.side .srow .n{font-family:'Playfair Display',serif;font-weight:800;color:var(--rose);font-size:18px;line-height:1.3}
+.side .srow em{color:var(--muted);font-style:italic}
+
+.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:34px;letter-spacing:.4px}
+.foot b{color:var(--rose)}
+@media(max-width:560px){.hero h1{font-size:34px}.score{top:22px;right:20px}.hero{padding:22px 20px 20px}.card,.machine,.boss,.side{padding:20px 18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="score"><span class="st">★</span> <span id="stars">0</span> /6</div>
+    <div class="brand">English by Neves</div>
+    <h1 class="serif">Number <em>Quest II</em></h1>
+    <div class="sub">Numbers 30 → 10,000 · A1 · type, say, play</div>
+    <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+
+  <p class="intro">You can already say your <b>age</b> and your <b>phone number</b>. Now for the real world: <b>prices</b>, <b>years</b>, <b>salaries</b>, <b>followers</b>. Type any number below and I'll show you how to say it — and say it out loud with you.</p>
+
+  <!-- LEVEL 3 -->
+  <div class="lvl"><span class="pill rose">Level 3</span><span class="mins">~5 min</span></div>
+  <h2 class="sec">The tens: 30 → 100</h2>
+  <p class="lead">Read each one out loud. Watch the spelling traps. Tap a card for a real-life use.</p>
+  <div class="grid" id="g-tens"></div>
+  <div class="note"><b>Spelling traps:</b> it's <b>forty</b> (not "fourty"), <b>fifty</b>, and <b>ninety</b> — easy to get wrong when you write them.</div>
+  <button class="learned" data-star>I learned the tens</button>
+
+  <!-- LEVEL 4 -->
+  <div class="lvl"><span class="pill teal">Level 4</span><span class="mins">~5 min</span></div>
+  <h2 class="sec">In between: 21 → 99</h2>
+  <p class="lead">Just glue two words with a <b>hyphen</b>: twenty + one → <b>twenty-one</b>. Tap for examples.</p>
+  <div class="grid" id="g-comp"></div>
+  <button class="learned" data-star>I can build any number to 99</button>
+
+  <!-- LEVEL 5 -->
+  <div class="lvl"><span class="pill orange">Level 5</span><span class="mins">~5 min</span></div>
+  <h2 class="sec">Hundreds: 100 → 999</h2>
+  <p class="lead">One word: <b>hundred</b> (never "hundreds" for a number). Tap a card to hear the pattern.</p>
+  <div class="grid" id="g-hund"></div>
+  <div class="note uk"><b>British tip (that's us! 🇬🇧):</b> we put <b>"and"</b> before the last part — <b>one hundred and twenty-five</b>, not "one hundred twenty-five". Americans drop the "and". Both are understood.</div>
+  <button class="learned" data-star>I've got hundreds</button>
+
+  <!-- LEVEL 6 -->
+  <div class="lvl"><span class="pill blue">Level 6</span><span class="mins">~5 min</span></div>
+  <h2 class="sec">Thousands: 1,000 → 10,000</h2>
+  <p class="lead">Same idea, bigger word: <b>thousand</b>. Tap for real prices and salaries.</p>
+  <div class="grid" id="g-thou"></div>
+  <div class="note"><b>Two ways for round numbers:</b> 1,500 can be <b>"one thousand five hundred"</b> or, casually, <b>"fifteen hundred"</b>. Both are correct.</div>
+  <button class="learned" data-star>I reached ten thousand</button>
+
+  <!-- THE MACHINE -->
+  <div class="lvl"><span class="pill purple">The Machine</span><span class="mins">use it anytime</span></div>
+  <div class="machine">
+    <h2 class="serif">The Number Machine ⚙️</h2>
+    <div class="msub">Type ANY number from 0 to 10,000. See how to say it — then tap 🔊 and say it out loud with the voice.</div>
+    <div class="inrow">
+      <input class="numinput" id="mInput" type="number" inputmode="numeric" min="0" max="10000" placeholder="e.g. 3450">
+      <button class="btn say" id="mSay">Say it</button>
+      <button class="btn ghost sm" id="mRand">🎲 Surprise me</button>
+    </div>
+    <div class="words" id="mWords"><span class="ph">…your number in English will appear here</span></div>
+    <div class="hintline">Tip: for phone numbers we say each digit — but for prices, ages and years we say the whole number, like this.</div>
+  </div>
+
+  <!-- REAL-LIFE MISSIONS -->
+  <div class="lvl"><span class="pill orange">Real-life missions</span><span class="mins">~16 min</span></div>
+  <h2 class="sec">Use big numbers for real</h2>
+  <p class="lead">Four missions. Type your real answer, reveal the model, then <b>say it out loud</b>.</p>
+
+  <!-- Mission 1: price -->
+  <div class="card">
+    <span class="pill rose">Mission 1 · The price</span>
+    <h3 class="serif" style="margin-top:10px">How much is it?</h3>
+    <div class="csub">Type a price in reais and hear how to say it.</div>
+    <div class="frame">How much is it? — <b>It's ___ reais.</b></div>
+    <div class="inrow">
+      <input class="numinput" id="pInput" type="number" inputmode="numeric" placeholder="1250" style="font-size:24px;width:150px">
+      <button class="btn say sm" id="pSay">Say the price</button>
+    </div>
+    <div class="out big" id="pOut"></div>
+    <div class="mini">Real ones to try: a phone (R$2,300) · rent (R$1,800) · a coffee (R$8) · a laptop (R$4,500)</div>
+  </div>
+
+  <!-- Mission 2: year -->
+  <div class="card">
+    <span class="pill blue">Mission 2 · The year</span>
+    <h3 class="serif" style="margin-top:10px">What year?</h3>
+    <div class="csub">Years sound different! 1998 = "nineteen ninety-eight". 2025 = "twenty twenty-five". Type a year.</div>
+    <div class="frame">What year were you born? — <b>I was born in ___.</b></div>
+    <div class="inrow">
+      <input class="numinput" id="yInput" type="number" inputmode="numeric" placeholder="1999" style="font-size:24px;width:150px">
+      <button class="btn say sm" id="ySay">Say the year</button>
+    </div>
+    <div class="out big" id="yOut"></div>
+    <div class="mini">Try: your birth year · this year (2026) · the year you finished school</div>
+  </div>
+
+  <!-- Mission 3: dictation -->
+  <div class="card">
+    <span class="pill teal">Mission 3 · Listen &amp; type</span>
+    <h3 class="serif" style="margin-top:10px">Number dictation</h3>
+    <div class="csub">Tap 🔊 to hear a number. Type the digits you hear. The machine checks you.</div>
+    <div class="inrow">
+      <button class="btn say sm" id="dSay">Play a number</button>
+      <input class="quizin" id="dInput" type="number" inputmode="numeric" placeholder="type digits" style="font-family:'Raleway';font-weight:700;font-size:16px;width:150px;padding:9px 13px;border-radius:10px;border:1.5px solid var(--line);outline:none;color:var(--ink)">
+      <button class="btn sm" id="dCheck">Check</button>
+      <button class="btn ghost sm" id="dNew">New number</button>
+    </div>
+    <div class="fb" id="dFb" style="margin-top:10px"></div>
+  </div>
+
+  <!-- Mission 4: big life numbers -->
+  <div class="card">
+    <span class="pill purple">Mission 4 · Your life in numbers</span>
+    <h3 class="serif" style="margin-top:10px">Talk about your world</h3>
+    <div class="csub">Type each real number, hear it, then say the full sentence out loud.</div>
+    <div class="frame">"There are about <b>___</b> people in my city." &nbsp;·&nbsp; "I have <b>___</b> followers." &nbsp;·&nbsp; "My rent is <b>___</b> reais."</div>
+    <div class="inrow">
+      <input class="numinput" id="lInput" type="number" inputmode="numeric" placeholder="8500" style="font-size:24px;width:150px">
+      <button class="btn say sm" id="lSay">Say it</button>
+    </div>
+    <div class="out big" id="lOut"></div>
+  </div>
+
+  <button class="learned" data-star style="margin-left:4px">Missions done</button>
+
+  <!-- PRACTICE / QUIZ -->
+  <div class="lvl"><span class="pill yellow">Practice</span><span class="mins">~6 min</span></div>
+  <h2 class="sec">Questions — type the number</h2>
+  <p class="lead">Read the words, type the <b>digits</b>. Instant check. Say each one out loud first!</p>
+  <div class="card quiz" id="quiz"></div>
+
+  <!-- BOSS -->
+  <div class="lvl"><span class="pill purple">Boss level</span><span class="mins">~3 min</span></div>
+  <div class="boss">
+    <h2 class="serif">Put it all together</h2>
+    <div class="bsub">One quick conversation. Answer with a real number in every line — no looking, say it out loud. Tap a line to hear a model.</div>
+    <div id="bossRows"></div>
+    <button class="learned" data-star style="margin-top:6px">I beat the boss</button>
+  </div>
+
+  <!-- SIDE QUEST -->
+  <div class="side">
+    <span class="pill rose">Side quest · Home</span>
+    <h2 class="serif" style="margin-top:10px">Record 40 seconds</h2>
+    <div class="ssub">On WhatsApp, record yourself answering these and send it to me before our next class.</div>
+    <div class="srow"><span class="n">1</span><div>Say a price you paid this week. <em>"It cost ___ reais."</em></div></div>
+    <div class="srow"><span class="n">2</span><div>Say the year you were born and this year. <em>"I was born in ___. Now it's ___."</em></div></div>
+    <div class="srow"><span class="n">3</span><div>Say one big number from your life — rent, salary, followers, or people in your city.</div></div>
+  </div>
+
+  <div class="foot"><b>English by Neves</b> ★ Number Quest II ★ A1</div>
+
+</div>
+
+<script>
+/* ---------- NUMBER → WORDS (British, 0–10,000) ---------- */
+var ONES=["","one","two","three","four","five","six","seven","eight","nine","ten","eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen"];
+var TENS=["","","twenty","thirty","forty","fifty","sixty","seventy","eighty","ninety"];
+function under100(n){ if(n<20) return ONES[n]; var t=Math.floor(n/10),o=n%10; return TENS[t]+(o?"-"+ONES[o]:""); }
+function under1000(n){ if(n<100) return under100(n); var h=Math.floor(n/100),r=n%100; return ONES[h]+" hundred"+(r?" and "+under100(r):""); }
+function toWords(n){
+  n=Math.floor(n);
+  if(isNaN(n)) return "";
+  if(n===0) return "zero";
+  if(n<0) return "minus "+toWords(-n);
+  if(n>10000) return "(let's keep it under ten thousand for now)";
+  if(n<1000) return under1000(n);
+  var th=Math.floor(n/1000), r=n%1000;
+  var s=under1000(th)+" thousand";
+  if(r){ s += (r<100? " and "+under100(r) : " "+under1000(r)); }
+  return s;
+}
+/* YEAR reading */
+function yearWords(y){
+  y=Math.floor(y);
+  if(isNaN(y)) return "";
+  if(y<1000||y>2099) return toWords(y);
+  if(y>=2000){ var r=y%100; if(r===0) return "two thousand"; if(r<10) return "two thousand and "+ONES[r]; return "twenty "+under100(r); }
+  var hi=Math.floor(y/100), lo=y%100;
+  if(lo===0) return ONES[hi]+" hundred";
+  if(lo<10) return ONES[hi]+" oh "+ONES[lo];
+  return ONES[hi]+" "+under100(lo);
+}
+/* SPEAK (British voice) */
+function speak(text){
+  try{
+    if(!('speechSynthesis' in window)||!text) return;
+    window.speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang='en-GB'; u.rate=.9; u.pitch=1;
+    var vs=window.speechSynthesis.getVoices();
+    var gb=vs.find(function(v){return /en-GB/i.test(v.lang)})||vs.find(function(v){return /en/i.test(v.lang)});
+    if(gb) u.voice=gb;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
+if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged=function(){}; }
+
+/* ---------- TILES ---------- */
+var cap=(s)=>s.charAt(0).toUpperCase()+s.slice(1);
+function tile(num,name,ex,i){
+  return '<button class="tile c'+(i%6)+'" data-w="'+name+'">'
+    +'<span class="face front"><span class="num">'+num+'</span><span class="nm">'+name+'</span><span class="tap">tap ›</span></span>'
+    +'<span class="face back"><span class="ex">'+ex+'</span></span></button>';
+}
+function fill(id,arr){ document.getElementById(id).innerHTML=arr.map(function(x,i){return tile(x[0],x[1],x[2],i)}).join(''); }
+
+fill('g-tens',[
+ [30,"thirty","30 minutes = half an hour"],[40,"forty","\u201CMy dad is forty.\u201D"],[50,"fifty","a R$50 note"],
+ [60,"sixty","60 seconds in a minute"],[70,"seventy","\u201CGrandma is seventy.\u201D"],[80,"eighty","80 km/h on the road"],
+ [90,"ninety","90 minutes = a football match"],[100,"one hundred","100% \u2014 full marks!"]
+]);
+fill('g-comp',[
+ [21,"twenty-one","legal adult in the US"],[34,"thirty-four","\u201CI'm thirty-four.\u201D"],[47,"forty-seven","bus number 47"],
+ [58,"fifty-eight","\u201CIt's fifty-eight reais.\u201D"],[69,"sixty-nine","room 69, third floor"],[76,"seventy-six","76% battery"],
+ [88,"eighty-eight","\u201CApartment eighty-eight.\u201D"],[99,"ninety-nine","R$99 \u2014 almost 100!"]
+]);
+fill('g-hund',[
+ [100,"one hundred","\u201COne hundred reais, please.\u201D"],[200,"two hundred","200 g of cheese"],[250,"two hundred and fifty","\u201CIt's R$250.\u201D"],
+ [500,"five hundred","a R$500 flight"],[750,"seven hundred and fifty","750 ml bottle"],[999,"nine hundred and ninety-nine","R$999 \u2014 a phone"]
+]);
+fill('g-thou',[
+ [1000,"one thousand","1,000 followers \uD83C\uDF89"],[1500,"one thousand five hundred","\u201CRent is 1,500.\u201D"],[2000,"two thousand","a R$2,000 laptop"],
+ [3750,"three thousand seven hundred and fifty","\u201CSalary: 3,750.\u201D"],[5000,"five thousand","5,000 steps today"],[10000,"ten thousand","10,000 \u2014 max level!"]
+]);
+
+document.addEventListener('click',function(e){
+  var t=e.target.closest('.tile');
+  if(t){ t.classList.toggle('flip'); speak(t.getAttribute('data-w')); }
+});
+
+/* ---------- MACHINE ---------- */
+var mIn=document.getElementById('mInput'), mW=document.getElementById('mWords');
+function renderMachine(){
+  var v=mIn.value.trim();
+  if(v===''){ mW.innerHTML='<span class="ph">…your number in English will appear here</span>'; return; }
+  var n=parseInt(v,10);
+  mW.textContent=cap(toWords(n));
+}
+mIn.addEventListener('input',renderMachine);
+document.getElementById('mSay').onclick=function(){ var n=parseInt(mIn.value,10); if(!isNaN(n)){renderMachine();speak(toWords(n));} };
+document.getElementById('mRand').onclick=function(){ var n=Math.floor(Math.random()*10001); mIn.value=n; renderMachine(); speak(toWords(n)); };
+
+/* ---------- MISSION price ---------- */
+var pIn=document.getElementById('pInput'),pOut=document.getElementById('pOut');
+function renderPrice(){ var v=pIn.value.trim(); if(v===''){pOut.textContent='';return;} var n=parseInt(v,10); pOut.textContent='It\u2019s '+toWords(n)+' reais.'; }
+pIn.addEventListener('input',renderPrice);
+document.getElementById('pSay').onclick=function(){ var n=parseInt(pIn.value,10); if(!isNaN(n)){renderPrice();speak(toWords(n)+" reais");} };
+
+/* ---------- MISSION year ---------- */
+var yIn=document.getElementById('yInput'),yOut=document.getElementById('yOut');
+function renderYear(){ var v=yIn.value.trim(); if(v===''){yOut.textContent='';return;} var n=parseInt(v,10); yOut.textContent=cap(yearWords(n)); }
+yIn.addEventListener('input',renderYear);
+document.getElementById('ySay').onclick=function(){ var n=parseInt(yIn.value,10); if(!isNaN(n)){renderYear();speak(yearWords(n));} };
+
+/* ---------- MISSION dictation ---------- */
+var dNum=0;
+function newDict(){ dNum=Math.floor(Math.random()*9001)+100; document.getElementById('dFb').textContent=''; document.getElementById('dFb').className='fb'; document.getElementById('dInput').value=''; }
+newDict();
+document.getElementById('dSay').onclick=function(){ speak(toWords(dNum)); };
+document.getElementById('dNew').onclick=function(){ newDict(); speak(toWords(dNum)); };
+document.getElementById('dCheck').onclick=function(){
+  var g=parseInt(document.getElementById('dInput').value,10),fb=document.getElementById('dFb');
+  if(isNaN(g)){fb.className='fb no';fb.textContent='Type the digits first.';return;}
+  if(g===dNum){fb.className='fb ok';fb.textContent='Correct! It was '+dNum+' — '+toWords(dNum)+'.';}
+  else{fb.className='fb no';fb.textContent='Not quite — listen again and try once more.';}
+};
+
+/* ---------- MISSION life ---------- */
+var lIn=document.getElementById('lInput'),lOut=document.getElementById('lOut');
+function renderLife(){ var v=lIn.value.trim(); if(v===''){lOut.textContent='';return;} lOut.textContent=cap(toWords(parseInt(v,10)))+'.'; }
+lIn.addEventListener('input',renderLife);
+document.getElementById('lSay').onclick=function(){ var n=parseInt(lIn.value,10); if(!isNaN(n)){renderLife();speak(toWords(n));} };
+
+/* ---------- QUIZ ---------- */
+var QUIZ=[
+ {w:"forty-seven",a:47},
+ {w:"two hundred and thirteen",a:213},
+ {w:"one thousand five hundred",a:1500},
+ {w:"three thousand and sixty",a:3060},
+ {w:"nine hundred and ninety-nine",a:999}
+];
+var quizEl=document.getElementById('quiz');
+quizEl.innerHTML=QUIZ.map(function(q,i){
+  return '<div class="q"><div class="prompt">\u201C'+cap(q.w)+'\u201D</div>'
+   +'<div class="qin"><button class="reveal" data-say="'+q.w+'">🔊 hear it</button>'
+   +'<input type="number" inputmode="numeric" id="qi'+i+'" placeholder="type digits">'
+   +'<button class="btn sm" data-check="'+i+'">Check</button>'
+   +'<span class="fb" id="qf'+i+'"></span></div></div>';
+}).join('');
+quizEl.addEventListener('click',function(e){
+  var s=e.target.closest('[data-say]'); if(s){ speak(s.getAttribute('data-say')); return; }
+  var c=e.target.closest('[data-check]'); if(!c) return;
+  var i=+c.getAttribute('data-check'),g=parseInt(document.getElementById('qi'+i).value,10),fb=document.getElementById('qf'+i);
+  if(isNaN(g)){fb.className='fb no';fb.textContent='?';return;}
+  if(g===QUIZ[i].a){fb.className='fb ok';fb.textContent='';}
+  else{fb.className='fb no';fb.textContent='try again';}
+});
+
+/* ---------- BOSS ---------- */
+var BOSS=[
+ {q:"How old are you?",a:"I'm ___ years old.",say:"I'm twenty-eight years old."},
+ {q:"How much is your rent?",a:"It's ___ reais.",say:"It's one thousand five hundred reais."},
+ {q:"What year did you finish school?",a:"In ___.",say:"In twenty seventeen."},
+ {q:"How many people live in your city?",a:"About ___.",say:"About five thousand."}
+];
+document.getElementById('bossRows').innerHTML=BOSS.map(function(b){
+  return '<div class="brow" data-say="'+b.say.replace(/"/g,'&quot;')+'"><span>'+b.q+' — '+b.a+'<span class="ans">'+b.say+'</span></span><span class="sayb">🔊 model</span></div>';
+}).join('');
+document.getElementById('bossRows').addEventListener('click',function(e){
+  var r=e.target.closest('.brow'); if(!r) return; r.classList.toggle('open'); speak(r.getAttribute('data-say'));
+});
+
+/* ---------- STARS ---------- */
+var stars=0,se=document.getElementById('stars');
+document.querySelectorAll('[data-star]').forEach(function(b){
+  b.addEventListener('click',function(){ if(b.disabled) return; stars++; se.textContent=stars; b.disabled=true;
+    var d=document.querySelectorAll('.dots i'); if(d[stars-1]) d[stars-1].classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
