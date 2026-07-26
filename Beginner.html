@@ -571,7 +571,7 @@ const LESSONS = [
   cando:"Eu sei <b>revisar sozinho(a)</b> e fazer o inglês grudar.",
   objComm:"Aprender a estudar fora da aula com repetição espaçada e flashcards.",
   objEN:"I know how to review and study every day.",
-  review:[{from:"Aula 1",items:["I tento falar mesmo errado","Reviso 10 min/dia","Trago minhas dúvidas","Hello! My name is ___"]}],
+  review:[{from:"Aula 1",items:["Eu tento falar mesmo errado","Reviso 10 min/dia","Trago minhas dúvidas","Hello! My name is ___"]}],
   warmup:"Pergunta rápida em inglês, só pra aquecer: <span class='mdl' style='font-family:Fraunces;font-style:italic;color:var(--rose-deep)'>“Are you ready?”</span> — responda <b>“Yes, I'm ready!”</b>.",
   vocab:[{en:"every day",pt:"todo dia"},{en:"to remember",pt:"lembrar"},{en:"to forget",pt:"esquecer"},{en:"a word",pt:"uma palavra"},{en:"a phrase",pt:"uma frase"},{en:"again",pt:"de novo"}],
   phrases:[
@@ -600,7 +600,7 @@ const LESSONS = [
   success:["Eu entendi o que é repetição espaçada.","Eu montei meu primeiro maço de flashcards.","Eu falei as frases em voz alta antes de virar o cartão."]
 },
 {
-  n:3, tag:"Survival English", title:"Survive in the english class",
+  n:3, tag:"Survival English", title:"Survive in the English class",
   cando:"Eu consigo <b>pedir ajuda em inglês</b> sem voltar pro português.",
   objComm:"Pedir ajuda durante a aula: repetir, não entendi, como se diz, escreve aí.",
   objEN:"I can ask for help in English during class.",
@@ -647,8 +647,8 @@ const LESSONS = [
   objComm:"Soletrar informações pessoais (nome, e-mail, palavras simples).",
   objEN:"I can spell my name and email.",
   review:[{from:"Aula 3",items:["Sorry? Can you repeat?","How do you say ___?"]}],
-  warmup:"Cantar/dizer o alfabeto uma vez, relaxado.",
-  vocab:[{en:"to spell",pt:"soletrar"},{en:"a letter",pt:"uma letra"},{en:"an email",pt:"um e-mail"},{en:"double (LL)",pt:"dois (LL)"},{en:"at / dot",pt:"arroba / ponto"}],
+  warmup:"Cantar/dizer o alfabeto uma vez, relaxado. Depois, pergunta: \"How do you spell your name?\"",
+  vocab:[{en:"to spell",pt:"soletrar"},{en:"a letter",pt:"uma letra"}],
   phrases:[
     {en:"How do you spell that?",pt:"Como se soletra isso?"},
     {en:"It's ___, ___, ___...",pt:"É ___, ___, ___..."}
@@ -741,7 +741,7 @@ const LESSONS = [
   success:["Eu me apresento com nome, idade, país e nacionalidade sem travar.","Eu faço as 3 perguntas pessoais a outra pessoa.","Eu mantive uma troca de ~1 min juntando cumprimento + apresentação."]
 },
 {
-  n:7, tag:"My life", title:"Profession, City and Languagens", wip:true,
+  n:7, tag:"My life", title:"Profession, City and Languages", wip:true,
   cando:"Eu consigo dizer <b>o que faço, onde moro e que idiomas falo</b>.",
   objComm:"Falar profissão, cidade onde mora e idiomas.",
   objEN:"I can talk about my job, my city and the languages I speak.",
@@ -836,7 +836,7 @@ const $=s=>document.querySelector(s);
 const home=$('#home'), lessonView=$('#lessonView'), trilha=$('#trilha');
 
 function isDone(n){return !!done[n]}
-function isUnlocked(n){return n===1 || isDone(n-1)}
+function isUnlocked(n){return true}
 function status(n){return isDone(n)?'done':(isUnlocked(n)?'open':'locked')}
 
 function updateProgress(){
