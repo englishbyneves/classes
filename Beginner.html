@@ -641,24 +641,53 @@ const LESSONS = [
   success:["Eu peço ajuda em inglês sem travar.","Eu uso a frase certa pra cada situação (repetir, não entendi, como se diz).","Eu evitei o português quando travei."]
 },
 {
-  
-  n:4, tag:"Spelling", title:"Alphabet and Spelling", wip:true,
-  cando:"Eu consigo <b>soletrar meu nome e e-mail</b> em inglês.",
-  objComm:"Soletrar informações pessoais (nome, e-mail, palavras simples).",
-  objEN:"I can spell my name and email.",
-  review:[{from:"Aula 3",items:["Sorry? Can you repeat?","How do you say ___?"]}],
-  warmup:"Cantar/dizer o alfabeto uma vez, relaxado. Depois, pergunta: \"How do you spell your name?\"",
-  vocab:[{en:"to spell",pt:"soletrar"},{en:"a letter",pt:"uma letra"}],
+  n:4, tag:"Spelling", title:"Alphabet and Spelling",
+  cando:"Eu consigo <b>soletrar meu nome</b> em inglês e pedir pra outra pessoa soletrar quando eu não entendo.",
+  objComm:"Dizer o alfabeto com a pronúncia certa e soletrar nome, sobrenome e palavras simples sem voltar pro português.",
+  objEN:"I can spell my name and ask people to spell things for me.",
+  review:[
+    {from:"Aula 3",items:["Sorry? Can you repeat?","How do you say ___?","Slowly, please"]},
+    {from:"Aula 1",items:["Hello! My name is ___","Nice to meet you"]}
+  ],
+  warmup:"<b>How would you spell your name?</b> ",
+  vocab:[
+    {en:"to spell",pt:"soletrar"},
+    {en:"a letter",pt:"uma letra"},
+    {en:"a word",pt:"uma palavra"},
+    {en:"How do you spell it?",pt:"Como se soletra?"}
+  ],
   phrases:[
     {en:"How do you spell that?",pt:"Como se soletra isso?"},
-    {en:"It's ___, ___, ___...",pt:"É ___, ___, ___..."}
+    {en:"Can you spell it, please?",pt:"Você pode soletrar, por favor?"},
+    {en:"It's ___, ___, ___.",pt:"É ___, ___, ___."},
+    {en:"Let me repeat.",pt:"Deixa eu repetir."}
   ],
-  guided:[{p:"Esqueleto: letras difíceis pro brasileiro (G/J, E/I, H, W, Y, R), depois soletrar nome e e-mail.",model:""}],
-  speaking:[{lbl:"Spell-it Challenge",sec:60,prompt:"Soletre seu nome completo, depois seu e-mail, depois 3 palavras que eu disser.",model:"My name is Ester — E-S-T-E-R."}],
-  main:{title:"(a completar)",body:["Atividade principal a definir."]},
-  grammar:[{html:"Em uso: alfabeto, sons das vogais e acrônimos."}],
-  homepractice:["(a completar)"],
-  success:["Eu sei soletrar meu nome e meu e-mail sem hesitar."]
+  guided:[
+    {p:"O alfabeto inteiro, com o som de cada letra. Diga linha por linha comigo — as <b>rosas</b> são as que derrubam brasileiro, então vá mais devagar nelas:<span style='display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px;margin-top:12px'><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>A</b><span style='font-size:11px;color:var(--ink-soft)'>êi</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>B</b><span style='font-size:11px;color:var(--ink-soft)'>bi</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>C</b><span style='font-size:11px;color:var(--ink-soft)'>si</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>D</b><span style='font-size:11px;color:var(--ink-soft)'>di</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>E</b><span style='font-size:11px;color:var(--ink-soft)'>ii</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>F</b><span style='font-size:11px;color:var(--ink-soft)'>éf</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>G</b><span style='font-size:11px;color:var(--ink-soft)'>dji</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>H</b><span style='font-size:11px;color:var(--ink-soft)'>êitch</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>I</b><span style='font-size:11px;color:var(--ink-soft)'>ái</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>J</b><span style='font-size:11px;color:var(--ink-soft)'>djêi</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>K</b><span style='font-size:11px;color:var(--ink-soft)'>kêi</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>L</b><span style='font-size:11px;color:var(--ink-soft)'>él</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>M</b><span style='font-size:11px;color:var(--ink-soft)'>ém</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>N</b><span style='font-size:11px;color:var(--ink-soft)'>én</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>O</b><span style='font-size:11px;color:var(--ink-soft)'>ôu</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>P</b><span style='font-size:11px;color:var(--ink-soft)'>pi</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>Q</b><span style='font-size:11px;color:var(--ink-soft)'>kiu</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>R</b><span style='font-size:11px;color:var(--ink-soft)'>ar</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>S</b><span style='font-size:11px;color:var(--ink-soft)'>és</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>T</b><span style='font-size:11px;color:var(--ink-soft)'>ti</span></span><span style='background:var(--gold-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:#7A5A22;display:block'>U</b><span style='font-size:11px;color:var(--ink-soft)'>iú</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>V</b><span style='font-size:11px;color:var(--ink-soft)'>vi</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>W</b><span style='font-size:11px;color:var(--ink-soft)'>dâbliu</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>X</b><span style='font-size:11px;color:var(--ink-soft)'>éks</span></span><span style='background:var(--rose-tint);border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;color:var(--rose-deep);display:block'>Y</b><span style='font-size:11px;color:var(--ink-soft)'>uái</span></span><span style='background:#F4F1EC;border-radius:9px;padding:7px 3px;text-align:center'><b style='font-family:Fraunces;font-size:18px;display:block'>Z</b><span style='font-size:11px;color:var(--ink-soft)'>zi</span></span></span><span style='display:block;margin-top:10px;font-size:13px;color:var(--ink-soft)'>Par mais perigoso: <b>E</b> (ii) e <b>I</b> (ái) — o brasileiro troca os dois o tempo todo.</span>",model:"E — ii. I — ái. G — dji. J — djêi."},
+    {p:"<b>Listening time.</b> Ouça o alfabeto uma vez inteiro sem falar nada. Na segunda vez, fale junto — mesmo atrasado(a), mesmo errado. <span style='color:var(--ink-soft);font-size:13px'>[colar aqui o link do vídeo de pronúncia]</span>",model:""},
+    {p:"Agora a letra vira palavra — assim o som gruda. Diga a letra, o som, e as duas palavras:<span style='display:block;margin-top:12px'><span style='display:flex;gap:12px;align-items:center;background:var(--rose-tint);border-radius:9px;padding:7px 13px;margin-bottom:5px'><b style='font-family:Fraunces;font-size:16px;color:var(--rose-deep);min-width:56px'>A êi</b><span style='font-size:14px'>apple · avocado</span></span><span style='display:flex;gap:12px;align-items:center;background:var(--rose-tint);border-radius:9px;padding:7px 13px;margin-bottom:5px'><b style='font-family:Fraunces;font-size:16px;color:var(--rose-deep);min-width:56px'>E ii</b><span style='font-size:14px'>eight · elephant</span></span><span style='display:flex;gap:12px;align-items:center;background:var(--rose-tint);border-radius:9px;padding:7px 13px;margin-bottom:5px'><b style='font-family:Fraunces;font-size:16px;color:var(--rose-deep);min-width:56px'>I ái</b><span style='font-size:14px'>ice · iron</span></span><span style='display:flex;gap:12px;align-items:center;background:var(--sage-tint);border-radius:9px;padding:7px 13px;margin-bottom:5px'><b style='font-family:Fraunces;font-size:16px;color:#3F6152;min-width:56px'>G dji</b><span style='font-size:14px'>guitar · garage</span></span><span style='display:flex;gap:12px;align-items:center;background:var(--sage-tint);border-radius:9px;padding:7px 13px;margin-bottom:5px'><b style='font-family:Fraunces;font-size:16px;color:#3F6152;min-width:56px'>J djêi</b><span style='font-size:14px'>juice · Jurassic</span></span><span style='display:flex;gap:12px;align-items:center;background:var(--sage-tint);border-radius:9px;padding:7px 13px'><b style='font-family:Fraunces;font-size:16px;color:#3F6152;min-width:56px'>Y uái</b><span style='font-size:14px'>you · yesterday</span></span></span>",model:"A — êi — apple. G — dji — guitar. Y — uái — you."}
+  ],
+  speaking:[
+    {lbl:"How would you spell your name?",sec:30,prompt:"Sem parar por 30 segundos: <b>“My name is ___. It's ___, ___, ___...”</b> Soletre o primeiro nome, depois o sobrenome. Depois recomeça, mais rápido.",model:"My name is Gabriela — G-A-B-R-I-E-L-A."},
+    {lbl:"Spelling game",sec:60,prompt:"Soletre esta lista inteira em voz alta, sem parar: <b>cat · dog · name · book · gym · food · flower · shine · sun · pool · I</b>. Errou? Não para — continua e volta depois.",model:"Cat — C-A-T. Gym — G-Y-M. Flower — F-L-O-W-E-R."},
+    {lbl:"Decode & Ask",sec:60,prompt:"Eu soletro 4 palavras rápido demais de propósito. Você me interrompe em inglês toda vez que precisar, escreve, e me devolve a palavra soletrando de volta.",model:"Sorry? Can you spell it again, please? — Ok: it's B-R-I-G-H-T."}
+  ],
+  main:{title:"The Booking Call",body:[
+    "Encena comigo: você está ligando pra reservar um hotel. Eu sou o atendente e vou pedir seu <b>nome</b> e seu <b>sobrenome</b> — e vou fingir que não entendi pelo menos duas vezes.",
+    "Sua missão: soletrar tudo e <b>não voltar pro português nenhuma vez</b>. Quando eu errar seu nome de propósito, corrige: <b>“No, it's ___, with a double L.”</b>",
+    "Rodada 2: eu ligo de volta e você reserva no nome de um(a) amigo(a). Rodada 3: <b>você</b> é o atendente e eu sou o cliente — pergunta <b>“How do you spell that?”</b> e anota o que eu disser."
+  ]},
+  grammar:[{html:"Apoio da professora: <b>How do you spell...?</b> entra como bloco pronto (chunk), sem análise do auxiliar <i>do</i>. Trabalhe <b>nome da letra</b> ≠ <b>som da letra</b> — o A0 confunde os dois. <b>Capital</b> e <b>double</b> entram como vocabulário funcional. Meses e dias da semana NÃO entram nesta aula: ficam pra Aula 9, no uso comunicativo (on Monday, rotina)."}],
+  homepractice:[
+    "Gravar um áudio de 30s soletrando o nome completo e me mandar.",
+    "Soletrar em voz alta 5 nomes de séries, jogos ou artistas que você curte (Stranger Things, Fortnite, The Sims...).",
+    "Flashcards: as letras rosas do quadro (A E G H I J W Y)."
+  ],
+  success:[
+    "Eu digo o alfabeto inteiro sem travar nas letras difíceis.",
+    "Eu soletro meu nome completo sem hesitar e sem voltar pro português.",
+    "Eu peço pra outra pessoa soletrar: “How do you spell that?”"
+  ]
 },
 {
   n:5, tag:"Greetings", title:"Greetings and Farewells",
