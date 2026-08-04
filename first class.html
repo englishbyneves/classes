@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English by Neves — Never Freeze Again</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#17284A;
+    --navy-2:#20325b;
+    --rose:#C77E95;
+    --rose-soft:#E7C2CE;
+    --rose-tint:#F7E9EE;
+    --cream:#FBF7F5;
+    --ink:#2A2E3A;
+    --muted:#6a7180;
+    --white:#ffffff;
+    --shadow:0 18px 40px -18px rgba(23,40,74,.35);
+    --shadow-sm:0 8px 22px -12px rgba(23,40,74,.30);
+    --radius:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 85% -10%, var(--rose-tint), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, #eef2fb, transparent 55%),
+      var(--cream);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:26px 20px 80px}
+
+  /* Brand bar */
+  .brand{display:flex;align-items:baseline;gap:10px;justify-content:center;margin:6px 0 30px;letter-spacing:.02em}
+  .brand .b1{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--navy);font-size:1.15rem}
+  .brand .by{font-family:'Montserrat',sans-serif;font-style:italic;font-weight:500;color:var(--rose);font-size:.95rem}
+  .brand .b2{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--rose);font-size:1.15rem}
+
+  /* Hero */
+  .hero{
+    background:linear-gradient(150deg,var(--navy),var(--navy-2));
+    color:#fff;border-radius:var(--radius);padding:44px 38px;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .hero::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--rose), transparent 70%);opacity:.55}
+  .hero .kicker{font-family:'Montserrat',sans-serif;font-weight:600;letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:var(--rose-soft)}
+  .hero h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:2.5rem;line-height:1.05;margin:12px 0 10px;position:relative;z-index:1}
+  .hero h1 em{font-style:italic;color:var(--rose-soft);font-weight:800}
+  .hero p{max-width:520px;color:#dfe5f2;font-size:1.04rem;position:relative;z-index:1}
+  .hero .tag{display:inline-block;margin-top:18px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+    padding:8px 16px;border-radius:999px;font-size:.85rem;color:#fff}
+
+  section{margin-top:34px}
+  .eyebrow{display:flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--navy);
+    font-size:1.28rem;margin-bottom:4px}
+  .eyebrow .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:11px;background:var(--rose);color:#fff;font-size:.95rem;flex:none}
+  .sub{color:var(--muted);margin:2px 0 18px;font-size:.98rem}
+
+  .card{background:var(--white);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow-sm);border:1px solid #eee}
+
+  /* Mission checklist */
+  .mission{display:grid;gap:12px}
+  .mission .goal{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid #eee;border-left:4px solid var(--rose);
+    border-radius:16px;padding:16px 18px;box-shadow:var(--shadow-sm);transition:.2s}
+  .mission .goal:hover{transform:translateX(4px)}
+  .mission .goal .ic{font-size:1.3rem;line-height:1.4}
+  .mission .goal b{color:var(--navy);font-family:'Montserrat',sans-serif}
+  .mission .goal span{display:block;color:var(--muted);font-size:.92rem}
+
+  /* Two truths */
+  .ttl{display:grid;gap:12px}
+  .ttl .opt{cursor:pointer;background:var(--white);border:2px solid #ececf2;border-radius:16px;padding:16px 18px;
+    display:flex;align-items:center;gap:14px;font-size:1.02rem;transition:.18s;user-select:none}
+  .ttl .opt:hover{border-color:var(--rose);transform:translateY(-2px)}
+  .ttl .opt .dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--rose-soft);flex:none;display:grid;place-items:center;font-size:.8rem;color:#fff}
+  .ttl .opt.lie{border-color:var(--rose);background:var(--rose-tint)}
+  .ttl .opt.lie .dot{background:var(--rose);border-color:var(--rose)}
+  .ttl .opt.truth{opacity:.6}
+  .ttl .opt.truth .dot{background:var(--navy);border-color:var(--navy)}
+  .ttl-result{margin-top:14px;font-size:.96rem;color:var(--navy);background:var(--rose-tint);border-radius:12px;padding:12px 16px;display:none}
+  .ttl-result.show{display:block}
+  .ynote{margin-top:16px;font-size:.92rem;color:var(--muted);border-top:1px dashed #e4e4ea;padding-top:14px}
+  .ynote b{color:var(--navy)}
+
+  /* Flip cards */
+  .flips{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media(max-width:560px){.flips{grid-template-columns:1fr}}
+  .flip{perspective:1200px;height:132px;cursor:pointer}
+  .flip .inner{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+  .flip.on .inner{transform:rotateY(180deg)}
+  .flip .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:18px;display:flex;flex-direction:column;justify-content:center}
+  .flip .front{background:linear-gradient(145deg,#fff,#fbf3f6);border:1px solid #f0e3e8}
+  .flip .front .when{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--rose);font-weight:700;font-family:'Montserrat',sans-serif}
+  .flip .front .pt{font-size:1rem;color:var(--navy);margin-top:6px;font-weight:500}
+  .flip .front .hint{margin-top:auto;font-size:.72rem;color:var(--muted)}
+  .flip .back{background:linear-gradient(145deg,var(--navy),var(--navy-2));color:#fff;transform:rotateY(180deg);border:1px solid var(--navy)}
+  .flip .back .en{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.14rem;line-height:1.25}
+  .flip .back .say{margin-top:10px;font-size:.8rem;color:var(--rose-soft)}
+
+  /* Builder */
+  .builder .screen{background:var(--navy);color:#fff;border-radius:16px;padding:20px;min-height:70px;display:flex;align-items:center;
+    font-family:'Montserrat',sans-serif;font-size:1.25rem;font-weight:600;gap:6px;flex-wrap:wrap}
+  .builder .screen .ph{color:#7d89a8;font-weight:500;font-size:1rem}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .chip{border:2px solid var(--rose-soft);background:#fff;color:var(--navy);border-radius:999px;padding:9px 16px;font-size:.95rem;cursor:pointer;transition:.15s;font-weight:500}
+  .chip:hover{background:var(--rose);color:#fff;border-color:var(--rose);transform:translateY(-2px)}
+  .builder .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .btn{border:none;border-radius:12px;padding:11px 20px;font-size:.92rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+  .btn-rose{background:var(--rose);color:#fff}
+  .btn-rose:hover{background:#b56a82}
+  .btn-ghost{background:#eef0f6;color:var(--navy)}
+  .btn-ghost:hover{background:#e2e6f1}
+  .builder small{display:block;margin-top:14px;color:var(--muted);font-size:.86rem}
+
+  /* Write-your-own (two truths) */
+  .write{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:560px){.write{grid-template-columns:1fr}}
+  .write .col{background:var(--white);border:1px solid #eee;border-radius:16px;padding:18px;box-shadow:var(--shadow-sm)}
+  .write .col h4{font-family:'Montserrat',sans-serif;color:var(--navy);font-size:1rem;margin-bottom:2px;display:flex;align-items:center;gap:8px}
+  .write .col .tip{color:var(--muted);font-size:.8rem;margin-bottom:12px}
+  .write .col.you{border-top:4px solid var(--rose)}
+  .field{width:100%;border:2px solid #ececf2;border-radius:12px;padding:11px 14px;font-family:'Inter',sans-serif;font-size:.95rem;color:var(--ink);margin-bottom:9px;transition:.15s;background:#fcfcfe}
+  .field:focus{outline:none;border-color:var(--rose);background:#fff}
+
+  /* Cafe production area */
+  .prod{padding:16px 18px 18px;border-top:1px solid #eef0f5;background:#fff}
+  .goal-tag{display:inline-block;background:var(--rose-tint);color:#a85f78;font-weight:600;font-size:.8rem;padding:6px 12px;border-radius:999px;margin-bottom:10px;font-family:'Inter',sans-serif}
+  .prod textarea{width:100%;border:2px solid #ececf2;border-radius:12px;padding:11px 14px;font-family:'Inter',sans-serif;font-size:.95rem;resize:none;min-height:50px;background:#fcfcfe}
+  .prod textarea:focus{outline:none;border-color:var(--rose);background:#fff}
+  .prod .row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;align-items:center}
+  .suggest{font-size:.84rem;color:var(--muted);margin-top:12px;cursor:pointer;user-select:none}
+  .suggest u{color:var(--rose)}
+  .suggest .model{display:none;margin-top:6px;background:#f4f6fb;border-left:3px solid var(--rose-soft);padding:9px 12px;border-radius:8px;color:var(--navy);font-size:.9rem}
+  .suggest.open .model{display:block}
+
+  /* Cafe simulator */
+  .phone{background:var(--white);border-radius:26px;border:1px solid #ececf2;box-shadow:var(--shadow);overflow:hidden;max-width:420px;margin:0 auto}
+  .phone .top{background:var(--navy);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px}
+  .phone .top .av{width:38px;height:38px;border-radius:50%;background:var(--rose);display:grid;place-items:center;font-size:1.1rem;flex:none}
+  .phone .top b{font-family:'Montserrat',sans-serif;font-size:.98rem}
+  .phone .top span{display:block;font-size:.72rem;color:#aab4cf}
+  .chatwin{padding:18px;min-height:220px;display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,#fbfbfd,#f6f7fb)}
+  .bub{max-width:80%;padding:11px 15px;border-radius:16px;font-size:.95rem;line-height:1.4;animation:pop .3s ease}
+  .bub.them{background:#fff;border:1px solid #ececf2;border-bottom-left-radius:5px;align-self:flex-start;color:var(--ink)}
+  .bub.you{background:var(--navy);color:#fff;border-bottom-right-radius:5px;align-self:flex-end}
+  .bub.you .lead{display:block;font-size:.68rem;color:var(--rose-soft);margin-bottom:3px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+  @keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .phone .foot{padding:14px 18px;border-top:1px solid #eef0f5;display:flex;justify-content:center}
+  .cafe-done{text-align:center;color:var(--navy);font-weight:600;font-family:'Montserrat',sans-serif;display:none;padding:4px 0}
+
+  /* Challenge */
+  .challenge{background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#fff;border-radius:var(--radius);padding:32px;text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .challenge::before{content:"";position:absolute;left:-60px;bottom:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--rose),transparent 70%);opacity:.4}
+  .challenge h3{font-family:'Montserrat',sans-serif;font-size:1.5rem;position:relative}
+  .challenge .prompt{max-width:520px;margin:12px auto 0;color:#dbe1f0;position:relative;display:none}
+  .challenge .prompt.show{display:block;animation:pop .4s ease}
+  .challenge .prompt .big{display:block;font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;font-size:1.15rem;margin-bottom:8px}
+  .bar{height:10px;background:rgba(255,255,255,.15);border-radius:999px;margin:22px auto 0;max-width:520px;overflow:hidden;display:none}
+  .bar.show{display:block}
+  .bar > i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--rose-soft),var(--rose));border-radius:999px}
+  .challenge .win{display:none;margin-top:16px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.1rem;color:var(--rose-soft);position:relative}
+  .challenge .win.show{display:block;animation:pop .5s ease}
+
+  /* Homework */
+  .hw{display:flex;gap:18px;align-items:center}
+  .hw .ic{font-size:2.2rem;flex:none}
+  .hw .frame{margin-top:12px;background:var(--navy);color:#fff;border-radius:12px;padding:12px 16px;font-family:'Montserrat',sans-serif;font-size:.98rem}
+  .hw .frame u{color:var(--rose-soft);text-decoration-color:var(--rose)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:.6s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  footer{text-align:center;margin-top:46px;color:var(--muted);font-size:.85rem}
+  footer b{color:var(--navy);font-family:'Montserrat',sans-serif}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand"><span class="b1">ENGLISH</span><span class="by">by</span><span class="b2">NEVES</span></div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="kicker">Class 1 · English for Real Life</div>
+    <h1>Never Freeze<br><em>Again.</em></h1>
+    <p>You already know English — it's just been sleeping. Today you wake it up and use it in the real situations that used to make you freeze.</p>
+    <div class="tag">☕ Cafés · ✈️ Travel · 🗣️ Real conversations</div>
+  </div>
+
+  <!-- MISSION -->
+  <section class="reveal">
+    <div class="eyebrow"><span class="n">1</span> Your mission today</div>
+    <p class="sub">Three things you'll be able to do by the end of this class.</p>
+    <div class="mission">
+      <div class="goal"><span class="ic">💬</span><div><b>Speak without freezing</b><span>Keep talking, even when a word disappears.</span></div></div>
+      <div class="goal"><span class="ic">🙋‍♀️</span><div><b>Ask for help like a local</b><span>"Can you spell that?" · "Did you write it correctly?"</span></div></div>
+      <div class="goal"><span class="ic">🇬🇷</span><div><b>Win the Greece moment</b><span>The exact situation you couldn't handle — solved for good.</span></div></div>
+    </div>
+  </section>
+
+  <!-- WARM UP -->
+  <section class="reveal">
+    <div class="eyebrow"><span class="n">2</span> Warm-up · Two truths, one lie</div>
+    <p class="sub">Write three sentences about yourself — two true, one false. Then read them out loud and let the other person guess the lie.</p>
+    <div class="write">
+      <div class="col">
+        <h4>✍️ Teacher</h4>
+        <div class="tip">Two true, one false — mix the order!</div>
+        <input class="field" type="text" placeholder="Sentence 1…">
+        <input class="field" type="text" placeholder="Sentence 2…">
+        <input class="field" type="text" placeholder="Sentence 3…">
+      </div>
+      <div class="col you">
+        <h4>✍️ You</h4>
+        <div class="tip">Say each one out loud after you write it.</div>
+        <input class="field" type="text" placeholder="Sentence 1…">
+        <input class="field" type="text" placeholder="Sentence 2…">
+        <input class="field" type="text" placeholder="Sentence 3…">
+      </div>
+    </div>
+  </section>
+
+  <!-- SURVIVAL PHRASES -->
+  <section class="reveal">
+    <div class="eyebrow"><span class="n">3</span> Survival phrases</div>
+    <p class="sub">Tap each card to flip it. These are your rescue lines — say each one out loud.</p>
+    <div class="flips" id="flips">
+      <div class="flip"><div class="inner">
+        <div class="face front"><div class="when">You didn't hear it</div><div class="pt">Não entendeu o que falaram</div><div class="hint">tap to reveal →</div></div>
+        <div class="face back"><div class="en">Sorry, I didn't catch that.</div><div class="say">🔊 say it out loud</div></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="face front"><div class="when">A name to write</div><div class="pt">Precisa soletrar um nome</div><div class="hint">tap to reveal →</div></div>
+        <div class="face back"><div class="en">Can you spell that for me?</div><div class="say">🔊 say it out loud</div></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="face front"><div class="when">Checking your name</div><div class="pt">O momento da Grécia ☕</div><div class="hint">tap to reveal →</div></div>
+        <div class="face back"><div class="en">Did you write my name correctly?</div><div class="say">🔊 say it out loud</div></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="face front"><div class="when">They spoke too fast</div><div class="pt">Falaram rápido demais</div><div class="hint">tap to reveal →</div></div>
+        <div class="face back"><div class="en">Could you say that again, please?</div><div class="say">🔊 say it out loud</div></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="face front"><div class="when">A word is missing</div><div class="pt">Faltou a palavra — não pare!</div><div class="hint">tap to reveal →</div></div>
+        <div class="face back"><div class="en">How do you say this in English?</div><div class="say">🔊 say it out loud</div></div>
+      </div></div>
+      <div class="flip"><div class="inner">
+        <div class="face front"><div class="when">Confirming anything</div><div class="pt">Confirmando algo</div><div class="hint">tap to reveal →</div></div>
+        <div class="face back"><div class="en">Let me check — is this right?</div><div class="say">🔊 say it out loud</div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- BUILDER -->
+  <section class="reveal">
+    <div class="eyebrow"><span class="n">4</span> The magic pattern</div>
+    <p class="sub">Every polite request follows the same shape. Tap the words and build one — then say it.</p>
+    <div class="card builder">
+      <div class="screen" id="screen"><span class="ph">Tap the words below to build a request…</span></div>
+      <div class="chips" id="chips">
+        <span class="chip" data-w="Can you">Can you</span>
+        <span class="chip" data-w="Could you">Could you</span>
+        <span class="chip" data-w="help me">help me</span>
+        <span class="chip" data-w="repeat that">repeat that</span>
+        <span class="chip" data-w="write it down">write it down</span>
+        <span class="chip" data-w="spell it">spell it</span>
+        <span class="chip" data-w="please">please</span>
+        <span class="chip" data-w="?">?</span>
+      </div>
+      <div class="row">
+        <button class="btn btn-ghost" id="clearBtn">Clear</button>
+        <button class="btn btn-rose" id="tryBtn">Give me an example</button>
+      </div>
+      <small>💡 Secret: don't build the perfect sentence in your head. Grab the pattern and go.</small>
+    </div>
+  </section>
+
+  <!-- CAFE SIMULATOR -->
+  <section class="reveal">
+    <div class="eyebrow"><span class="n">5</span> Real situation · At the café</div>
+    <p class="sub">The barista talks to you. <b>You</b> write and say your own answer — then continue. Stuck? Peek at a hint only after you try.</p>
+    <div class="phone">
+      <div class="top"><div class="av">☕</div><div><b>Corner Café</b><span>Athens · now</span></div></div>
+      <div class="chatwin" id="chatwin"></div>
+      <div class="prod" id="prod">
+        <button class="btn btn-rose" id="cafeStart">Walk in and order →</button>
+        <div class="cafe-done" id="cafeDone">✅ You just did in English what you couldn't do in Greece.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHALLENGE -->
+  <section class="reveal">
+    <div class="challenge">
+      <h3>🎬 Final Challenge · Back in Greece</h3>
+      <div class="prompt" id="chalPrompt">
+        <span class="big">You're back at that café. This time, you speak.</span>
+        Order your drink, give your name, spell it, and check it's correct — all in one go. Keep talking, don't stop!
+      </div>
+      <div class="bar" id="chalBar"><i id="chalFill"></i></div>
+      <div class="win" id="chalWin">🎉 That's it — the exact thing you froze on is now easy.</div>
+      <div style="margin-top:20px;position:relative">
+        <button class="btn btn-rose" id="chalBtn">Reveal the challenge</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOMEWORK -->
+  <section class="reveal">
+    <div class="eyebrow"><span class="n">6</span> Homework</div>
+    <p class="sub">Five minutes. Send it to your teacher before the next class.</p>
+    <div class="card hw">
+      <span class="ic">🎙️</span>
+      <div>
+        <b style="color:var(--navy);font-family:'Montserrat',sans-serif">Record a 30-second audio</b>
+        <div style="color:var(--muted);font-size:.92rem;margin-top:2px">Introduce yourself to an imaginary waiter: say your name, spell it, and order something.</div>
+        <div class="frame">"Hi, my name is <u>____</u>. Let me spell it: <u>____</u>. Can I get <u>____</u>, please?"</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Made with care — <b>English by Neves</b> · Real English for real life.
+  </footer>
+</div>
+
+<script>
+  // Reveal on scroll
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Flip cards
+  document.querySelectorAll('#flips .flip').forEach(f=>f.addEventListener('click',()=>f.classList.toggle('on')));
+
+  // Builder
+  const screen=document.getElementById('screen'); let parts=[];
+  function render(){ if(!parts.length){screen.innerHTML='<span class="ph">Tap the words below to build a request…</span>';return;} screen.textContent=parts.join(' ').replace(' ?','?'); }
+  document.querySelectorAll('#chips .chip').forEach(c=>c.addEventListener('click',()=>{parts.push(c.dataset.w);render();}));
+  document.getElementById('clearBtn').addEventListener('click',()=>{parts=[];render();});
+  const examples=["Could you repeat that, please?","Can you spell it, please?","Could you write it down, please?","Can you help me, please?"];
+  let ei=0;
+  document.getElementById('tryBtn').addEventListener('click',()=>{screen.textContent=examples[ei%examples.length];ei++;parts=[];});
+
+  // Cafe simulator — student produces each line
+  const steps=[
+    {them:"Hi there! What can I get you?", goal:"Order a drink you like", model:"Hi! Can I get a cappuccino, please?"},
+    {them:"Sure! What name should I put on the cup?", goal:"Give your name", model:"My name is ____."},
+    {them:"How do you spell that?", goal:"Spell your name out loud, letter by letter", model:"It's ____ — (say each letter)."},
+    {them:"Let me write it down… is this right?", goal:"Check if it's correct — confirm it or fix it", model:"Let me check… yes, that's right! (or: Actually, it's without the H.)"},
+    {them:"Perfect! It'll be ready in a minute. 😊", goal:null, model:null}
+  ];
+  const chatwin=document.getElementById('chatwin'), prod=document.getElementById('prod'), cafeStart=document.getElementById('cafeStart');
+  function addBub(t,cls){const b=document.createElement('div');b.className='bub '+cls;b.textContent=t;chatwin.appendChild(b);chatwin.scrollTop=chatwin.scrollHeight;}
+  function showInput(step,i){
+    prod.innerHTML =
+      '<div class="goal-tag">🎯 '+step.goal+'</div>'+
+      '<textarea id="cafeIn" placeholder="Write your line here… then say it out loud"></textarea>'+
+      '<div class="row"><button class="btn btn-rose" id="cafeSend">Say it &amp; send →</button></div>'+
+      '<div class="suggest" id="cafeSug">💡 <u>Stuck? See a hint</u><div class="model">'+step.model+'</div></div>';
+    document.getElementById('cafeSug').addEventListener('click',function(){this.classList.toggle('open');});
+    const inp=document.getElementById('cafeIn'); inp.focus();
+    document.getElementById('cafeSend').addEventListener('click',()=>{
+      const v=inp.value.trim(); if(!v){inp.focus();return;}
+      addBub(v,'you'); renderStep(i+1);
+    });
+  }
+  function renderStep(i){
+    if(i>=steps.length)return;
+    const step=steps[i];
+    addBub(step.them,'them');
+    if(step.goal){ setTimeout(()=>showInput(step,i),300); }
+    else { prod.innerHTML='<div class="cafe-done" style="display:block">✅ You just did in English what you couldn\'t do in Greece.</div>'; }
+  }
+  cafeStart.addEventListener('click',()=>{ prod.innerHTML=''; renderStep(0); });
+
+  // Challenge
+  const chalBtn=document.getElementById('chalBtn'),chalPrompt=document.getElementById('chalPrompt'),
+        chalBar=document.getElementById('chalBar'),chalFill=document.getElementById('chalFill'),chalWin=document.getElementById('chalWin');
+  let chalStarted=false;
+  chalBtn.addEventListener('click',()=>{
+    if(!chalStarted){
+      chalPrompt.classList.add('show');chalBtn.textContent='Start speaking (45s)';chalStarted=true;return;
+    }
+    chalBtn.style.display='none';chalBar.classList.add('show');
+    let start=Date.now(),dur=45000;
+    const iv=setInterval(()=>{
+      let p=Math.min(1,(Date.now()-start)/dur);
+      chalFill.style.width=(p*100)+'%';
+      if(p>=1){clearInterval(iv);chalWin.classList.add('show');}
+    },80);
+  });
+</script>
+</body>
+</html>
