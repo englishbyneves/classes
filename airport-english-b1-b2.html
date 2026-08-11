@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Airport English · B1–B2 — English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Raleway:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1e2647; --navy2:#2a3357; --ink:#1e2647; --muted:#666c8c;
+    --rose:#cf7e93; --rose-deep:#a85870; --rose-soft:#f7e8ec;
+    --gold:#e3a948; --green:#3f9d6d;
+    --bg:#f1f2f7; --paper:#ffffff; --line:#e3e3ee;
+    --r:18px; --r-sm:12px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Raleway',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ---- HERO ---- */
+  .hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;background:#1e2647 center/cover no-repeat;background-image:linear-gradient(180deg,rgba(20,26,48,.30) 0%,rgba(20,26,48,.55) 55%,rgba(20,26,48,.93) 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Cape_Town_International_Airport_Departures_Area.jpg?width=1600');}
+  .hero-in{padding:40px 0 38px;color:#fff;width:100%;}
+  .wm{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;}
+  .wm .d{width:8px;height:8px;border-radius:50%;background:var(--rose);}
+  .wm span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:3px;color:#fff;text-transform:uppercase;}
+  .hero .ey{font-family:'IBM Plex Mono',monospace;color:var(--rose);font-size:12.5px;letter-spacing:3px;text-transform:uppercase;}
+  .hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,8vw,68px);line-height:1.0;margin:8px 0 12px;text-shadow:0 2px 24px rgba(0,0,0,.3);}
+  .hero h1 em{font-style:italic;color:var(--rose);}
+  .hero .sub{font-size:clamp(15px,2.3vw,18px);color:#e7e8f2;max-width:540px;margin:0;}
+
+  /* boarding pass */
+  .bpass{display:flex;background:var(--paper);border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.5);box-shadow:0 20px 50px rgba(16,21,43,.4);margin-top:26px;max-width:520px;}
+  .bp-l{flex:1;padding:16px 20px;}
+  .bp-l .air{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:2px;color:var(--rose-deep);font-weight:600;}
+  .bp-route{display:flex;align-items:center;gap:13px;margin:7px 0 9px;}
+  .bp-route .pt{font-family:'Playfair Display',serif;font-weight:800;font-size:25px;color:var(--navy);}
+  .bp-route .ar{color:var(--gold);font-size:17px;}
+  .bp-meta{display:flex;gap:22px;}
+  .bp-meta .k{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+  .bp-meta .v{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--navy);font-weight:600;}
+  .bp-r{width:92px;border-left:2px dashed var(--line);background:var(--rose-soft);padding:14px 12px;display:flex;flex-direction:column;justify-content:space-between;position:relative;}
+  .bp-r::before,.bp-r::after{content:"";position:absolute;left:-9px;width:16px;height:16px;border-radius:50%;background:var(--navy);}
+  .bp-r::before{top:-8px;}.bp-r::after{bottom:-8px;}
+  .bp-r .seat{font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:var(--rose-deep);}
+  .bc{height:30px;background:repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 4px,var(--navy) 4px 5px,transparent 5px 8px);border-radius:2px;margin-top:6px;}
+
+  /* ---- JOURNEY MAP ---- */
+  .map{background:var(--navy);padding:20px 0;}
+  .map .wrap{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:center;}
+  .stop{display:flex;align-items:center;gap:7px;text-decoration:none;}
+  .stop .c{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--navy);background:var(--rose);border-radius:6px;padding:3px 7px;}
+  .stop .nm{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#cfd2e6;letter-spacing:.5px;}
+  .stop:hover .nm{color:#fff;}
+  .map .arrow{color:var(--rose);font-size:13px;opacity:.6;}
+
+  /* ---- LESSON ---- */
+  .lesson{padding:42px 0 8px;}
+  .lhd{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  .lhd .tag{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:2px;color:#fff;background:var(--navy);padding:7px 14px;border-radius:7px;}
+  .lhd .tag.t2{background:var(--rose);}
+  .lesson>.wrap>h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(27px,5vw,40px);margin:10px 0 4px;line-height:1.03;}
+  .lesson>.wrap>.li{color:var(--muted);font-size:15.5px;max-width:600px;margin:0 0 6px;}
+
+  /* station */
+  .station{margin:26px 0;background:var(--paper);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 30px rgba(30,38,71,.06);}
+  .banner{position:relative;min-height:200px;display:flex;align-items:flex-end;background:#1e2647 center/cover no-repeat;}
+  .banner::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,48,.15),rgba(20,26,48,.82));}
+  .banner-in{position:relative;padding:18px 22px;color:#fff;width:100%;display:flex;align-items:center;gap:14px;}
+  .banner .code{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;letter-spacing:1px;color:var(--navy);background:var(--gold);border-radius:9px;padding:9px 13px;flex-shrink:0;}
+  .banner h3{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,4vw,30px);margin:0;line-height:1.05;text-shadow:0 2px 14px rgba(0,0,0,.35);}
+  .banner .step{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--rose);text-transform:uppercase;display:block;margin-bottom:3px;}
+
+  .panel{padding:24px 22px 26px;}
+  .blk{margin-top:24px;}
+  .blk:first-child{margin-top:0;}
+  .blabel{display:flex;align-items:center;gap:10px;margin-bottom:13px;}
+  .blabel-n{width:27px;height:27px;border-radius:7px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .in-c{background:var(--navy);color:var(--rose);}
+  .out-c{background:var(--rose);color:#fff;}
+  .blabel-t{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);font-weight:600;}
+  .blabel-s{font-size:12.5px;color:var(--muted);}
+  .tagin,.tagout{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:5px;font-weight:600;margin-left:auto;text-transform:uppercase;}
+  .tagin{background:var(--rose-soft);color:var(--rose-deep);}
+  .tagout{background:#e7f3ec;color:var(--green);}
+
+  /* vocab cards */
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:11px;}
+  .vcard{background:transparent;border:none;padding:0;perspective:1000px;height:140px;cursor:pointer;font-family:inherit;text-align:left;}
+  .vci{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;}
+  .vcard.flipped .vci{transform:rotateY(180deg);}
+  .vf{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-sm);padding:14px 15px;display:flex;flex-direction:column;}
+  .vfr{background:#fbfafc;border:1px solid var(--line);border-left:4px solid var(--gold);}
+  .vfr .tm{font-family:'Playfair Display',serif;font-weight:700;font-size:17.5px;color:var(--navy);line-height:1.12;}
+  .vfr .ps{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.5px;color:var(--rose-deep);text-transform:uppercase;margin:3px 0 8px;}
+  .vfr .df{font-size:13px;color:#4a4f70;line-height:1.4;}
+  .vfr .fh{margin-top:auto;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.5px;color:var(--muted);}
+  .vbk{background:var(--navy);transform:rotateY(180deg);border-left:4px solid var(--rose);justify-content:center;}
+  .vbk .el{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:7px;}
+  .vbk .ex{font-size:14.5px;color:#fff;line-height:1.45;font-style:italic;font-family:'Playfair Display',serif;}
+
+  /* hear / say */
+  .phr{display:grid;gap:7px;}
+  .phr.hear{}
+  .pli{display:flex;gap:10px;align-items:flex-start;border-radius:10px;padding:10px 13px;font-size:14.5px;line-height:1.4;}
+  .hear .pli{background:var(--rose-soft);color:var(--navy);}
+  .say .pli{background:#eef0f7;color:var(--navy);}
+  .pli .ico{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;flex-shrink:0;padding-top:2px;}
+  .hear .ico{color:var(--rose-deep);}
+  .say .ico{color:var(--navy);}
+
+  /* quick practice */
+  .qp{display:grid;gap:9px;}
+  .qrow{background:#fbfafc;border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .qrow .pr{font-size:14.5px;color:var(--navy);}
+  .qrow .pr .bl{color:var(--rose-deep);font-weight:700;letter-spacing:2px;font-family:'IBM Plex Mono',monospace;}
+  .qrow button{margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--rose-deep);background:none;border:1px dashed var(--rose);border-radius:7px;padding:5px 11px;cursor:pointer;}
+  .qrow button:hover{background:var(--rose-soft);}
+  .qrow .ans{display:none;margin-top:9px;font-size:14px;color:var(--green);font-weight:600;}
+  .qrow .ans.show{display:block;}
+
+  /* your turn + roleplay */
+  .turn{background:var(--navy);border-radius:var(--r-sm);padding:18px 18px;color:#fff;}
+  .turn .setup{font-size:15px;color:#dfe1ef;margin:0 0 14px;line-height:1.5;}
+  .turn .setup b{color:#fff;}
+  .turn button{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.5px;background:var(--rose);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;}
+  .turn button:hover{filter:brightness(1.08);}
+  .turn .model{display:none;margin-top:13px;background:rgba(255,255,255,.06);border-left:3px solid var(--gold);border-radius:0 9px 9px 0;padding:13px 15px;}
+  .turn .model.show{display:block;}
+  .turn .model .ml{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:7px;}
+  .turn .model p{margin:0 0 7px;font-size:14.5px;color:#fff;line-height:1.5;}
+  .turn .model p:last-child{margin:0;}
+  .turn .model .q{color:var(--rose);font-weight:600;}
+
+  .roleplay{margin-top:13px;display:flex;gap:12px;align-items:flex-start;background:#e7f3ec;border-radius:var(--r-sm);padding:15px 17px;}
+  .roleplay .rp-ic{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--green);font-size:11px;flex-shrink:0;border:1.5px solid var(--green);border-radius:6px;padding:4px 7px;}
+  .roleplay .rp-t{font-size:14.5px;color:var(--navy);line-height:1.45;}
+  .roleplay .rp-t b{color:var(--green);}
+
+  /* finish journey */
+  .finish{background:linear-gradient(135deg,var(--navy),#2c2150);border-radius:var(--r);padding:28px 24px;color:#fff;margin:24px 0;}
+  .finish .fl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+  .finish h3{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;margin:8px 0 6px;color:#fff;}
+  .finish p{color:#d4d6ea;font-size:15px;margin:0 0 14px;}
+  .finish .chain{display:flex;gap:8px;flex-wrap:wrap;}
+  .finish .ch{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#fff;background:rgba(255,255,255,.09);border:1px solid rgba(207,126,147,.4);border-radius:8px;padding:8px 12px;}
+
+  /* signs */
+  .signs-sec{padding:30px 0;}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .sign{border:none;border-radius:10px;padding:0;cursor:pointer;overflow:hidden;text-align:left;font-family:inherit;}
+  .sign .face{padding:15px 16px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.5px;}
+  .sign.dir .face{background:var(--gold);color:#1e2647;}
+  .sign.grn .face{background:var(--green);color:#fff;}
+  .sign.blu .face{background:#2b4a7a;color:#fff;}
+  .sign .mean{display:none;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-top:none;font-family:'Raleway';font-size:13.5px;color:var(--navy);line-height:1.45;}
+  .sign.open .mean{display:block;}
+
+  /* personalize */
+  .person{background:var(--rose-soft);border-radius:var(--r);padding:26px 24px;margin:8px 0 0;}
+  .person .pl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--rose-deep);text-transform:uppercase;}
+  .person h3{font-family:'Playfair Display',serif;font-weight:700;font-size:23px;margin:8px 0 6px;color:var(--navy);}
+  .person p{color:var(--rose-deep);font-size:14.5px;margin:0 0 14px;}
+  .person ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;}
+  .person li{background:#fff;border-radius:10px;padding:12px 15px;font-size:15px;color:var(--navy);}
+  .person li b{color:var(--rose-deep);}
+
+  /* section heads (signs/etc) */
+  .shd{margin-bottom:16px;}
+  .shd .e{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--rose-deep);text-transform:uppercase;}
+  .shd h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,4.5vw,34px);margin:8px 0 4px;}
+  .shd p{color:var(--muted);font-size:15px;margin:0;max-width:560px;}
+
+  footer{background:var(--navy);color:#aeb2cf;padding:26px 0 34px;margin-top:30px;}
+  footer .wrap{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.5px;line-height:1.7;}
+  footer a{color:var(--rose);text-decoration:none;}
+  footer .big{color:#fff;font-size:13px;letter-spacing:2px;margin-bottom:8px;}
+
+  button:focus-visible,.vcard:focus-visible,.sign:focus-visible,a:focus-visible{outline:3px solid var(--rose);outline-offset:2px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important;}}
+  @media (max-width:560px){
+    .vgrid{grid-template-columns:1fr;} .banner-in{flex-direction:column;align-items:flex-start;gap:9px;}
+    .hero{min-height:70vh;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap"><div class="hero-in">
+  <div class="wm"><span class="d"></span><span>English by Neves</span></div>
+  <p class="ey">Speaking lesson · B1–B2</p>
+  <h1>Airport <em>English</em></h1>
+  <p class="sub">Walk through the whole journey — check-in, security, the gate, passport control, baggage — and rehearse exactly what you'll say in English at each step.</p>
+  <div class="bpass">
+    <div class="bp-l">
+      <div class="air">BOARDING PASS · ENGLISH BY NEVES</div>
+      <div class="bp-route"><span class="pt">HOME</span><span class="ar">✈</span><span class="pt">WORLD</span></div>
+      <div class="bp-meta">
+        <div><div class="k">Passenger</div><div class="v">YOU</div></div>
+        <div><div class="k">Level</div><div class="v">B1–B2</div></div>
+        <div><div class="k">Trip</div><div class="v">REAL LIFE</div></div>
+      </div>
+    </div>
+    <div class="bp-r"><div><div class="k mono" style="font-size:9px;color:var(--rose-deep);letter-spacing:1px;">SEAT</div><div class="seat">12A</div></div><div class="bc"></div></div>
+  </div>
+</div></div></header>
+
+<!-- JOURNEY MAP -->
+<nav class="map"><div class="wrap">
+  <a class="stop" href="#s1"><span class="c">A1</span><span class="nm">Check-in</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s2"><span class="c">A2</span><span class="nm">Security</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s3"><span class="c">A3</span><span class="nm">The Gate</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s4"><span class="c">B1</span><span class="nm">Passport</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s5"><span class="c">B2</span><span class="nm">Baggage</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s6"><span class="c">B3</span><span class="nm">Arrivals</span></a>
+</div></nav>
+
+<!-- ===================== LESSON 1 ===================== -->
+<section class="lesson"><div class="wrap">
+  <div class="lhd"><span class="tag">LESSON 1</span></div>
+  <h2>Departures — getting on the plane</h2>
+  <p class="li">From dropping your bags to stepping onto the plane. At each stop: learn the words, hear what staff say, then do it yourself.</p>
+
+  <!-- S1 CHECK-IN -->
+  <div class="station" id="s1">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/JFK_Terminal_5_Ticketing_and_Check-In.jpg?width=1200')">
+      <div class="banner-in"><span class="code">A1</span><div><span class="step">Stop 1</span><h3>Check-in &amp; bag drop</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip for an example</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s1"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">the agent says…</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Can I see your passport and booking, please?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Are you checking any bags?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Did you pack your bags yourself?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Window or aisle?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Here's your boarding pass — gate 22, boarding at 2:30."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">your lines</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Hi, I'm checking in for the flight to London."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Just one bag to check in — this is my hand luggage."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Could I have a window seat, please?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Is the flight on time?" · "Which gate is it?"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">Agent: "Are you checking any bags?" → You: "Yes, just <span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Yes, just one suitcase. This is my hand luggage."</div></div>
+          <div class="qrow"><div class="pr">You want a window seat: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Could I have a window seat, please?"</div></div>
+          <div class="qrow"><div class="pr">Ask where to go next: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Which gate is it?" / "What time is boarding?"</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You're at the desk. You have <b>one suitcase to check in</b> and a <b>backpack</b> to carry on. You'd like a <b>window seat</b>, and you want to know if the flight is <b>on time</b>. Do your part — out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Hi, I'm checking in for the flight to Lisbon. Just one bag to check in — this is my hand luggage. Could I have a window seat, please? And is the flight on time?"</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from "Good morning" to walking away with your boarding pass, knowing your gate and boarding time.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 SECURITY -->
+  <div class="station" id="s2">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Security_check_Munich_Airport_stitched_4.jpg?width=1200')">
+      <div class="banner-in"><span class="code">A2</span><div><span class="step">Stop 2</span><h3>Security</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s2"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">the officer says…</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Put your bag in the tray."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Take out any liquids and laptops."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Take off your belt, please."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Step through." · "Could you step aside for a moment?"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">your lines</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Do I need to take my shoes off?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Where do I put my laptop?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Is this small bottle okay?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Sorry, I forgot to take this out."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">Officer: "Take out any liquids." → You: "Sorry, they're <span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Sorry, they're in my bag — let me get them out."</div></div>
+          <div class="qrow"><div class="pr">You're not sure about shoes: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Do I need to take my shoes off?"</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You're at the front of the line. You have a <b>laptop</b>, a <b>small bottle of water</b>, and you're wearing a <b>belt</b>. You're not sure what to take out. Ask, and answer the officer — out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Do I need to take my laptop out? … And my belt? Sorry, I've got a small bottle of water — is that okay, or should I throw it away?"</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from "Next, please" to picking up your tray on the other side.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S3 GATE -->
+  <div class="station" id="s3">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Hong_Kong_International_Airport,_Terminal_1,_Boarding_gate_521_and_522.jpg?width=1200')">
+      <div class="banner-in"><span class="code">A3</span><div><span class="step">Stop 3</span><h3>The gate &amp; boarding</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s3"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">announcements</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Now boarding at gate 22."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"This is the final call for flight BA245."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Please have your boarding pass ready."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"The flight is delayed by 40 minutes."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">your lines</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Is this the gate for London?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Has boarding started?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Sorry, I think that's my seat."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Could you help me with my bag?"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">You're not sure it's the right gate: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Excuse me, is this the gate for the London flight?"</div></div>
+          <div class="qrow"><div class="pr">Someone is in your seat: "Sorry, I think <span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Sorry, I think that's my seat — I'm 14A."</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You reach the gate. The board says your flight is <b>delayed</b>, and you have a <b>connecting flight</b> in Lisbon. Ask the gate agent what this means for you — out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Excuse me, I see the flight is delayed. I've got a connecting flight in Lisbon at 6pm — will I still make it? Is there anything I should do?"</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from finding the right gate to boarding the plane and finding your seat.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L1 FINISH -->
+  <div class="finish"><span class="fl">Lesson 1 · final challenge</span>
+    <h3>Do the whole journey</h3>
+    <p>No notes. Walk yourself through Lesson 1 out loud — one or two lines at each stop.</p>
+    <div class="chain"><span class="ch">1 · Check in your bag</span><span class="ch">2 · Get through security</span><span class="ch">3 · Find your gate &amp; board</span></div>
+  </div>
+</div></section>
+
+<!-- ===================== LESSON 2 ===================== -->
+<section class="lesson"><div class="wrap">
+  <div class="lhd"><span class="tag t2">LESSON 2</span></div>
+  <h2>Arrivals — landing in another country</h2>
+  <p class="li">You've landed. Now clear passport control with confidence, collect your bags, get through customs, and find your way out.</p>
+
+  <!-- S4 PASSPORT -->
+  <div class="station" id="s4">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Zurich_International_Airport_e-Passport_control_gates.jpg?width=1200')">
+      <div class="banner-in"><span class="code">B1</span><div><span class="step">Stop 4 · the big one</span><h3>Passport control &amp; immigration</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s4"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">the officer asks…</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"What's the purpose of your visit?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"How long are you staying?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Where are you staying?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Do you have a return ticket?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Enjoy your stay."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">short, clear, calm</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"I'm here on holiday." / "I'm here for work."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"For two weeks."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"I'm staying with family." / "At a hotel in the centre."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Yes, I'm flying back on the 30th. Here's my passport."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">answer the officer, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">"What's the purpose of your visit?" → "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"I'm here on holiday." / "Tourism — I'm visiting family."</div></div>
+          <div class="qrow"><div class="pr">"How long are you staying?" → "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"For ten days." / "Just under two weeks."</div></div>
+          <div class="qrow"><div class="pr">"Where are you staying?" → "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"With my cousin, in the city centre. I have the address here."</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn — the interview</span><span class="blabel-s">do the whole thing</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You hand over your passport. Answer the officer's questions one by one — <b>short and confident</b>, no hesitation. You're on holiday for two weeks, staying with family, flying home on the 30th.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal the exchange</button>
+          <div class="model"><div class="ml">a confident exchange</div>
+            <p><span class="q">"Purpose of your visit?"</span> — "I'm here on holiday, visiting family."</p>
+            <p><span class="q">"How long are you staying?"</span> — "Two weeks."</p>
+            <p><span class="q">"Where are you staying?"</span> — "With my cousin, in the city centre. I've got the address here."</p>
+            <p><span class="q">"Do you have a return ticket?"</span> — "Yes, I fly back on the 30th — I can show you the booking."</p>
+          </div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now do it for real:</b> the full passport-control conversation, start to "Enjoy your stay." Keep every answer short and steady.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S5 BAGGAGE -->
+  <div class="station" id="s5">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Beijing_Capital_International_Airport_Terminal_1_Baggage_Claim_Hall_20140329.JPG?width=1200')">
+      <div class="banner-in"><span class="code">B2</span><div><span class="step">Stop 5</span><h3>Baggage &amp; customs</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s5"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">at the desk / at customs</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Which flight were you on?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Can I see your baggage tag?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Do you have anything to declare?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Please open your bag."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">your lines</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Which carousel is for the flight from Lisbon?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"My suitcase hasn't come out."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"I'd like to report a missing bag."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"No, nothing to declare."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">Your bag didn't arrive: "My suitcase <span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"My suitcase hasn't come out — I think it's missing."</div></div>
+          <div class="qrow"><div class="pr">Customs asks and you have nothing: "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"No, nothing to declare."</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You've waited at the carousel and your <b>bag hasn't arrived</b>. Go to the desk and report it: your <b>flight</b>, what the bag <b>looks like</b>, and where you're <b>staying</b>. Out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Hi, I think my bag is missing. I was on the flight from Lisbon, BA245. It's a medium black suitcase with a red ribbon. I'm staying at the Centro Hotel — here's my baggage tag."</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> report your lost bag at the desk, then walk through customs with "nothing to declare."</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S6 ARRIVALS -->
+  <div class="station" id="s6">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Proserpine_Airport_Arrivals_Hall_-_January_2012.JPG?width=1200')">
+      <div class="banner-in"><span class="code">B3</span><div><span class="step">Stop 6</span><h3>Arrivals &amp; getting out</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s6"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">around the arrivals hall</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Welcome to São Paulo."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Taxis are this way." · "The shuttle leaves from exit 3."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Are you being picked up?"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">your lines</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Where can I get a taxi?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"How do I get to the city centre?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Is there a train or bus to downtown?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"I'm being picked up, thanks."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">Ask how to reach the centre: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Excuse me, how do I get to the city centre from here?"</div></div>
+          <div class="qrow"><div class="pr">Ask about a taxi: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Where can I get a taxi?"</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You're in the arrivals hall. You need to get to a <b>hotel in the city centre</b> and you want the <b>cheapest</b> way. Stop someone and ask — out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Excuse me, I need to get to a hotel in the city centre. What's the cheapest way — is there a train or a bus? And where do I catch it?"</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from the arrivals hall to sorting out your transport into the city.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L2 FINISH -->
+  <div class="finish"><span class="fl">Lesson 2 · final challenge</span>
+    <h3>Do the whole journey</h3>
+    <p>No notes. Walk yourself through Lesson 2 out loud — one or two lines at each stop.</p>
+    <div class="chain"><span class="ch">4 · Clear passport control</span><span class="ch">5 · Get your bags &amp; customs</span><span class="ch">6 · Find your way out</span></div>
+  </div>
+</div></section>
+
+<!-- SIGNS -->
+<section class="signs-sec"><div class="wrap">
+  <div class="shd"><p class="e">Read the airport</p><h2>What does the sign mean?</h2><p>You'll follow these signs the whole way. Tap each one to check when you follow it.</p></div>
+  <div class="sgrid">
+    <button class="sign blu" onclick="this.classList.toggle('open')"><div class="face"><span>Check-in</span><span>›</span></div><div class="mean">Follow this first, to drop your bags and get your boarding pass.</div></button>
+    <button class="sign dir" onclick="this.classList.toggle('open')"><div class="face"><span>Gates 1–30</span><span>→</span></div><div class="mean">After security — follow this to find the gate on your boarding pass.</div></button>
+    <button class="sign blu" onclick="this.classList.toggle('open')"><div class="face"><span>Passport Control</span><span>›</span></div><div class="mean">When you land — follow this to show your passport and enter the country.</div></button>
+    <button class="sign dir" onclick="this.classList.toggle('open')"><div class="face"><span>Baggage Reclaim</span><span>↓</span></div><div class="mean">After immigration — follow this to collect your checked suitcase.</div></button>
+    <button class="sign grn" onclick="this.classList.toggle('open')"><div class="face"><span>Nothing to Declare</span><span>✓</span></div><div class="mean">Take this green exit at customs if you have no goods to declare.</div></button>
+    <button class="sign dir" onclick="this.classList.toggle('open')"><div class="face"><span>Way Out / Exit</span><span>→</span></div><div class="mean">The way to leave the airport and reach taxis, buses and trains.</div></button>
+  </div>
+</div></section>
+
+<!-- PERSONALIZE -->
+<section class="lesson" style="padding-bottom:30px;"><div class="wrap">
+  <div class="person"><span class="pl">Make it yours</span>
+    <h3>Plan your next real trip</h3>
+    <p>Answer out loud, in full sentences, using the words from today.</p>
+    <ul>
+      <li><b>Where</b> are you going, and <b>when</b>?</li>
+      <li><b>How long</b> will you stay, and <b>where</b>?</li>
+      <li>Window or aisle? How many bags will you <b>check in</b>?</li>
+      <li>At passport control, what will you say is the <b>purpose of your visit</b>?</li>
+      <li>How will you get from the airport to the <b>city centre</b>?</li>
+    </ul>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="big">ENGLISH BY NEVES · AIRPORT ENGLISH · B1–B2</div>
+  Photos: Wikimedia Commons (CC BY / CC BY-SA) — Cape Town, JFK, Munich, Hong Kong, Zürich, Beijing &amp; Proserpine airports.<br>
+  Image source &amp; licences: <a href="https://commons.wikimedia.org/wiki/Category:Interiors_of_airports">commons.wikimedia.org</a>
+</div></footer>
+
+<script>
+const V = {
+ 's1':[["check-in desk","noun","where you show your ticket and drop your bags.","Go to the check-in desk for your airline."],["boarding pass","noun","the ticket that lets you onto the plane.","Keep your boarding pass — you need it at the gate."],["to check in a bag","phrase","to hand a bag to the airline for the hold.","I'd like to check in one bag."],["hand luggage","noun","the bag you take onto the plane (carry-on).","This small bag is my hand luggage."],["window / aisle seat","noun","a seat by the window, or by the walkway.","Could I have a window seat?"],["baggage allowance","noun","how much luggage your ticket includes.","The baggage allowance is 23 kilos."],["overweight","adjective","heavier than the limit allowed.","My suitcase is a bit overweight."],["gate","noun","the door where you get on the plane.","Boarding is at gate 22."],["departure time","noun","the time the plane leaves.","The departure time is 2:30."],["delayed","adjective","later than planned.","The flight is delayed by an hour."]],
+ 's2':[["security check","noun","where staff scan you and your bags.","There was a long queue at the security check."],["tray","noun","the plastic box for your things on the belt.","Put your phone and keys in the tray."],["liquids","noun","drinks, gels and creams — in a clear bag.","Liquids go in a small clear bag."],["laptop","noun","you usually take it out of your bag.","Take your laptop out, please."],["belt","noun","you often have to take it off.","I had to take off my belt."],["to take off","phrasal verb","to remove (shoes, belt, jacket).","Do I need to take off my shoes?"],["metal detector","noun","the gate you walk through.","Walk through the metal detector."],["to beep","verb","to make a sound (when there's metal).","The machine beeped, so they checked me."],["to pat down","phrasal verb","to check your body with hands.","They patted me down quickly."],["to get flagged","phrase","to be chosen for an extra check.","My bag got flagged for a closer look."]],
+ 's3':[["departure board","noun","the screen with flights and gates.","Check the departure board for your gate."],["boarding","noun","getting onto the plane.","Boarding starts in ten minutes."],["final call","noun","the last announcement before the gate closes.","That was the final call for my flight!"],["on time","phrase","not late.","Good news — the flight is on time."],["to board","verb","to get on the plane.","We board at gate 22."],["priority boarding","noun","getting on the plane first.","I have priority boarding with this ticket."],["seat number","noun","your place on the plane.","My seat number is 14A."],["overhead locker","noun","the space above the seats for bags.","Put your bag in the overhead locker."],["connecting flight","noun","a second flight you change to.","I have a connecting flight in Lisbon."],["to miss a flight","phrase","to be too late for it.","I don't want to miss my connection."]],
+ 's4':[["passport control","noun","where officers check your passport to enter.","There was a queue at passport control."],["immigration officer","noun","the person who checks your documents.","The immigration officer asked a few questions."],["purpose of your visit","phrase","why you're coming (holiday, work, study).","Purpose of your visit? — Holiday."],["length of stay","phrase","how long you'll stay.","Length of stay? — Two weeks."],["return ticket","noun","proof that you'll fly back.","I showed my return ticket."],["to stamp","verb","to mark your passport.","She stamped my passport and smiled."],["e-gate","noun","an automatic gate that reads your passport.","I used the e-gate — it was quick."],["queue / line","noun","people waiting in order.","Join the queue for non-residents."],["resident / non-resident","noun","someone who lives / doesn't live there.","Non-residents use this line."],["entry","noun","permission to come into the country.","They gave me entry for 90 days."]],
+ 's5':[["baggage reclaim","noun","where you collect your checked bags.","Follow the signs to baggage reclaim."],["carousel / belt","noun","the moving belt with the bags.","My bag is on carousel 4."],["trolley / cart","noun","you push your bags on it.","I grabbed a trolley for my suitcases."],["to come out","phrasal verb","to arrive on the belt.","My bag still hasn't come out."],["lost luggage","noun","bags that didn't arrive.","I went to the lost luggage desk."],["to report","verb","to tell staff about a problem.","I'd like to report a missing bag."],["customs","noun","where they check what you bring in.","Go through customs after baggage reclaim."],["nothing to declare","phrase","you have no goods to declare.","Nothing to declare — the green channel."],["green / red channel","noun","customs exits: nothing / something to declare.","Take the green channel if you have nothing to declare."],["baggage tag","noun","the sticker that proves a bag is yours.","Keep your baggage tag until you leave."]],
+ 's6':[["arrivals hall","noun","the area after customs where you exit.","I met my cousin in the arrivals hall."],["to pick up / be picked up","phrasal verb","to collect / be collected by someone.","My friend is picking me up."],["taxi rank","noun","where taxis wait outside.","The taxi rank is just outside."],["airport shuttle","noun","a bus to the city or to hotels.","I took the airport shuttle to the centre."],["public transport","noun","buses, trains, the metro.","Is there public transport to the centre?"],["city centre / downtown","noun","the middle of the city.","How do I get to the city centre?"],["drop-off / pick-up","noun","where cars stop briefly.","Meet me at the pick-up area."],["way out / exit","noun","the way to leave.","Follow the signs to the way out."]]
+};
+function render(id){
+  const grid=document.getElementById('vg-'+id); if(!grid) return;
+  V[id].forEach(([tm,ps,df,ex])=>{
+    const b=document.createElement('button');
+    b.className='vcard'; b.setAttribute('aria-label',tm+': '+df);
+    b.innerHTML='<div class="vci"><div class="vf vfr"><div class="tm">'+tm+'</div><div class="ps">'+ps+'</div><div class="df">'+df+'</div><div class="fh">tap for example ›</div></div><div class="vf vbk"><div class="el">in use</div><div class="ex">'+ex+'</div></div></div>';
+    b.addEventListener('click',()=>b.classList.toggle('flipped'));
+    grid.appendChild(b);
+  });
+}
+['s1','s2','s3','s4','s5','s6'].forEach(render);
+
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';io.unobserve(e.target);}}),{threshold:.08});
+  document.querySelectorAll('.station,.finish,.person,.signs-sec').forEach(s=>{s.style.opacity=0;s.style.transform='translateY(20px)';s.style.transition='opacity .6s,transform .6s';io.observe(s);});
+}
+</script>
+</body>
+</html>
