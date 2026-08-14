@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotel Check-in · A2 — English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Raleway:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1e2647; --navy2:#2a3357; --ink:#1e2647; --muted:#666c8c;
+    --rose:#cf7e93; --rose-deep:#a85870; --rose-soft:#f7e8ec;
+    --gold:#e3a948; --green:#3f9d6d;
+    --bg:#f1f2f7; --paper:#ffffff; --line:#e3e3ee;
+    --r:18px; --r-sm:12px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Raleway',system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ---- HERO ---- */
+  .hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;background:#1e2647 center/cover no-repeat;background-image:linear-gradient(180deg,rgba(20,26,48,.30) 0%,rgba(20,26,48,.55) 55%,rgba(20,26,48,.93) 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Ocean_Drive_Miami_Beach_FL.jpg?width=1600');}
+  .hero-in{padding:40px 0 38px;color:#fff;width:100%;}
+  .wm{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;}
+  .wm .d{width:8px;height:8px;border-radius:50%;background:var(--rose);}
+  .wm span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:3px;color:#fff;text-transform:uppercase;}
+  .hero .ey{font-family:'IBM Plex Mono',monospace;color:var(--rose);font-size:12.5px;letter-spacing:3px;text-transform:uppercase;}
+  .hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(38px,8vw,68px);line-height:1.0;margin:8px 0 12px;text-shadow:0 2px 24px rgba(0,0,0,.3);}
+  .hero h1 em{font-style:italic;color:var(--rose);}
+  .hero .sub{font-size:clamp(15px,2.3vw,18px);color:#e7e8f2;max-width:540px;margin:0;}
+
+  /* key card */
+  .bpass{display:flex;background:var(--paper);border-radius:var(--r);overflow:hidden;border:1px solid rgba(255,255,255,.5);box-shadow:0 20px 50px rgba(16,21,43,.4);margin-top:26px;max-width:520px;}
+  .bp-l{flex:1;padding:16px 20px;}
+  .bp-l .air{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:2px;color:var(--rose-deep);font-weight:600;}
+  .bp-route{display:flex;align-items:center;gap:13px;margin:7px 0 9px;}
+  .bp-route .pt{font-family:'Playfair Display',serif;font-weight:800;font-size:25px;color:var(--navy);}
+  .bp-route .ar{color:var(--gold);font-size:17px;}
+  .bp-meta{display:flex;gap:22px;}
+  .bp-meta .k{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+  .bp-meta .v{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--navy);font-weight:600;}
+  .bp-r{width:92px;border-left:2px dashed var(--line);background:var(--rose-soft);padding:14px 12px;display:flex;flex-direction:column;justify-content:space-between;position:relative;}
+  .bp-r::before,.bp-r::after{content:"";position:absolute;left:-9px;width:16px;height:16px;border-radius:50%;background:var(--navy);}
+  .bp-r::before{top:-8px;}.bp-r::after{bottom:-8px;}
+  .bp-r .seat{font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:var(--rose-deep);}
+  .bc{height:30px;background:repeating-linear-gradient(90deg,var(--navy) 0 2px,transparent 2px 4px,var(--navy) 4px 5px,transparent 5px 8px);border-radius:2px;margin-top:6px;}
+
+  /* ---- JOURNEY MAP ---- */
+  .map{background:var(--navy);padding:20px 0;}
+  .map .wrap{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:center;}
+  .stop{display:flex;align-items:center;gap:7px;text-decoration:none;}
+  .stop .c{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--navy);background:var(--rose);border-radius:6px;padding:3px 7px;}
+  .stop .nm{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#cfd2e6;letter-spacing:.5px;}
+  .stop:hover .nm{color:#fff;}
+  .map .arrow{color:var(--rose);font-size:13px;opacity:.6;}
+
+  /* ---- LESSON ---- */
+  .lesson{padding:42px 0 8px;}
+  .lhd{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
+  .lhd .tag{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:2px;color:#fff;background:var(--navy);padding:7px 14px;border-radius:7px;}
+  .lhd .tag.t2{background:var(--rose);}
+  .lesson>.wrap>h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(27px,5vw,40px);margin:10px 0 4px;line-height:1.03;}
+  .lesson>.wrap>.li{color:var(--muted);font-size:15.5px;max-width:600px;margin:0 0 6px;}
+
+  /* station */
+  .station{margin:26px 0;background:var(--paper);border-radius:var(--r);overflow:hidden;border:1px solid var(--line);box-shadow:0 10px 30px rgba(30,38,71,.06);}
+  .banner{position:relative;min-height:200px;display:flex;align-items:flex-end;background:#1e2647 center/cover no-repeat;}
+  .banner::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,26,48,.15),rgba(20,26,48,.82));}
+  .banner-in{position:relative;padding:18px 22px;color:#fff;width:100%;display:flex;align-items:center;gap:14px;}
+  .banner .code{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;letter-spacing:1px;color:var(--navy);background:var(--gold);border-radius:9px;padding:9px 13px;flex-shrink:0;}
+  .banner h3{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(21px,4vw,30px);margin:0;line-height:1.05;text-shadow:0 2px 14px rgba(0,0,0,.35);}
+  .banner .step{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--rose);text-transform:uppercase;display:block;margin-bottom:3px;}
+
+  .panel{padding:24px 22px 26px;}
+  .blk{margin-top:24px;}
+  .blk:first-child{margin-top:0;}
+  .blabel{display:flex;align-items:center;gap:10px;margin-bottom:13px;}
+  .blabel-n{width:27px;height:27px;border-radius:7px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .in-c{background:var(--navy);color:var(--rose);}
+  .out-c{background:var(--rose);color:#fff;}
+  .blabel-t{font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);font-weight:600;}
+  .blabel-s{font-size:12.5px;color:var(--muted);}
+  .tagin,.tagout{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:5px;font-weight:600;margin-left:auto;text-transform:uppercase;}
+  .tagin{background:var(--rose-soft);color:var(--rose-deep);}
+  .tagout{background:#e7f3ec;color:var(--green);}
+
+  /* vocab cards */
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:11px;}
+  .vcard{background:transparent;border:none;padding:0;perspective:1000px;height:140px;cursor:pointer;font-family:inherit;text-align:left;}
+  .vci{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;}
+  .vcard.flipped .vci{transform:rotateY(180deg);}
+  .vf{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-sm);padding:14px 15px;display:flex;flex-direction:column;}
+  .vfr{background:#fbfafc;border:1px solid var(--line);border-left:4px solid var(--gold);}
+  .vfr .tm{font-family:'Playfair Display',serif;font-weight:700;font-size:17.5px;color:var(--navy);line-height:1.12;}
+  .vfr .ps{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.5px;color:var(--rose-deep);text-transform:uppercase;margin:3px 0 8px;}
+  .vfr .df{font-size:13px;color:#4a4f70;line-height:1.4;}
+  .vfr .fh{margin-top:auto;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.5px;color:var(--muted);}
+  .vbk{background:var(--navy);transform:rotateY(180deg);border-left:4px solid var(--rose);justify-content:center;}
+  .vbk .el{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:7px;}
+  .vbk .ex{font-size:14.5px;color:#fff;line-height:1.45;font-style:italic;font-family:'Playfair Display',serif;}
+
+  /* hear / say */
+  .phr{display:grid;gap:7px;}
+  .pli{display:flex;gap:10px;align-items:flex-start;border-radius:10px;padding:10px 13px;font-size:14.5px;line-height:1.4;}
+  .hear .pli{background:var(--rose-soft);color:var(--navy);}
+  .say .pli{background:#eef0f7;color:var(--navy);}
+  .pli .ico{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;flex-shrink:0;padding-top:2px;}
+  .hear .ico{color:var(--rose-deep);}
+  .say .ico{color:var(--navy);}
+
+  /* quick practice */
+  .qp{display:grid;gap:9px;}
+  .qrow{background:#fbfafc;border:1px solid var(--line);border-radius:10px;padding:12px 14px;}
+  .qrow .pr{font-size:14.5px;color:var(--navy);}
+  .qrow .pr .bl{color:var(--rose-deep);font-weight:700;letter-spacing:2px;font-family:'IBM Plex Mono',monospace;}
+  .qrow button{margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--rose-deep);background:none;border:1px dashed var(--rose);border-radius:7px;padding:5px 11px;cursor:pointer;}
+  .qrow button:hover{background:var(--rose-soft);}
+  .qrow .ans{display:none;margin-top:9px;font-size:14px;color:var(--green);font-weight:600;}
+  .qrow .ans.show{display:block;}
+
+  /* your turn + roleplay */
+  .turn{background:var(--navy);border-radius:var(--r-sm);padding:18px 18px;color:#fff;}
+  .turn .setup{font-size:15px;color:#dfe1ef;margin:0 0 14px;line-height:1.5;}
+  .turn .setup b{color:#fff;}
+  .turn button{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:12px;letter-spacing:.5px;background:var(--rose);color:#fff;border:none;border-radius:8px;padding:10px 16px;cursor:pointer;}
+  .turn button:hover{filter:brightness(1.08);}
+  .turn .model{display:none;margin-top:13px;background:rgba(255,255,255,.06);border-left:3px solid var(--gold);border-radius:0 9px 9px 0;padding:13px 15px;}
+  .turn .model.show{display:block;}
+  .turn .model .ml{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-bottom:7px;}
+  .turn .model p{margin:0 0 7px;font-size:14.5px;color:#fff;line-height:1.5;}
+  .turn .model p:last-child{margin:0;}
+  .turn .model .q{color:var(--rose);font-weight:600;}
+
+  .roleplay{margin-top:13px;display:flex;gap:12px;align-items:flex-start;background:#e7f3ec;border-radius:var(--r-sm);padding:15px 17px;}
+  .roleplay .rp-ic{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--green);font-size:11px;flex-shrink:0;border:1.5px solid var(--green);border-radius:6px;padding:4px 7px;}
+  .roleplay .rp-t{font-size:14.5px;color:var(--navy);line-height:1.45;}
+  .roleplay .rp-t b{color:var(--green);}
+
+  /* finish */
+  .finish{background:linear-gradient(135deg,var(--navy),#2c2150);border-radius:var(--r);padding:28px 24px;color:#fff;margin:24px 0;}
+  .finish .fl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+  .finish h3{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;margin:8px 0 6px;color:#fff;}
+  .finish p{color:#d4d6ea;font-size:15px;margin:0 0 14px;}
+  .finish .chain{display:flex;gap:8px;flex-wrap:wrap;}
+  .finish .ch{font-family:'IBM Plex Mono',monospace;font-size:12px;color:#fff;background:rgba(255,255,255,.09);border:1px solid rgba(207,126,147,.4);border-radius:8px;padding:8px 12px;}
+
+  /* signs */
+  .signs-sec{padding:30px 0;}
+  .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+  .sign{border:none;border-radius:10px;padding:0;cursor:pointer;overflow:hidden;text-align:left;font-family:inherit;}
+  .sign .face{padding:15px 16px;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:16px;display:flex;align-items:center;justify-content:space-between;letter-spacing:.5px;}
+  .sign.dir .face{background:var(--gold);color:#1e2647;}
+  .sign.grn .face{background:var(--green);color:#fff;}
+  .sign.blu .face{background:#2b4a7a;color:#fff;}
+  .sign.red .face{background:#b8394b;color:#fff;}
+  .sign .mean{display:none;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-top:none;font-family:'Raleway';font-size:13.5px;color:var(--navy);line-height:1.45;}
+  .sign.open .mean{display:block;}
+
+  /* personalize */
+  .person{background:var(--rose-soft);border-radius:var(--r);padding:26px 24px;margin:8px 0 0;}
+  .person .pl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--rose-deep);text-transform:uppercase;}
+  .person h3{font-family:'Playfair Display',serif;font-weight:700;font-size:23px;margin:8px 0 6px;color:var(--navy);}
+  .person p{color:var(--rose-deep);font-size:14.5px;margin:0 0 14px;}
+  .person ul{margin:0;padding:0;list-style:none;display:grid;gap:9px;}
+  .person li{background:#fff;border-radius:10px;padding:12px 15px;font-size:15px;color:var(--navy);}
+  .person li b{color:var(--rose-deep);}
+
+  /* homework */
+  .homework{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:26px 24px;margin:22px 0 0;}
+  .homework .hl{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--navy);text-transform:uppercase;}
+  .homework h3{font-family:'Playfair Display',serif;font-weight:700;font-size:23px;margin:8px 0 12px;color:var(--navy);}
+  .homework ol{margin:0;padding:0 0 0 20px;color:var(--navy);}
+  .homework li{margin:8px 0;font-size:15px;line-height:1.5;}
+  .homework li em{color:var(--muted);font-size:13px;font-style:italic;}
+
+  /* section heads */
+  .shd{margin-bottom:16px;}
+  .shd .e{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:2px;color:var(--rose-deep);text-transform:uppercase;}
+  .shd h2{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(24px,4.5vw,34px);margin:8px 0 4px;}
+  .shd p{color:var(--muted);font-size:15px;margin:0;max-width:560px;}
+
+  footer{background:var(--navy);color:#aeb2cf;padding:26px 0 34px;margin-top:30px;}
+  footer .wrap{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.5px;line-height:1.7;}
+  footer a{color:var(--rose);text-decoration:none;}
+  footer .big{color:#fff;font-size:13px;letter-spacing:2px;margin-bottom:8px;}
+
+  button:focus-visible,.vcard:focus-visible,.sign:focus-visible,a:focus-visible{outline:3px solid var(--rose);outline-offset:2px;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important;}}
+  @media (max-width:560px){
+    .vgrid{grid-template-columns:1fr;} .banner-in{flex-direction:column;align-items:flex-start;gap:9px;}
+    .hero{min-height:70vh;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap"><div class="hero-in">
+  <div class="wm"><span class="d"></span><span>English by Neves</span></div>
+  <p class="ey">Speaking lesson · A2</p>
+  <h1>Hotel <em>Check-in</em></h1>
+  <p class="sub">You just landed in Miami. Time to get to your hotel, check in, deal with any problems, and get out into the city — all in English.</p>
+  <div class="bpass">
+    <div class="bp-l">
+      <div class="air">RESERVATION · ENGLISH BY NEVES</div>
+      <div class="bp-route"><span class="pt">MIA</span><span class="ar">✦</span><span class="pt">OCEAN VIEW</span></div>
+      <div class="bp-meta">
+        <div><div class="k">Guest</div><div class="v">THIAGO</div></div>
+        <div><div class="k">Nights</div><div class="v">03</div></div>
+        <div><div class="k">Level</div><div class="v">A2</div></div>
+      </div>
+    </div>
+    <div class="bp-r"><div><div class="k mono" style="font-size:9px;color:var(--rose-deep);letter-spacing:1px;">ROOM</div><div class="seat">314</div></div><div class="bc"></div></div>
+  </div>
+</div></div></header>
+
+<!-- JOURNEY MAP -->
+<nav class="map"><div class="wrap">
+  <a class="stop" href="#s1"><span class="c">H1</span><span class="nm">Reception</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s2"><span class="c">H2</span><span class="nm">The Room</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s3"><span class="c">H3</span><span class="nm">Around Town</span></a><span class="arrow">→</span>
+  <a class="stop" href="#s4"><span class="c">H4</span><span class="nm">Check-out</span></a>
+</div></nav>
+
+<!-- ===================== LESSON 1 ===================== -->
+<section class="lesson"><div class="wrap">
+  <div class="lhd"><span class="tag">LESSON 1</span></div>
+  <h2>Arrival — from the lobby to your room</h2>
+  <p class="li">Walk in, check in, get your key, and go up. Learn the words, hear what staff say, then do it yourself.</p>
+
+  <!-- S1 RECEPTION -->
+  <div class="station" id="s1">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_lobby_reception_desk.jpg?width=1200')">
+      <div class="banner-in"><span class="code">H1</span><div><span class="step">Stop 1</span><h3>At the reception desk</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip for an example</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s1"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">the receptionist says…</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Good evening. Do you have a reservation?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Can I have your name, please?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Can I see your passport or ID?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Here's your key. Your room is on the third floor."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Breakfast is from 7 to 10 in the restaurant."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">short and clear</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Hi, I have a reservation."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"My name is Thiago Ritz."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"It's for three nights, one person."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Here is my passport."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Can I have the Wi-Fi password, please?"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">Receptionist: "Do you have a reservation?" → You: "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Yes, I do. My name is Thiago Ritz."</div></div>
+          <div class="qrow"><div class="pr">She asks how many nights: "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Three nights, one person."</div></div>
+          <div class="qrow"><div class="pr">You want to know about breakfast: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Is breakfast included?" / "What time is breakfast?"</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You walk into the Ocean View Hotel. You have a <b>reservation for 3 nights</b>, one person. You want a <b>room with a view</b> if possible, and you need the <b>Wi-Fi password</b>. Do your part — out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Hi, good evening. I have a reservation. My name is Thiago Ritz. It's for three nights, one person. Here's my passport. Could I have a room with a view, please? And can I get the Wi-Fi password?"</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from "Good evening" to walking away with your key, your room number, and the Wi-Fi info.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S2 IN THE ROOM -->
+  <div class="station" id="s2">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_room_at_the_Peninsula_Hong_Kong.jpg?width=1200')">
+      <div class="banner-in"><span class="code">H2</span><div><span class="step">Stop 2</span><h3>In the room · when things go wrong</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s2"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">on the phone with the front desk</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"Front desk, how can I help you?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"What room are you in?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"I'll send someone up in a few minutes."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Sorry about that. It will be fixed soon."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">simple problems, simple words</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Hi, this is room 314. The AC is not working."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"There is no hot water in the shower."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"The Wi-Fi is not working. Can you help?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Can I get two more towels, please?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"The people next door are very loud."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">The AC is broken. You call: "Hi, this is room 314. <span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"The AC is not working. Can someone come to fix it?"</div></div>
+          <div class="qrow"><div class="pr">You want an extra pillow: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Can I get an extra pillow, please?"</div></div>
+          <div class="qrow"><div class="pr">No hot water: "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"There is no hot water in the shower. Only cold."</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">You go into room 314. The <b>AC is too cold</b>, the <b>TV is not working</b>, and you need <b>two more towels</b>. Call the front desk and solve all three problems in one call. Out loud.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Hi, this is room 314. I have some problems. First, the AC is very cold — can you help me turn it down? Also, the TV is not working. And can I get two more towels, please? Thank you."</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> pick <b>4 problems</b> from the vocab cards. Call the front desk. Describe each one clearly, one by one.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L1 FINISH -->
+  <div class="finish"><span class="fl">Lesson 1 · final challenge</span>
+    <h3>From the lobby to your bed</h3>
+    <p>No notes. Walk yourself through Lesson 1 out loud — one or two lines at each stop.</p>
+    <div class="chain"><span class="ch">1 · Check in at reception</span><span class="ch">2 · Get to your room</span><span class="ch">3 · Solve one problem</span></div>
+  </div>
+</div></section>
+
+<!-- ===================== LESSON 2 ===================== -->
+<section class="lesson"><div class="wrap">
+  <div class="lhd"><span class="tag t2">LESSON 2</span></div>
+  <h2>Around town — using your hotel as a base</h2>
+  <p class="li">Ask for tips, get out of the hotel, come back later, check out on time. Small talk with staff is part of the trip.</p>
+
+  <!-- S3 AROUND TOWN -->
+  <div class="station" id="s3">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Ocean_Drive_at_night_Miami_Beach.jpg?width=1200')">
+      <div class="banner-in"><span class="code">H3</span><div><span class="step">Stop 3</span><h3>Asking for tips &amp; directions</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s3"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">the receptionist knows the city</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"There's a good place two blocks from here."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"It's very close. You can walk."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Take a taxi — it's about 10 minutes."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Yes, it's safe to walk at night."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"First time in Miami?"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">questions + small talk</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Where can I eat something good and cheap near here?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"How do I get to Ocean Drive?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Is the beach far from here?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Can you call me a taxi, please?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Yes, first time. I'm going to Orlando next week."</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">You want dinner: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Where can I eat something good and cheap near here?"</div></div>
+          <div class="qrow"><div class="pr">She asks: "First time in Miami?" → "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Yes, first time. I'm very excited to see the beach!"</div></div>
+          <div class="qrow"><div class="pr">You need a taxi: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Can you call me a taxi, please?"</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">It's 8 pm and you're hungry. Go to reception. Ask for a <b>cheap and good place</b> to eat, ask if it's <b>safe to walk</b> there, and ask if the receptionist has any <b>recommendation for tomorrow</b>. Answer her small talk too.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div>
+            <p>"Hi, quick question. Where can I eat something good and cheap near here? Is it safe to walk there at night?"</p>
+            <p><span class="q">"First time in Miami?"</span> — "Yes, first time! I'm going to Orlando next week."</p>
+            <p>"Great. Do you have any recommendation for tomorrow — the beach, something to do?"</p>
+          </div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from arriving at the desk to walking out with a plan for dinner and tomorrow.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S4 CHECK-OUT -->
+  <div class="station" id="s4">
+    <div class="banner" style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_check-out_desk.jpg?width=1200')">
+      <div class="banner-in"><span class="code">H4</span><div><span class="step">Stop 4</span><h3>Check-out &amp; goodbye</h3></div></div>
+    </div>
+    <div class="panel">
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">1</span><span class="blabel-t">Words to know</span><span class="blabel-s">tap a card, then flip</span><span class="tagin">input</span></div><div class="vgrid" id="vg-s4"></div></div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">2</span><span class="blabel-t">What you'll hear</span><span class="blabel-s">the receptionist at check-out</span><span class="tagin">input</span></div>
+        <div class="phr hear">
+          <div class="pli"><span class="ico">HEAR</span><span>"How was your stay?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Did you use anything from the mini-bar?"</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Here is your receipt."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Sure, you can leave your bags here."</span></div>
+          <div class="pli"><span class="ico">HEAR</span><span>"Have a safe trip!"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n in-c">3</span><span class="blabel-t">What you can say</span><span class="blabel-s">short and polite</span><span class="tagin">input</span></div>
+        <div class="phr say">
+          <div class="pli"><span class="ico">SAY</span><span>"Hi, I'd like to check out. Room 314."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"It was great, thank you."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"No, I didn't use anything."</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Can I leave my bags here for a few hours?"</span></div>
+          <div class="pli"><span class="ico">SAY</span><span>"Thank you for everything!"</span></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">4</span><span class="blabel-t">Quick practice</span><span class="blabel-s">finish your line, then check</span><span class="tagout">output</span></div>
+        <div class="qp">
+          <div class="qrow"><div class="pr">You arrive at the desk in the morning: "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Hi, I'd like to check out. Room 314."</div></div>
+          <div class="qrow"><div class="pr">Your flight is at night: "<span class="bl">_____</span>?"</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"Can I leave my bags here until 6 pm, please?"</div></div>
+          <div class="qrow"><div class="pr">She asks: "How was your stay?" → "<span class="bl">_____</span>."</div><button onclick="this.nextElementSibling.classList.toggle('show')">show an answer</button><div class="ans">"It was great, thank you. Very comfortable!"</div></div>
+        </div>
+      </div>
+
+      <div class="blk"><div class="blabel"><span class="blabel-n out-c">5</span><span class="blabel-t">Your turn</span><span class="blabel-s">say it out loud</span><span class="tagout">output</span></div>
+        <div class="turn"><p class="setup">It's your last day. You're checking out at 11 am but your <b>flight to Orlando</b> is at <b>7 pm</b>. You want to <b>leave your bags</b> at the hotel and get <b>one last tip</b> for lunch nearby.</p>
+          <button onclick="this.nextElementSibling.classList.toggle('show')">Reveal a model</button>
+          <div class="model"><div class="ml">one natural version</div><p>"Hi, I'd like to check out. Room 314. My stay was great, thank you! No, I didn't use anything from the mini-bar. My flight is at 7 pm — can I leave my bags here until 5? And one last question — where can I get a good lunch nearby?"</p></div>
+        </div>
+        <div class="roleplay"><span class="rp-ic">ROLE-PLAY</span><span class="rp-t"><b>Now the whole thing:</b> from "Hi, I'd like to check out" to walking out with your receipt, your bags stored, and a lunch plan.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- L2 FINISH -->
+  <div class="finish"><span class="fl">Final challenge · one take · 4 minutes</span>
+    <h3>Your first 24 hours at Ocean View</h3>
+    <p>No stopping, no notes. Walk through the whole hotel journey out loud, one or two lines at each stop.</p>
+    <div class="chain"><span class="ch">1 · Check in</span><span class="ch">2 · Solve a problem</span><span class="ch">3 · Ask for a tip</span><span class="ch">4 · Check out &amp; leave bags</span></div>
+  </div>
+</div></section>
+
+<!-- SIGNS -->
+<section class="signs-sec"><div class="wrap">
+  <div class="shd"><p class="e">Read the hotel</p><h2>What does the sign mean?</h2><p>You'll see these all around the hotel. Tap each one to check.</p></div>
+  <div class="sgrid">
+    <button class="sign blu" onclick="this.classList.toggle('open')"><div class="face"><span>Reception</span><span>›</span></div><div class="mean">The main desk. Go here for check-in, check-out, keys and questions.</div></button>
+    <button class="sign dir" onclick="this.classList.toggle('open')"><div class="face"><span>Elevator / Lift</span><span>↑</span></div><div class="mean">The machine that takes you up and down between floors.</div></button>
+    <button class="sign grn" onclick="this.classList.toggle('open')"><div class="face"><span>Breakfast</span><span>7–10</span></div><div class="mean">The room and the times where you eat breakfast, usually included.</div></button>
+    <button class="sign dir" onclick="this.classList.toggle('open')"><div class="face"><span>Pool</span><span>→</span></div><div class="mean">Follow this sign to the swimming pool. Bring a towel.</div></button>
+    <button class="sign red" onclick="this.classList.toggle('open')"><div class="face"><span>Do Not Disturb</span><span>✕</span></div><div class="mean">Put this on your door when you don't want cleaning or anyone knocking.</div></button>
+    <button class="sign grn" onclick="this.classList.toggle('open')"><div class="face"><span>Wi-Fi Zone</span><span>≋</span></div><div class="mean">You can connect to the internet here — ask for the password.</div></button>
+    <button class="sign blu" onclick="this.classList.toggle('open')"><div class="face"><span>Check-out</span><span>11:00</span></div><div class="mean">The time you have to leave the room. After this, extra fee.</div></button>
+    <button class="sign red" onclick="this.classList.toggle('open')"><div class="face"><span>Fire Exit</span><span>↗</span></div><div class="mean">The way out in an emergency. Never blocked, never locked.</div></button>
+  </div>
+</div></section>
+
+<!-- PERSONALIZE -->
+<section class="lesson" style="padding-bottom:8px;"><div class="wrap">
+  <div class="person"><span class="pl">Make it yours</span>
+    <h3>Plan your Orlando hotel</h3>
+    <p>Answer out loud, in full sentences, using the words from today.</p>
+    <ul>
+      <li><b>Where</b> is your hotel in Orlando? Near Disney or downtown?</li>
+      <li><b>How many nights</b> are you staying?</li>
+      <li>Do you want <b>a room with a view</b>? Of what?</li>
+      <li>What's the <b>first thing</b> you'll ask at reception?</li>
+      <li>If the AC is not working, what will you <b>say</b> on the phone?</li>
+      <li>Where will you ask the receptionist for a <b>tip</b> — food, parks, transport?</li>
+    </ul>
+  </div>
+
+  <!-- HOMEWORK -->
+  <div class="homework"><span class="hl">Homework · before next class</span>
+    <h3>Practice this week</h3>
+    <ol>
+      <li>Send a <b>WhatsApp voice message (60 seconds)</b>: you are checking in at a hotel. Say everything you'd say — the whole thing, one take. <em>Send by Thursday.</em></li>
+      <li>Add the 8 <b>check-in chunks</b> from Station H1 to your DuoCards deck. 5 minutes a day.</li>
+      <li>Watch on YouTube: <b>"GTA Vice City · Ocean Drive walk"</b>. Write down 3 words you hear in English. Bring to next class.</li>
+      <li>Bonus: describe your <b>dream hotel room</b> in 5 English sentences. Voice message.</li>
+    </ol>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="big">ENGLISH BY NEVES · HOTEL CHECK-IN · A2</div>
+  Photos: Wikimedia Commons (CC BY / CC BY-SA) — Miami Beach, Hong Kong &amp; generic hotel interiors.<br>
+  Image source &amp; licences: <a href="https://commons.wikimedia.org/wiki/Category:Hotels">commons.wikimedia.org</a>
+</div></footer>
+
+<script>
+const V = {
+ 's1':[
+   ["reservation","noun","a room booked before you arrive.","I have a reservation for tonight."],
+   ["front desk","noun","the main desk in the hotel lobby.","Ask at the front desk for the Wi-Fi."],
+   ["key card","noun","a plastic card that opens your room.","Don't lose your key card!"],
+   ["floor","noun","the level of the building (1st, 2nd, 3rd).","My room is on the fifth floor."],
+   ["ID / passport","noun","the document with your photo.","Can I see your ID, please?"],
+   ["room number","noun","the number of your room.","My room number is 314."],
+   ["view","noun","what you see from the window.","I'd like a room with a view of the beach."],
+   ["Wi-Fi password","noun","the code to use the internet.","What's the Wi-Fi password?"]
+ ],
+ 's2':[
+   ["air conditioning / AC","noun","the machine that makes the room cold.","The AC is too cold — can you help?"],
+   ["hot water","noun","warm water in the shower or tap.","There is no hot water in the shower."],
+   ["shower","noun","where you wash your body.","The shower is not working."],
+   ["towel","noun","the cloth you use to dry yourself.","Can I get two more towels?"],
+   ["extra pillow","noun","one more pillow for the bed.","Can I have an extra pillow?"],
+   ["remote","noun","the small thing that controls the TV.","The remote is not working."],
+   ["mini-bar","noun","the small fridge with drinks.","I didn't use anything from the mini-bar."],
+   ["noisy / loud","adjective","when there is too much noise.","The people next door are very loud."]
+ ],
+ 's3':[
+   ["near here","phrase","close to this place.","Is there a good restaurant near here?"],
+   ["cheap","adjective","not expensive.","I want something cheap and good."],
+   ["far","adjective","not close.","Is the beach far from here?"],
+   ["walking distance","phrase","close enough to walk.","It's walking distance — 10 minutes."],
+   ["taxi","noun","a car you pay for to take you somewhere.","Can you call me a taxi, please?"],
+   ["safe","adjective","not dangerous.","Is it safe to walk at night?"],
+   ["recommendation","noun","a good tip from someone.","Do you have a recommendation for dinner?"],
+   ["map","noun","a picture that shows the streets.","Do you have a map of the city?"]
+ ],
+ 's4':[
+   ["check-out","noun / verb","leaving the hotel at the end.","Check-out is at 11 am."],
+   ["receipt","noun","the paper that shows what you paid.","Can I have my receipt, please?"],
+   ["stay","noun","the time you spent at the hotel.","How was your stay?"],
+   ["luggage","noun","your bags and suitcases.","I'll get my luggage from the room."],
+   ["to leave bags","phrase","to keep bags at reception for a few hours.","Can I leave my bags here until 5 pm?"],
+   ["late check-out","noun","leaving after the normal time.","Can I have a late check-out?"],
+   ["credit card","noun","the card you use to pay.","Can I pay with my credit card?"],
+   ["thank you for everything","phrase","a polite goodbye at the end.","Thank you for everything — I loved my stay!"]
+ ]
+};
+function render(id){
+  const grid=document.getElementById('vg-'+id); if(!grid) return;
+  V[id].forEach(([tm,ps,df,ex])=>{
+    const b=document.createElement('button');
+    b.className='vcard'; b.setAttribute('aria-label',tm+': '+df);
+    b.innerHTML='<div class="vci"><div class="vf vfr"><div class="tm">'+tm+'</div><div class="ps">'+ps+'</div><div class="df">'+df+'</div><div class="fh">tap for example ›</div></div><div class="vf vbk"><div class="el">in use</div><div class="ex">'+ex+'</div></div></div>';
+    b.addEventListener('click',()=>b.classList.toggle('flipped'));
+    grid.appendChild(b);
+  });
+}
+['s1','s2','s3','s4'].forEach(render);
+
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity=1;e.target.style.transform='none';io.unobserve(e.target);}}),{threshold:.08});
+  document.querySelectorAll('.station,.finish,.person,.homework,.signs-sec').forEach(s=>{s.style.opacity=0;s.style.transform='translateY(20px)';s.style.transition='opacity .6s,transform .6s';io.observe(s);});
+}
+</script>
+</body>
+</html>
