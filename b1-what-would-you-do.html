@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Would You Do? — B1 Speaking | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --rose:#CF7E93; --teal:#0A7D6E; --mint:#DCF0EA;
+  --ink:#1E2647; --paper:#FBFAF7; --line:#E7E2DA;
+  --rose-soft:#F6E6EA; --teal-soft:#E0F1ED; --amber:#E8A14C;
+  --shadow:0 10px 30px rgba(30,38,71,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+section{margin:30px 0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.sec-head{padding:20px 22px;display:flex;align-items:center;gap:14px}
+.sec-head h2{font-size:1.4rem;color:#fff}
+.sec-head .n{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);display:block;margin-bottom:2px;font-family:'Raleway'}
+.sec-body{padding:22px}
+.ico{flex:0 0 46px;width:46px;height:46px}
+.a-rose .sec-head{background:linear-gradient(135deg,var(--rose),#b96077)}
+.a-teal .sec-head{background:linear-gradient(135deg,var(--teal),#086457)}
+.a-navy .sec-head{background:linear-gradient(135deg,var(--navy),#2c3a6b)}
+.a-amber .sec-head{background:linear-gradient(135deg,var(--amber),#cf8427)}
+
+.hero{background:var(--rose);color:#fff;border-radius:0 0 28px 28px;padding:34px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero .logo{font-family:'Playfair Display';font-weight:800;font-size:1.05rem;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.hero .mono{width:38px;height:38px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:#fff}
+.hero h1{font-size:2.5rem;font-weight:800;margin:4px 0 6px}
+.hero .sub{color:#fff;opacity:.9;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem}
+.hero .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 13px;border-radius:30px;font-size:.78rem;font-weight:600}
+.hero .goal{margin-top:20px;background:rgba(30,38,71,.15);border-radius:14px;padding:14px 16px;font-size:.98rem;max-width:520px;margin:20px auto 0}
+.hero .goal b{color:#fff}
+
+.teacher{max-width:760px;margin:16px auto 0;padding:0 16px}
+.teacher details{background:#F3F1EC;border:1px dashed var(--line);border-radius:12px;padding:0 16px}
+.teacher summary{cursor:pointer;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#9a948a;font-weight:700;padding:11px 0;list-style:none}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher .tbody{font-size:.84rem;color:#746f66;font-style:italic;padding:4px 0 15px;border-top:1px solid var(--line)}
+.teacher .tbody p{margin:7px 0}
+.teacher .tbody b{color:#5c574f;font-style:normal}
+
+.lead{font-size:1.02rem;color:#4a4a55;margin-bottom:16px}
+.tag{display:inline-block;background:var(--mint);color:var(--teal);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+.qlist{list-style:none;display:grid;gap:12px}
+.qlist li{display:flex;gap:14px;align-items:flex-start;background:var(--rose-soft);border-radius:14px;padding:14px 16px}
+.a-teal .qlist li{background:var(--teal-soft)}
+.a-amber .qlist li{background:#FBEEDC}
+.qlist .qn{flex:0 0 30px;height:30px;background:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--rose);font-family:'Playfair Display'}
+.a-teal .qlist .qn{color:var(--teal)} .a-amber .qlist .qn{color:var(--amber)}
+.qlist p{font-size:1.06rem;font-weight:500}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter-btn{border:1.5px solid var(--line);background:#fff;color:#777;padding:7px 14px;border-radius:30px;font-family:'Raleway';font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{perspective:1000px;min-height:108px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;min-height:108px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:center}
+.front{background:#fff;border:1.5px solid var(--line)}
+.front .en{font-size:1.04rem;font-weight:700;color:var(--navy)}
+.front .cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:7px}
+.back{background:var(--rose);color:#fff;transform:rotateY(180deg);text-align:center}
+.back .pt{font-size:.98rem;color:#fff;font-weight:500}
+.back small{display:block;margin-top:8px;color:rgba(255,255,255,.6);font-size:.68rem}
+.c-hyp{color:var(--rose)} .c-imag{color:var(--teal)} .c-weigh{color:#6a7bbd} .c-react{color:var(--amber)}
+.hint{font-size:.78rem;color:#9a948a;margin-bottom:14px;font-style:italic}
+
+.box{background:var(--mint);border-radius:14px;padding:16px 18px;margin:14px 0}
+.box.navy{background:var(--navy);color:#fff}
+.box.navy b{color:var(--mint)}
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:30px;padding:8px 15px;font-weight:600;font-size:.92rem}
+
+.tot{display:grid;gap:10px}
+.tot .pair{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;border:1.5px solid var(--line)}
+.tot .side{flex:1;padding:14px;text-align:center;font-weight:600;background:#fff;font-size:.96rem}
+.tot .vs{display:grid;place-items:center;background:var(--rose);color:#fff;font-family:'Playfair Display';font-weight:800;padding:0 14px;font-size:.9rem}
+
+.stage{background:linear-gradient(160deg,#b96077,#CF7E93);color:#fff;border-radius:18px;padding:24px 20px;text-align:center}
+.stage .draw{min-height:92px;display:grid;place-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:18px;font-size:1.2rem;font-weight:600;font-family:'Playfair Display';margin:16px 0;color:#fff}
+.stage .twist{background:rgba(30,38,71,.25);border-radius:12px;padding:12px 14px;margin:12px 0;font-size:.98rem;min-height:44px;display:grid;place-items:center}
+.btn{background:var(--navy);color:#fff;border:none;padding:13px 26px;border-radius:30px;font-family:'Raleway';font-weight:700;font-size:1rem;cursor:pointer;transition:.15s;box-shadow:0 6px 16px rgba(30,38,71,.3)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;box-shadow:none;border:1.5px solid rgba(255,255,255,.6);color:#fff}
+.score{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:14px;font-weight:700}
+.score .pts{background:var(--navy);color:#fff;border-radius:30px;padding:6px 16px;font-size:1.1rem}
+.stage .mini{font-size:.82rem;color:rgba(255,255,255,.8);margin-top:10px}
+
+.hw li{margin:9px 0 9px 4px;padding-left:26px;position:relative;font-size:1rem}
+.hw li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--rose);border-radius:4px}
+
+#timer{position:fixed;right:14px;bottom:14px;z-index:50;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:10px 12px;width:150px;text-align:center}
+#timer .lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a948a;font-weight:700}
+#timer .disp{font-family:'Playfair Display';font-weight:800;font-size:1.7rem;color:var(--navy);margin:2px 0}
+#timer.run .disp{color:var(--teal)}
+#timer.done .disp{color:var(--rose)}
+#timer .set{display:flex;gap:5px;justify-content:center;margin:5px 0}
+#timer .set button,#timer .go{border:none;border-radius:8px;cursor:pointer;font-family:'Raleway';font-weight:700}
+#timer .set button{flex:1;background:var(--mint);color:var(--teal);padding:5px 0;font-size:.78rem}
+#timer .set button.sel{background:var(--teal);color:#fff}
+#timer .go{width:100%;background:var(--navy);color:#fff;padding:7px 0;font-size:.82rem}
+#timer .min{position:absolute;top:6px;right:9px;cursor:pointer;color:#bbb;font-weight:700;font-size:.9rem;background:none;border:none}
+#timer.mini .set,#timer.mini .go,#timer.mini .lbl{display:none}
+#timer.mini{width:92px;padding:7px 10px}
+
+@media(max-width:480px){
+  .hero h1{font-size:2rem}
+  .cards{grid-template-columns:1fr 1fr}
+  .sec-head h2{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo"><span class="mono">EN</span> English by Neves</div>
+  <div class="sub">B1 Speaking · Conversation Block</div>
+  <h1>What Would You Do?</h1>
+  <div class="meta">
+    <span class="chip">★ Level B1</span>
+    <span class="chip">⏱ 50 min</span>
+    <span class="chip">🤔 Hypotheticals &amp; Dilemmas</span>
+  </div>
+  <div class="goal">By the end of today, <b>you can talk about imaginary situations and tough choices using "If I… I would…" without stopping to translate.</b></div>
+</header>
+
+<div class="teacher">
+  <details>
+    <summary>Teacher reference — plano &amp; meta (toque para abrir)</summary>
+    <div class="tbody">
+      <p><b>Código:</b> B1-CONV-03 · <b>Módulo:</b> Conversation Block · <b>Tema:</b> Hypotheticals &amp; dilemmas</p>
+      <p><b>Objetivo comunicativo:</b> falar sobre situações imaginárias e escolhas difíceis; justificar decisões; reagir a dilemas de outras pessoas.</p>
+      <p><b>Gramática em contexto (não ensinar isolada):</b> second conditional (If I won…, I'd…), would/wouldn't, would rather, might/probably pra suavizar. Introduzir via chunk, não via regra.</p>
+      <p><b>Correção:</b> recast do "would" e da forma do verbo (If I <i>had</i>… não "If I have"). Corrige no fim pra não travar o fluxo.</p>
+      <p><b>Critério de sucesso:</b> o aluno sustenta uma decisão hipotética por 60s, usa "I'd / I wouldn't" corretamente 3+ vezes e lida com um "plot twist" sem recorrer ao português.</p>
+      <p><b>Homework:</b> DuoCards (chunks de 2nd conditional) + áudio de 60s "If I could change one thing about my routine…".</p>
+    </div>
+  </details>
+</div>
+
+<main class="wrap">
+
+<!-- WARM UP -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 6v8M24 6l-10 14h20z" fill="#fff"/><path d="M14 20l10 22 10-22" fill="#DCF0EA"/><circle cx="24" cy="30" r="3" fill="#CF7E93"/></svg>
+    <div><span class="n">Round 1 · Warm-up</span><h2>Quick choices</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Snap decision — pick one out loud and say <i>why</i> in a few words. No "I don't know"! 😄</p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>Teleport anywhere right now — beach or big city?</p></li>
+      <li><span class="qn">2</span><p>Free superpower: fly or be invisible?</p></li>
+      <li><span class="qn">3</span><p>Win R$1,000 today or R$10,000 in a year?</p></li>
+      <li><span class="qn">4</span><p>Never use your phone for a week or never eat your favourite food for a month?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="13" fill="#fff"/><path d="M24 26v-3c3-1 4-3 4-5a4 4 0 10-8 0" stroke="#1E2647" stroke-width="2.6" stroke-linecap="round" fill="none"/><circle cx="24" cy="31" r="2" fill="#CF7E93"/><path d="M18 40h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+    <div><span class="n">Toolbox</span><h2>Talk about "what if"</h2></div>
+  </div>
+  <div class="sec-body">
+    <span class="tag">Flip for 🇧🇷</span>
+    <p class="hint">Grab these chunks before you decide anything. Filter, flip to check, then build every answer around "I'd…".</p>
+    <div class="filters" id="f1">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="hyp">Hypothesis</button>
+      <button class="filter-btn" data-cat="imag">Imagine</button>
+      <button class="filter-btn" data-cat="weigh">Weigh it up</button>
+      <button class="filter-btn" data-cat="react">React</button>
+    </div>
+    <div class="cards" id="cards1"></div>
+  </div>
+</section>
+
+<!-- IF I COULD -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 7l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#fff"/><path d="M24 18v8" stroke="#0A7D6E" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 2 · Guided</span><h2>If I could…</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Pick a card and answer with <b>"If I…, I'd…"</b> — then keep going for <b>30 seconds</b>. Add <i>why</i> and <i>what would happen next</i>.</p>
+    <div class="pill-row">
+      <span class="pill">…won the lottery</span>
+      <span class="pill">…could live in any country</span>
+      <span class="pill">…could have any job</span>
+      <span class="pill">…could meet anyone in the world</span>
+      <span class="pill">…could master one skill instantly</span>
+      <span class="pill">…could be invisible for one day</span>
+    </div>
+    <div class="box navy" style="margin-top:18px">Stretch it: pick <b>one</b> and talk for a full <b>60 seconds</b>. What else would change in your life?</div>
+  </div>
+</section>
+
+<!-- DILEMMAS -->
+<section class="a-amber">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 8v8" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M24 16l-12 16h24z" fill="#fff"/><path d="M12 32a12 6 0 0024 0" fill="#FBEEDC"/><circle cx="24" cy="22" r="2.4" fill="#E8A14C"/></svg>
+    <div><span class="n">Round 3 · Decide</span><h2>Tough calls</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Read each dilemma aloud and <b>decide</b>. Say what you'd do and defend it. There's no "right" answer — only how well you explain it.</p>
+    <ul class="qlist">
+      <li><span class="qn">A</span><p>You find a wallet with R$500 and no ID, only a photo. What would you do?</p></li>
+      <li><span class="qn">B</span><p>Your best friend asks you to lie to cover for them. Would you do it?</p></li>
+      <li><span class="qn">C</span><p>You're offered your dream job — but in another country, starting next month. Do you go?</p></li>
+      <li><span class="qn">D</span><p>A free trip anywhere, but you have to leave tomorrow and tell no one. Would you take it?</p></li>
+      <li><span class="qn">E</span><p>You could know the date of one future event. Would you want to?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- WOULD YOU RATHER -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M16 8v20m0 0l-5-5m5 5l5-5" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 40V20m0 0l-5 5m5-5l5 5" stroke="#DCF0EA" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Round 4 · Rapid</span><h2>Would you rather…</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Pick a side fast and defend it in one breath. Then your teacher argues the other side — hold your ground!</p>
+    <div class="tot">
+      <div class="pair"><div class="side">Always be 10 min early</div><div class="vs">or</div><div class="side">Always be 10 min late</div></div>
+      <div class="pair"><div class="side">Never use social media again</div><div class="vs">or</div><div class="side">Never watch series again</div></div>
+      <div class="pair"><div class="side">Travel the past</div><div class="vs">or</div><div class="side">Travel the future</div></div>
+      <div class="pair"><div class="side">Speak every language</div><div class="vs">or</div><div class="side">Play every instrument</div></div>
+      <div class="pair"><div class="side">Work your dream job for low pay</div><div class="vs">or</div><div class="side">A boring job for great pay</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="9" y="12" width="30" height="26" rx="5" fill="#fff"/><circle cx="24" cy="25" r="7" fill="none" stroke="#CF7E93" stroke-width="2.6"/><path d="M24 18v-4M24 36v-4M31 25h4M13 25h4" stroke="#1E2647" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 5 · Main event</span><h2>The Decision Machine</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Draw a dilemma and talk through your choice for <b>60 seconds</b>. Then tap <b>"Plot twist"</b> — something changes, and you have to <b>re-decide</b> and explain. Each full decision = +1.</p>
+    <div class="stage">
+      <div class="draw" id="draw">Tap "Draw a dilemma" ⚙️</div>
+      <button class="btn ghost" onclick="drawDil()">Draw a dilemma</button>
+      <div class="twist" id="tw">Plot twist appears here…</div>
+      <button class="btn" onclick="addTwist()">🌀 Plot twist!</button>
+      <div class="score"><span>Decisions made:</span><span class="pts" id="pts">0</span></div>
+      <button class="btn ghost" style="margin-top:12px" onclick="dec()">Decided &amp; defended ✓ +1</button>
+      <div class="mini">Golden rule: every answer starts with <b>"I'd…"</b> or <b>"I wouldn't…"</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="10" y="7" width="28" height="34" rx="5" fill="#fff"/><path d="M17 17h14M17 24h14M17 31h9" stroke="#0A7D6E" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">After class</span><h2>Homework</h2></div>
+  </div>
+  <div class="sec-body">
+    <ul class="hw">
+      <li><b>DuoCards:</b> add the "If I…, I'd…" chunks and the weighing-up phrases (on one hand / it depends).</li>
+      <li><b>Record a 60-second voice note:</b> "If I could change one thing about my daily routine, I'd…" — and explain what would happen.</li>
+      <li><b>Dilemma for me:</b> come to next class with ONE "would you rather" question to challenge your teacher. 😏</li>
+    </ul>
+    <div class="box" style="margin-top:16px"><b>Success check:</b> you held a hypothetical choice for 60s, used "I'd / I wouldn't" naturally, and survived a plot twist in English. 🎯</div>
+  </div>
+</section>
+
+</main>
+
+<div id="timer">
+  <button class="min" onclick="miniTimer()" title="minimize">▾</button>
+  <div class="lbl">Speaking timer</div>
+  <div class="disp" id="disp">0:30</div>
+  <div class="set">
+    <button data-s="30" class="sel" onclick="setT(30,this)">30s</button>
+    <button data-s="60" onclick="setT(60,this)">60s</button>
+    <button data-s="90" onclick="setT(90,this)">90s</button>
+  </div>
+  <button class="go" id="go" onclick="toggleT()">Start</button>
+</div>
+
+<script>
+const CHUNKS=[
+  {en:"If I had the chance, I'd…",pt:"Se eu tivesse a chance, eu…",cat:"hyp",lab:"Hypothesis",cls:"c-hyp"},
+  {en:"If I were you, I'd…",pt:"Se eu fosse você, eu…",cat:"hyp",lab:"Hypothesis",cls:"c-hyp"},
+  {en:"I'd probably…",pt:"Eu provavelmente…",cat:"hyp",lab:"Hypothesis",cls:"c-hyp"},
+  {en:"I definitely wouldn't…",pt:"Eu com certeza não…",cat:"hyp",lab:"Hypothesis",cls:"c-hyp"},
+  {en:"There's no way I'd…",pt:"De jeito nenhum eu…",cat:"hyp",lab:"Hypothesis",cls:"c-hyp"},
+  {en:"Imagine if…",pt:"Imagina se…",cat:"imag",lab:"Imagine",cls:"c-imag"},
+  {en:"Let's say…",pt:"Digamos que…",cat:"imag",lab:"Imagine",cls:"c-imag"},
+  {en:"In that case,",pt:"Nesse caso,",cat:"imag",lab:"Imagine",cls:"c-imag"},
+  {en:"It would be amazing to…",pt:"Seria incrível…",cat:"imag",lab:"Imagine",cls:"c-imag"},
+  {en:"On one hand… on the other…",pt:"Por um lado… por outro…",cat:"weigh",lab:"Weigh it up",cls:"c-weigh"},
+  {en:"It depends on…",pt:"Depende de…",cat:"weigh",lab:"Weigh it up",cls:"c-weigh"},
+  {en:"I'd rather … than …",pt:"Eu preferiria … a …",cat:"weigh",lab:"Weigh it up",cls:"c-weigh"},
+  {en:"The thing is,",pt:"A questão é que,",cat:"weigh",lab:"Weigh it up",cls:"c-weigh"},
+  {en:"It's a hard call, but…",pt:"É uma decisão difícil, mas…",cat:"weigh",lab:"Weigh it up",cls:"c-weigh"},
+  {en:"No way! Would you really?",pt:"Sem chance! Você faria mesmo?",cat:"react",lab:"React",cls:"c-react"},
+  {en:"That's a tough one.",pt:"Essa é difícil.",cat:"react",lab:"React",cls:"c-react"},
+  {en:"I'd never do that!",pt:"Eu nunca faria isso!",cat:"react",lab:"React",cls:"c-react"},
+  {en:"Really? What about…?",pt:"Sério? E se fosse…?",cat:"react",lab:"React",cls:"c-react"}
+];
+function renderCards(filter){
+  const box=document.getElementById('cards1');box.innerHTML='';
+  CHUNKS.filter(c=>filter==='all'||c.cat===filter).forEach(c=>{
+    const d=document.createElement('div');d.className='flip';
+    d.innerHTML=`<div class="flip-in">
+      <div class="face front"><span class="en">${c.en}</span><span class="cat ${c.cls}">${c.lab}</span></div>
+      <div class="face back"><span class="pt">${c.pt}</span><small>tap to flip back</small></div></div>`;
+    d.onclick=()=>d.classList.toggle('on');box.appendChild(d);
+  });
+}
+renderCards('all');
+document.querySelectorAll('#f1 .filter-btn').forEach(b=>{
+  b.onclick=()=>{document.querySelectorAll('#f1 .filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards(b.dataset.cat);};
+});
+
+const DIL=[
+  "You win a free holiday, but only for one person. Who do you upset — and where do you go?",
+  "A stranger offers you R$100,000 to delete all your social media forever. Deal or no deal?",
+  "You can have your dream body OR your dream bank account — but not both. Which?",
+  "Your company offers double salary, but you must move abroad alone. Do you take it?",
+  "You can undo ONE decision from your past. Would you? Which kind of decision?",
+  "You find out a close friend has been lying to you about something small. Confront them or let it go?",
+  "You can be famous and rich but never have privacy again. Worth it?",
+  "You can speak perfect English tomorrow, but you forget your first language for a year. Trade?",
+  "A genie gives you one wish — but a random stranger gets the same thing, times ten. Still wish?",
+  "You can relive one year of your life. Which year — and would you change anything?"
+];
+const TWISTS=[
+  "Plot twist: you only have 24 hours to decide.",
+  "Plot twist: your family strongly disagrees with you.",
+  "Plot twist: there's a catch — it's not reversible.",
+  "Plot twist: money is suddenly not a problem. Does your answer change?",
+  "Plot twist: a close friend is affected too.",
+  "Plot twist: you have to do it completely alone.",
+  "Plot twist: you'd have to keep it a secret forever.",
+  "Plot twist: you get double the reward, but double the risk.",
+  "Plot twist: you can't ever talk about it afterwards.",
+  "Plot twist: what if it were 5 years ago instead of now?"
+];
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+function drawDil(){document.getElementById('draw').textContent='⚙️ '+pick(DIL);document.getElementById('tw').textContent='Plot twist appears here…';}
+function addTwist(){document.getElementById('tw').textContent='🌀 '+pick(TWISTS);}
+let pts=0;function dec(){pts++;document.getElementById('pts').textContent=pts;}
+
+let total=30,left=30,tick=null,running=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('disp').textContent=fmt(left);}
+function setT(s,el){total=s;left=s;paint();document.querySelectorAll('#timer .set button').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');stopT();}
+function toggleT(){running?stopT():startT();}
+function startT(){const tm=document.getElementById('timer');tm.classList.add('run');tm.classList.remove('done');running=true;document.getElementById('go').textContent='Pause';
+  tick=setInterval(()=>{left--;paint();if(left<=0){clearInterval(tick);running=false;tm.classList.remove('run');tm.classList.add('done');document.getElementById('go').textContent='Reset';document.getElementById('disp').textContent="Time!";}},1000);}
+function stopT(){clearInterval(tick);running=false;const tm=document.getElementById('timer');tm.classList.remove('run');const go=document.getElementById('go');if(left<=0){left=total;paint();tm.classList.remove('done');go.textContent='Start';}else go.textContent='Start';}
+function miniTimer(){const tm=document.getElementById('timer');tm.classList.toggle('mini');tm.querySelector('.min').textContent=tm.classList.contains('mini')?'▴':'▾';}
+paint();
+</script>
+</body>
+</html>

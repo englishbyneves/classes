@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hot Takes — B1 Speaking | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --rose:#CF7E93; --teal:#0A7D6E; --mint:#DCF0EA;
+  --ink:#1E2647; --paper:#FBFAF7; --line:#E7E2DA;
+  --rose-soft:#F6E6EA; --teal-soft:#E0F1ED; --amber:#E8A14C;
+  --shadow:0 10px 30px rgba(30,38,71,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+.serif{font-family:'Playfair Display',serif}
+section{margin:30px 0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.sec-head{padding:20px 22px;display:flex;align-items:center;gap:14px}
+.sec-head h2{font-size:1.4rem;color:#fff}
+.sec-head .n{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);display:block;margin-bottom:2px;font-family:'Raleway'}
+.sec-body{padding:22px}
+.ico{flex:0 0 46px;width:46px;height:46px}
+/* section accents */
+.a-rose .sec-head{background:linear-gradient(135deg,var(--rose),#b96077)}
+.a-teal .sec-head{background:linear-gradient(135deg,var(--teal),#086457)}
+.a-navy .sec-head{background:linear-gradient(135deg,var(--navy),#2c3a6b)}
+.a-amber .sec-head{background:linear-gradient(135deg,var(--amber),#cf8427)}
+
+/* HERO */
+.hero{background:var(--navy);color:#fff;border-radius:0 0 28px 28px;padding:34px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero .logo{font-family:'Playfair Display';font-weight:800;font-size:1.05rem;letter-spacing:.02em;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.hero .mono{width:38px;height:38px;border:2px solid var(--mint);border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:var(--mint)}
+.hero h1{font-size:2.5rem;font-weight:800;margin:4px 0 6px}
+.hero .sub{color:var(--mint);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem}
+.hero .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.1);border:1px solid rgba(220,240,234,.35);color:var(--mint);padding:6px 13px;border-radius:30px;font-size:.78rem;font-weight:600}
+.hero .goal{margin-top:20px;background:rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;font-size:.98rem;max-width:520px;margin-left:auto;margin-right:auto}
+.hero .goal b{color:#fff}
+
+/* teacher reference (demoted) */
+.teacher{max-width:760px;margin:16px auto 0;padding:0 16px}
+.teacher details{background:#F3F1EC;border:1px dashed var(--line);border-radius:12px;padding:0 16px}
+.teacher summary{cursor:pointer;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#9a948a;font-weight:700;padding:11px 0;list-style:none}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher .tbody{font-size:.84rem;color:#746f66;font-style:italic;padding:4px 0 15px;border-top:1px solid var(--line)}
+.teacher .tbody p{margin:7px 0}
+.teacher .tbody b{color:#5c574f;font-style:normal}
+
+.lead{font-size:1.02rem;color:#4a4a55;margin-bottom:16px}
+.tag{display:inline-block;background:var(--mint);color:var(--teal);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+/* numbered prompts */
+.qlist{list-style:none;display:grid;gap:12px}
+.qlist li{display:flex;gap:14px;align-items:flex-start;background:var(--rose-soft);border-radius:14px;padding:14px 16px}
+.a-teal .qlist li{background:var(--teal-soft)}
+.qlist .qn{flex:0 0 30px;height:30px;background:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--rose);font-family:'Playfair Display'}
+.a-teal .qlist .qn{color:var(--teal)}
+.qlist p{font-size:1.06rem;font-weight:500}
+
+/* flip cards */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter-btn{border:1.5px solid var(--line);background:#fff;color:#777;padding:7px 14px;border-radius:30px;font-family:'Raleway';font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{perspective:1000px;min-height:108px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;min-height:108px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:center}
+.front{background:#fff;border:1.5px solid var(--line)}
+.front .en{font-size:1.04rem;font-weight:700;color:var(--navy)}
+.front .cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:7px}
+.back{background:var(--navy);color:#fff;transform:rotateY(180deg);text-align:center}
+.back .pt{font-size:.98rem;color:var(--mint);font-weight:500}
+.back small{display:block;margin-top:8px;color:rgba(255,255,255,.5);font-size:.68rem}
+.c-op{color:var(--rose)} .c-ag{color:var(--teal)} .c-dis{color:var(--amber)} .c-time{color:#6a7bbd}
+.hint{font-size:.78rem;color:#9a948a;margin-bottom:14px;font-style:italic}
+
+/* steps / boxes */
+.box{background:var(--mint);border-radius:14px;padding:16px 18px;margin:14px 0}
+.box.navy{background:var(--navy);color:#fff}
+.box.navy b{color:var(--mint)}
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:30px;padding:8px 15px;font-weight:600;font-size:.92rem}
+.a-teal .pill{border-color:#bfe3db}
+
+/* this or that */
+.tot{display:grid;gap:10px}
+.tot .pair{display:flex;align-items:stretch;gap:0;border-radius:14px;overflow:hidden;border:1.5px solid var(--line)}
+.tot .side{flex:1;padding:14px;text-align:center;font-weight:600;background:#fff}
+.tot .vs{display:grid;place-items:center;background:var(--navy);color:var(--mint);font-family:'Playfair Display';font-weight:800;padding:0 14px;font-size:.9rem}
+
+/* main activity */
+.stage{background:linear-gradient(160deg,#242d54,#1E2647);color:#fff;border-radius:18px;padding:24px 20px;text-align:center}
+.stage .draw{min-height:92px;display:grid;place-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(220,240,234,.25);border-radius:14px;padding:18px;font-size:1.22rem;font-weight:600;font-family:'Playfair Display';margin:16px 0}
+.stage .draw.hot{color:var(--mint)}
+.btn{background:var(--rose);color:#fff;border:none;padding:13px 26px;border-radius:30px;font-family:'Raleway';font-weight:700;font-size:1rem;cursor:pointer;transition:.15s;box-shadow:0 6px 16px rgba(207,126,147,.35)}
+.btn:active{transform:translateY(1px)}
+.btn.teal{background:var(--teal);box-shadow:0 6px 16px rgba(10,125,110,.3)}
+.score{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:16px;font-weight:700}
+.score .pts{background:var(--mint);color:var(--teal);border-radius:30px;padding:6px 16px;font-size:1.1rem}
+.stage .mini{font-size:.82rem;color:rgba(220,240,234,.75);margin-top:8px}
+
+/* homework */
+.hw li{margin:9px 0 9px 4px;padding-left:26px;position:relative;font-size:1rem}
+.hw li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--teal);border-radius:4px}
+
+/* floating speaking timer */
+#timer{position:fixed;right:14px;bottom:14px;z-index:50;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:10px 12px;width:150px;text-align:center}
+#timer .lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a948a;font-weight:700}
+#timer .disp{font-family:'Playfair Display';font-weight:800;font-size:1.7rem;color:var(--navy);margin:2px 0}
+#timer.run .disp{color:var(--teal)}
+#timer.done .disp{color:var(--rose)}
+#timer .set{display:flex;gap:5px;justify-content:center;margin:5px 0}
+#timer .set button,#timer .go{border:none;border-radius:8px;cursor:pointer;font-family:'Raleway';font-weight:700}
+#timer .set button{flex:1;background:var(--mint);color:var(--teal);padding:5px 0;font-size:.78rem}
+#timer .set button.sel{background:var(--teal);color:#fff}
+#timer .go{width:100%;background:var(--navy);color:#fff;padding:7px 0;font-size:.82rem}
+#timer .min{position:absolute;top:6px;right:9px;cursor:pointer;color:#bbb;font-weight:700;font-size:.9rem;background:none;border:none}
+#timer.mini .set,#timer.mini .go,#timer.mini .lbl{display:none}
+#timer.mini{width:92px;padding:7px 10px}
+
+@media(max-width:480px){
+  .hero h1{font-size:2rem}
+  .cards{grid-template-columns:1fr 1fr}
+  .sec-head h2{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo"><span class="mono">EN</span> English by Neves</div>
+  <div class="sub">B1 Speaking · Conversation Block</div>
+  <h1>Hot Takes</h1>
+  <div class="meta">
+    <span class="chip">★ Level B1</span>
+    <span class="chip">⏱ 50 min</span>
+    <span class="chip">💬 Opinions &amp; Debate</span>
+  </div>
+  <div class="goal">By the end of today, <b>you can give your opinion, back it up with a reason, and agree or disagree with someone without freezing.</b></div>
+</header>
+
+<div class="teacher">
+  <details>
+    <summary>Teacher reference — plano &amp; meta (toque para abrir)</summary>
+    <div class="tbody">
+      <p><b>Código:</b> B1-CONV-01 · <b>Módulo:</b> Conversation Block · <b>Tema:</b> Opinions &amp; friendly debate</p>
+      <p><b>Objetivo comunicativo:</b> dar, justificar e defender opiniões; concordar e discordar com naturalidade; ganhar tempo pra pensar em inglês.</p>
+      <p><b>Gramática em contexto (não ensinar isolada):</b> opinion chunks (I'd say / I reckon / If you ask me), comparativos e superlativos pra justificar (it's way more…, the worst thing is…), linkers (because, so, but, the thing is).</p>
+      <p><b>Correção:</b> recast — repete certo dentro da conversa, não interrompe o fluxo. Anota 2–3 chunks pra devolver no fim.</p>
+      <p><b>Critério de sucesso:</b> o aluno sustenta uma opinião por 60s, usa pelo menos 3 chunks novos e reage à opinião do professor sem travar.</p>
+      <p><b>Homework:</b> DuoCards (chunks da aula) + áudio de 60s "My most unpopular opinion".</p>
+    </div>
+  </details>
+</div>
+
+<main class="wrap">
+
+<!-- WARM UP -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="5" y="9" width="26" height="19" rx="6" fill="#fff"/><path d="M12 32l0 6 8-6" fill="#fff"/><rect x="21" y="18" width="22" height="16" rx="5" fill="#DCF0EA"/><path d="M38 37l0 5-7-5" fill="#DCF0EA"/><circle cx="14" cy="18" r="2" fill="#CF7E93"/><circle cx="21" cy="18" r="2" fill="#CF7E93"/><circle cx="28" cy="18" r="2" fill="#CF7E93"/></svg>
+    <div><span class="n">Round 1 · Warm-up</span><h2>Quick fire</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">No full sentences needed yet — just react fast. Answer each one out loud in a few seconds. Say <i>why</i> if you can.</p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>Coffee or tea — and is it even a real question?</p></li>
+      <li><span class="qn">2</span><p>What's one trend right now that you just don't get?</p></li>
+      <li><span class="qn">3</span><p>Texting or calling? Why?</p></li>
+      <li><span class="qn">4</span><p>What's overrated: Netflix, the gym, or going out on weekends?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- EXPRESSIONS -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="7" y="12" width="34" height="24" rx="6" fill="#fff"/><path d="M16 36l-4 6 10-6" fill="#fff"/><path d="M15 20h18M15 26h12" stroke="#1E2647" stroke-width="2.4" stroke-linecap="round"/><circle cx="37" cy="11" r="6" fill="#CF7E93"/><path d="M37 8v6M34 11h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+    <div><span class="n">Toolbox</span><h2>Say it like a native</h2></div>
+  </div>
+  <div class="sec-body">
+    <span class="tag">Flip for 🇧🇷</span>
+    <p class="hint">Tap a card to see the meaning. Filter by what you want to practise, then use 3 of them in the next rounds.</p>
+    <div class="filters" id="f1">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="op">Give opinion</button>
+      <button class="filter-btn" data-cat="ag">Agree</button>
+      <button class="filter-btn" data-cat="dis">Disagree</button>
+      <button class="filter-btn" data-cat="time">Buy time</button>
+    </div>
+    <div class="cards" id="cards1"></div>
+  </div>
+</section>
+
+<!-- RATE IT -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 6l5 11 12 1-9 8 3 12-11-6-11 6 3-12-9-8 12-1z" fill="#fff"/><circle cx="24" cy="22" r="4" fill="#0A7D6E"/></svg>
+    <div><span class="n">Round 2 · Guided</span><h2>Rate it 1–10</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Give each one a score out of 10 and <b>defend it for 30 seconds</b>. Use the timer (bottom right). Start with: <i>"I'd give it a… because…"</i></p>
+    <div class="pill-row">
+      <span class="pill">Working from home</span>
+      <span class="pill">Instagram / TikTok</span>
+      <span class="pill">Mondays</span>
+      <span class="pill">Fast food</span>
+      <span class="pill">Learning English 😏</span>
+      <span class="pill">Your city</span>
+    </div>
+    <div class="box navy" style="margin-top:18px">Push yourself: can you keep talking about <b>one</b> of them for a full <b>60 seconds</b> without stopping?</div>
+  </div>
+</section>
+
+<!-- UNPOPULAR OPINIONS -->
+<section class="a-amber">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" fill="#fff"/><path d="M24 14v12" stroke="#E8A14C" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="33" r="2.6" fill="#E8A14C"/></svg>
+    <div><span class="n">Round 3 · React</span><h2>Unpopular opinions</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Read each take out loud. <b>Agree or disagree</b> using a card from the toolbox — then add <i>one reason</i>. No "I think yes/no" allowed. 😅</p>
+    <ul class="qlist">
+      <li><span class="qn">A</span><p>"Pineapple on pizza is actually great."</p></li>
+      <li><span class="qn">B</span><p>"Phones have made us worse at talking to people."</p></li>
+      <li><span class="qn">C</span><p>"Remote work is better than working in an office."</p></li>
+      <li><span class="qn">D</span><p>"Subtitles are better than dubbing — always."</p></li>
+      <li><span class="qn">E</span><p>"Expensive coffee is a waste of money."</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- THIS OR THAT -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 8v32" stroke="#fff" stroke-width="3" stroke-dasharray="4 4" stroke-linecap="round"/><rect x="6" y="18" width="13" height="13" rx="3" fill="#fff"/><rect x="29" y="18" width="13" height="13" rx="3" fill="#DCF0EA"/></svg>
+    <div><span class="n">Round 4 · Rapid</span><h2>This or that</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Pick a side out loud and defend it in one breath. Then your teacher picks the <i>opposite</i> — change their mind!</p>
+    <div class="tot">
+      <div class="pair"><div class="side">Books</div><div class="vs">or</div><div class="side">Movies</div></div>
+      <div class="pair"><div class="side">City life</div><div class="vs">or</div><div class="side">Small town</div></div>
+      <div class="pair"><div class="side">Save money</div><div class="vs">or</div><div class="side">Spend on experiences</div></div>
+      <div class="pair"><div class="side">Early bird</div><div class="vs">or</div><div class="side">Night owl</div></div>
+      <div class="pair"><div class="side">Plan everything</div><div class="vs">or</div><div class="side">Go with the flow</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN ACTIVITY -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 5l3 6 6 2-6 2-3 6-3-6-6-2 6-2z" fill="#CF7E93"/><rect x="9" y="22" width="30" height="18" rx="5" fill="#fff"/><path d="M16 31h16M16 36h10" stroke="#1E2647" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 5 · Main event</span><h2>The Debate Table</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Draw a hot take. <b>Argue FOR it for 60 seconds.</b> Then draw the same card again and argue <b>AGAINST</b> it. Every time you survive 60s without switching to Portuguese, you score a point.</p>
+    <div class="stage">
+      <div class="draw hot" id="draw">Tap "Draw a hot take" to start 🔥</div>
+      <button class="btn" onclick="drawTake()">Draw a hot take</button>
+      <button class="btn teal" onclick="flipSide()">Flip my side ↔</button>
+      <div class="score"><span>Confidence points:</span><span class="pts" id="pts">0</span></div>
+      <button class="btn teal" style="margin-top:14px;background:transparent;box-shadow:none;border:1.5px solid rgba(220,240,234,.4)" onclick="addPoint()">I survived 60s ✓ +1</button>
+      <div class="mini">Side: <b id="side">FOR</b> — start with a chunk from the toolbox.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="10" y="7" width="28" height="34" rx="5" fill="#fff"/><path d="M17 17h14M17 24h14M17 31h9" stroke="#0A7D6E" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">After class</span><h2>Homework</h2></div>
+  </div>
+  <div class="sec-body">
+    <ul class="hw">
+      <li><b>DuoCards:</b> add today's opinion chunks and review them 2× before our next class.</li>
+      <li><b>Record a 60-second voice note:</b> "My most unpopular opinion is…" — give it and defend it with two reasons.</li>
+      <li><b>Steal one:</b> next time you text someone, use <i>"If you ask me…"</i> or <i>"To be fair…"</i> in English in your head first.</li>
+    </ul>
+    <div class="box" style="margin-top:16px"><b>Success check:</b> you held an opinion for 60 seconds, used 3+ new chunks, and disagreed with your teacher without freezing. 🎯</div>
+  </div>
+</section>
+
+</main>
+
+<!-- SPEAKING TIMER -->
+<div id="timer">
+  <button class="min" onclick="miniTimer()" title="minimize">▾</button>
+  <div class="lbl">Speaking timer</div>
+  <div class="disp" id="disp">0:30</div>
+  <div class="set">
+    <button data-s="30" class="sel" onclick="setT(30,this)">30s</button>
+    <button data-s="60" onclick="setT(60,this)">60s</button>
+    <button data-s="90" onclick="setT(90,this)">90s</button>
+  </div>
+  <button class="go" id="go" onclick="toggleT()">Start</button>
+</div>
+
+<script>
+/* ---------- expression flip cards ---------- */
+const CHUNKS=[
+  {en:"I'd say…",pt:"Eu diria que…",cat:"op",lab:"Give opinion",cls:"c-op"},
+  {en:"If you ask me,",pt:"Se quer saber / na minha opinião,",cat:"op",lab:"Give opinion",cls:"c-op"},
+  {en:"I reckon…",pt:"Eu acho / imagino que… (informal)",cat:"op",lab:"Give opinion",cls:"c-op"},
+  {en:"The way I see it,",pt:"Do jeito que eu vejo,",cat:"op",lab:"Give opinion",cls:"c-op"},
+  {en:"Honestly, for me…",pt:"Sinceramente, pra mim…",cat:"op",lab:"Give opinion",cls:"c-op"},
+  {en:"Exactly! That's so true.",pt:"Exato! É tão verdade.",cat:"ag",lab:"Agree",cls:"c-ag"},
+  {en:"I'm with you on that.",pt:"Concordo contigo nessa.",cat:"ag",lab:"Agree",cls:"c-ag"},
+  {en:"Good point.",pt:"Boa observação.",cat:"ag",lab:"Agree",cls:"c-ag"},
+  {en:"Fair enough.",pt:"Faz sentido / justo.",cat:"ag",lab:"Agree",cls:"c-ag"},
+  {en:"I see what you mean, but…",pt:"Entendo o que você diz, mas…",cat:"dis",lab:"Disagree",cls:"c-dis"},
+  {en:"I'm not so sure about that.",pt:"Não tenho tanta certeza disso.",cat:"dis",lab:"Disagree",cls:"c-dis"},
+  {en:"To be fair,",pt:"Pra ser justo,",cat:"dis",lab:"Disagree",cls:"c-dis"},
+  {en:"That's not how I see it.",pt:"Não é assim que eu vejo.",cat:"dis",lab:"Disagree",cls:"c-dis"},
+  {en:"Come on, really?",pt:"Qual é, sério? (leve/brincalhão)",cat:"dis",lab:"Disagree",cls:"c-dis"},
+  {en:"Hmm, let me think…",pt:"Hmm, deixa eu pensar…",cat:"time",lab:"Buy time",cls:"c-time"},
+  {en:"That's a tough one.",pt:"Essa é difícil.",cat:"time",lab:"Buy time",cls:"c-time"},
+  {en:"Well, it depends.",pt:"Bom, depende.",cat:"time",lab:"Buy time",cls:"c-time"},
+  {en:"The thing is…",pt:"A questão é que…",cat:"time",lab:"Buy time",cls:"c-time"}
+];
+function renderCards(filter){
+  const box=document.getElementById('cards1');
+  box.innerHTML='';
+  CHUNKS.filter(c=>filter==='all'||c.cat===filter).forEach(c=>{
+    const d=document.createElement('div');
+    d.className='flip';
+    d.innerHTML=`<div class="flip-in">
+      <div class="face front"><span class="en">${c.en}</span><span class="cat ${c.cls}">${c.lab}</span></div>
+      <div class="face back"><span class="pt">${c.pt}</span><small>tap to flip back</small></div></div>`;
+    d.onclick=()=>d.classList.toggle('on');
+    box.appendChild(d);
+  });
+}
+renderCards('all');
+document.querySelectorAll('#f1 .filter-btn').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#f1 .filter-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    renderCards(b.dataset.cat);
+  };
+});
+
+/* ---------- debate table ---------- */
+const TAKES=[
+  "Social media does more harm than good.",
+  "Working 4 days a week should be normal.",
+  "Everyone should learn to cook.",
+  "Streaming killed the cinema — and that's fine.",
+  "Online friends are real friends.",
+  "Money can buy happiness.",
+  "Reality TV is a waste of time.",
+  "Cities are better than beaches for holidays.",
+  "AI will make life better, not worse.",
+  "It's rude to be late, no excuses.",
+  "Video games are a legit hobby for adults.",
+  "English should be taught through conversation, not grammar."
+];
+let curSide='FOR';
+function drawTake(){
+  const t=TAKES[Math.floor(Math.random()*TAKES.length)];
+  document.getElementById('draw').textContent='🔥 '+t;
+}
+function flipSide(){
+  curSide=curSide==='FOR'?'AGAINST':'FOR';
+  document.getElementById('side').textContent=curSide;
+}
+let pts=0;
+function addPoint(){pts++;document.getElementById('pts').textContent=pts;}
+
+/* ---------- speaking timer ---------- */
+let total=30,left=30,tick=null,running=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('disp').textContent=fmt(left);}
+function setT(s,el){
+  total=s;left=s;paint();
+  document.querySelectorAll('#timer .set button').forEach(b=>b.classList.remove('sel'));
+  el.classList.add('sel');
+  stopT();
+}
+function toggleT(){running?stopT():startT();}
+function startT(){
+  const tm=document.getElementById('timer');
+  tm.classList.add('run');tm.classList.remove('done');
+  running=true;document.getElementById('go').textContent='Pause';
+  tick=setInterval(()=>{
+    left--;paint();
+    if(left<=0){clearInterval(tick);running=false;tm.classList.remove('run');tm.classList.add('done');
+      document.getElementById('go').textContent='Reset';document.getElementById('disp').textContent="Time!";}
+  },1000);
+}
+function stopT(){
+  clearInterval(tick);running=false;
+  const tm=document.getElementById('timer');tm.classList.remove('run');
+  const go=document.getElementById('go');
+  if(left<=0){left=total;paint();tm.classList.remove('done');go.textContent='Start';}
+  else go.textContent='Start';
+}
+function miniTimer(){
+  const tm=document.getElementById('timer');
+  tm.classList.toggle('mini');
+  tm.querySelector('.min').textContent=tm.classList.contains('mini')?'▴':'▾';
+}
+paint();
+</script>
+</body>
+</html>
