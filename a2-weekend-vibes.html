@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekend Vibes — A2 Speaking | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --rose:#CF7E93; --teal:#0A7D6E; --mint:#DCF0EA;
+  --ink:#1E2647; --paper:#FBFAF7; --line:#E7E2DA;
+  --rose-soft:#F6E6EA; --teal-soft:#E0F1ED; --amber:#E8A14C;
+  --shadow:0 10px 30px rgba(30,38,71,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+section{margin:30px 0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.sec-head{padding:20px 22px;display:flex;align-items:center;gap:14px}
+.sec-head h2{font-size:1.4rem;color:#fff}
+.sec-head .n{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);display:block;margin-bottom:2px;font-family:'Raleway'}
+.sec-body{padding:22px}
+.ico{flex:0 0 46px;width:46px;height:46px}
+.a-rose .sec-head{background:linear-gradient(135deg,var(--rose),#b96077)}
+.a-teal .sec-head{background:linear-gradient(135deg,var(--teal),#086457)}
+.a-navy .sec-head{background:linear-gradient(135deg,var(--navy),#2c3a6b)}
+.a-amber .sec-head{background:linear-gradient(135deg,var(--amber),#cf8427)}
+
+.hero{background:var(--teal);color:#fff;border-radius:0 0 28px 28px;padding:34px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero .logo{font-family:'Playfair Display';font-weight:800;font-size:1.05rem;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.hero .mono{width:38px;height:38px;border:2px solid var(--mint);border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:var(--mint)}
+.hero h1{font-size:2.5rem;font-weight:800;margin:4px 0 6px}
+.hero .sub{color:var(--mint);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem}
+.hero .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.12);border:1px solid rgba(220,240,234,.35);color:#fff;padding:6px 13px;border-radius:30px;font-size:.78rem;font-weight:600}
+.hero .goal{margin-top:20px;background:rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;font-size:.98rem;max-width:520px;margin:20px auto 0}
+.hero .goal b{color:var(--mint)}
+
+.teacher{max-width:760px;margin:16px auto 0;padding:0 16px}
+.teacher details{background:#F3F1EC;border:1px dashed var(--line);border-radius:12px;padding:0 16px}
+.teacher summary{cursor:pointer;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#9a948a;font-weight:700;padding:11px 0;list-style:none}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher .tbody{font-size:.84rem;color:#746f66;font-style:italic;padding:4px 0 15px;border-top:1px solid var(--line)}
+.teacher .tbody p{margin:7px 0}
+.teacher .tbody b{color:#5c574f;font-style:normal}
+
+.lead{font-size:1.02rem;color:#4a4a55;margin-bottom:16px}
+.tag{display:inline-block;background:var(--mint);color:var(--teal);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+.qlist{list-style:none;display:grid;gap:12px}
+.qlist li{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border-radius:14px;padding:14px 16px}
+.a-rose .qlist li{background:var(--rose-soft)}
+.a-amber .qlist li{background:#FBEEDC}
+.qlist .qn{flex:0 0 30px;height:30px;background:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--teal);font-family:'Playfair Display'}
+.a-rose .qlist .qn{color:var(--rose)} .a-amber .qlist .qn{color:var(--amber)}
+.qlist p{font-size:1.06rem;font-weight:500}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter-btn{border:1.5px solid var(--line);background:#fff;color:#777;padding:7px 14px;border-radius:30px;font-family:'Raleway';font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{perspective:1000px;min-height:108px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;min-height:108px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:center}
+.front{background:#fff;border:1.5px solid var(--line)}
+.front .en{font-size:1.04rem;font-weight:700;color:var(--navy)}
+.front .cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:7px}
+.back{background:var(--teal);color:#fff;transform:rotateY(180deg);text-align:center}
+.back .pt{font-size:.98rem;color:var(--mint);font-weight:500}
+.back small{display:block;margin-top:8px;color:rgba(255,255,255,.55);font-size:.68rem}
+.c-free{color:var(--teal)} .c-past{color:#6a7bbd} .c-plan{color:var(--amber)} .c-react{color:var(--rose)}
+.hint{font-size:.78rem;color:#9a948a;margin-bottom:14px;font-style:italic}
+
+.box{background:var(--mint);border-radius:14px;padding:16px 18px;margin:14px 0}
+.box.navy{background:var(--navy);color:#fff}
+.box.navy b{color:var(--mint)}
+
+/* sentence frames */
+.frames{display:grid;gap:10px}
+.frame{background:#fff;border:1.5px dashed var(--teal);border-radius:14px;padding:13px 16px;font-size:1.1rem;color:var(--navy)}
+.frame b{color:var(--teal);font-family:'Playfair Display'}
+.frame .blank{display:inline-block;min-width:70px;border-bottom:2px dotted var(--rose);margin:0 3px}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:30px;padding:8px 15px;font-weight:600;font-size:.95rem}
+
+/* this or that */
+.tot{display:grid;gap:10px}
+.tot .pair{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;border:1.5px solid var(--line)}
+.tot .side{flex:1;padding:14px;text-align:center;font-weight:600;background:#fff;font-size:.96rem}
+.tot .vs{display:grid;place-items:center;background:var(--teal);color:#fff;font-family:'Playfair Display';font-weight:800;padding:0 14px;font-size:.9rem}
+
+/* main */
+.stage{background:linear-gradient(160deg,#0d5e53,#0A7D6E);color:#fff;border-radius:18px;padding:24px 20px;text-align:center}
+.stage .draw{min-height:84px;display:grid;place-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(220,240,234,.3);border-radius:14px;padding:18px;font-size:1.3rem;font-weight:700;font-family:'Playfair Display';margin:16px 0;color:var(--mint)}
+.stage .ask{background:rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:.92rem;text-align:left}
+.stage .ask b{color:var(--mint)}
+.btn{background:var(--rose);color:#fff;border:none;padding:13px 26px;border-radius:30px;font-family:'Raleway';font-weight:700;font-size:1rem;cursor:pointer;transition:.15s;box-shadow:0 6px 16px rgba(207,126,147,.35)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;box-shadow:none;border:1.5px solid rgba(220,240,234,.5);color:#fff}
+.score{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:14px;font-weight:700}
+.score .pts{background:var(--mint);color:var(--teal);border-radius:30px;padding:6px 16px;font-size:1.1rem}
+
+.hw li{margin:9px 0 9px 4px;padding-left:26px;position:relative;font-size:1rem}
+.hw li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--teal);border-radius:4px}
+
+#timer{position:fixed;right:14px;bottom:14px;z-index:50;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:10px 12px;width:150px;text-align:center}
+#timer .lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a948a;font-weight:700}
+#timer .disp{font-family:'Playfair Display';font-weight:800;font-size:1.7rem;color:var(--navy);margin:2px 0}
+#timer.run .disp{color:var(--teal)}
+#timer.done .disp{color:var(--rose)}
+#timer .set{display:flex;gap:5px;justify-content:center;margin:5px 0}
+#timer .set button,#timer .go{border:none;border-radius:8px;cursor:pointer;font-family:'Raleway';font-weight:700}
+#timer .set button{flex:1;background:var(--mint);color:var(--teal);padding:5px 0;font-size:.78rem}
+#timer .set button.sel{background:var(--teal);color:#fff}
+#timer .go{width:100%;background:var(--navy);color:#fff;padding:7px 0;font-size:.82rem}
+#timer .min{position:absolute;top:6px;right:9px;cursor:pointer;color:#bbb;font-weight:700;font-size:.9rem;background:none;border:none}
+#timer.mini .set,#timer.mini .go,#timer.mini .lbl{display:none}
+#timer.mini{width:92px;padding:7px 10px}
+
+@media(max-width:480px){
+  .hero h1{font-size:2rem}
+  .cards{grid-template-columns:1fr 1fr}
+  .sec-head h2{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo"><span class="mono">EN</span> English by Neves</div>
+  <div class="sub">A2 Speaking · Everyday Life</div>
+  <h1>Weekend Vibes</h1>
+  <div class="meta">
+    <span class="chip">★ Level A2</span>
+    <span class="chip">⏱ 50 min</span>
+    <span class="chip">🗓️ Free time &amp; plans</span>
+  </div>
+  <div class="goal">By the end of today, <b>you can talk about your free time, say what you did last weekend, and make simple plans for the next one.</b></div>
+</header>
+
+<div class="teacher">
+  <details>
+    <summary>Teacher reference — plano &amp; meta (toque para abrir)</summary>
+    <div class="tbody">
+      <p><b>Código:</b> A2-LIFE-01 · <b>Módulo:</b> Everyday Life · <b>Tema:</b> Free time, weekends &amp; plans</p>
+      <p><b>Objetivo comunicativo:</b> falar de rotina de tempo livre; contar o fim de semana passado; combinar/planejar o próximo. Fala em frases completas curtas, com apoio das frases-modelo.</p>
+      <p><b>Gramática em contexto (não ensinar isolada, usar via frase-modelo):</b> present simple + advérbios de frequência (usually, at weekends), past simple de ações comuns (I went / I watched / I stayed), going to pra planos (I'm going to…).</p>
+      <p><b>Apoio A2:</b> frases-modelo sempre visíveis, repetição guiada, muitos exemplos prontos. Correção por recast — repete certo dentro da conversa, não interrompe.</p>
+      <p><b>Critério de sucesso:</b> o aluno fala ~30s sobre o fim de semana usando past simple, faz 1 pergunta ao professor e diz 1 plano com "going to".</p>
+      <p><b>Homework:</b> DuoCards (chunks da aula) + áudio de 30s "Last weekend I…".</p>
+    </div>
+  </details>
+</div>
+
+<main class="wrap">
+
+<!-- WARM UP -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" fill="#fff"/><path d="M24 13v11l7 4" stroke="#0A7D6E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Round 1 · Warm-up</span><h2>Quick answers</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Answer out loud in a short sentence. Example: <i>"My favourite day is Saturday."</i></p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>What's your favourite day of the week? Why?</p></li>
+      <li><span class="qn">2</span><p>Do you like busy weekends or quiet weekends?</p></li>
+      <li><span class="qn">3</span><p>What do you usually do on Sunday mornings?</p></li>
+      <li><span class="qn">4</span><p>Early riser or late sleeper on weekends?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="26" rx="5" fill="#fff"/><path d="M18 14v-3a3 3 0 013-3h6a3 3 0 013 3v3" stroke="#1E2647" stroke-width="2.6"/><path d="M20 27l4 4 8-8" stroke="#CF7E93" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Toolbox</span><h2>Useful phrases</h2></div>
+  </div>
+  <div class="sec-body">
+    <span class="tag">Flip for 🇧🇷</span>
+    <p class="hint">Tap a card to see the meaning. Pick 3 to use today.</p>
+    <div class="filters" id="f1">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="free">Free time</button>
+      <button class="filter-btn" data-cat="past">Last weekend</button>
+      <button class="filter-btn" data-cat="plan">Plans</button>
+      <button class="filter-btn" data-cat="react">React &amp; ask</button>
+    </div>
+    <div class="cards" id="cards1"></div>
+  </div>
+</section>
+
+<!-- MY WEEKEND -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="8" y="10" width="32" height="30" rx="5" fill="#fff"/><path d="M8 18h32" stroke="#0A7D6E" stroke-width="2.6"/><path d="M16 7v6M32 7v6" stroke="#0A7D6E" stroke-width="2.6" stroke-linecap="round"/><circle cx="31" cy="28" r="5" fill="#CF7E93"/></svg>
+    <div><span class="n">Round 2 · Guided</span><h2>My typical weekend</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Finish each sentence out loud. Then say it again adding <i>when</i> or <i>who with</i>.</p>
+    <div class="frames">
+      <div class="frame">On Saturdays, I usually <span class="blank"></span>.</div>
+      <div class="frame">In the evening, I like to <span class="blank"></span>.</div>
+      <div class="frame">On Sundays, I never <span class="blank"></span>.</div>
+      <div class="frame">My favourite weekend activity is <span class="blank"></span>.</div>
+    </div>
+    <div class="box" style="margin-top:16px">Keep going for <b>30 seconds</b>: describe your perfect weekend. Use the timer, bottom right.</div>
+  </div>
+</section>
+
+<!-- LAST WEEKEND -->
+<section class="a-amber">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 24l-9 9M24 8a16 16 0 11-11 4.7" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M11 8v7h7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Round 3 · Past</span><h2>Last weekend</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Answer with the past: <b>I went… / I watched… / I stayed… / I ate…</b></p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>Where did you go last weekend?</p></li>
+      <li><span class="qn">2</span><p>What did you eat?</p></li>
+      <li><span class="qn">3</span><p>Did you watch anything good? (series, game, match?)</p></li>
+      <li><span class="qn">4</span><p>Who did you spend time with?</p></li>
+      <li><span class="qn">5</span><p>What was the best part?</p></li>
+    </ul>
+    <div class="box navy" style="margin-top:4px">Now <b>you ask your teacher</b> the same questions. 🎤</div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 6l4 9 10 1-7 7 2 10-9-5-9 5 2-10-7-7 10-1z" fill="#fff"/><path d="M24 18v8" stroke="#CF7E93" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 4 · Plans</span><h2>This or that weekend</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Pick one and say: <b>"I'm going to…"</b> — then add why. Your teacher picks the other side!</p>
+    <div class="tot">
+      <div class="pair"><div class="side">Stay home &amp; relax</div><div class="vs">or</div><div class="side">Go out with friends</div></div>
+      <div class="pair"><div class="side">Cook at home</div><div class="vs">or</div><div class="side">Eat out</div></div>
+      <div class="pair"><div class="side">Watch a series</div><div class="vs">or</div><div class="side">Play games</div></div>
+      <div class="pair"><div class="side">Sleep in</div><div class="vs">or</div><div class="side">Wake up early</div></div>
+      <div class="pair"><div class="side">Beach / park</div><div class="vs">or</div><div class="side">Shopping / city</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="17" fill="#fff"/><path d="M24 24L34 16M24 24l-8 9" stroke="#CF7E93" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="#1E2647"/></svg>
+    <div><span class="n">Round 5 · Main event</span><h2>The Weekend Spinner</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Spin an activity. Talk about it for <b>30 seconds</b> using the 3 questions below. Each time you talk without stopping, you score a point!</p>
+    <div class="stage">
+      <div class="draw" id="draw">Tap "Spin" to start 🎡</div>
+      <div class="ask">Say: <b>Do you do this?</b> · <b>When / who with?</b> · <b>Do you like it?</b></div>
+      <button class="btn" onclick="spin()">🎡 Spin</button>
+      <div class="score"><span>Points:</span><span class="pts" id="pts">0</span></div>
+      <button class="btn ghost" style="margin-top:12px" onclick="addPoint()">I talked 30s ✓ +1</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="10" y="7" width="28" height="34" rx="5" fill="#fff"/><path d="M17 17h14M17 24h14M17 31h9" stroke="#0A7D6E" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">After class</span><h2>Homework</h2></div>
+  </div>
+  <div class="sec-body">
+    <ul class="hw">
+      <li><b>DuoCards:</b> add today's phrases (I went, I'm going to, at weekends) and review 2×.</li>
+      <li><b>Record a 30-second voice note:</b> "Last weekend I…" — say 3 things you did.</li>
+      <li><b>One plan:</b> send me one sentence about your next weekend starting with "I'm going to…".</li>
+    </ul>
+    <div class="box" style="margin-top:16px"><b>Success check:</b> you talked ~30s about your weekend, asked your teacher a question, and made one plan. 🎯</div>
+  </div>
+</section>
+
+</main>
+
+<div id="timer">
+  <button class="min" onclick="miniTimer()" title="minimize">▾</button>
+  <div class="lbl">Speaking timer</div>
+  <div class="disp" id="disp">0:20</div>
+  <div class="set">
+    <button data-s="20" class="sel" onclick="setT(20,this)">20s</button>
+    <button data-s="30" onclick="setT(30,this)">30s</button>
+    <button data-s="45" onclick="setT(45,this)">45s</button>
+  </div>
+  <button class="go" id="go" onclick="toggleT()">Start</button>
+</div>
+
+<script>
+const CHUNKS=[
+  {en:"In my free time, I…",pt:"No meu tempo livre, eu…",cat:"free",lab:"Free time",cls:"c-free"},
+  {en:"At weekends, I usually…",pt:"Nos fins de semana, eu geralmente…",cat:"free",lab:"Free time",cls:"c-free"},
+  {en:"I'm really into…",pt:"Eu curto muito…",cat:"free",lab:"Free time",cls:"c-free"},
+  {en:"I spend time with…",pt:"Eu passo tempo com…",cat:"free",lab:"Free time",cls:"c-free"},
+  {en:"Last weekend, I went to…",pt:"No fim de semana passado, eu fui pra…",cat:"past",lab:"Last weekend",cls:"c-past"},
+  {en:"I watched / I played…",pt:"Eu assisti / eu joguei…",cat:"past",lab:"Last weekend",cls:"c-past"},
+  {en:"I stayed home and…",pt:"Eu fiquei em casa e…",cat:"past",lab:"Last weekend",cls:"c-past"},
+  {en:"It was really fun / tiring.",pt:"Foi bem divertido / cansativo.",cat:"past",lab:"Last weekend",cls:"c-past"},
+  {en:"I'm going to…",pt:"Eu vou… (plano)",cat:"plan",lab:"Plans",cls:"c-plan"},
+  {en:"I want to…",pt:"Eu quero…",cat:"plan",lab:"Plans",cls:"c-plan"},
+  {en:"Maybe I'll…",pt:"Talvez eu…",cat:"plan",lab:"Plans",cls:"c-plan"},
+  {en:"I'm not sure yet.",pt:"Ainda não tenho certeza.",cat:"plan",lab:"Plans",cls:"c-plan"},
+  {en:"That sounds nice!",pt:"Que legal!",cat:"react",lab:"React & ask",cls:"c-react"},
+  {en:"Really? Me too!",pt:"Sério? Eu também!",cat:"react",lab:"React & ask",cls:"c-react"},
+  {en:"What about you?",pt:"E você?",cat:"react",lab:"React & ask",cls:"c-react"},
+  {en:"What did you do?",pt:"O que você fez?",cat:"react",lab:"React & ask",cls:"c-react"}
+];
+function renderCards(filter){
+  const box=document.getElementById('cards1');box.innerHTML='';
+  CHUNKS.filter(c=>filter==='all'||c.cat===filter).forEach(c=>{
+    const d=document.createElement('div');d.className='flip';
+    d.innerHTML=`<div class="flip-in">
+      <div class="face front"><span class="en">${c.en}</span><span class="cat ${c.cls}">${c.lab}</span></div>
+      <div class="face back"><span class="pt">${c.pt}</span><small>tap to flip back</small></div></div>`;
+    d.onclick=()=>d.classList.toggle('on');box.appendChild(d);
+  });
+}
+renderCards('all');
+document.querySelectorAll('#f1 .filter-btn').forEach(b=>{
+  b.onclick=()=>{document.querySelectorAll('#f1 .filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards(b.dataset.cat);};
+});
+
+const ACTS=[
+  "Watching a series 📺","Playing video games 🎮","Going to the beach 🏖️","Cooking something nice 🍳",
+  "Meeting friends ☕","Sleeping late 😴","Going for a walk 🚶","Shopping 🛍️",
+  "Listening to music 🎧","Playing football ⚽","Visiting family 👨‍👩‍👧","Going to the gym 💪",
+  "Watching a movie 🎬","Going to a party 🎉","Reading 📚","Taking photos 📸"
+];
+function spin(){document.getElementById('draw').textContent=ACTS[Math.floor(Math.random()*ACTS.length)];}
+let pts=0;function addPoint(){pts++;document.getElementById('pts').textContent=pts;}
+
+let total=20,left=20,tick=null,running=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('disp').textContent=fmt(left);}
+function setT(s,el){total=s;left=s;paint();document.querySelectorAll('#timer .set button').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');stopT();}
+function toggleT(){running?stopT():startT();}
+function startT(){const tm=document.getElementById('timer');tm.classList.add('run');tm.classList.remove('done');running=true;document.getElementById('go').textContent='Pause';
+  tick=setInterval(()=>{left--;paint();if(left<=0){clearInterval(tick);running=false;tm.classList.remove('run');tm.classList.add('done');document.getElementById('go').textContent='Reset';document.getElementById('disp').textContent="Time!";}},1000);}
+function stopT(){clearInterval(tick);running=false;const tm=document.getElementById('timer');tm.classList.remove('run');const go=document.getElementById('go');if(left<=0){left=total;paint();tm.classList.remove('done');go.textContent='Start';}else go.textContent='Start';}
+function miniTimer(){const tm=document.getElementById('timer');tm.classList.toggle('mini');tm.querySelector('.min').textContent=tm.classList.contains('mini')?'▴':'▾';}
+paint();
+</script>
+</body>
+</html>

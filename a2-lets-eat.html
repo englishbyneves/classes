@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Let's Eat! — A2 Speaking | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --rose:#CF7E93; --teal:#0A7D6E; --mint:#DCF0EA;
+  --ink:#1E2647; --paper:#FBFAF7; --line:#E7E2DA;
+  --rose-soft:#F6E6EA; --teal-soft:#E0F1ED; --amber:#E8A14C;
+  --shadow:0 10px 30px rgba(30,38,71,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+section{margin:30px 0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.sec-head{padding:20px 22px;display:flex;align-items:center;gap:14px}
+.sec-head h2{font-size:1.4rem;color:#fff}
+.sec-head .n{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);display:block;margin-bottom:2px;font-family:'Raleway'}
+.sec-body{padding:22px}
+.ico{flex:0 0 46px;width:46px;height:46px}
+.a-rose .sec-head{background:linear-gradient(135deg,var(--rose),#b96077)}
+.a-teal .sec-head{background:linear-gradient(135deg,var(--teal),#086457)}
+.a-navy .sec-head{background:linear-gradient(135deg,var(--navy),#2c3a6b)}
+.a-amber .sec-head{background:linear-gradient(135deg,var(--amber),#cf8427)}
+
+.hero{background:var(--rose);color:#fff;border-radius:0 0 28px 28px;padding:34px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero .logo{font-family:'Playfair Display';font-weight:800;font-size:1.05rem;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.hero .mono{width:38px;height:38px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:#fff}
+.hero h1{font-size:2.5rem;font-weight:800;margin:4px 0 6px}
+.hero .sub{color:#fff;opacity:.9;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem}
+.hero .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 13px;border-radius:30px;font-size:.78rem;font-weight:600}
+.hero .goal{margin-top:20px;background:rgba(30,38,71,.15);border-radius:14px;padding:14px 16px;font-size:.98rem;max-width:520px;margin:20px auto 0}
+.hero .goal b{color:#fff}
+
+.teacher{max-width:760px;margin:16px auto 0;padding:0 16px}
+.teacher details{background:#F3F1EC;border:1px dashed var(--line);border-radius:12px;padding:0 16px}
+.teacher summary{cursor:pointer;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#9a948a;font-weight:700;padding:11px 0;list-style:none}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher .tbody{font-size:.84rem;color:#746f66;font-style:italic;padding:4px 0 15px;border-top:1px solid var(--line)}
+.teacher .tbody p{margin:7px 0}
+.teacher .tbody b{color:#5c574f;font-style:normal}
+
+.lead{font-size:1.02rem;color:#4a4a55;margin-bottom:16px}
+.tag{display:inline-block;background:var(--mint);color:var(--teal);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+.qlist{list-style:none;display:grid;gap:12px}
+.qlist li{display:flex;gap:14px;align-items:flex-start;background:var(--rose-soft);border-radius:14px;padding:14px 16px}
+.a-teal .qlist li{background:var(--teal-soft)}
+.a-amber .qlist li{background:#FBEEDC}
+.qlist .qn{flex:0 0 30px;height:30px;background:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--rose);font-family:'Playfair Display'}
+.a-teal .qlist .qn{color:var(--teal)} .a-amber .qlist .qn{color:var(--amber)}
+.qlist p{font-size:1.06rem;font-weight:500}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter-btn{border:1.5px solid var(--line);background:#fff;color:#777;padding:7px 14px;border-radius:30px;font-family:'Raleway';font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{perspective:1000px;min-height:108px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;min-height:108px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:center}
+.front{background:#fff;border:1.5px solid var(--line)}
+.front .en{font-size:1.04rem;font-weight:700;color:var(--navy)}
+.front .cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:7px}
+.back{background:var(--rose);color:#fff;transform:rotateY(180deg);text-align:center}
+.back .pt{font-size:.98rem;color:#fff;font-weight:500}
+.back small{display:block;margin-top:8px;color:rgba(255,255,255,.6);font-size:.68rem}
+.c-like{color:var(--rose)} .c-order{color:var(--teal)} .c-desc{color:var(--amber)} .c-react{color:#6a7bbd}
+.hint{font-size:.78rem;color:#9a948a;margin-bottom:14px;font-style:italic}
+
+.box{background:var(--mint);border-radius:14px;padding:16px 18px;margin:14px 0}
+.box.navy{background:var(--navy);color:#fff}
+.box.navy b{color:var(--mint)}
+
+/* sentence frames */
+.frames{display:grid;gap:10px}
+.frame{background:#fff;border:1.5px dashed var(--rose);border-radius:14px;padding:13px 16px;font-size:1.1rem;color:var(--navy)}
+.frame b{color:var(--rose);font-family:'Playfair Display'}
+.frame .blank{display:inline-block;min-width:70px;border-bottom:2px dotted var(--teal);margin:0 3px}
+
+/* dialogue */
+.dialogue{display:grid;gap:10px}
+.turn{display:flex;gap:10px;align-items:flex-start}
+.turn .who{flex:0 0 74px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding-top:11px}
+.turn.staff .who{color:var(--teal)} .turn.you .who{color:var(--rose)}
+.turn .bubble{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:11px 15px;font-size:1.02rem;font-weight:500;flex:1}
+.turn.you .bubble{background:var(--rose-soft);border-color:#eccdd5}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:30px;padding:8px 15px;font-weight:600;font-size:.95rem}
+
+.tot{display:grid;gap:10px}
+.tot .pair{display:flex;align-items:stretch;border-radius:14px;overflow:hidden;border:1.5px solid var(--line)}
+.tot .side{flex:1;padding:14px;text-align:center;font-weight:600;background:#fff;font-size:.96rem}
+.tot .vs{display:grid;place-items:center;background:var(--rose);color:#fff;font-family:'Playfair Display';font-weight:800;padding:0 14px;font-size:.9rem}
+
+/* main */
+.stage{background:linear-gradient(160deg,#b96077,#CF7E93);color:#fff;border-radius:18px;padding:24px 20px;text-align:center}
+.stage .draw{min-height:84px;display:grid;place-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:18px;font-size:1.22rem;font-weight:700;font-family:'Playfair Display';margin:16px 0;color:#fff}
+.stage .ask{background:rgba(30,38,71,.22);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:.92rem;text-align:left}
+.stage .ask b{color:var(--mint)}
+.btn{background:var(--navy);color:#fff;border:none;padding:13px 26px;border-radius:30px;font-family:'Raleway';font-weight:700;font-size:1rem;cursor:pointer;transition:.15s;box-shadow:0 6px 16px rgba(30,38,71,.3)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;box-shadow:none;border:1.5px solid rgba(255,255,255,.6);color:#fff}
+.score{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:14px;font-weight:700}
+.score .pts{background:var(--navy);color:#fff;border-radius:30px;padding:6px 16px;font-size:1.1rem}
+
+.hw li{margin:9px 0 9px 4px;padding-left:26px;position:relative;font-size:1rem}
+.hw li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--rose);border-radius:4px}
+
+#timer{position:fixed;right:14px;bottom:14px;z-index:50;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:10px 12px;width:150px;text-align:center}
+#timer .lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a948a;font-weight:700}
+#timer .disp{font-family:'Playfair Display';font-weight:800;font-size:1.7rem;color:var(--navy);margin:2px 0}
+#timer.run .disp{color:var(--teal)}
+#timer.done .disp{color:var(--rose)}
+#timer .set{display:flex;gap:5px;justify-content:center;margin:5px 0}
+#timer .set button,#timer .go{border:none;border-radius:8px;cursor:pointer;font-family:'Raleway';font-weight:700}
+#timer .set button{flex:1;background:var(--mint);color:var(--teal);padding:5px 0;font-size:.78rem}
+#timer .set button.sel{background:var(--teal);color:#fff}
+#timer .go{width:100%;background:var(--navy);color:#fff;padding:7px 0;font-size:.82rem}
+#timer .min{position:absolute;top:6px;right:9px;cursor:pointer;color:#bbb;font-weight:700;font-size:.9rem;background:none;border:none}
+#timer.mini .set,#timer.mini .go,#timer.mini .lbl{display:none}
+#timer.mini{width:92px;padding:7px 10px}
+
+@media(max-width:480px){
+  .hero h1{font-size:2rem}
+  .cards{grid-template-columns:1fr 1fr}
+  .sec-head h2{font-size:1.2rem}
+  .turn .who{flex:0 0 58px}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo"><span class="mono">EN</span> English by Neves</div>
+  <div class="sub">A2 Speaking · Everyday Life</div>
+  <h1>Let's Eat!</h1>
+  <div class="meta">
+    <span class="chip">★ Level A2</span>
+    <span class="chip">⏱ 50 min</span>
+    <span class="chip">🍽️ Food &amp; ordering</span>
+  </div>
+  <div class="goal">By the end of today, <b>you can talk about food you like, describe a meal, and order in a café or restaurant in English.</b></div>
+</header>
+
+<div class="teacher">
+  <details>
+    <summary>Teacher reference — plano &amp; meta (toque para abrir)</summary>
+    <div class="tbody">
+      <p><b>Código:</b> A2-LIFE-02 · <b>Módulo:</b> Everyday Life · <b>Tema:</b> Food, preferences &amp; ordering out</p>
+      <p><b>Objetivo comunicativo:</b> dizer o que gosta/não gosta de comer; descrever um prato simples; pedir comida/bebida num café ou restaurante com naturalidade.</p>
+      <p><b>Gramática em contexto (não ensinar isolada, usar via frase-modelo):</b> like/love/don't like + -ing ou substantivo, would like / I'll have pra pedir, Can I…? / Could I…?, there is/are no cardápio.</p>
+      <p><b>Apoio A2:</b> mini-diálogo modelo visível para o role-play, frases-modelo, muito exemplo pronto. Correção por recast; deixa o aluno terminar a fala antes de corrigir.</p>
+      <p><b>Critério de sucesso:</b> o aluno faz um pedido completo (bebida + comida + pergunta) no role-play, diz 2 coisas que gosta/não gosta e descreve 1 prato por ~30s.</p>
+      <p><b>Homework:</b> DuoCards (chunks da aula) + áudio de 30s "My favourite meal is…".</p>
+    </div>
+  </details>
+</div>
+
+<main class="wrap">
+
+<!-- WARM UP -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M16 6v16a4 4 0 008 0V6M20 6v36M34 6c-3 0-5 4-5 10s2 8 5 8v18" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div><span class="n">Round 1 · Warm-up</span><h2>Quick answers</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Answer out loud in a short sentence. Example: <i>"My favourite food is pizza."</i></p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>What's your favourite food?</p></li>
+      <li><span class="qn">2</span><p>Sweet or salty? 🍫🧂</p></li>
+      <li><span class="qn">3</span><p>What did you have for breakfast today?</p></li>
+      <li><span class="qn">4</span><p>Do you cook, or do you prefer to eat out?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="26" rx="5" fill="#fff"/><path d="M18 14v-3a3 3 0 013-3h6a3 3 0 013 3v3" stroke="#1E2647" stroke-width="2.6"/><path d="M20 27l4 4 8-8" stroke="#CF7E93" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Toolbox</span><h2>Useful phrases</h2></div>
+  </div>
+  <div class="sec-body">
+    <span class="tag">Flip for 🇧🇷</span>
+    <p class="hint">Tap a card to see the meaning. Pick 3 to use today.</p>
+    <div class="filters" id="f1">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="like">Like / dislike</button>
+      <button class="filter-btn" data-cat="order">Ordering</button>
+      <button class="filter-btn" data-cat="desc">Describe food</button>
+      <button class="filter-btn" data-cat="react">React &amp; ask</button>
+    </div>
+    <div class="cards" id="cards1"></div>
+  </div>
+</section>
+
+<!-- MY FAVOURITES -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 40S8 30 8 19a9 9 0 0116-5 9 9 0 0116 5c0 11-16 21-16 21z" fill="#fff"/></svg>
+    <div><span class="n">Round 2 · Guided</span><h2>My food favourites</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Finish each sentence out loud. Then say <i>why</i>, or <i>when</i> you eat it.</p>
+    <div class="frames">
+      <div class="frame">I really love <span class="blank"></span>.</div>
+      <div class="frame">I don't like <span class="blank"></span> very much.</div>
+      <div class="frame">On a special day, I eat <span class="blank"></span>.</div>
+      <div class="frame">I could eat <span class="blank"></span> every day!</div>
+    </div>
+    <div class="box" style="margin-top:16px">Keep going for <b>30 seconds</b>: describe your favourite meal. What's in it? Who makes it? Use the timer, bottom right.</div>
+  </div>
+</section>
+
+<!-- AT THE CAFÉ -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M10 18h22v8a11 11 0 01-22 0z" fill="#fff"/><path d="M32 20h4a4 4 0 010 8h-4" stroke="#fff" stroke-width="3" fill="none"/><path d="M14 8c0 3 0 3 0 6M20 8c0 3 0 3 0 6M26 8c0 3 0 3 0 6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 3 · Model</span><h2>At the café</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Read this little dialogue out loud with your teacher. Then <b>swap roles</b> and change the order to what YOU want.</p>
+    <div class="dialogue">
+      <div class="turn staff"><span class="who">Staff</span><div class="bubble">Hi! What can I get you?</div></div>
+      <div class="turn you"><span class="who">You</span><div class="bubble">Hi! Can I have a cappuccino, please?</div></div>
+      <div class="turn staff"><span class="who">Staff</span><div class="bubble">Sure. Anything to eat?</div></div>
+      <div class="turn you"><span class="who">You</span><div class="bubble">Yes, I'll have a slice of cake. How much is it?</div></div>
+      <div class="turn staff"><span class="who">Staff</span><div class="bubble">That's £5.50. For here or to go?</div></div>
+      <div class="turn you"><span class="who">You</span><div class="bubble">For here, please. Thank you!</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- THIS OR THAT FOOD -->
+<section class="a-amber">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 8v32" stroke="#fff" stroke-width="3" stroke-dasharray="4 4" stroke-linecap="round"/><circle cx="14" cy="24" r="8" fill="#fff"/><rect x="30" y="16" width="12" height="16" rx="3" fill="#FBEEDC"/></svg>
+    <div><span class="n">Round 4 · Rapid</span><h2>This or that</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Pick one and say why: <b>"I prefer… because…"</b> Then your teacher picks the other!</p>
+    <div class="tot">
+      <div class="pair"><div class="side">Pizza 🍕</div><div class="vs">or</div><div class="side">Burger 🍔</div></div>
+      <div class="pair"><div class="side">Coffee ☕</div><div class="vs">or</div><div class="side">Tea 🫖</div></div>
+      <div class="pair"><div class="side">Breakfast</div><div class="vs">or</div><div class="side">Dinner</div></div>
+      <div class="pair"><div class="side">Cook at home</div><div class="vs">or</div><div class="side">Order delivery</div></div>
+      <div class="pair"><div class="side">Chocolate 🍫</div><div class="vs">or</div><div class="side">Ice cream 🍦</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" fill="#fff"/><circle cx="24" cy="24" r="9" fill="none" stroke="#CF7E93" stroke-width="2.6"/><path d="M24 6v4M24 38v4M6 24h4M38 24h4" stroke="#1E2647" stroke-width="2.6" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 5 · Main event</span><h2>Order Up!</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Draw a place. You're the customer — <b>order out loud</b> (a drink + something to eat + one question). Your teacher is the staff. Each complete order = +1!</p>
+    <div class="stage">
+      <div class="draw" id="draw">Tap "Draw a place" 🍴</div>
+      <div class="ask">Your order needs: <b>a drink</b> · <b>something to eat</b> · <b>one question</b> (How much…? / Do you have…?)</div>
+      <button class="btn ghost" onclick="drawPlace()">Draw a place</button>
+      <div class="score"><span>Orders done:</span><span class="pts" id="pts">0</span></div>
+      <button class="btn ghost" style="margin-top:12px" onclick="addPoint()">Order complete ✓ +1</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="10" y="7" width="28" height="34" rx="5" fill="#fff"/><path d="M17 17h14M17 24h14M17 31h9" stroke="#CF7E93" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">After class</span><h2>Homework</h2></div>
+  </div>
+  <div class="sec-body">
+    <ul class="hw">
+      <li><b>DuoCards:</b> add today's phrases (I'll have…, Can I have…?, I'm not a fan of…) and review 2×.</li>
+      <li><b>Record a 30-second voice note:</b> "My favourite meal is…" — say what's in it and when you eat it.</li>
+      <li><b>Real mission:</b> next time you order a coffee or food, say the order in English in your head first. 😉</li>
+    </ul>
+    <div class="box" style="margin-top:16px"><b>Success check:</b> you made a full order in the role-play, said 2 likes/dislikes, and described one meal for ~30s. 🎯</div>
+  </div>
+</section>
+
+</main>
+
+<div id="timer">
+  <button class="min" onclick="miniTimer()" title="minimize">▾</button>
+  <div class="lbl">Speaking timer</div>
+  <div class="disp" id="disp">0:20</div>
+  <div class="set">
+    <button data-s="20" class="sel" onclick="setT(20,this)">20s</button>
+    <button data-s="30" onclick="setT(30,this)">30s</button>
+    <button data-s="45" onclick="setT(45,this)">45s</button>
+  </div>
+  <button class="go" id="go" onclick="toggleT()">Start</button>
+</div>
+
+<script>
+const CHUNKS=[
+  {en:"I love…",pt:"Eu amo…",cat:"like",lab:"Like / dislike",cls:"c-like"},
+  {en:"I'm really into…",pt:"Eu curto muito…",cat:"like",lab:"Like / dislike",cls:"c-like"},
+  {en:"I'm not a fan of…",pt:"Não sou muito fã de…",cat:"like",lab:"Like / dislike",cls:"c-like"},
+  {en:"I can't stand…",pt:"Eu não suporto…",cat:"like",lab:"Like / dislike",cls:"c-like"},
+  {en:"Can I have…, please?",pt:"Posso pedir…, por favor?",cat:"order",lab:"Ordering",cls:"c-order"},
+  {en:"I'll have…",pt:"Vou querer…",cat:"order",lab:"Ordering",cls:"c-order"},
+  {en:"Could I see the menu?",pt:"Posso ver o cardápio?",cat:"order",lab:"Ordering",cls:"c-order"},
+  {en:"How much is it?",pt:"Quanto custa?",cat:"order",lab:"Ordering",cls:"c-order"},
+  {en:"For here or to go?",pt:"Pra comer aqui ou pra viagem?",cat:"order",lab:"Ordering",cls:"c-order"},
+  {en:"It's really tasty.",pt:"É muito gostoso.",cat:"desc",lab:"Describe food",cls:"c-desc"},
+  {en:"It's a bit spicy.",pt:"É um pouco picante.",cat:"desc",lab:"Describe food",cls:"c-desc"},
+  {en:"It's sweet / salty.",pt:"É doce / salgado.",cat:"desc",lab:"Describe food",cls:"c-desc"},
+  {en:"It's my comfort food.",pt:"É minha comida de conforto.",cat:"desc",lab:"Describe food",cls:"c-desc"},
+  {en:"Yum! That sounds good.",pt:"Hmm! Parece bom.",cat:"react",lab:"React & ask",cls:"c-react"},
+  {en:"Really? Me too!",pt:"Sério? Eu também!",cat:"react",lab:"React & ask",cls:"c-react"},
+  {en:"What about you?",pt:"E você?",cat:"react",lab:"React & ask",cls:"c-react"},
+  {en:"Have you tried…?",pt:"Você já provou…?",cat:"react",lab:"React & ask",cls:"c-react"}
+];
+function renderCards(filter){
+  const box=document.getElementById('cards1');box.innerHTML='';
+  CHUNKS.filter(c=>filter==='all'||c.cat===filter).forEach(c=>{
+    const d=document.createElement('div');d.className='flip';
+    d.innerHTML=`<div class="flip-in">
+      <div class="face front"><span class="en">${c.en}</span><span class="cat ${c.cls}">${c.lab}</span></div>
+      <div class="face back"><span class="pt">${c.pt}</span><small>tap to flip back</small></div></div>`;
+    d.onclick=()=>d.classList.toggle('on');box.appendChild(d);
+  });
+}
+renderCards('all');
+document.querySelectorAll('#f1 .filter-btn').forEach(b=>{
+  b.onclick=()=>{document.querySelectorAll('#f1 .filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards(b.dataset.cat);};
+});
+
+const PLACES=[
+  "☕ A coffee shop","🍔 A burger place","🍕 A pizzeria","🍣 A sushi restaurant",
+  "🥐 A bakery","🍦 An ice cream shop","🌮 A street food stall","🥗 A healthy lunch spot",
+  "🍜 A noodle bar","🥞 A breakfast diner","🍺 A pub kitchen","🧋 A bubble tea shop"
+];
+function drawPlace(){document.getElementById('draw').textContent=PLACES[Math.floor(Math.random()*PLACES.length)];}
+let pts=0;function addPoint(){pts++;document.getElementById('pts').textContent=pts;}
+
+let total=20,left=20,tick=null,running=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('disp').textContent=fmt(left);}
+function setT(s,el){total=s;left=s;paint();document.querySelectorAll('#timer .set button').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');stopT();}
+function toggleT(){running?stopT():startT();}
+function startT(){const tm=document.getElementById('timer');tm.classList.add('run');tm.classList.remove('done');running=true;document.getElementById('go').textContent='Pause';
+  tick=setInterval(()=>{left--;paint();if(left<=0){clearInterval(tick);running=false;tm.classList.remove('run');tm.classList.add('done');document.getElementById('go').textContent='Reset';document.getElementById('disp').textContent="Time!";}},1000);}
+function stopT(){clearInterval(tick);running=false;const tm=document.getElementById('timer');tm.classList.remove('run');const go=document.getElementById('go');if(left<=0){left=total;paint();tm.classList.remove('done');go.textContent='Start';}else go.textContent='Start';}
+function miniTimer(){const tm=document.getElementById('timer');tm.classList.toggle('mini');tm.querySelector('.min').textContent=tm.classList.contains('mini')?'▴':'▾';}
+paint();
+</script>
+</body>
+</html>
