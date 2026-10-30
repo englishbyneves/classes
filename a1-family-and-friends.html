@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Family &amp; Friends — A1 Speaking | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --rose:#CF7E93; --teal:#0A7D6E; --mint:#DCF0EA;
+  --ink:#1E2647; --paper:#FBFAF7; --line:#E7E2DA;
+  --rose-soft:#F6E6EA; --teal-soft:#E0F1ED; --amber:#E8A14C;
+  --shadow:0 10px 30px rgba(30,38,71,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+section{margin:30px 0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.sec-head{padding:20px 22px;display:flex;align-items:center;gap:14px}
+.sec-head h2{font-size:1.4rem;color:#fff}
+.sec-head .n{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);display:block;margin-bottom:2px;font-family:'Raleway'}
+.sec-body{padding:22px}
+.ico{flex:0 0 46px;width:46px;height:46px}
+.a-rose .sec-head{background:linear-gradient(135deg,var(--rose),#b96077)}
+.a-teal .sec-head{background:linear-gradient(135deg,var(--teal),#086457)}
+.a-navy .sec-head{background:linear-gradient(135deg,var(--navy),#2c3a6b)}
+.a-amber .sec-head{background:linear-gradient(135deg,var(--amber),#cf8427)}
+
+.hero{background:var(--rose);color:#fff;border-radius:0 0 28px 28px;padding:34px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero .logo{font-family:'Playfair Display';font-weight:800;font-size:1.05rem;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.hero .mono{width:38px;height:38px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:#fff}
+.hero h1{font-size:2.5rem;font-weight:800;margin:4px 0 6px}
+.hero .sub{color:#fff;opacity:.9;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem}
+.hero .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:#fff;padding:6px 13px;border-radius:30px;font-size:.78rem;font-weight:600}
+.hero .goal{margin-top:20px;background:rgba(30,38,71,.15);border-radius:14px;padding:14px 16px;font-size:.98rem;max-width:520px;margin:20px auto 0}
+.hero .goal b{color:#fff}
+
+.teacher{max-width:760px;margin:16px auto 0;padding:0 16px}
+.teacher details{background:#F3F1EC;border:1px dashed var(--line);border-radius:12px;padding:0 16px}
+.teacher summary{cursor:pointer;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#9a948a;font-weight:700;padding:11px 0;list-style:none}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher .tbody{font-size:.84rem;color:#746f66;font-style:italic;padding:4px 0 15px;border-top:1px solid var(--line)}
+.teacher .tbody p{margin:7px 0}
+.teacher .tbody b{color:#5c574f;font-style:normal}
+
+.lead{font-size:1.02rem;color:#4a4a55;margin-bottom:16px}
+.tag{display:inline-block;background:var(--mint);color:var(--teal);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+.qlist{list-style:none;display:grid;gap:12px}
+.qlist li{display:flex;gap:14px;align-items:flex-start;background:var(--rose-soft);border-radius:14px;padding:14px 16px}
+.a-teal .qlist li{background:var(--teal-soft)}
+.a-amber .qlist li{background:#FBEEDC}
+.a-navy .qlist li{background:var(--mint)}
+.qlist .qn{flex:0 0 30px;height:30px;background:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--rose);font-family:'Playfair Display'}
+.a-teal .qlist .qn{color:var(--teal)} .a-amber .qlist .qn{color:var(--amber)} .a-navy .qlist .qn{color:var(--navy)}
+.qlist p{font-size:1.08rem;font-weight:500}
+.qlist .model{display:block;font-size:.86rem;color:#b58a95;font-style:italic;margin-top:3px}
+.a-teal .qlist .model{color:#7d8a86}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter-btn{border:1.5px solid var(--line);background:#fff;color:#777;padding:7px 14px;border-radius:30px;font-family:'Raleway';font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{perspective:1000px;min-height:104px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;min-height:104px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:center}
+.front{background:#fff;border:1.5px solid var(--line)}
+.front .en{font-size:1.08rem;font-weight:700;color:var(--navy)}
+.front .cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:7px}
+.back{background:var(--rose);color:#fff;transform:rotateY(180deg);text-align:center}
+.back .pt{font-size:1rem;color:#fff;font-weight:500}
+.back small{display:block;margin-top:8px;color:rgba(255,255,255,.6);font-size:.68rem}
+.c-fam{color:var(--rose)} .c-desc{color:var(--teal)} .c-this{color:#6a7bbd} .c-ask{color:var(--amber)}
+.hint{font-size:.78rem;color:#9a948a;margin-bottom:14px;font-style:italic}
+
+.box{background:var(--mint);border-radius:14px;padding:16px 18px;margin:14px 0}
+.box.navy{background:var(--navy);color:#fff}
+.box.navy b{color:var(--mint)}
+
+.frames{display:grid;gap:10px}
+.frame{background:#fff;border:1.5px dashed var(--rose);border-radius:14px;padding:13px 16px;font-size:1.14rem;color:var(--navy)}
+.frame b{color:var(--rose);font-family:'Playfair Display'}
+.frame .blank{display:inline-block;min-width:80px;border-bottom:2px dotted var(--teal);margin:0 3px}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:30px;padding:9px 16px;font-weight:600;font-size:1rem}
+
+.stage{background:linear-gradient(160deg,#b96077,#CF7E93);color:#fff;border-radius:18px;padding:24px 20px;text-align:center}
+.stage .draw{min-height:84px;display:grid;place-items:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);border-radius:14px;padding:18px;font-size:1.35rem;font-weight:700;font-family:'Playfair Display';margin:16px 0;color:#fff}
+.stage .ask{background:rgba(30,38,71,.22);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:.92rem}
+.stage .ask b{color:var(--mint)}
+.btn{background:var(--navy);color:#fff;border:none;padding:13px 26px;border-radius:30px;font-family:'Raleway';font-weight:700;font-size:1rem;cursor:pointer;transition:.15s;box-shadow:0 6px 16px rgba(30,38,71,.3)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;box-shadow:none;border:1.5px solid rgba(255,255,255,.6);color:#fff}
+.score{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:14px;font-weight:700}
+.score .pts{background:var(--navy);color:#fff;border-radius:30px;padding:6px 16px;font-size:1.1rem}
+
+.hw li{margin:9px 0 9px 4px;padding-left:26px;position:relative;font-size:1rem}
+.hw li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--rose);border-radius:4px}
+
+#timer{position:fixed;right:14px;bottom:14px;z-index:50;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:10px 12px;width:150px;text-align:center}
+#timer .lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a948a;font-weight:700}
+#timer .disp{font-family:'Playfair Display';font-weight:800;font-size:1.7rem;color:var(--navy);margin:2px 0}
+#timer.run .disp{color:var(--teal)}
+#timer.done .disp{color:var(--rose)}
+#timer .set{display:flex;gap:5px;justify-content:center;margin:5px 0}
+#timer .set button,#timer .go{border:none;border-radius:8px;cursor:pointer;font-family:'Raleway';font-weight:700}
+#timer .set button{flex:1;background:var(--mint);color:var(--teal);padding:5px 0;font-size:.78rem}
+#timer .set button.sel{background:var(--teal);color:#fff}
+#timer .go{width:100%;background:var(--navy);color:#fff;padding:7px 0;font-size:.82rem}
+#timer .min{position:absolute;top:6px;right:9px;cursor:pointer;color:#bbb;font-weight:700;font-size:.9rem;background:none;border:none}
+#timer.mini .set,#timer.mini .go,#timer.mini .lbl{display:none}
+#timer.mini{width:92px;padding:7px 10px}
+
+@media(max-width:480px){
+  .hero h1{font-size:2rem}
+  .cards{grid-template-columns:1fr 1fr}
+  .sec-head h2{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo"><span class="mono">EN</span> English by Neves</div>
+  <div class="sub">A1 Speaking · First Steps</div>
+  <h1>My Family &amp; Friends</h1>
+  <div class="meta">
+    <span class="chip">★ Level A1</span>
+    <span class="chip">⏱ 50 min</span>
+    <span class="chip">👨‍👩‍👧 People in my life</span>
+  </div>
+  <div class="goal">By the end of today, <b>you can talk about your family and friends — who they are and what they're like — in simple English.</b></div>
+</header>
+
+<div class="teacher">
+  <details>
+    <summary>Teacher reference — plano &amp; meta (toque para abrir)</summary>
+    <div class="tbody">
+      <p><b>Código:</b> A1-ME-02 · <b>Módulo:</b> First Steps · <b>Tema:</b> Family, friends &amp; simple descriptions</p>
+      <p><b>Objetivo comunicativo:</b> dizer quem são as pessoas da vida dele; descrever com adjetivos simples; fazer as mesmas perguntas de volta. Frases curtas e completas com apoio da frase-modelo.</p>
+      <p><b>Gramática em contexto (não ensinar isolada):</b> have/has (I have a sister), possessivos my/his/her, to be em descrição (He is tall, She is funny), This is my… .</p>
+      <p><b>Apoio A1:</b> frase-modelo embaixo de cada pergunta, muita repetição, exemplos prontos. Correção suave por recast; aceitar frase curta e expandir junto. Priorizar confiança.</p>
+      <p><b>Critério de sucesso:</b> o aluno fala de 2–3 pessoas (nome + relação + 1 adjetivo cada) e faz 2 perguntas ao professor sem travar.</p>
+      <p><b>Homework:</b> DuoCards (chunks da aula) + áudio curto (15–20s) "This is my… / He/She is…".</p>
+    </div>
+  </details>
+</div>
+
+<main class="wrap">
+
+<!-- WARM UP -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="16" cy="17" r="6" fill="#fff"/><circle cx="32" cy="17" r="6" fill="#fff"/><path d="M6 38c0-7 5-11 10-11s10 4 10 11M22 38c0-7 5-11 10-11s10 4 10 11" fill="#fff"/></svg>
+    <div><span class="n">Round 1 · Warm-up</span><h2>Quick answers</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Answer out loud in a short sentence.</p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>Do you have brothers or sisters?<span class="model">Yes, I have one sister. / No, I don't.</span></p></li>
+      <li><span class="qn">2</span><p>Do you have a big family or a small family?</p></li>
+      <li><span class="qn">3</span><p>Who is your best friend?<span class="model">My best friend is Lucas.</span></p></li>
+      <li><span class="qn">4</span><p>Do you have a pet? 🐶🐱</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="26" rx="5" fill="#fff"/><path d="M18 14v-3a3 3 0 013-3h6a3 3 0 013 3v3" stroke="#1E2647" stroke-width="2.6"/><path d="M20 27l4 4 8-8" stroke="#CF7E93" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Toolbox</span><h2>My phrases</h2></div>
+  </div>
+  <div class="sec-body">
+    <span class="tag">Flip for 🇧🇷</span>
+    <p class="hint">Tap a card to see the meaning. Say each one out loud.</p>
+    <div class="filters" id="f1">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="fam">Family words</button>
+      <button class="filter-btn" data-cat="this">This is…</button>
+      <button class="filter-btn" data-cat="desc">Describe</button>
+      <button class="filter-btn" data-cat="ask">Ask</button>
+    </div>
+    <div class="cards" id="cards1"></div>
+  </div>
+</section>
+
+<!-- MY FAMILY -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="9" y="9" width="30" height="30" rx="6" fill="#fff"/><circle cx="24" cy="20" r="6" fill="#0A7D6E"/><path d="M14 35c2-6 18-6 20 0" fill="#0A7D6E"/></svg>
+    <div><span class="n">Round 2 · Guided</span><h2>My family</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Finish each sentence out loud. Use real names from your family!</p>
+    <div class="frames">
+      <div class="frame">I have <span class="blank"></span>. <span style="font-size:.85rem;color:#999">(a sister / two brothers…)</span></div>
+      <div class="frame">My mum's name is <span class="blank"></span>.</div>
+      <div class="frame">This is my <span class="blank"></span>. <span style="font-size:.85rem;color:#999">(brother / dad / friend…)</span></div>
+      <div class="frame">We live in <span class="blank"></span>.</div>
+    </div>
+    <div class="box" style="margin-top:16px">Say 3 sentences about your family in a row. Try the <b>20-second</b> timer, bottom right.</div>
+  </div>
+</section>
+
+<!-- DESCRIBE -->
+<section class="a-amber">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" fill="#fff"/><circle cx="18" cy="21" r="2.4" fill="#E8A14C"/><circle cx="30" cy="21" r="2.4" fill="#E8A14C"/><path d="M17 29c3 4 11 4 14 0" stroke="#E8A14C" stroke-width="3" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 3 · Describe</span><h2>He is… / She is…</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Point at a word and make a sentence about someone: <b>"My brother is funny."</b></p>
+    <div class="pill-row">
+      <span class="pill">nice 😊</span>
+      <span class="pill">funny 😄</span>
+      <span class="pill">tall</span>
+      <span class="pill">short</span>
+      <span class="pill">kind</span>
+      <span class="pill">quiet 🤫</span>
+      <span class="pill">friendly</span>
+      <span class="pill">smart 🧠</span>
+    </div>
+    <div class="box navy" style="margin-top:18px">Describe <b>2 people</b>: one from your family and one friend. Name + 1 word each. 🎤</div>
+  </div>
+</section>
+
+<!-- ASK ME -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="22" r="14" fill="#fff"/><path d="M20 18a4 4 0 115 4c-1 1-1 2-1 3" stroke="#0A7D6E" stroke-width="2.6" stroke-linecap="round" fill="none"/><circle cx="24" cy="29" r="2" fill="#CF7E93"/><path d="M16 40l4-6" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 4 · Ask</span><h2>Now you ask me!</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Your turn to ask the teacher. Read each question out loud — then listen.</p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>Do you have brothers or sisters?</p></li>
+      <li><span class="qn">2</span><p>What's your best friend's name?</p></li>
+      <li><span class="qn">3</span><p>Do you have a pet?</p></li>
+      <li><span class="qn">4</span><p>Is your family big or small?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="17" fill="#fff"/><path d="M24 24L34 16M24 24l-8 9" stroke="#CF7E93" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="#1E2647"/></svg>
+    <div><span class="n">Round 5 · Main event</span><h2>Who's This? Spinner</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Spin a person from your life. Say <b>2–3 sentences</b> about them: who they are, a name, and one word. Each turn = +1! 🎉</p>
+    <div class="stage">
+      <div class="draw" id="draw">Tap "Spin a person" 🎡</div>
+      <div class="ask">Say: <b>Who is it?</b> · <b>Their name</b> · <b>One word about them</b> (nice, funny…)</div>
+      <button class="btn" onclick="spin()">🎡 Spin a person</button>
+      <div class="score"><span>Points:</span><span class="pts" id="pts">0</span></div>
+      <button class="btn ghost" style="margin-top:12px" onclick="addPoint()">Said 2–3 sentences ✓ +1</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="10" y="7" width="28" height="34" rx="5" fill="#fff"/><path d="M17 17h14M17 24h14M17 31h9" stroke="#CF7E93" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">After class</span><h2>Homework</h2></div>
+  </div>
+  <div class="sec-body">
+    <ul class="hw">
+      <li><b>DuoCards:</b> add today's words (sister, brother, friend, nice, funny, This is my…) and review 2×.</li>
+      <li><b>Record a short voice note (15–20s):</b> "This is my… His/Her name is… He/She is…"</li>
+      <li><b>Photo talk:</b> look at one photo on your phone and say 2 sentences about the person in English. 📱</li>
+    </ul>
+    <div class="box" style="margin-top:16px"><b>Success check:</b> you talked about 2–3 people and asked your teacher 2 questions. 🎯</div>
+  </div>
+</section>
+
+</main>
+
+<div id="timer">
+  <button class="min" onclick="miniTimer()" title="minimize">▾</button>
+  <div class="lbl">Speaking timer</div>
+  <div class="disp" id="disp">0:15</div>
+  <div class="set">
+    <button data-s="15" class="sel" onclick="setT(15,this)">15s</button>
+    <button data-s="20" onclick="setT(20,this)">20s</button>
+    <button data-s="30" onclick="setT(30,this)">30s</button>
+  </div>
+  <button class="go" id="go" onclick="toggleT()">Start</button>
+</div>
+
+<script>
+const CHUNKS=[
+  {en:"I have a sister / brother.",pt:"Eu tenho uma irmã / um irmão.",cat:"fam",lab:"Family words",cls:"c-fam"},
+  {en:"my mum / my dad",pt:"minha mãe / meu pai",cat:"fam",lab:"Family words",cls:"c-fam"},
+  {en:"my best friend",pt:"meu melhor amigo / minha melhor amiga",cat:"fam",lab:"Family words",cls:"c-fam"},
+  {en:"We are a big / small family.",pt:"Somos uma família grande / pequena.",cat:"fam",lab:"Family words",cls:"c-fam"},
+  {en:"This is my…",pt:"Este(a) é meu/minha…",cat:"this",lab:"This is…",cls:"c-this"},
+  {en:"His name is…",pt:"O nome dele é…",cat:"this",lab:"This is…",cls:"c-this"},
+  {en:"Her name is…",pt:"O nome dela é…",cat:"this",lab:"This is…",cls:"c-this"},
+  {en:"We live together.",pt:"A gente mora junto.",cat:"this",lab:"This is…",cls:"c-this"},
+  {en:"He is funny.",pt:"Ele é engraçado.",cat:"desc",lab:"Describe",cls:"c-desc"},
+  {en:"She is really nice.",pt:"Ela é muito gente boa.",cat:"desc",lab:"Describe",cls:"c-desc"},
+  {en:"He / She is tall.",pt:"Ele / Ela é alto(a).",cat:"desc",lab:"Describe",cls:"c-desc"},
+  {en:"We are very close.",pt:"A gente é muito próximo.",cat:"desc",lab:"Describe",cls:"c-desc"},
+  {en:"Do you have brothers?",pt:"Você tem irmãos?",cat:"ask",lab:"Ask",cls:"c-ask"},
+  {en:"What's his / her name?",pt:"Qual é o nome dele / dela?",cat:"ask",lab:"Ask",cls:"c-ask"},
+  {en:"Do you have a pet?",pt:"Você tem um bicho de estimação?",cat:"ask",lab:"Ask",cls:"c-ask"},
+  {en:"And you?",pt:"E você?",cat:"ask",lab:"Ask",cls:"c-ask"}
+];
+function renderCards(filter){
+  const box=document.getElementById('cards1');box.innerHTML='';
+  CHUNKS.filter(c=>filter==='all'||c.cat===filter).forEach(c=>{
+    const d=document.createElement('div');d.className='flip';
+    d.innerHTML=`<div class="flip-in">
+      <div class="face front"><span class="en">${c.en}</span><span class="cat ${c.cls}">${c.lab}</span></div>
+      <div class="face back"><span class="pt">${c.pt}</span><small>tap to flip back</small></div></div>`;
+    d.onclick=()=>d.classList.toggle('on');box.appendChild(d);
+  });
+}
+renderCards('all');
+document.querySelectorAll('#f1 .filter-btn').forEach(b=>{
+  b.onclick=()=>{document.querySelectorAll('#f1 .filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards(b.dataset.cat);};
+});
+
+const PEOPLE=[
+  "👩 Your mum","👨 Your dad","🧑 Your brother or sister","🧒 Your best friend",
+  "👵 Your grandma","👴 Your grandpa","🐶 Your pet","👫 A friend from school or work",
+  "👶 A cousin","🧑‍🍳 Someone who cooks well in your family","😂 The funny one in your family","❤️ The person you talk to the most"
+];
+function spin(){document.getElementById('draw').textContent=PEOPLE[Math.floor(Math.random()*PEOPLE.length)];}
+let pts=0;function addPoint(){pts++;document.getElementById('pts').textContent=pts;}
+
+let total=15,left=15,tick=null,running=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('disp').textContent=fmt(left);}
+function setT(s,el){total=s;left=s;paint();document.querySelectorAll('#timer .set button').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');stopT();}
+function toggleT(){running?stopT():startT();}
+function startT(){const tm=document.getElementById('timer');tm.classList.add('run');tm.classList.remove('done');running=true;document.getElementById('go').textContent='Pause';
+  tick=setInterval(()=>{left--;paint();if(left<=0){clearInterval(tick);running=false;tm.classList.remove('run');tm.classList.add('done');document.getElementById('go').textContent='Reset';document.getElementById('disp').textContent="Time!";}},1000);}
+function stopT(){clearInterval(tick);running=false;const tm=document.getElementById('timer');tm.classList.remove('run');const go=document.getElementById('go');if(left<=0){left=total;paint();tm.classList.remove('done');go.textContent='Start';}else go.textContent='Start';}
+function miniTimer(){const tm=document.getElementById('timer');tm.classList.toggle('mini');tm.querySelector('.min').textContent=tm.classList.contains('mini')?'▴':'▾';}
+paint();
+</script>
+</body>
+</html>
