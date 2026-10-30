@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All About Me — A1 Speaking | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1E2647; --rose:#CF7E93; --teal:#0A7D6E; --mint:#DCF0EA;
+  --ink:#1E2647; --paper:#FBFAF7; --line:#E7E2DA;
+  --rose-soft:#F6E6EA; --teal-soft:#E0F1ED; --amber:#E8A14C;
+  --shadow:0 10px 30px rgba(30,38,71,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Raleway',sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 120px}
+h1,h2,h3{font-family:'Playfair Display',serif;line-height:1.15}
+section{margin:30px 0;background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.sec-head{padding:20px 22px;display:flex;align-items:center;gap:14px}
+.sec-head h2{font-size:1.4rem;color:#fff}
+.sec-head .n{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);display:block;margin-bottom:2px;font-family:'Raleway'}
+.sec-body{padding:22px}
+.ico{flex:0 0 46px;width:46px;height:46px}
+.a-rose .sec-head{background:linear-gradient(135deg,var(--rose),#b96077)}
+.a-teal .sec-head{background:linear-gradient(135deg,var(--teal),#086457)}
+.a-navy .sec-head{background:linear-gradient(135deg,var(--navy),#2c3a6b)}
+.a-amber .sec-head{background:linear-gradient(135deg,var(--amber),#cf8427)}
+
+.hero{background:var(--navy);color:#fff;border-radius:0 0 28px 28px;padding:34px 22px 30px;text-align:center;position:relative;overflow:hidden}
+.hero .logo{font-family:'Playfair Display';font-weight:800;font-size:1.05rem;display:inline-flex;align-items:center;gap:9px;margin-bottom:22px}
+.hero .mono{width:38px;height:38px;border:2px solid var(--mint);border-radius:50%;display:grid;place-items:center;font-size:.9rem;color:var(--mint)}
+.hero h1{font-size:2.5rem;font-weight:800;margin:4px 0 6px}
+.hero .sub{color:var(--mint);font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.78rem}
+.hero .meta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.hero .chip{background:rgba(255,255,255,.1);border:1px solid rgba(220,240,234,.35);color:var(--mint);padding:6px 13px;border-radius:30px;font-size:.78rem;font-weight:600}
+.hero .goal{margin-top:20px;background:rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;font-size:.98rem;max-width:520px;margin:20px auto 0}
+.hero .goal b{color:#fff}
+
+.teacher{max-width:760px;margin:16px auto 0;padding:0 16px}
+.teacher details{background:#F3F1EC;border:1px dashed var(--line);border-radius:12px;padding:0 16px}
+.teacher summary{cursor:pointer;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:#9a948a;font-weight:700;padding:11px 0;list-style:none}
+.teacher summary::-webkit-details-marker{display:none}
+.teacher .tbody{font-size:.84rem;color:#746f66;font-style:italic;padding:4px 0 15px;border-top:1px solid var(--line)}
+.teacher .tbody p{margin:7px 0}
+.teacher .tbody b{color:#5c574f;font-style:normal}
+
+.lead{font-size:1.02rem;color:#4a4a55;margin-bottom:16px}
+.tag{display:inline-block;background:var(--mint);color:var(--teal);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+
+.qlist{list-style:none;display:grid;gap:12px}
+.qlist li{display:flex;gap:14px;align-items:flex-start;background:var(--teal-soft);border-radius:14px;padding:14px 16px}
+.a-rose .qlist li{background:var(--rose-soft)}
+.a-amber .qlist li{background:#FBEEDC}
+.a-navy .qlist li{background:var(--mint)}
+.qlist .qn{flex:0 0 30px;height:30px;background:#fff;border-radius:50%;display:grid;place-items:center;font-weight:800;color:var(--teal);font-family:'Playfair Display'}
+.a-rose .qlist .qn{color:var(--rose)} .a-amber .qlist .qn{color:var(--amber)} .a-navy .qlist .qn{color:var(--navy)}
+.qlist p{font-size:1.08rem;font-weight:500}
+.qlist .model{display:block;font-size:.86rem;color:#7d8a86;font-style:italic;margin-top:3px}
+.a-rose .qlist .model{color:#b58a95}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter-btn{border:1.5px solid var(--line);background:#fff;color:#777;padding:7px 14px;border-radius:30px;font-family:'Raleway';font-weight:600;font-size:.82rem;cursor:pointer;transition:.15s}
+.filter-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.flip{perspective:1000px;min-height:104px;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;min-height:104px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:15px;display:flex;flex-direction:column;justify-content:center}
+.front{background:#fff;border:1.5px solid var(--line)}
+.front .en{font-size:1.08rem;font-weight:700;color:var(--navy)}
+.front .cat{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700;margin-top:7px}
+.back{background:var(--navy);color:#fff;transform:rotateY(180deg);text-align:center}
+.back .pt{font-size:1rem;color:var(--mint);font-weight:500}
+.back small{display:block;margin-top:8px;color:rgba(255,255,255,.5);font-size:.68rem}
+.c-me{color:var(--teal)} .c-where{color:#6a7bbd} .c-like{color:var(--rose)} .c-ask{color:var(--amber)}
+.hint{font-size:.78rem;color:#9a948a;margin-bottom:14px;font-style:italic}
+
+.box{background:var(--mint);border-radius:14px;padding:16px 18px;margin:14px 0}
+.box.navy{background:var(--navy);color:#fff}
+.box.navy b{color:var(--mint)}
+
+/* sentence frames */
+.frames{display:grid;gap:10px}
+.frame{background:#fff;border:1.5px dashed var(--navy);border-radius:14px;padding:13px 16px;font-size:1.14rem;color:var(--navy)}
+.frame b{color:var(--teal);font-family:'Playfair Display'}
+.frame .blank{display:inline-block;min-width:80px;border-bottom:2px dotted var(--rose);margin:0 3px}
+
+/* likes pills */
+.pill-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:6px}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:30px;padding:9px 16px;font-weight:600;font-size:1rem}
+
+/* main */
+.stage{background:linear-gradient(160deg,#242d54,#1E2647);color:#fff;border-radius:18px;padding:24px 20px;text-align:center}
+.stage .draw{min-height:84px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(220,240,234,.3);border-radius:14px;padding:18px;font-size:1.35rem;font-weight:700;font-family:'Playfair Display';margin:16px 0;color:var(--mint)}
+.stage .ask{background:rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;margin:0 0 14px;font-size:.92rem}
+.stage .ask b{color:var(--mint)}
+.btn{background:var(--rose);color:#fff;border:none;padding:13px 26px;border-radius:30px;font-family:'Raleway';font-weight:700;font-size:1rem;cursor:pointer;transition:.15s;box-shadow:0 6px 16px rgba(207,126,147,.35)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;box-shadow:none;border:1.5px solid rgba(220,240,234,.5);color:#fff}
+.score{display:flex;justify-content:center;gap:10px;align-items:center;margin-top:14px;font-weight:700}
+.score .pts{background:var(--mint);color:var(--teal);border-radius:30px;padding:6px 16px;font-size:1.1rem}
+
+.hw li{margin:9px 0 9px 4px;padding-left:26px;position:relative;font-size:1rem}
+.hw li::before{content:"";position:absolute;left:0;top:7px;width:13px;height:13px;border:2px solid var(--teal);border-radius:4px}
+
+#timer{position:fixed;right:14px;bottom:14px;z-index:50;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:16px;padding:10px 12px;width:150px;text-align:center}
+#timer .lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a948a;font-weight:700}
+#timer .disp{font-family:'Playfair Display';font-weight:800;font-size:1.7rem;color:var(--navy);margin:2px 0}
+#timer.run .disp{color:var(--teal)}
+#timer.done .disp{color:var(--rose)}
+#timer .set{display:flex;gap:5px;justify-content:center;margin:5px 0}
+#timer .set button,#timer .go{border:none;border-radius:8px;cursor:pointer;font-family:'Raleway';font-weight:700}
+#timer .set button{flex:1;background:var(--mint);color:var(--teal);padding:5px 0;font-size:.78rem}
+#timer .set button.sel{background:var(--teal);color:#fff}
+#timer .go{width:100%;background:var(--navy);color:#fff;padding:7px 0;font-size:.82rem}
+#timer .min{position:absolute;top:6px;right:9px;cursor:pointer;color:#bbb;font-weight:700;font-size:.9rem;background:none;border:none}
+#timer.mini .set,#timer.mini .go,#timer.mini .lbl{display:none}
+#timer.mini{width:92px;padding:7px 10px}
+
+@media(max-width:480px){
+  .hero h1{font-size:2rem}
+  .cards{grid-template-columns:1fr 1fr}
+  .sec-head h2{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="logo"><span class="mono">EN</span> English by Neves</div>
+  <div class="sub">A1 Speaking · First Steps</div>
+  <h1>All About Me</h1>
+  <div class="meta">
+    <span class="chip">★ Level A1</span>
+    <span class="chip">⏱ 50 min</span>
+    <span class="chip">👋 Introduce yourself</span>
+  </div>
+  <div class="goal">By the end of today, <b>you can introduce yourself — your name, where you're from, and what you like — in simple English.</b></div>
+</header>
+
+<div class="teacher">
+  <details>
+    <summary>Teacher reference — plano &amp; meta (toque para abrir)</summary>
+    <div class="tbody">
+      <p><b>Código:</b> A1-ME-01 · <b>Módulo:</b> First Steps · <b>Tema:</b> Introducing yourself &amp; basic personal info</p>
+      <p><b>Objetivo comunicativo:</b> dar nome, origem, onde mora, idade e gostos; fazer as mesmas perguntas de volta. Frases curtas e completas, sempre com apoio da frase-modelo.</p>
+      <p><b>Gramática em contexto (não ensinar isolada):</b> verb to be (I am / you are), I live in…, I like / I don't like, perguntas básicas (What's your name? Where are you from? How old are you?).</p>
+      <p><b>Apoio A1:</b> muita repetição, frase-modelo abaixo de cada pergunta, exemplos prontos. Correção suave por recast; aceitar frase curta e expandir junto. Priorizar confiança — elogiar tentativa.</p>
+      <p><b>Critério de sucesso:</b> o aluno se apresenta com 4 frases (name, from, live, like) e faz 2 perguntas ao professor sem travar.</p>
+      <p><b>Homework:</b> DuoCards (chunks da aula) + áudio curto (15–20s) "Hi, I'm… and I'm from…".</p>
+    </div>
+  </details>
+</div>
+
+<main class="wrap">
+
+<!-- WARM UP -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" fill="#fff"/><path d="M17 20c0-2 2-3 3-1M28 20c0-2 2-3 3-1" stroke="#1E2647" stroke-width="2.4" stroke-linecap="round"/><path d="M17 29c3 4 11 4 14 0" stroke="#CF7E93" stroke-width="3" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 1 · Warm-up</span><h2>Say hello!</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Say each one out loud. Easy start — just a few words!</p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>Say "Hello!" and your name.<span class="model">Hello! I'm Ana.</span></p></li>
+      <li><span class="qn">2</span><p>How are you today?<span class="model">I'm good, thank you!</span></p></li>
+      <li><span class="qn">3</span><p>What day is it today?<span class="model">Today is Friday.</span></p></li>
+      <li><span class="qn">4</span><p>Say one word in English you like. 😊</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- TOOLBOX -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="8" y="14" width="32" height="26" rx="5" fill="#fff"/><path d="M18 14v-3a3 3 0 013-3h6a3 3 0 013 3v3" stroke="#0A7D6E" stroke-width="2.6"/><path d="M20 27l4 4 8-8" stroke="#CF7E93" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div><span class="n">Toolbox</span><h2>My phrases</h2></div>
+  </div>
+  <div class="sec-body">
+    <span class="tag">Flip for 🇧🇷</span>
+    <p class="hint">Tap a card to see the meaning. Say each one out loud.</p>
+    <div class="filters" id="f1">
+      <button class="filter-btn active" data-cat="all">All</button>
+      <button class="filter-btn" data-cat="me">Me</button>
+      <button class="filter-btn" data-cat="where">Where</button>
+      <button class="filter-btn" data-cat="like">I like</button>
+      <button class="filter-btn" data-cat="ask">Ask</button>
+    </div>
+    <div class="cards" id="cards1"></div>
+  </div>
+</section>
+
+<!-- THIS IS ME -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="9" y="9" width="30" height="30" rx="6" fill="#fff"/><circle cx="24" cy="20" r="6" fill="#CF7E93"/><path d="M14 35c2-6 18-6 20 0" fill="#CF7E93"/></svg>
+    <div><span class="n">Round 2 · Guided</span><h2>This is me</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Finish each sentence out loud. Then say all 4 together — that's your intro!</p>
+    <div class="frames">
+      <div class="frame">Hi, my name is <span class="blank"></span>.</div>
+      <div class="frame">I'm from <span class="blank"></span>.</div>
+      <div class="frame">I live in <span class="blank"></span>.</div>
+      <div class="frame">I'm <span class="blank"></span> years old.</div>
+    </div>
+    <div class="box" style="margin-top:16px">Now say all 4 sentences in a row. Try the <b>15-second</b> timer — can you do it smoothly? (Timer, bottom right.)</div>
+  </div>
+</section>
+
+<!-- MY LIKES -->
+<section class="a-amber">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><path d="M24 40S8 30 8 19a9 9 0 0116-5 9 9 0 0116 5c0 11-16 21-16 21z" fill="#fff"/></svg>
+    <div><span class="n">Round 3 · Likes</span><h2>I like… I don't like…</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Point at one and make a sentence: <b>"I like…"</b> or <b>"I don't like…"</b></p>
+    <div class="pill-row">
+      <span class="pill">🍕 pizza</span>
+      <span class="pill">⚽ football</span>
+      <span class="pill">🎮 games</span>
+      <span class="pill">🎵 music</span>
+      <span class="pill">☕ coffee</span>
+      <span class="pill">🐶 dogs</span>
+      <span class="pill">📺 series</span>
+      <span class="pill">🌧️ rain</span>
+    </div>
+    <div class="box navy" style="margin-top:18px">Say <b>3 things you like</b> and <b>1 thing you don't like</b>. 🎤</div>
+  </div>
+</section>
+
+<!-- ASK ME -->
+<section class="a-teal">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="22" r="14" fill="#fff"/><path d="M20 18a4 4 0 115 4c-1 1-1 2-1 3" stroke="#0A7D6E" stroke-width="2.6" stroke-linecap="round" fill="none"/><circle cx="24" cy="29" r="2" fill="#CF7E93"/><path d="M16 40l4-6" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg>
+    <div><span class="n">Round 4 · Ask</span><h2>Now you ask me!</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Your turn to ask the teacher. Read each question out loud — then listen to the answer.</p>
+    <ul class="qlist">
+      <li><span class="qn">1</span><p>What's your name?</p></li>
+      <li><span class="qn">2</span><p>Where are you from?</p></li>
+      <li><span class="qn">3</span><p>How old are you? <span class="model">(it's okay to ask in class! 😄)</span></p></li>
+      <li><span class="qn">4</span><p>What do you like?</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="a-navy">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="17" fill="#fff"/><path d="M24 24L34 16M24 24l-8 9" stroke="#CF7E93" stroke-width="3" stroke-linecap="round"/><circle cx="24" cy="24" r="3" fill="#1E2647"/></svg>
+    <div><span class="n">Round 5 · Main event</span><h2>The Intro Game</h2></div>
+  </div>
+  <div class="sec-body">
+    <p class="lead">Tap for a question. Answer in a <b>full sentence</b>. Easy ones and fun ones! Each good answer = +1. 🎉</p>
+    <div class="stage">
+      <div class="draw" id="draw">Tap "New question" 🎲</div>
+      <div class="ask">Answer in a full sentence. Example: <b>"My name is… / I like… / I'm from…"</b></div>
+      <button class="btn" onclick="draw()">🎲 New question</button>
+      <div class="score"><span>Points:</span><span class="pts" id="pts">0</span></div>
+      <button class="btn ghost" style="margin-top:12px" onclick="addPoint()">Good answer ✓ +1</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEWORK -->
+<section class="a-rose">
+  <div class="sec-head">
+    <svg class="ico" viewBox="0 0 48 48" fill="none"><rect x="10" y="7" width="28" height="34" rx="5" fill="#fff"/><path d="M17 17h14M17 24h14M17 31h9" stroke="#CF7E93" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div><span class="n">After class</span><h2>Homework</h2></div>
+  </div>
+  <div class="sec-body">
+    <ul class="hw">
+      <li><b>DuoCards:</b> add today's phrases (I'm from…, I live in…, I like…) and review 2×.</li>
+      <li><b>Record a short voice note (15–20s):</b> "Hi, I'm… I'm from… I live in… I like…"</li>
+      <li><b>Mirror time:</b> say your 4 intro sentences to the mirror once a day. It builds confidence! 💪</li>
+    </ul>
+    <div class="box" style="margin-top:16px"><b>Success check:</b> you introduced yourself with 4 sentences and asked your teacher 2 questions. 🎯</div>
+  </div>
+</section>
+
+</main>
+
+<div id="timer">
+  <button class="min" onclick="miniTimer()" title="minimize">▾</button>
+  <div class="lbl">Speaking timer</div>
+  <div class="disp" id="disp">0:15</div>
+  <div class="set">
+    <button data-s="15" class="sel" onclick="setT(15,this)">15s</button>
+    <button data-s="20" onclick="setT(20,this)">20s</button>
+    <button data-s="30" onclick="setT(30,this)">30s</button>
+  </div>
+  <button class="go" id="go" onclick="toggleT()">Start</button>
+</div>
+
+<script>
+const CHUNKS=[
+  {en:"My name is…",pt:"Meu nome é…",cat:"me",lab:"Me",cls:"c-me"},
+  {en:"I'm… (name)",pt:"Eu sou… (nome)",cat:"me",lab:"Me",cls:"c-me"},
+  {en:"I'm … years old.",pt:"Eu tenho … anos.",cat:"me",lab:"Me",cls:"c-me"},
+  {en:"Nice to meet you!",pt:"Prazer em te conhecer!",cat:"me",lab:"Me",cls:"c-me"},
+  {en:"I'm from…",pt:"Eu sou de…",cat:"where",lab:"Where",cls:"c-where"},
+  {en:"I live in…",pt:"Eu moro em…",cat:"where",lab:"Where",cls:"c-where"},
+  {en:"I'm Brazilian.",pt:"Eu sou brasileiro(a).",cat:"where",lab:"Where",cls:"c-where"},
+  {en:"I like…",pt:"Eu gosto de…",cat:"like",lab:"I like",cls:"c-like"},
+  {en:"I don't like…",pt:"Eu não gosto de…",cat:"like",lab:"I like",cls:"c-like"},
+  {en:"I love…",pt:"Eu amo…",cat:"like",lab:"I like",cls:"c-like"},
+  {en:"My favourite is…",pt:"Meu favorito é…",cat:"like",lab:"I like",cls:"c-like"},
+  {en:"What's your name?",pt:"Qual é o seu nome?",cat:"ask",lab:"Ask",cls:"c-ask"},
+  {en:"Where are you from?",pt:"De onde você é?",cat:"ask",lab:"Ask",cls:"c-ask"},
+  {en:"How are you?",pt:"Como você está?",cat:"ask",lab:"Ask",cls:"c-ask"},
+  {en:"And you?",pt:"E você?",cat:"ask",lab:"Ask",cls:"c-ask"}
+];
+function renderCards(filter){
+  const box=document.getElementById('cards1');box.innerHTML='';
+  CHUNKS.filter(c=>filter==='all'||c.cat===filter).forEach(c=>{
+    const d=document.createElement('div');d.className='flip';
+    d.innerHTML=`<div class="flip-in">
+      <div class="face front"><span class="en">${c.en}</span><span class="cat ${c.cls}">${c.lab}</span></div>
+      <div class="face back"><span class="pt">${c.pt}</span><small>tap to flip back</small></div></div>`;
+    d.onclick=()=>d.classList.toggle('on');box.appendChild(d);
+  });
+}
+renderCards('all');
+document.querySelectorAll('#f1 .filter-btn').forEach(b=>{
+  b.onclick=()=>{document.querySelectorAll('#f1 .filter-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCards(b.dataset.cat);};
+});
+
+const Q=[
+  "What's your name?","Where are you from?","How old are you?","Where do you live?",
+  "What do you like?","What's your favourite food?","What's your favourite colour?","Do you like music?",
+  "Do you have a pet?","What day is it today?","How are you today?","What's your favourite game or series?",
+  "Spell your first name out loud. 🔤","Say 3 things you like.","Say hello in English!","What do you do? (work / study)"
+];
+function draw(){document.getElementById('draw').textContent=Q[Math.floor(Math.random()*Q.length)];}
+let pts=0;function addPoint(){pts++;document.getElementById('pts').textContent=pts;}
+
+let total=15,left=15,tick=null,running=false;
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
+function paint(){document.getElementById('disp').textContent=fmt(left);}
+function setT(s,el){total=s;left=s;paint();document.querySelectorAll('#timer .set button').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');stopT();}
+function toggleT(){running?stopT():startT();}
+function startT(){const tm=document.getElementById('timer');tm.classList.add('run');tm.classList.remove('done');running=true;document.getElementById('go').textContent='Pause';
+  tick=setInterval(()=>{left--;paint();if(left<=0){clearInterval(tick);running=false;tm.classList.remove('run');tm.classList.add('done');document.getElementById('go').textContent='Reset';document.getElementById('disp').textContent="Time!";}},1000);}
+function stopT(){clearInterval(tick);running=false;const tm=document.getElementById('timer');tm.classList.remove('run');const go=document.getElementById('go');if(left<=0){left=total;paint();tm.classList.remove('done');go.textContent='Start';}else go.textContent='Start';}
+function miniTimer(){const tm=document.getElementById('timer');tm.classList.toggle('mini');tm.querySelector('.min').textContent=tm.classList.contains('mini')?'▴':'▾';}
+paint();
+</script>
+</body>
+</html>
