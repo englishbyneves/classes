@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's the Weather Like? | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Oswald:wght@500;600;700&family=Raleway:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#2E9BD6; --sky-deep:#1C6FA8; --sun:#FFC43D; --sun-deep:#F5A623;
+  --navy:#1E2647; --teal:#0A7D6E; --rose:#CF7E93; --mint:#DCF0EA;
+  --rain:#4A6FA5; --cream:#F3FAFF; --ink:#1E2647; --muted:#6a7183; --line:#dcebf4;
+  --shadow:0 10px 30px rgba(30,38,71,.12); --shadow-sm:0 4px 14px rgba(30,38,71,.10);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; font-family:'Raleway',system-ui,sans-serif; color:var(--ink);
+  background:var(--cream); line-height:1.55; -webkit-text-size-adjust:100%}
+img{max-width:100%; display:block}
+h1,h2,h3{margin:0; line-height:1.05}
+.wrap{max-width:860px; margin:0 auto; padding:0 18px}
+
+/* sticky bar */
+.bar{position:sticky; top:0; z-index:40; background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex; align-items:center; justify-content:space-between; height:56px}
+.brand{display:flex; align-items:center; gap:10px; font-family:'Oswald'; font-weight:600; font-size:.95rem; color:var(--navy)}
+.brand small{display:block; font-family:'Raleway'; font-weight:600; font-size:.62rem; letter-spacing:1px; color:var(--rose); text-transform:uppercase}
+.logo{width:34px; height:34px; flex:none}
+.jump{background:var(--sky); color:#fff; border:none; font-family:'Oswald'; font-weight:600;
+  text-transform:uppercase; letter-spacing:1px; font-size:.72rem; padding:9px 14px; border-radius:40px; cursor:pointer; white-space:nowrap}
+.jump:active{transform:scale(.97)}
+
+/* hero */
+.hero{position:relative; background:linear-gradient(160deg,#2E9BD6,#1C6FA8 70%); color:#fff; overflow:hidden; padding:30px 0 34px}
+.hero::before{content:""; position:absolute; top:-40px; right:-30px; width:150px; height:150px; border-radius:50%;
+  background:radial-gradient(circle,#FFD873,#FFC43D); box-shadow:0 0 70px rgba(255,196,61,.6); opacity:.9}
+.hero .wrap{position:relative; z-index:2}
+.cloud{position:absolute; background:rgba(255,255,255,.22); border-radius:50px; z-index:1}
+.c1{width:120px; height:34px; top:60px; left:-20px}
+.c2{width:90px; height:26px; top:120px; right:40px}
+.badge-row{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px}
+.badge{font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px;
+  font-size:.66rem; padding:6px 11px; border-radius:40px; background:rgba(255,255,255,.18); color:#fff}
+.hero h1{font-family:'Fredoka'; font-weight:700; font-size:clamp(2.3rem,9vw,3.8rem); line-height:1; letter-spacing:.3px}
+.hero .sub{font-family:'Oswald'; font-weight:500; font-size:clamp(1rem,4vw,1.4rem); letter-spacing:1px; color:#D7EEFB; margin-top:10px; text-transform:uppercase}
+.goal{margin-top:18px; background:rgba(255,255,255,.12); border-left:4px solid var(--sun);
+  padding:12px 16px; border-radius:0 12px 12px 0; font-size:.98rem}
+.goal b{color:var(--sun)}
+
+/* sections */
+section{padding:34px 0}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:6px}
+.sec-num{font-family:'Fredoka'; font-weight:700; font-size:2.1rem; line-height:1; color:var(--sky)}
+.sec-head h2{font-family:'Fredoka'; font-weight:700; font-size:clamp(1.5rem,6vw,2.1rem); color:var(--navy); letter-spacing:.3px}
+.sec-sub{color:var(--muted); font-size:.95rem; margin:2px 0 20px; font-weight:500}
+.tint-sky{background:linear-gradient(180deg,#fff,#eaf6fe)}
+.tint-sun{background:linear-gradient(180deg,#fffdf4,#fff6df)}
+.tint-teal{background:linear-gradient(180deg,#f2fbf8,#eafaf5)}
+.tint-rose{background:linear-gradient(180deg,#fff,#fdf2f5)}
+.tint-navy{background:var(--navy); color:#fff}
+.tint-navy .sec-head h2, .tint-navy .sec-num{color:#fff}
+.tint-navy .sec-sub{color:#b9c0d8}
+
+/* speak list */
+.speak{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+.speak li{background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px 14px 48px;
+  position:relative; box-shadow:var(--shadow-sm); font-size:1.05rem; font-weight:600}
+.speak li::before{content:"🗣️"; position:absolute; left:15px; top:13px; font-size:1.1rem}
+.note{background:var(--mint); color:var(--navy); border-radius:12px; padding:12px 15px; font-size:.9rem; font-weight:600; margin-top:16px}
+.note.dark{background:rgba(255,255,255,.1); color:#fff}
+
+/* flip cards */
+.group-label{font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1.5px;
+  font-size:.82rem; color:var(--sky-deep); margin:22px 0 10px; display:flex; align-items:center; gap:8px}
+.group-label::after{content:""; flex:1; height:2px; background:currentColor; opacity:.25}
+.tint-navy .group-label{color:var(--mint)}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(104px,1fr)); gap:10px}
+.card{perspective:800px; cursor:pointer; height:120px}
+.card-in{position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:8px; text-align:center; box-shadow:var(--shadow-sm)}
+.face.front{background:#fff; border:2px solid var(--line)}
+.face.front .ic{width:48px; height:48px; margin-bottom:8px}
+.face.front .w{font-weight:800; font-size:.95rem; color:var(--navy); line-height:1.1}
+.face.back{background:var(--navy); color:#fff; transform:rotateY(180deg); border:2px solid var(--navy); padding:10px}
+.face.back .ex{font-size:.9rem; color:var(--mint); font-weight:600; font-style:italic; line-height:1.35}
+.flip-hint{text-align:center; color:var(--muted); font-size:.82rem; margin:12px 0 0; font-weight:600}
+
+/* phrase list */
+.pcat{font-family:'Oswald'; text-transform:uppercase; letter-spacing:1.5px; font-weight:600; font-size:.78rem; color:var(--rose); margin:20px 0 8px}
+.plist{display:grid; gap:9px}
+.pitem{background:#fff; border-radius:14px; border:1px solid var(--line); box-shadow:var(--shadow-sm);
+  padding:14px 16px; font-weight:700; font-size:1.05rem; color:var(--navy)}
+
+/* builder */
+.builder{background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; border:2px solid var(--navy)}
+.builder-top{background:var(--sky); color:#fff; padding:14px 18px; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; display:flex; align-items:center; gap:10px}
+.builder-body{padding:18px}
+.step{margin-bottom:20px}
+.step-h{font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.85rem; color:var(--navy); margin-bottom:9px; display:flex; align-items:center; gap:8px}
+.step-h .n{background:var(--navy); color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; flex:none}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{border:2px solid var(--line); background:#fff; color:var(--navy); border-radius:40px; padding:9px 15px;
+  font-family:'Raleway'; font-weight:700; font-size:.88rem; cursor:pointer; transition:.15s; display:inline-flex; align-items:center; gap:6px}
+.chip:active{transform:scale(.96)}
+.chip.on{background:var(--sky); border-color:var(--sky); color:#fff}
+.chip .mi{width:18px; height:18px}
+.temp-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.temp-box{display:flex; align-items:center; gap:10px}
+.temp-box label{font-family:'Oswald'; text-transform:uppercase; font-size:.72rem; letter-spacing:1px; color:var(--muted)}
+input[type=range]{width:150px; accent-color:var(--sky)}
+.temp-val{font-family:'Fredoka'; font-weight:700; font-size:1.3rem; color:var(--sky-deep); min-width:54px}
+.order-out{background:var(--navy); color:#fff; border-radius:16px; padding:20px; margin-top:8px}
+.order-out .lbl{font-family:'Oswald'; text-transform:uppercase; letter-spacing:2px; font-size:.68rem; color:var(--mint); margin-bottom:8px}
+#forecastText{font-size:1.15rem; line-height:1.55; font-weight:600}
+#forecastText b{color:#FFD23F}
+.say-row{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap}
+.btn{border:none; border-radius:40px; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.82rem; padding:12px 18px; cursor:pointer}
+.btn.say{background:var(--sun-deep); color:#fff; flex:1; min-width:180px}
+.btn.reset{background:rgba(255,255,255,.15); color:#fff}
+.btn:active{transform:scale(.98)}
+#timer{margin-top:14px; font-family:'Oswald'; font-weight:600; color:var(--mint); font-size:.95rem; display:none}
+#timer.show{display:block}
+.pulse{animation:pulse 1s ease}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(46,155,214,.5)}100%{box-shadow:0 0 0 22px rgba(46,155,214,0)}}
+
+/* small talk cards */
+.smalltalk{display:grid; gap:12px}
+.st{background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-sm); overflow:hidden}
+.st-q{padding:14px 16px; display:flex; align-items:center; gap:10px; font-weight:700; color:var(--navy); font-size:1.02rem}
+.st-q .flag{font-size:1.3rem}
+.st-a{background:var(--mint); padding:12px 16px; font-size:.95rem; color:var(--navy); font-weight:600; border-top:1px solid var(--line)}
+
+/* seasons */
+.seasons{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-top:4px}
+.season{border-radius:16px; padding:16px; color:#fff; box-shadow:var(--shadow-sm)}
+.season .ic{width:40px; height:40px; margin-bottom:8px}
+.season h4{font-family:'Fredoka'; font-weight:700; font-size:1.2rem; margin-bottom:4px}
+.season p{font-size:.88rem; font-weight:500; opacity:.95; margin:0}
+.spring{background:linear-gradient(150deg,#6CC070,#3E9B5F)}
+.summer{background:linear-gradient(150deg,#FFC43D,#F5881F)}
+.autumn{background:linear-gradient(150deg,#E8863C,#C65B2E)}
+.winter{background:linear-gradient(150deg,#5DA9D6,#3A6FA5)}
+
+/* self assessment */
+.survive{display:grid; gap:12px}
+.srow{background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px; box-shadow:var(--shadow-sm)}
+.srow .en{font-weight:700; color:var(--navy); font-size:1.02rem; margin-bottom:10px}
+.rate{display:flex; gap:7px}
+.rate button{flex:1; border:2px solid var(--line); background:#fff; border-radius:9px; padding:8px 4px;
+  font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:.5px; font-size:.66rem; color:var(--muted); cursor:pointer}
+.rate button.easy.on{background:var(--teal); border-color:var(--teal); color:#fff}
+.rate button.hes.on{background:#E8A020; border-color:#E8A020; color:#fff}
+.rate button.hard.on{background:var(--rose); border-color:var(--rose); color:#fff}
+
+/* checklist / homework */
+.check{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+.check li{background:rgba(255,255,255,.08); border-radius:12px; padding:13px 15px 13px 46px; position:relative; font-weight:600; font-size:.98rem; cursor:pointer}
+.check li::before{content:"○"; position:absolute; left:16px; top:11px; font-size:1.2rem; color:var(--mint)}
+.check li.done::before{content:"✓"; color:#7CE0A9}
+.check li.done{text-decoration:line-through; opacity:.7}
+.hw{display:grid; gap:12px; margin-top:8px}
+.hwcard{background:var(--rose); color:#fff; border-radius:14px; padding:15px 16px; display:flex; gap:12px; align-items:flex-start}
+.hwcard .ico{font-size:1.5rem; flex:none}
+.hwcard b{display:block; font-family:'Oswald'; text-transform:uppercase; letter-spacing:.5px; font-size:.8rem; margin-bottom:3px}
+.hwcard span{font-size:.92rem; font-weight:500}
+
+/* grammar reference */
+details.gram{margin-top:26px; border:1px dashed rgba(255,255,255,.3); border-radius:12px; background:rgba(255,255,255,.05)}
+details.gram summary{cursor:pointer; padding:12px 16px; font-family:'Oswald'; text-transform:uppercase; letter-spacing:1px; font-size:.74rem; color:#aab2cd; list-style:none}
+details.gram summary::-webkit-details-marker{display:none}
+details.gram summary::before{content:"▸ "; color:var(--rose)}
+details.gram[open] summary::before{content:"▾ "}
+details.gram .gbody{padding:0 16px 16px; font-size:.86rem; color:#c7cde0; font-style:italic}
+details.gram code{font-style:normal; background:rgba(220,240,234,.15); color:var(--mint); padding:1px 6px; border-radius:5px; font-weight:600}
+
+/* footer */
+footer{background:var(--navy); color:#fff; text-align:center; padding:34px 18px 40px}
+footer .logo{margin:0 auto 12px}
+footer .fb{font-family:'Fredoka'; font-weight:700; font-size:1.3rem; letter-spacing:.3px}
+footer .fs{color:var(--rose); font-weight:600; font-size:.85rem; margin-top:4px}
+footer .cr{color:#8891ad; font-size:.72rem; margin-top:16px}
+</style>
+</head>
+<body>
+
+<!-- sticky bar -->
+<div class="bar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 48" aria-label="English by Neves"><circle cx="24" cy="24" r="23" fill="#1E2647"/><text x="24" y="31" font-family="Fredoka, sans-serif" font-size="17" font-weight="700" fill="#DCF0EA" text-anchor="middle">EN</text></svg>
+      <span>What's the Weather?<small>English by Neves</small></span>
+    </div>
+    <button class="jump" onclick="document.getElementById('builder').scrollIntoView()">🌦️ Be the presenter</button>
+  </div>
+</div>
+
+<!-- hero -->
+<header class="hero">
+  <div class="cloud c1"></div><div class="cloud c2"></div>
+  <div class="wrap">
+    <div class="badge-row">
+      <span class="badge">Speaking</span>
+    </div>
+    <h1>What's the<br>Weather Like?</h1>
+    <div class="sub">Talk about the weather with anyone</div>
+    <div class="goal">By the end of today, you can <b>describe the weather</b>, <b>understand a forecast</b>, and <b>make small talk</b> about it. ☔</div>
+  </div>
+</header>
+
+<!-- 1. warm up -->
+<section class="tint-sky">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Warm up</h2></div>
+    <p class="sec-sub">Just talk. Short answers are fine.</p>
+    <ul class="speak">
+      <li>What's the weather like today, where you are?</li>
+      <li>What's your favourite kind of weather?</li>
+      <li>Do you prefer hot weather or cold weather?</li>
+      <li>What do you do on a rainy day?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. weather words -->
+<section class="tint-sun">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Weather words</h2></div>
+    <p class="sec-sub">Tap a card to flip it. Then say the words out loud.</p>
+
+    <div class="group-label">☁️ What's in the sky?</div>
+    <div class="cards" id="cards-sky"></div>
+
+    <div class="group-label">🌡️ How hot or cold?</div>
+    <div class="cards" id="cards-temp"></div>
+
+    <div class="group-label">💨 A bit more</div>
+    <div class="cards" id="cards-extra"></div>
+
+    <p class="flip-hint">👆 Point at 6 cards and say the word. No flipping!</p>
+  </div>
+</section>
+
+<!-- 3. phrases -->
+<section class="tint-teal">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">3</span><h2>How to say it</h2></div>
+    <p class="sec-sub">The sentences you need. Say each one out loud.</p>
+    <div id="phrases"></div>
+    <div class="note">🔑 For weather <b>now</b>, use <b>It's + -ing</b> → It's raining. For a fact, <b>It's + word</b> → It's sunny.</div>
+  </div>
+</section>
+
+<!-- 4. BUILDER -->
+<section class="tint-sky" id="builder">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Be the weather presenter</h2></div>
+    <p class="sec-sub">Build the forecast, then read it out loud like you're on TV. 📺</p>
+
+    <div class="builder">
+      <div class="builder-top">📺 Today's forecast</div>
+      <div class="builder-body">
+
+        <div class="step">
+          <div class="step-h"><span class="n">1</span>Where?</div>
+          <div class="chips" data-group="city" data-single="1">
+            <button class="chip on" data-v="London">London</button>
+            <button class="chip" data-v="São Paulo">São Paulo</button>
+            <button class="chip" data-v="New York">New York</button>
+            <button class="chip" data-v="my city">My city</button>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-h"><span class="n">2</span>What's it doing?</div>
+          <div class="chips" data-group="cond" data-single="1" id="condChips"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-h"><span class="n">3</span>Temperature</div>
+          <div class="temp-row">
+            <div class="temp-box">
+              <label>High</label>
+              <input type="range" id="high" min="-5" max="42" value="18">
+              <span class="temp-val" id="highVal">18°</span>
+            </div>
+            <div class="temp-box">
+              <label>Low</label>
+              <input type="range" id="low" min="-10" max="35" value="9">
+              <span class="temp-val" id="lowVal">9°</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-h"><span class="n">4</span>Advice for people</div>
+          <div class="chips" data-group="advice" data-single="1">
+            <button class="chip on" data-v="">None</button>
+            <button class="chip" data-v="take an umbrella">Umbrella ☔</button>
+            <button class="chip" data-v="wear a coat">Coat 🧥</button>
+            <button class="chip" data-v="wear sunscreen">Sunscreen 🧴</button>
+            <button class="chip" data-v="stay inside">Stay inside 🏠</button>
+          </div>
+        </div>
+
+        <div class="order-out">
+          <div class="lbl">📢 Read this out loud, like a TV presenter</div>
+          <div id="forecastText"></div>
+          <div class="say-row">
+            <button class="btn say" id="sayBtn">Go live · 20 sec 🎬</button>
+            <button class="btn reset" id="resetBtn">↺ New forecast</button>
+          </div>
+          <div id="timer"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. british small talk -->
+<section class="tint-navy">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">5</span><h2>British small talk</h2></div>
+    <p class="sec-sub">In the UK, the weather is how people start a chat. Tap each card.</p>
+    <div class="smalltalk" id="smalltalk"></div>
+    <div class="note dark">🇬🇧 <b style="color:var(--mint)">Golden rule:</b> you don't need real information. Someone says <b>"Cold today, isn't it?"</b> You just agree: <b>"Yeah, freezing!"</b> 😄</div>
+
+    <details class="gram">
+      <summary>Grammar reference</summary>
+      <div class="gbody">
+        • <b>Now</b> → <code>It's</code> + verb-ing: It's raining. It's snowing.<br>
+        • <b>A fact</b> → <code>It's</code> + adjective: It's sunny. It's windy. It's 10 degrees.<br>
+        • <b>Forecast</b> → <code>It's going to</code> + verb: It's going to rain later.<br>
+        • <b>Tag question</b> → <code>…, isn't it?</code> Lovely day, isn't it?
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- 6. seasons & your country -->
+<section class="tint-sun">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Seasons &amp; your country</h2></div>
+    <p class="sec-sub">Now talk about the whole year.</p>
+    <div class="seasons" id="seasons"></div>
+    <div class="note" style="background:var(--navy);color:#fff">🗣️ <b style="color:#FFD873">Keep talking:</b> What's the weather like in your city in <b>summer</b>? And in <b>winter</b>? Which season do you like best?</div>
+  </div>
+</section>
+
+<!-- 7. survival -->
+<section class="tint-rose">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">7</span><h2>Real travel questions</h2></div>
+    <p class="sec-sub">Say each one, then tap how it felt.</p>
+    <div class="survive" id="survive"></div>
+  </div>
+</section>
+
+<!-- 8. wrap -->
+<section class="tint-navy">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">8</span><h2>You can do this ✓</h2></div>
+    <p class="sec-sub">Tap each one you can do now.</p>
+    <ul class="check" id="check">
+      <li>I can describe the weather now. It's raining. It's sunny.</li>
+      <li>I can say the temperature. It's about 20 degrees.</li>
+      <li>I can talk about a forecast. It's going to be cold tomorrow.</li>
+      <li>I can make small talk. Lovely day, isn't it?</li>
+    </ul>
+
+    <h3 style="font-family:'Fredoka';font-weight:700;color:#fff;font-size:1.4rem;margin:28px 0 12px">Homework 🏠</h3>
+    <div class="hw">
+      <div class="hwcard"><span class="ico">📱</span><div><b>DuoCards</b><span>Add 10 weather words from today.</span></div></div>
+      <div class="hwcard"><span class="ico">🎬</span><div><b>Be the presenter</b><span>Record a 30-second weather report for tomorrow.</span></div></div>
+      <div class="hwcard"><span class="ico">🌍</span><div><b>Real life</b><span>Each morning, say the weather out loud in English before you leave home.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <svg class="logo" style="width:52px;height:52px" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#2a3358"/><text x="24" y="31" font-family="Fredoka, sans-serif" font-size="17" font-weight="700" fill="#DCF0EA" text-anchor="middle">EN</text></svg>
+  <div class="fb">English by Neves</div>
+  <div class="fs">See you in class ☀️</div>
+  <div class="cr">What's the Weather Like? · English by Neves</div>
+</footer>
+
+<script>
+/* ---------- weather SVG icons ---------- */
+const I = {
+  sunny:'<svg class="ic" viewBox="0 0 48 48"><g stroke="#F5A623" stroke-width="2.4" stroke-linecap="round"><line x1="24" y1="5" x2="24" y2="11"/><line x1="24" y1="37" x2="24" y2="43"/><line x1="5" y1="24" x2="11" y2="24"/><line x1="37" y1="24" x2="43" y2="24"/><line x1="11" y1="11" x2="15" y2="15"/><line x1="33" y1="33" x2="37" y2="37"/><line x1="37" y1="11" x2="33" y2="15"/><line x1="15" y1="33" x2="11" y2="37"/></g><circle cx="24" cy="24" r="8.5" fill="#FFC43D"/></svg>',
+  cloudy:'<svg class="ic" viewBox="0 0 48 48"><path d="M16 34h18a8 8 0 0 0 .6-16A11 11 0 0 0 13 20a7 7 0 0 0 3 14z" fill="#B8C6D4"/></svg>',
+  rainy:'<svg class="ic" viewBox="0 0 48 48"><path d="M15 28h18a7.5 7.5 0 0 0 .5-15A10.5 10.5 0 0 0 12 16a6.5 6.5 0 0 0 3 12z" fill="#9FB2C4"/><g stroke="#2E9BD6" stroke-width="2.6" stroke-linecap="round"><line x1="17" y1="33" x2="15" y2="40"/><line x1="24" y1="33" x2="22" y2="41"/><line x1="31" y1="33" x2="29" y2="40"/></g></svg>',
+  shower:'<svg class="ic" viewBox="0 0 48 48"><circle cx="31" cy="15" r="6" fill="#FFC43D"/><path d="M13 28h17a7 7 0 0 0 .5-14A10 10 0 0 0 11 17a6 6 0 0 0 2 11z" fill="#A9BAC9"/><g stroke="#2E9BD6" stroke-width="2.4" stroke-linecap="round"><line x1="16" y1="33" x2="14" y2="39"/><line x1="23" y1="33" x2="21" y2="39"/></g></svg>',
+  stormy:'<svg class="ic" viewBox="0 0 48 48"><path d="M15 26h18a7.5 7.5 0 0 0 .5-15A10.5 10.5 0 0 0 12 14a6.5 6.5 0 0 0 3 12z" fill="#7E8EA0"/><path d="M24 29l-6 9h5l-2 7 8-11h-5l3-5z" fill="#FFC43D"/></svg>',
+  snowy:'<svg class="ic" viewBox="0 0 48 48"><path d="M15 27h18a7.5 7.5 0 0 0 .5-15A10.5 10.5 0 0 0 12 15a6.5 6.5 0 0 0 3 12z" fill="#C3D2DF"/><g fill="#6FB4E0"><circle cx="17" cy="37" r="2"/><circle cx="24" cy="40" r="2"/><circle cx="31" cy="37" r="2"/></g></svg>',
+  windy:'<svg class="ic" viewBox="0 0 48 48"><g stroke="#6FA2C4" stroke-width="2.8" stroke-linecap="round" fill="none"><path d="M6 18h20a4 4 0 1 0-4-4"/><path d="M6 26h26a4.5 4.5 0 1 1-4.5 4.5"/><path d="M6 34h14a3.5 3.5 0 1 0-3.5-3.5"/></g></svg>',
+  foggy:'<svg class="ic" viewBox="0 0 48 48"><g stroke="#AEB9C4" stroke-width="3" stroke-linecap="round"><line x1="9" y1="16" x2="39" y2="16"/><line x1="7" y1="23" x2="41" y2="23"/><line x1="9" y1="30" x2="39" y2="30"/><line x1="11" y1="37" x2="37" y2="37"/></g></svg>',
+  rainbow:'<svg class="ic" viewBox="0 0 48 48"><g fill="none" stroke-width="3.4"><path d="M8 38a16 16 0 0 1 32 0" stroke="#E2574C"/><path d="M12 38a12 12 0 0 1 24 0" stroke="#FFC43D"/><path d="M16 38a8 8 0 0 1 16 0" stroke="#3E9B5F"/></g></svg>',
+  clear:'<svg class="ic" viewBox="0 0 48 48"><path d="M30 30a12 12 0 1 1-12-15 10 10 0 0 0 12 15z" fill="#4A6FA5"/><circle cx="33" cy="14" r="1.6" fill="#DCF0EA"/><circle cx="38" cy="20" r="1.2" fill="#DCF0EA"/><circle cx="29" cy="9" r="1.1" fill="#DCF0EA"/></svg>',
+  hot:'<svg class="ic" viewBox="0 0 48 48"><rect x="20" y="8" width="8" height="24" rx="4" fill="#E9EEF2"/><circle cx="24" cy="36" r="7" fill="#E2574C"/><rect x="22" y="20" width="4" height="15" fill="#E2574C"/><g stroke="#F5A623" stroke-width="2" stroke-linecap="round"><line x1="34" y1="12" x2="38" y2="12"/><line x1="34" y1="18" x2="38" y2="18"/></g></svg>',
+  warm:'<svg class="ic" viewBox="0 0 48 48"><rect x="20" y="8" width="8" height="24" rx="4" fill="#E9EEF2"/><circle cx="24" cy="36" r="7" fill="#F5A623"/><rect x="22" y="24" width="4" height="11" fill="#F5A623"/></svg>',
+  cool:'<svg class="ic" viewBox="0 0 48 48"><rect x="20" y="8" width="8" height="24" rx="4" fill="#E9EEF2"/><circle cx="24" cy="36" r="7" fill="#3E9B5F"/><rect x="22" y="27" width="4" height="8" fill="#3E9B5F"/></svg>',
+  cold:'<svg class="ic" viewBox="0 0 48 48"><rect x="20" y="8" width="8" height="24" rx="4" fill="#E9EEF2"/><circle cx="24" cy="36" r="7" fill="#2E9BD6"/><rect x="22" y="29" width="4" height="6" fill="#2E9BD6"/><g stroke="#6FB4E0" stroke-width="1.8" stroke-linecap="round"><line x1="34" y1="14" x2="39" y2="14"/><line x1="36.5" y1="11.5" x2="36.5" y2="16.5"/></g></svg>',
+  freezing:'<svg class="ic" viewBox="0 0 48 48"><g stroke="#2E9BD6" stroke-width="2.6" stroke-linecap="round"><line x1="24" y1="7" x2="24" y2="41"/><line x1="9" y1="15.5" x2="39" y2="32.5"/><line x1="39" y1="15.5" x2="9" y2="32.5"/></g><g stroke="#6FB4E0" stroke-width="2.4" stroke-linecap="round"><line x1="24" y1="7" x2="20" y2="11"/><line x1="24" y1="7" x2="28" y2="11"/><line x1="24" y1="41" x2="20" y2="37"/><line x1="24" y1="41" x2="28" y2="37"/></g></svg>',
+  humid:'<svg class="ic" viewBox="0 0 48 48"><path d="M24 7s12 14 12 22a12 12 0 0 1-24 0c0-8 12-22 12-22z" fill="#5DA9D6"/><path d="M20 28a4 4 0 0 0 4 8" stroke="#DCF0EA" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  degrees:'<svg class="ic" viewBox="0 0 48 48"><circle cx="16" cy="14" r="5" fill="none" stroke="#F5A623" stroke-width="2.6"/><text x="30" y="34" font-family="Fredoka,sans-serif" font-size="22" font-weight="700" fill="#2E9BD6" text-anchor="middle">C</text></svg>',
+  umbrella:'<svg class="ic" viewBox="0 0 48 48"><path d="M24 10a15 15 0 0 1 15 12H9A15 15 0 0 1 24 10z" fill="#E2574C"/><line x1="24" y1="22" x2="24" y2="36" stroke="#5B6775" stroke-width="2.4"/><path d="M24 36a4 4 0 0 1-7 0" fill="none" stroke="#5B6775" stroke-width="2.4"/></svg>'
+};
+
+/* ---------- vocab (English only) ---------- */
+const VOCAB = {
+  sky:[
+    ['sunny',"It's a sunny day.",I.sunny],
+    ['cloudy','The sky is grey.',I.cloudy],
+    ['rainy',"It's raining.",I.rainy],
+    ['a shower','A short rain.',I.shower],
+    ['stormy','Thunder and lightning.',I.stormy],
+    ['snowy',"It's snowing.",I.snowy],
+    ['windy','Hold your hat!',I.windy],
+    ['foggy',"You can't see far.",I.foggy],
+    ['clear','A clear night.',I.clear],
+    ['a rainbow','After the rain. 🌈',I.rainbow],
+  ],
+  temp:[
+    ['hot','About 35 degrees. 🥵',I.hot],
+    ['warm','A nice warm day.',I.warm],
+    ['cool','A cool evening.',I.cool],
+    ['cold','Put a coat on.',I.cold],
+    ['freezing','0 degrees or less. 🥶',I.freezing],
+    ['degrees',"It's 20 degrees.",I.degrees],
+  ],
+  extra:[
+    ['humid','Sticky, heavy air.',I.humid],
+    ['sunshine','Lots of sunshine.',I.sunny],
+    ['an umbrella','For the rain.',I.umbrella],
+    ['a coat','For the cold.',I.cold],
+  ]
+};
+function buildCards(id, arr){
+  const box=document.getElementById(id);
+  box.innerHTML = arr.map(([w,ex,ic])=>`
+    <div class="card"><div class="card-in">
+      <div class="face front">${ic}<div class="w">${w}</div></div>
+      <div class="face back"><div class="ex">${ex}</div></div>
+    </div></div>`).join('');
+  box.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flipped')));
+}
+buildCards('cards-sky',VOCAB.sky);
+buildCards('cards-temp',VOCAB.temp);
+buildCards('cards-extra',VOCAB.extra);
+
+/* ---------- phrases (English only) ---------- */
+const PHRASES=[
+  ['ASKING',["What's the weather like?","What's it like outside?","What's the forecast for tomorrow?"]],
+  ['RIGHT NOW',["It's sunny / cloudy / windy.","It's raining.","It's about 18 degrees.","It's a beautiful day!"]],
+  ['THE FORECAST',["It's going to rain later.","It's going to be cold tomorrow.","I think it's going to be sunny."]],
+  ['REACTING',["What lovely weather!","Ugh, horrible weather today.","I'm freezing!"]],
+];
+document.getElementById('phrases').innerHTML = PHRASES.map(([cat,items])=>`
+  <div class="pcat">${cat}</div>
+  <div class="plist">${items.map(en=>`<div class="pitem">${en}</div>`).join('')}</div>`).join('');
+
+/* ---------- builder conditions ---------- */
+const CONDS=[
+  ['sunny',I.sunny],['cloudy',I.cloudy],['raining',I.rainy],
+  ['windy',I.windy],['snowing',I.snowy],['foggy',I.foggy],
+];
+document.getElementById('condChips').innerHTML = CONDS.map((c,i)=>
+  `<button class="chip${i===0?' on':''}" data-v="${c[0]}">${c[1].replace('class="ic"','class="mi"')}${c[0]}</button>`).join('');
+
+const state={city:'London',cond:'sunny',advice:'',high:18,low:9};
+function chipHandler(btn){
+  const grp=btn.parentElement.dataset.group;
+  [...btn.parentElement.children].forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  state[grp]=btn.dataset.v;
+  render();
+}
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>chipHandler(b)));
+
+const high=document.getElementById('high'), low=document.getElementById('low');
+high.addEventListener('input',()=>{state.high=+high.value; document.getElementById('highVal').textContent=high.value+'°'; render();});
+low.addEventListener('input',()=>{state.low=+low.value; document.getElementById('lowVal').textContent=low.value+'°'; render();});
+
+function condPhrase(c){
+  if(c==='raining') return "it's raining";
+  if(c==='snowing') return "it's snowing";
+  return "it's "+c;
+}
+function render(){
+  const greet = "Good morning! Here's the forecast for <b>"+state.city+"</b>.";
+  let main = "Right now, "+condPhrase(state.cond)+".";
+  let temp = " The high today is <b>"+state.high+" degrees</b> and the low is <b>"+state.low+" degrees</b>.";
+  let adv = state.advice ? " Don't forget to <b>"+state.advice+"</b>!" : " Have a great day!";
+  document.getElementById('forecastText').innerHTML = greet+" "+main.charAt(0).toUpperCase()+main.slice(1)+temp+adv;
+}
+render();
+
+let timerId=null;
+document.getElementById('sayBtn').addEventListener('click',function(){
+  const box=document.querySelector('.order-out');
+  box.classList.remove('pulse'); void box.offsetWidth; box.classList.add('pulse');
+  const t=document.getElementById('timer'); let n=20; t.classList.add('show');
+  t.textContent='🎬 On air… 20s'; clearInterval(timerId);
+  timerId=setInterval(()=>{ n--; t.textContent = n>0? '🎬 On air… '+n+'s' : "✅ And that's the weather! Say it again, with a smile."; if(n<=0) clearInterval(timerId); },1000);
+});
+document.getElementById('resetBtn').addEventListener('click',function(){
+  state.city='London';state.cond='sunny';state.advice='';state.high=18;state.low=9;
+  high.value=18; low.value=9; document.getElementById('highVal').textContent='18°'; document.getElementById('lowVal').textContent='9°';
+  document.querySelectorAll('.chips').forEach(g=>{
+    [...g.querySelectorAll('.chip')].forEach((b,i)=>b.classList.toggle('on', i===0));
+  });
+  document.getElementById('timer').classList.remove('show'); clearInterval(timerId);
+  render();
+});
+
+/* ---------- small talk (English only) ---------- */
+const ST=[
+  ['☀️','"Lovely day, isn\'t it?"','"Yes, gorgeous! Let\'s hope it lasts."'],
+  ['🥶','"Bit chilly today, isn\'t it?"','"Yeah, freezing! I need a bigger coat."'],
+  ['🌧️','"Typical British weather!"','"Haha, raining again! What a surprise."'],
+  ['🙂','"At least it\'s not raining."','"True! We got lucky today."'],
+];
+document.getElementById('smalltalk').innerHTML = ST.map(([f,q,a])=>`
+  <div class="st">
+    <div class="st-q"><span class="flag">${f}</span>${q}</div>
+    <div class="st-a">You say: ${a}</div>
+  </div>`).join('');
+
+/* ---------- seasons (English only) ---------- */
+const SEASONS=[
+  ['spring','Spring','Warm, flowers, a bit rainy.',I.rainbow],
+  ['summer','Summer','Hot and sunny. "It\'s boiling!"',I.sunny],
+  ['autumn','Autumn','Cool, windy, leaves fall.',I.windy],
+  ['winter','Winter','Cold, dark, maybe snow.',I.snowy],
+];
+document.getElementById('seasons').innerHTML = SEASONS.map(([cls,en,desc,ic])=>`
+  <div class="season ${cls}">${ic}<h4>${en}</h4><p>${desc}</p></div>`).join('');
+
+/* ---------- survival (English only) ---------- */
+const SURV=[
+  'Do I need an umbrella today?',
+  'Is it going to be cold tonight?',
+  'What should I pack, warm clothes?',
+  'Is it always this hot here?',
+  "Excuse me, what's the weather like in the mountains?",
+];
+document.getElementById('survive').innerHTML = SURV.map((s,i)=>`
+  <div class="srow">
+    <div class="en">${s}</div>
+    <div class="rate" data-i="${i}">
+      <button class="easy">😎 Easy</button><button class="hes">😐 Hesitate</button><button class="hard">😰 Hard</button>
+    </div>
+  </div>`).join('');
+document.querySelectorAll('.rate').forEach(r=>{
+  r.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    r.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  }));
+});
+
+/* checklist */
+document.querySelectorAll('#check li').forEach(li=>li.addEventListener('click',()=>li.classList.toggle('done')));
+</script>
+</body>
+</html>

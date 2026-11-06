@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Family Members (A1) | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Oswald:wght@500;600;700&family=Raleway:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#E8826B; --coral-deep:#C85F48; --rose:#CF7E93; --sun:#FFC43D;
+  --navy:#1E2647; --teal:#0A7D6E; --mint:#DCF0EA;
+  --cream:#FFF6F3; --ink:#1E2647; --muted:#6a7183; --line:#f0ded9;
+  --shadow:0 10px 30px rgba(30,38,71,.12); --shadow-sm:0 4px 14px rgba(30,38,71,.10);
+  --radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; font-family:'Raleway',system-ui,sans-serif; color:var(--ink);
+  background:var(--cream); line-height:1.55; -webkit-text-size-adjust:100%}
+img{max-width:100%; display:block}
+h1,h2,h3{margin:0; line-height:1.05}
+.wrap{max-width:860px; margin:0 auto; padding:0 18px}
+
+/* sticky bar */
+.bar{position:sticky; top:0; z-index:40; background:rgba(255,255,255,.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex; align-items:center; justify-content:space-between; height:56px}
+.brand{display:flex; align-items:center; gap:10px; font-family:'Oswald'; font-weight:600; font-size:.95rem; color:var(--navy)}
+.brand small{display:block; font-family:'Raleway'; font-weight:600; font-size:.62rem; letter-spacing:1px; color:var(--rose); text-transform:uppercase}
+.logo{width:34px; height:34px; flex:none}
+.jump{background:var(--coral); color:#fff; border:none; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.72rem; padding:9px 14px; border-radius:40px; cursor:pointer; white-space:nowrap}
+.jump:active{transform:scale(.97)}
+
+/* hero */
+.hero{position:relative; background:linear-gradient(160deg,#E8826B,#C85F48 75%); color:#fff; overflow:hidden; padding:30px 0 34px}
+.hero::before{content:""; position:absolute; top:-30px; right:-20px; width:140px; height:140px; border-radius:50%; background:rgba(255,196,61,.5); opacity:.8}
+.hero .wrap{position:relative; z-index:2}
+.badge-row{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px}
+.badge{font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.66rem; padding:6px 11px; border-radius:40px; background:rgba(255,255,255,.2); color:#fff}
+.hero h1{font-family:'Fredoka'; font-weight:700; font-size:clamp(2.3rem,9vw,3.8rem); line-height:1; letter-spacing:.3px}
+.hero .sub{font-family:'Oswald'; font-weight:500; font-size:clamp(1rem,4vw,1.4rem); letter-spacing:1px; color:#FFE6DE; margin-top:10px; text-transform:uppercase}
+.goal{margin-top:18px; background:rgba(255,255,255,.14); border-left:4px solid var(--sun); padding:12px 16px; border-radius:0 12px 12px 0; font-size:.98rem}
+.goal b{color:var(--sun)}
+
+/* sections */
+section{padding:34px 0}
+.sec-head{display:flex; align-items:baseline; gap:12px; margin-bottom:6px}
+.sec-num{font-family:'Fredoka'; font-weight:700; font-size:2.1rem; line-height:1; color:var(--coral)}
+.sec-head h2{font-family:'Fredoka'; font-weight:700; font-size:clamp(1.5rem,6vw,2.1rem); color:var(--navy); letter-spacing:.3px}
+.sec-sub{color:var(--muted); font-size:.95rem; margin:2px 0 20px; font-weight:500}
+.tint-coral{background:linear-gradient(180deg,#fff,#fdeee8)}
+.tint-sun{background:linear-gradient(180deg,#fffdf4,#fff6df)}
+.tint-teal{background:linear-gradient(180deg,#f2fbf8,#eafaf5)}
+.tint-rose{background:linear-gradient(180deg,#fff,#fdf2f5)}
+.tint-navy{background:var(--navy); color:#fff}
+.tint-navy .sec-head h2, .tint-navy .sec-num{color:#fff}
+.tint-navy .sec-sub{color:#b9c0d8}
+
+/* speak list */
+.speak{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+.speak li{background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px 16px 14px 48px; position:relative; box-shadow:var(--shadow-sm); font-size:1.05rem; font-weight:600}
+.speak li::before{content:"🗣️"; position:absolute; left:15px; top:13px; font-size:1.1rem}
+.note{background:var(--mint); color:var(--navy); border-radius:12px; padding:12px 15px; font-size:.9rem; font-weight:600; margin-top:16px}
+.note.dark{background:rgba(255,255,255,.1); color:#fff}
+
+/* flip cards */
+.group-label{font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; font-size:.82rem; color:var(--coral-deep); margin:22px 0 10px; display:flex; align-items:center; gap:8px}
+.group-label::after{content:""; flex:1; height:2px; background:currentColor; opacity:.25}
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(104px,1fr)); gap:10px}
+.card{perspective:800px; cursor:pointer; height:122px}
+.card-in{position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px; text-align:center; box-shadow:var(--shadow-sm)}
+.face.front{background:#fff; border:2px solid var(--line)}
+.face.front .ic{width:46px; height:46px; margin-bottom:6px}
+.face.front .w{font-weight:800; font-size:.92rem; color:var(--navy); line-height:1.1}
+.face.back{background:var(--navy); color:#fff; transform:rotateY(180deg); border:2px solid var(--navy)}
+.face.back .ptw{font-weight:700; font-size:1rem; color:var(--mint)}
+.flip-hint{text-align:center; color:var(--muted); font-size:.82rem; margin:12px 0 0; font-weight:600}
+
+/* phrase list */
+.pcat{font-family:'Oswald'; text-transform:uppercase; letter-spacing:1.5px; font-weight:600; font-size:.78rem; color:var(--rose); margin:20px 0 8px}
+.plist{display:grid; gap:9px}
+.pitem{background:#fff; border-radius:14px; border:1px solid var(--line); box-shadow:var(--shadow-sm); padding:14px 16px; font-weight:700; font-size:1.05rem; color:var(--navy)}
+.pitem b{color:var(--coral-deep)}
+
+/* builder */
+.builder{background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; border:2px solid var(--navy)}
+.builder-top{background:var(--coral); color:#fff; padding:14px 18px; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; display:flex; align-items:center; gap:10px}
+.builder-body{padding:18px}
+.step{margin-bottom:18px}
+.step-h{font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.85rem; color:var(--navy); margin-bottom:9px; display:flex; align-items:center; gap:8px}
+.step-h .n{background:var(--navy); color:#fff; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.72rem; flex:none}
+.chips{display:flex; flex-wrap:wrap; gap:8px}
+.chip{border:2px solid var(--line); background:#fff; color:var(--navy); border-radius:40px; padding:9px 14px; font-family:'Raleway'; font-weight:700; font-size:.86rem; cursor:pointer; transition:.15s; display:inline-flex; align-items:center; gap:6px}
+.chip:active{transform:scale(.96)}
+.chip.on{background:var(--coral); border-color:var(--coral); color:#fff}
+.chip .mi{width:20px; height:20px}
+.field{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+.field input[type=text]{flex:1; min-width:140px; border:2px solid var(--line); border-radius:12px; padding:10px 14px; font-family:'Raleway'; font-weight:600; font-size:1rem; color:var(--navy)}
+.field input:focus{outline:none; border-color:var(--coral)}
+.age-row{display:flex; align-items:center; gap:12px; margin-top:10px}
+.age-row label{font-family:'Oswald'; text-transform:uppercase; font-size:.72rem; letter-spacing:1px; color:var(--muted)}
+input[type=range]{flex:1; accent-color:var(--coral)}
+.age-val{font-family:'Fredoka'; font-weight:700; font-size:1.3rem; color:var(--coral-deep); min-width:40px}
+.addbtn{background:var(--teal); color:#fff; border:none; border-radius:40px; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.8rem; padding:11px 18px; cursor:pointer; margin-top:14px; width:100%}
+.addbtn:active{transform:scale(.98)}
+.tree{display:grid; gap:10px; margin-top:16px}
+.member{background:var(--navy); color:#fff; border-radius:14px; padding:14px 16px; display:flex; align-items:center; gap:12px; position:relative}
+.member .av{width:40px; height:40px; flex:none}
+.member .say{font-size:1.02rem; font-weight:600; flex:1}
+.member .say b{color:#FFD23F}
+.member .del{background:rgba(255,255,255,.15); border:none; color:#fff; width:26px; height:26px; border-radius:50%; cursor:pointer; flex:none; font-size:1rem; line-height:1}
+.empty{color:var(--muted); font-style:italic; font-weight:500; text-align:center; padding:16px}
+.say-all{background:var(--sun); color:var(--navy); border:none; border-radius:40px; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1px; font-size:.84rem; padding:13px 18px; cursor:pointer; width:100%; margin-top:14px; display:none}
+.say-all.show{display:block}
+
+/* dialogue */
+.dialog{display:grid; gap:10px; margin-top:6px}
+.turn{display:flex; gap:10px; align-items:flex-start}
+.who{font-family:'Oswald'; font-weight:600; text-transform:uppercase; font-size:.64rem; letter-spacing:1px; padding:5px 9px; border-radius:7px; flex:none; width:70px; text-align:center; margin-top:2px}
+.who.a{background:var(--navy); color:#fff}
+.who.b{background:var(--coral); color:#fff}
+.line{background:#fff; border:1px solid var(--line); border-radius:12px; padding:11px 14px; font-size:.96rem; font-weight:500; flex:1; box-shadow:var(--shadow-sm)}
+.line .fill{color:var(--teal); font-weight:700; font-style:italic}
+
+/* checklist / homework */
+.check{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+.check li{background:rgba(255,255,255,.08); border-radius:12px; padding:13px 15px 13px 46px; position:relative; font-weight:600; font-size:.98rem; cursor:pointer}
+.check li::before{content:"○"; position:absolute; left:16px; top:11px; font-size:1.2rem; color:var(--mint)}
+.check li.done::before{content:"✓"; color:#7CE0A9}
+.check li.done{text-decoration:line-through; opacity:.7}
+.hw{display:grid; gap:12px; margin-top:8px}
+.hwcard{background:var(--rose); color:#fff; border-radius:14px; padding:15px 16px; display:flex; gap:12px; align-items:flex-start}
+.hwcard .ico{font-size:1.5rem; flex:none}
+.hwcard b{display:block; font-family:'Oswald'; text-transform:uppercase; letter-spacing:.5px; font-size:.8rem; margin-bottom:3px}
+.hwcard span{font-size:.92rem; font-weight:500}
+
+/* grammar */
+details.gram{margin-top:26px; border:1px dashed rgba(255,255,255,.3); border-radius:12px; background:rgba(255,255,255,.05)}
+details.gram summary{cursor:pointer; padding:12px 16px; font-family:'Oswald'; text-transform:uppercase; letter-spacing:1px; font-size:.74rem; color:#aab2cd; list-style:none}
+details.gram summary::-webkit-details-marker{display:none}
+details.gram summary::before{content:"▸ "; color:var(--rose)}
+details.gram[open] summary::before{content:"▾ "}
+details.gram .gbody{padding:0 16px 16px; font-size:.86rem; color:#c7cde0; font-style:italic}
+details.gram code{font-style:normal; background:rgba(220,240,234,.15); color:var(--mint); padding:1px 6px; border-radius:5px; font-weight:600}
+
+/* footer */
+footer{background:var(--navy); color:#fff; text-align:center; padding:34px 18px 40px}
+footer .logo{margin:0 auto 12px}
+footer .fb{font-family:'Fredoka'; font-weight:700; font-size:1.3rem}
+footer .fs{color:var(--rose); font-weight:600; font-size:.85rem; margin-top:4px}
+footer .cr{color:#8891ad; font-size:.72rem; margin-top:16px}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 48 48" aria-label="English by Neves"><circle cx="24" cy="24" r="23" fill="#1E2647"/><text x="24" y="31" font-family="Fredoka, sans-serif" font-size="17" font-weight="700" fill="#DCF0EA" text-anchor="middle">EN</text></svg>
+      <span>My Family<small>English by Neves</small></span>
+    </div>
+    <button class="jump" onclick="document.getElementById('builder').scrollIntoView()">👨‍👩‍👧 Family tree</button>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge-row"><span class="badge">Speaking</span></div>
+    <h1>My Family<br>Members</h1>
+    <div class="sub">Talk about the people in your family</div>
+    <div class="goal">By the end of today, you can <b>name your family</b>, say <b>"This is my..."</b>, and tell me <b>how many brothers and sisters</b> you have. 👪</div>
+  </div>
+</header>
+
+<!-- 1 warm up -->
+<section class="tint-coral">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">1</span><h2>Warm up</h2></div>
+    <p class="sec-sub">Just talk. Short answers are fine.</p>
+    <ul class="speak">
+      <li>Do you have brothers or sisters?</li>
+      <li>Is your family big or small?</li>
+      <li>Who do you live with?</li>
+      <li>Who is your favourite person in your family?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2 vocab -->
+<section class="tint-sun">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">2</span><h2>Family words</h2></div>
+    <p class="sec-sub">Tap a card to flip it and check the meaning. Then say the words out loud.</p>
+
+    <div class="group-label">👩 Parents &amp; you</div>
+    <div class="cards" id="cards-close"></div>
+
+    <div class="group-label">👵 Grandparents</div>
+    <div class="cards" id="cards-grand"></div>
+
+    <div class="group-label">👨‍👩‍👧 More family</div>
+    <div class="cards" id="cards-more"></div>
+
+    <p class="flip-hint">👆 Point at 6 cards and say the word. No flipping!</p>
+  </div>
+</section>
+
+<!-- 3 this is my -->
+<section class="tint-teal">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">3</span><h2>How to say it</h2></div>
+    <p class="sec-sub">The sentences you need. Say each one out loud.</p>
+    <div id="phrases"></div>
+    <div class="note">🔑 We use <b>my</b> for your family: <b>my</b> mother, <b>my</b> brother. For another person we use <b>his</b> or <b>her</b>: <b>her</b> sister, <b>his</b> dad.</div>
+  </div>
+</section>
+
+<!-- 4 builder -->
+<section class="tint-coral" id="builder">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">4</span><h2>Build your family tree</h2></div>
+    <p class="sec-sub">Add a person, give a name and an age. The sentence appears, then say it out loud. 🌳</p>
+
+    <div class="builder">
+      <div class="builder-top">🌳 My family</div>
+      <div class="builder-body">
+        <div class="step">
+          <div class="step-h"><span class="n">1</span>Who is it?</div>
+          <div class="chips" data-group="rel" id="relChips"></div>
+        </div>
+        <div class="step">
+          <div class="step-h"><span class="n">2</span>Name</div>
+          <div class="field"><input type="text" id="nameIn" placeholder="e.g. Ana" maxlength="18"></div>
+          <div class="age-row">
+            <label>Age</label>
+            <input type="range" id="ageIn" min="0" max="95" value="40">
+            <span class="age-val" id="ageVal">40</span>
+          </div>
+        </div>
+        <button class="addbtn" id="addBtn">＋ Add to my family</button>
+
+        <div class="tree" id="tree"><div class="empty">Your family will appear here…</div></div>
+        <button class="say-all" id="sayAll">🗣️ Say all of them out loud</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ask & answer -->
+<section class="tint-teal">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">5</span><h2>Ask &amp; answer</h2></div>
+    <p class="sec-sub">You = A, your teacher = B. Then swap. Fill the green parts with YOUR family.</p>
+    <div class="dialog">
+      <div class="turn"><span class="who a">A</span><div class="line">Do you have any brothers or sisters?</div></div>
+      <div class="turn"><span class="who b">B</span><div class="line">Yes, I have <span class="fill">(two sisters)</span>. / No, I'm an only child.</div></div>
+      <div class="turn"><span class="who a">A</span><div class="line">What's your mother's name?</div></div>
+      <div class="turn"><span class="who b">B</span><div class="line">Her name is <span class="fill">(Ana)</span>.</div></div>
+      <div class="turn"><span class="who a">A</span><div class="line">How old is your brother?</div></div>
+      <div class="turn"><span class="who b">B</span><div class="line">He's <span class="fill">(twenty)</span>.</div></div>
+      <div class="turn"><span class="who a">A</span><div class="line">Who do you live with?</div></div>
+      <div class="turn"><span class="who b">B</span><div class="line">I live with <span class="fill">(my parents)</span>.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 describe -->
+<section class="tint-rose">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">6</span><h2>Show &amp; tell</h2></div>
+    <p class="sec-sub">Think of a photo of your family. Tell me about it for 1 minute.</p>
+    <div class="note" style="background:var(--navy);color:#fff">🗣️ Say: who is in the photo, their names, and one thing about them. Example: <b style="color:#FFD873">"This is my sister. Her name is Carla. She is 25. She is really nice."</b></div>
+  </div>
+</section>
+
+<!-- 7 wrap -->
+<section class="tint-navy">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">7</span><h2>You can do this ✓</h2></div>
+    <p class="sec-sub">Tap each one you can do now.</p>
+    <ul class="check" id="check">
+      <li>I can name my family. Mother, father, brother, sister.</li>
+      <li>I can say "This is my..." and "Her name is...".</li>
+      <li>I can say how many brothers and sisters I have.</li>
+      <li>I can ask "Do you have any brothers or sisters?".</li>
+    </ul>
+
+    <h3 style="font-family:'Fredoka';font-weight:700;color:#fff;font-size:1.4rem;margin:28px 0 12px">Homework 🏠</h3>
+    <div class="hw">
+      <div class="hwcard"><span class="ico">📱</span><div><b>DuoCards</b><span>Add 8 family words from today.</span></div></div>
+      <div class="hwcard"><span class="ico">🎬</span><div><b>Family photo</b><span>Record a 30-second video about one photo of your family.</span></div></div>
+      <div class="hwcard"><span class="ico">👪</span><div><b>Real life</b><span>Point at people in a photo and say who they are, out loud, in English.</span></div></div>
+    </div>
+
+    <details class="gram">
+      <summary>Grammar reference</summary>
+      <div class="gbody">
+        • <b>my / your / his / her</b> → <code>my</code> mother (your family), <code>her</code> brother (a woman's), <code>his</code> sister (a man's).<br>
+        • <b>have / has</b> → I <code>have</code> two sisters. She <code>has</code> one brother.<br>
+        • <b>'s</b> (possession) → my mother<code>'s</code> name = the name of my mother.<br>
+        • <b>How old</b> → How old is he? He<code>'s</code> 20.
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <svg class="logo" style="width:52px;height:52px" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#2a3358"/><text x="24" y="31" font-family="Fredoka, sans-serif" font-size="17" font-weight="700" fill="#DCF0EA" text-anchor="middle">EN</text></svg>
+  <div class="fb">English by Neves</div>
+  <div class="fs">See you in class 👋</div>
+  <div class="cr">My Family Members · A1 · English by Neves</div>
+</footer>
+
+<script>
+/* ---------- avatar SVGs ---------- */
+const skin='#F0C3A0', skin2='#E8B48E', G='#CBD0D9';
+const sh = (x,w,c)=>`<rect x="${x}" y="33" width="${w}" height="15" rx="13" fill="${c}"/>`;
+const glasses = ()=>'<g fill="none" stroke="#3a4a63" stroke-width="1.5"><circle cx="19.6" cy="21" r="3.5"/><circle cx="28.4" cy="21" r="3.5"/><line x1="23.1" y1="21" x2="24.9" y2="21"/></g>';
+const womanHair = hc=>`<path d="M11 25c0-10 6-15 13-15s13 5 13 15c0 6-1 11-3 15h-4.5l-1-13a4.5 4.5 0 0 0-9 0l-1 13H14c-2-4-3-9-3-15z" fill="${hc}"/>`;
+const girlHair  = hc=>`<path d="M13 25c0-8 5-13 11-13s11 5 11 13c0 4-1 8-2 11h-3.5l-1-10a4.5 4.5 0 0 0-9 0l-1 10H15c-1-3-2-7-2-11z" fill="${hc}"/>`;
+const manHair = hc=>`<path d="M13.5 22C13.5 8 34.5 8 34.5 22 C30 16 18 16 13.5 22 Z" fill="${hc}"/>`;
+const boyHair = hc=>`<path d="M15 23C15 11 33 11 33 23 C29.5 17.5 18.5 17.5 15 23 Z" fill="${hc}"/>`;
+function woman(c,hc){return `<svg class="av" viewBox="0 0 48 48">${sh(9,30,c)}${womanHair(hc)}<circle cx="24" cy="23" r="9" fill="${skin}"/></svg>`;}
+function man(c,hc){return `<svg class="av" viewBox="0 0 48 48">${sh(11,26,c)}<circle cx="24" cy="22" r="9.5" fill="${skin}"/>${manHair(hc)}</svg>`;}
+function girl(c,hc,pony){return `<svg class="av" viewBox="0 0 48 48">${sh(13,22,c)}${pony?`<path d="M33 22c4 1 5 7 3 12" stroke="${hc}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`:''}${girlHair(hc)}<circle cx="24" cy="24" r="7.5" fill="${skin}"/></svg>`;}
+function boy(c,hc){return `<svg class="av" viewBox="0 0 48 48">${sh(14,20,c)}<circle cx="24" cy="23" r="8" fill="${skin}"/>${boyHair(hc)}</svg>`;}
+function baby(c){return `<svg class="av" viewBox="0 0 48 48">${sh(15,18,c)}<circle cx="24" cy="23" r="8.5" fill="${skin}"/><path d="M24 15c0-3 4-3 2-6" stroke="#6B4B3A" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>`;}
+function grandma(c){return `<svg class="av" viewBox="0 0 48 48">${sh(9,30,c)}<circle cx="24" cy="9" r="4" fill="${G}"/>${womanHair(G)}<circle cx="24" cy="23" r="9" fill="${skin}"/>${glasses()}</svg>`;}
+function grandpa(c){return `<svg class="av" viewBox="0 0 48 48">${sh(11,26,c)}<circle cx="24" cy="22" r="9.5" fill="${skin}"/><path d="M13.5 22C14 11 34 11 34.5 22 C31 18 29 17.5 24 17.5 C19 17.5 17 18 13.5 22 Z" fill="${G}"/>${glasses()}<path d="M20.5 29h7" stroke="${G}" stroke-width="2" stroke-linecap="round"/></svg>`;}
+const AVA = {
+  mother: woman('#CF7E93','#6B4B3A'),
+  father: man('#3E6B8A','#4A3524'),
+  sister: girl('#E8826B','#6B4B3A'),
+  brother: boy('#0A7D6E','#4A3524'),
+  grandma: grandma('#B58AA8'),
+  grandpa: grandpa('#5B6B88'),
+  baby: baby('#FFC43D'),
+  aunt: woman('#C85F48','#7A4B2A'),
+  uncle: man('#1C6FA8','#2E2A26'),
+  cousin: girl('#8E5BA6','#6B4B3A',true),
+  me: boy('#0A7D6E','#4A3524'),
+  parents: `<svg class="av" viewBox="0 0 48 48"><rect x="4" y="32" width="20" height="13" rx="6.5" fill="#CF7E93"/><path d="M8 22c0-7 4-11 9-11s9 4 9 11c0 4-1 7-1.5 9h-3.5l-1-9a3.5 3.5 0 0 0-7 0l-1 9H9.5c-.5-2-1.5-5-1.5-9z" fill="#6B4B3A"/><circle cx="17" cy="20" r="7" fill="${skin}"/><rect x="25" y="32" width="19" height="13" rx="6.5" fill="#3E6B8A"/><circle cx="32" cy="20" r="7.5" fill="${skin2}"/><path d="M24.5 20C25 10 39 10 39.5 20 C36 16 35 15.5 32 15.5 C29 15.5 28 16 24.5 20 Z" fill="#4A3524"/></svg>`
+};
+
+/* ---------- vocab (PT on back) ---------- */
+const VOCAB = {
+  close:[
+    ['mother','a mãe',AVA.mother],
+    ['father','o pai',AVA.father],
+    ['parents','os pais',AVA.parents],
+    ['sister','a irmã',AVA.sister],
+    ['brother','o irmão',AVA.brother],
+    ['baby','o bebê',AVA.baby],
+  ],
+  grand:[
+    ['grandmother','a avó',AVA.grandma],
+    ['grandfather','o avô',AVA.grandpa],
+    ['grandparents','os avós',AVA.grandma],
+  ],
+  more:[
+    ['aunt','a tia',AVA.aunt],
+    ['uncle','o tio',AVA.uncle],
+    ['cousin','o primo / a prima',AVA.cousin],
+    ['son','o filho',AVA.brother],
+    ['daughter','a filha',AVA.sister],
+  ]
+};
+function buildCards(id, arr){
+  const box=document.getElementById(id);
+  box.innerHTML = arr.map(([w,pt,ic])=>`
+    <div class="card"><div class="card-in">
+      <div class="face front">${ic}<div class="w">${w}</div></div>
+      <div class="face back"><div class="ptw">${pt}</div></div>
+    </div></div>`).join('');
+  box.querySelectorAll('.card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flipped')));
+}
+buildCards('cards-close',VOCAB.close);
+buildCards('cards-grand',VOCAB.grand);
+buildCards('cards-more',VOCAB.more);
+
+/* ---------- phrases ---------- */
+const PHRASES=[
+  ['INTRODUCE',["This is my <b>mother</b>.","These are my <b>parents</b>.","Her name is Ana. His name is Pedro."]],
+  ['HOW MANY',["I have <b>two</b> brothers.","I have <b>one</b> sister.","I'm an only child."]],
+  ['AGE',["My brother is <b>twenty</b>.","My grandma is <b>seventy</b>.","How old is your sister?"]],
+];
+document.getElementById('phrases').innerHTML = PHRASES.map(([cat,items])=>`
+  <div class="pcat">${cat}</div>
+  <div class="plist">${items.map(en=>`<div class="pitem">${en}</div>`).join('')}</div>`).join('');
+
+/* ---------- builder ---------- */
+const RELS=[
+  ['mother','my mother','she'],['father','my father','he'],
+  ['sister','my sister','she'],['brother','my brother','he'],
+  ['grandma','my grandmother','she'],['grandpa','my grandfather','he'],
+  ['aunt','my aunt','she'],['uncle','my uncle','he'],['cousin','my cousin','they'],
+];
+document.getElementById('relChips').innerHTML = RELS.map((r,i)=>
+  `<button class="chip${i===0?' on':''}" data-v="${r[0]}">${AVA[r[0]].replace('class="av"','class="mi"')}${r[1].replace('my ','')}</button>`).join('');
+
+let selRel='mother';
+document.querySelectorAll('#relChips .chip').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#relChips .chip').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); selRel=b.dataset.v;
+}));
+const ageIn=document.getElementById('ageIn');
+ageIn.addEventListener('input',()=>document.getElementById('ageVal').textContent=ageIn.value);
+
+const family=[];
+function relData(key){ return RELS.find(r=>r[0]===key); }
+function renderTree(){
+  const tree=document.getElementById('tree');
+  if(family.length===0){ tree.innerHTML='<div class="empty">Your family will appear here…</div>'; document.getElementById('sayAll').classList.remove('show'); return; }
+  tree.innerHTML = family.map((m,i)=>{
+    const rd=relData(m.rel); const label=rd[1]; const pron=rd[2];
+    const be = pron==='they'?'are':'is';
+    const poss = pron==='they'?'Their':(pron==='she'?'Her':'His');
+    let s = `This is <b>${label}</b>.`;
+    if(m.name) s += ` ${poss} name is <b>${m.name}</b>.`;
+    s += ` ${pron.charAt(0).toUpperCase()+pron.slice(1)} ${be} <b>${m.age}</b>.`;
+    return `<div class="member">${AVA[m.rel]}<div class="say">${s}</div><button class="del" data-i="${i}">×</button></div>`;
+  }).join('');
+  tree.querySelectorAll('.del').forEach(b=>b.addEventListener('click',()=>{ family.splice(+b.dataset.i,1); renderTree(); }));
+  document.getElementById('sayAll').classList.add('show');
+}
+document.getElementById('addBtn').addEventListener('click',()=>{
+  family.push({rel:selRel, name:document.getElementById('nameIn').value.trim(), age:+ageIn.value});
+  document.getElementById('nameIn').value='';
+  renderTree();
+});
+document.getElementById('sayAll').addEventListener('click',function(){
+  this.textContent='🗣️ Great! Now say it faster, like you mean it.';
+  setTimeout(()=>this.textContent='🗣️ Say all of them out loud',2500);
+});
+
+/* checklist */
+document.querySelectorAll('#check li').forEach(li=>li.addEventListener('click',()=>li.classList.toggle('done')));
+</script>
+</body>
+</html>
