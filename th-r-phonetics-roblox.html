@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phonetic Training — TH Sound</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1a2e;
+    --surface: #16213e;
+    --card: #0f3460;
+    --red: #e94560;
+    --yellow: #f5a623;
+    --green: #00d4aa;
+    --blue: #4cc9f0;
+    --white: #f0f4ff;
+    --muted: #8892b0;
+    --border: #233554;
+    --pixel: 'Share Tech Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* pixel scanline effect */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--surface);
+    border-bottom: 3px solid var(--red);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-inner {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .header-pixel-bar {
+    height: 6px;
+    background: repeating-linear-gradient(90deg, var(--red) 0px, var(--red) 8px, var(--yellow) 8px, var(--yellow) 16px, var(--green) 16px, var(--green) 24px, var(--blue) 24px, var(--blue) 32px);
+  }
+
+  .header h1 {
+    font-family: var(--pixel);
+    font-size: 1.3rem;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  .header h1 span { color: var(--red); }
+
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-family: var(--pixel);
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid;
+    letter-spacing: 0.5px;
+  }
+  .badge-red { background: rgba(233,69,96,0.15); border-color: var(--red); color: var(--red); }
+  .badge-green { background: rgba(0,212,170,0.15); border-color: var(--green); color: var(--green); }
+  .badge-blue { background: rgba(76,201,240,0.15); border-color: var(--blue); color: var(--blue); }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: #0d1321;
+    padding: 8px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-label { font-family: var(--pixel); color: var(--muted); font-size: 0.65rem; white-space: nowrap; letter-spacing: 1px; }
+  .progress-track { flex: 1; height: 8px; background: var(--border); border-radius: 0; overflow: hidden; }
+  .progress-fill { height: 100%; transition: width 0.5s ease; background: repeating-linear-gradient(90deg, var(--red) 0px, var(--red) 6px, var(--yellow) 6px, var(--yellow) 12px); }
+  .progress-pct { font-family: var(--pixel); color: var(--yellow); font-size: 0.7rem; white-space: nowrap; }
+
+  /* NAV */
+  .nav {
+    background: var(--surface);
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--pixel);
+    font-size: 0.68rem;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    position: relative;
+    top: 1px;
+  }
+  .nav-btn:hover { color: var(--white); }
+  .nav-btn.active { color: var(--red); border-bottom-color: var(--red); }
+  .nav-btn.done { color: var(--green); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 28px 32px 110px; max-width: 820px; margin: 0 auto; animation: pixelIn 0.25s ease; }
+  .section.active { display: block; }
+
+  @keyframes pixelIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION TITLE */
+  .sec-title { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
+  .sec-icon { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+  .sec-title h2 { font-family: var(--pixel); font-size: 1.1rem; letter-spacing: 1px; line-height: 1.3; }
+  .sec-title .timing { color: var(--muted); font-size: 0.72rem; margin-top: 4px; font-family: var(--pixel); }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border-radius: 0;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--red);
+    position: relative;
+  }
+
+  .card.green { border-left-color: var(--green); }
+  .card.yellow { border-left-color: var(--yellow); }
+  .card.blue { border-left-color: var(--blue); }
+
+  .card h3 {
+    font-family: var(--pixel);
+    font-size: 0.85rem;
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .card p, .card li {
+    font-size: 0.9rem;
+    color: #b0bec5;
+    line-height: 1.75;
+  }
+
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 5px; }
+
+  /* MOUTH DIAGRAM */
+  .mouth-box {
+    background: #0d1321;
+    border: 2px solid var(--green);
+    padding: 20px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .mouth-diagram {
+    font-family: var(--pixel);
+    font-size: 0.8rem;
+    color: var(--green);
+    line-height: 2;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .mouth-label {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: var(--pixel);
+  }
+
+  /* WORD CARDS */
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .word-card {
+    background: #0d1321;
+    border: 1.5px solid var(--border);
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .word-card:hover { border-color: var(--red); transform: translateY(-2px); }
+  .word-card.done { border-color: var(--green); background: rgba(0,212,170,0.08); }
+
+  .wc-ipa {
+    font-family: var(--pixel);
+    font-size: 0.72rem;
+    color: var(--red);
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
+
+  .wc-word {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .wc-roblox {
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: block;
+    font-style: italic;
+  }
+
+  .wc-hint { font-size: 0.7rem; color: var(--green); display: none; margin-top: 6px; font-family: var(--pixel); }
+  .word-card.done .wc-hint { display: block; }
+  .word-card.done .wc-ipa { color: var(--green); }
+
+  .tap-hint { font-size: 0.7rem; color: var(--muted); text-align: center; margin-bottom: 14px; font-family: var(--pixel); }
+
+  /* MINIMAL PAIRS */
+  .pair-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+
+  .pair-word {
+    flex: 1;
+    background: #0d1321;
+    border: 1.5px solid var(--border);
+    padding: 12px;
+    text-align: center;
+  }
+
+  .pair-word .pw-ipa { font-family: var(--pixel); font-size: 0.7rem; color: var(--muted); display: block; }
+  .pair-word .pw-word { font-size: 1.1rem; font-weight: 700; color: var(--white); display: block; }
+  .pair-word.th-word { border-color: var(--red); }
+  .pair-word.th-word .pw-word { color: var(--red); }
+  .pair-word.other-word { border-color: var(--yellow); }
+  .pair-word.other-word .pw-word { color: var(--yellow); }
+
+  .pair-arrow { color: var(--muted); font-size: 1.2rem; font-weight: 700; flex-shrink: 0; }
+
+  /* SPEAK PROMPTS */
+  .speak-prompt {
+    background: rgba(233,69,96,0.08);
+    border: 1.5px solid var(--red);
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .sp-label {
+    font-family: var(--pixel);
+    font-size: 0.65rem;
+    color: var(--red);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sp-dot {
+    width: 6px; height: 6px;
+    background: var(--red);
+    display: inline-block;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+  .speak-prompt p { font-size: 0.92rem; color: var(--white); line-height: 1.7; font-weight: 600; }
+  .speak-prompt em { color: var(--muted); font-weight: 400; font-size: 0.83rem; display: block; margin-top: 4px; }
+
+  /* CHALLENGE BOX */
+  .challenge-box {
+    background: var(--surface);
+    border: 2px solid var(--yellow);
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .challenge-box::before {
+    content: '>>> MISSION <<<';
+    font-family: var(--pixel);
+    font-size: 0.65rem;
+    color: var(--yellow);
+    letter-spacing: 3px;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .challenge-box h3 {
+    font-family: var(--pixel);
+    color: var(--yellow);
+    font-size: 1rem;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .challenge-box p { color: #b0bec5; font-size: 0.9rem; line-height: 1.65; }
+
+  /* TONGUE TWISTER */
+  .twister-box {
+    background: #0d1321;
+    border: 2px solid var(--blue);
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+
+  .twister-label {
+    font-family: var(--pixel);
+    font-size: 0.65rem;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .twister-text {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.8;
+  }
+
+  .twister-text .th-hi { color: var(--red); }
+  .twister-text .r-hi { color: var(--blue); }
+
+  .speed-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .speed-chip {
+    font-family: var(--pixel);
+    font-size: 0.68rem;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* AI CHAT */
+  .chat-box {
+    background: #0d1321;
+    border: 1px solid var(--border);
+    padding: 14px;
+    min-height: 220px;
+    max-height: 320px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bubble { max-width: 82%; padding: 10px 14px; font-size: 0.88rem; line-height: 1.65; border-radius: 0; }
+  .bubble.ai { align-self: flex-start; background: var(--card); border: 1px solid var(--border); color: var(--white); border-left: 3px solid var(--green); }
+  .bubble.user { align-self: flex-end; background: var(--red); color: white; border-right: 3px solid var(--yellow); }
+  .bubble.loading { color: var(--muted); font-style: italic; font-family: var(--pixel); font-size: 0.75rem; }
+
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input-row input {
+    flex: 1;
+    background: #0d1321;
+    border: 1px solid var(--border);
+    padding: 11px 14px;
+    font-size: 0.88rem;
+    font-family: 'Nunito', sans-serif;
+    color: var(--white);
+    outline: none;
+    border-radius: 0;
+  }
+  .chat-input-row input:focus { border-color: var(--red); }
+  .chat-input-row input::placeholder { color: var(--muted); }
+
+  .chat-note { font-family: var(--pixel); font-size: 0.65rem; color: var(--muted); margin-bottom: 8px; letter-spacing: 1px; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 10px 18px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    border-radius: 0;
+  }
+  .btn:hover { border-color: var(--muted); }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary { background: var(--red); border-color: var(--red); color: white; }
+  .btn.primary:hover { background: #c73652; }
+  .btn.green-btn { background: rgba(0,212,170,0.15); border-color: var(--green); color: var(--green); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+  /* CHIPS */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip {
+    font-family: var(--pixel);
+    font-size: 0.68rem;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    background: #0d1321;
+  }
+
+  /* FINAL */
+  .final-wrap { text-align: center; }
+  .final-title { font-family: var(--pixel); font-size: 1.8rem; color: var(--yellow); margin-bottom: 8px; letter-spacing: 2px; }
+  .final-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 22px; }
+
+  .score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; }
+  .score-card { background: var(--card); border: 1px solid var(--border); padding: 14px; text-align: center; }
+  .score-card .sc-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+  .score-card .sc-label { font-family: var(--pixel); font-size: 0.65rem; color: var(--muted); display: block; margin-bottom: 2px; }
+  .score-card .sc-val { font-family: var(--pixel); font-size: 0.95rem; color: var(--white); }
+
+  .hw-box { background: rgba(245,166,35,0.08); border: 1px solid var(--yellow); padding: 16px 20px; margin: 0 auto 20px; max-width: 520px; text-align: left; }
+  .hw-box .hw-label { font-family: var(--pixel); font-size: 0.65rem; color: var(--yellow); letter-spacing: 2px; margin-bottom: 8px; }
+  .hw-box p { font-size: 0.88rem; color: #b0bec5; line-height: 1.65; }
+
+  /* FOOTER */
+  .footer-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 2px solid var(--border); padding: 12px 32px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+  .step-counter { font-family: var(--pixel); font-size: 0.7rem; color: var(--muted); letter-spacing: 1px; }
+
+  @media (max-width: 580px) {
+    .section { padding: 20px 14px 110px; }
+    .header-inner, .progress-bar-wrap, .footer-nav { padding-left: 14px; padding-right: 14px; }
+    .word-grid { grid-template-columns: repeat(2, 1fr); }
+    .score-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-pixel-bar"></div>
+  <div class="header-inner">
+    <h1>PHONETIC TRAINING // <span>TH + R</span></h1>
+    <div class="badges">
+      <span class="badge badge-red">C1 LEVEL</span>
+      <span class="badge badge-green">50 MIN</span>
+      <span class="badge badge-blue">ROBLOX MODE</span>
+    </div>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">XP:</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="pFill" style="width:20%"></div>
+  </div>
+  <span class="progress-pct" id="pPct">STAGE 1/5</span>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="go(0)">[ 1 ] SPAWN POINT</button>
+  <button class="nav-btn" onclick="go(1)">[ 2 ] TONGUE MAP</button>
+  <button class="nav-btn" onclick="go(2)">[ 3 ] WORD HUNT</button>
+  <button class="nav-btn" onclick="go(3)">[ 4 ] OBBY DRILL</button>
+  <button class="nav-btn" onclick="go(4)">[ 5 ] FINAL BOSS</button>
+</nav>
+
+<!-- ═══════════════ STAGE 1: SPAWN POINT (WARM-UP) ═══════════════ -->
+<div class="section active" id="s0">
+  <div class="sec-title">
+    <div class="sec-icon">🟥</div>
+    <div>
+      <h2 style="color:var(--red)">STAGE 1 — SPAWN POINT</h2>
+      <div class="timing">WARM-UP · 8 MINUTES</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>SELF-DIAGNOSTIC — Say these out loud</h3>
+    <p>Read each sentence once at normal speed. Don't correct yourself — just notice what happens:</p>
+    <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+      <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--red);">
+        <span style="font-size:1rem;font-weight:700;color:var(--white);">"I think the three threats are worth thinking through."</span>
+      </div>
+      <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--blue);">
+        <span style="font-size:1rem;font-weight:700;color:var(--white);">"The thread runs through the fabric rather thoroughly."</span>
+      </div>
+      <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--yellow);">
+        <span style="font-size:1rem;font-weight:700;color:var(--white);">"I really rather like running through the thorough reports."</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3>AFTER READING — Reflect out loud</h3>
+    <ul>
+      <li>Which word made you hesitate?</li>
+      <li>Did your tongue touch your teeth for <strong style="color:var(--red)">TH</strong>?</li>
+      <li>Was your <strong style="color:var(--blue)">R</strong> clear or did it feel mumbled?</li>
+      <li>Which sentence was hardest? Why?</li>
+    </ul>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label"><span class="sp-dot"></span> SPEAK NOW</div>
+    <p>Without looking at the sentences — describe what you noticed about your own pronunciation in 3-4 sentences. Be specific.</p>
+    <em>This is your baseline. We'll come back to these same sentences at the end.</em>
+  </div>
+
+  <button class="btn primary" id="s0next" onclick="go(1)">NEXT STAGE →</button>
+</div>
+
+<!-- ═══════════════ STAGE 2: TONGUE MAP ═══════════════ -->
+<div class="section" id="s1">
+  <div class="sec-title">
+    <div class="sec-icon">🗺️</div>
+    <div>
+      <h2 style="color:var(--green)">STAGE 2 — TONGUE MAP</h2>
+      <div class="timing">MECHANICS · 12 MINUTES</div>
+    </div>
+  </div>
+
+  <div class="card green">
+    <h3>THE TH SOUND — How it actually works</h3>
+    <p>The voiceless TH (as in <em>think, three, through</em>) is produced like this:</p>
+  </div>
+
+  <div class="mouth-box">
+    <div class="mouth-diagram">
+      UPPER TEETH<br>
+      ─────────────<br>
+      TONGUE TIP → | ← touch lightly<br>
+      ─────────────<br>
+      LOWER TEETH<br>
+    </div>
+    <div class="mouth-label">Air flows OUT between tongue tip and upper teeth. No voice. No friction buzz.</div>
+  </div>
+
+  <div class="card">
+    <h3>THE 3 MISTAKES — and what to fix</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+      <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--red);">
+        <div style="font-family:var(--pixel);font-size:0.7rem;color:var(--red);margin-bottom:4px;">MISTAKE 1 — "F" SUBSTITUTION</div>
+        <p style="font-size:0.88rem;color:#b0bec5;">Saying <strong style="color:var(--red)">free</strong> instead of <strong style="color:var(--green)">three</strong>. The tongue is not touching the teeth — air escapes through the lip-teeth friction instead. Fix: push your tongue forward until it touches the upper teeth.</p>
+      </div>
+      <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--yellow);">
+        <div style="font-family:var(--pixel);font-size:0.7rem;color:var(--yellow);margin-bottom:4px;">MISTAKE 2 — "T" SUBSTITUTION</div>
+        <p style="font-size:0.88rem;color:#b0bec5;">Saying <strong style="color:var(--yellow)">tink</strong> instead of <strong style="color:var(--green)">think</strong>. The tongue is hitting the roof of the mouth. Fix: the tongue must stay near the teeth, not the palate. Air must flow — not stop.</p>
+      </div>
+      <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--blue);">
+        <div style="font-family:var(--pixel);font-size:0.7rem;color:var(--blue);margin-bottom:4px;">MISTAKE 3 — TOO MUCH FRICTION</div>
+        <p style="font-size:0.88rem;color:#b0bec5;">Overcompensating by pressing the tongue too hard, creating a buzzing sound. Fix: light contact only. The tongue should barely graze the teeth. Think of gently blowing air out.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <h3>THE R SOUND — For someone with diction issues in PT-BR too</h3>
+    <p>Your R difficulty is partly muscular — the same articulatory imprecision that affects PT-BR also shows up in English. In English the R is <strong style="color:var(--blue)">retroflex</strong>: the tongue curls back slightly, it never touches anything, and the lips round very slightly.</p>
+    <ul style="margin-top:10px;">
+      <li>Tongue tip points up and slightly back — no contact</li>
+      <li>Middle of tongue is raised</li>
+      <li>Lips relax into a slight rounding</li>
+      <li>The sound comes from the throat shaping, not tongue friction</li>
+    </ul>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label"><span class="sp-dot"></span> DRILL — TONGUE PLACEMENT</div>
+    <p>Put your tongue between your teeth. Blow air slowly. You should feel air flowing over the tongue tip. Do this 5 times, then add voice: "ththththth".</p>
+    <em>This is the exact position for voiceless TH. Lock this feeling in.</em>
+  </div>
+
+  <div class="speak-prompt" style="border-color:var(--blue);background:rgba(76,201,240,0.06);">
+    <div class="sp-label" style="color:var(--blue);"><span class="sp-dot" style="background:var(--blue)"></span> DRILL — R ISOLATION</div>
+    <p>Say "uh" — now curl your tongue back slightly without touching anything. Feel the sound shift to an R. Hold it: "urrrrr". Now say: run, red, really, rather, through.</p>
+    <em>The R should feel like a shape, not a movement.</em>
+  </div>
+
+  <button class="btn primary" onclick="go(2)">NEXT STAGE →</button>
+</div>
+
+<!-- ═══════════════ STAGE 3: WORD HUNT ═══════════════ -->
+<div class="section" id="s2">
+  <div class="sec-title">
+    <div class="sec-icon">🎮</div>
+    <div>
+      <h2 style="color:var(--yellow)">STAGE 3 — WORD HUNT</h2>
+      <div class="timing">CONTROLLED PRACTICE · 12 MINUTES</div>
+    </div>
+  </div>
+
+  <div class="card yellow">
+    <h3>HOW TO PLAY</h3>
+    <p>Tap a word. Say it out loud BEFORE revealing. Then tap again to see the IPA and Roblox context. Mark it as done when you feel confident.</p>
+  </div>
+
+  <p class="tap-hint">TAP TO REVEAL · TAP AGAIN TO MARK DONE ✓</p>
+
+  <div style="font-family:var(--pixel);font-size:0.7rem;color:var(--red);letter-spacing:2px;margin-bottom:10px;">// TH WORDS</div>
+  <div class="word-grid" id="thGrid"></div>
+
+  <div style="font-family:var(--pixel);font-size:0.7rem;color:var(--blue);letter-spacing:2px;margin-bottom:10px;margin-top:20px;">// R + TH COMBO WORDS</div>
+  <div class="word-grid" id="rGrid"></div>
+
+  <div class="card" style="margin-top:16px;">
+    <h3>MINIMAL PAIRS — Say both, feel the difference</h3>
+    <p style="margin-bottom:14px;font-size:0.85rem;">Each pair differs by ONE sound. Say them slowly, then fast. Don't confuse them.</p>
+    <div id="pairArea"></div>
+  </div>
+
+  <button class="btn primary" onclick="go(3)">NEXT STAGE →</button>
+</div>
+
+<!-- ═══════════════ STAGE 4: OBBY DRILL ═══════════════ -->
+<div class="section" id="s3">
+  <div class="sec-title">
+    <div class="sec-icon">🏃</div>
+    <div>
+      <h2 style="color:var(--blue)">STAGE 4 — OBBY DRILL</h2>
+      <div class="timing">FLUENCY + TONGUE TWISTERS · 10 MINUTES</div>
+    </div>
+  </div>
+
+  <div class="card blue">
+    <h3>OBSTACLE COURSE — Each level harder than the last</h3>
+    <p>In a Roblox obby, each platform is harder. Same here. Read each twister at the speed shown. No stopping between words.</p>
+  </div>
+
+  <div class="twister-box">
+    <div class="twister-label">// LEVEL 1 — TH ONLY</div>
+    <div class="twister-text">
+      "<span class="th-hi">Th</span>ree <span class="th-hi">th</span>ousand <span class="th-hi">th</span>reads ran <span class="th-hi">th</span>rough <span class="th-hi">th</span>irty <span class="th-hi">th</span>ick <span class="th-hi">th</span>ickets."
+    </div>
+    <div class="speed-row">
+      <span class="speed-chip">SLOW ×0.5</span>
+      <span class="speed-chip">NORMAL ×1</span>
+      <span class="speed-chip">FAST ×1.5</span>
+    </div>
+  </div>
+
+  <div class="twister-box">
+    <div class="twister-label">// LEVEL 2 — R ONLY</div>
+    <div class="twister-text">
+      "<span class="r-hi">R</span>ather <span class="r-hi">r</span>apidly, <span class="r-hi">r</span>aiders <span class="r-hi">r</span>ushed a<span class="r-hi">r</span>ound the <span class="r-hi">r</span>oot of the <span class="r-hi">r</span>uins."
+    </div>
+    <div class="speed-row">
+      <span class="speed-chip">SLOW ×0.5</span>
+      <span class="speed-chip">NORMAL ×1</span>
+      <span class="speed-chip">FAST ×1.5</span>
+    </div>
+  </div>
+
+  <div class="twister-box">
+    <div class="twister-label">// LEVEL 3 — TH + R COMBINED</div>
+    <div class="twister-text">
+      "<span class="th-hi">Th</span>e <span class="r-hi">r</span>eal th<span class="r-hi">r</span>eat is <span class="th-hi">th</span>e <span class="r-hi">r</span>apid th<span class="r-hi">r</span>ead <span class="r-hi">r</span>unning <span class="th-hi">th</span><span class="r-hi">r</span>ough <span class="th-hi">th</span>e <span class="r-hi">r</span>ectangle."
+    </div>
+    <div class="speed-row">
+      <span class="speed-chip">SLOW ×0.5</span>
+      <span class="speed-chip">NORMAL ×1</span>
+      <span class="speed-chip">FAST ×1.5</span>
+    </div>
+  </div>
+
+  <div class="twister-box" style="border-color:var(--red);">
+    <div class="twister-label" style="color:var(--red);">// BOSS LEVEL — ROBLOX CONTEXT</div>
+    <div class="twister-text">
+      "I <span class="th-hi">th</span>ink <span class="th-hi">th</span>e <span class="r-hi">r</span>andomly gene<span class="r-hi">r</span>ated th<span class="r-hi">r</span>ead about <span class="th-hi">th</span>e <span class="r-hi">r</span>aid is <span class="th-hi">worth r</span>eading <span class="th-hi">th</span><span class="r-hi">r</span>ough."
+    </div>
+    <div class="speed-row">
+      <span class="speed-chip">SLOW ×0.5</span>
+      <span class="speed-chip">NORMAL ×1</span>
+      <span class="speed-chip">FAST ×1.5</span>
+      <span class="speed-chip" style="border-color:var(--red);color:var(--red);">NO STOP ×2</span>
+    </div>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label"><span class="sp-dot"></span> SPEAK — SENTENCE BUILDER</div>
+    <p>Build 3 sentences about Roblox using at least one TH word and one R word in each. Say them out loud. Don't write — just speak.</p>
+    <div class="chip-row">
+      <span class="chip">through the map</span>
+      <span class="chip">three rounds</span>
+      <span class="chip">the threat</span>
+      <span class="chip">rather difficult</span>
+      <span class="chip">run through</span>
+      <span class="chip">think about</span>
+    </div>
+  </div>
+
+  <button class="btn primary" onclick="go(4)">FINAL BOSS →</button>
+</div>
+
+<!-- ═══════════════ STAGE 5: FINAL BOSS ═══════════════ -->
+<div class="section" id="s4">
+  <div class="sec-title">
+    <div class="sec-icon">👾</div>
+    <div>
+      <h2 style="color:var(--yellow)">STAGE 5 — FINAL BOSS</h2>
+      <div class="timing">AI CHAT + DEBRIEF · 8 MINUTES</div>
+    </div>
+  </div>
+
+  <div class="challenge-box">
+    <h3>ROBLOX VOICE CHAT — SIMULATED</h3>
+    <p>You're voice chatting with an English-speaking player in a Roblox game. The AI will ask you questions about the game and your strategy. Answer in detail. Focus on TH and R sounds in every response.</p>
+  </div>
+
+  <p class="chat-note" id="chatNote">6 EXCHANGES // FOCUS ON TH + R SOUNDS IN EVERY RESPONSE</p>
+  <div class="chat-box" id="chatBox"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Type your response — focus on TH and R words..." onkeydown="if(event.key==='Enter')sendChat()" />
+    <button class="btn primary" onclick="sendChat()">SEND</button>
+  </div>
+
+  <div style="margin-top:16px;">
+    <button class="btn" onclick="showDebrief()">SKIP TO DEBRIEF</button>
+  </div>
+
+  <div id="debriefSection" style="display:none;margin-top:24px;">
+    <div class="card green" style="margin-bottom:14px;">
+      <h3>FINAL DEBRIEF — Say these again (same as Stage 1)</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+        <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--red);">
+          <span style="font-size:1rem;font-weight:700;color:var(--white);">"I think the three threats are worth thinking through."</span>
+        </div>
+        <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--blue);">
+          <span style="font-size:1rem;font-weight:700;color:var(--white);">"The thread runs through the fabric rather thoroughly."</span>
+        </div>
+        <div style="background:#0d1321;padding:12px 16px;border-left:3px solid var(--yellow);">
+          <span style="font-size:1rem;font-weight:700;color:var(--white);">"I really rather like running through the thorough reports."</span>
+        </div>
+      </div>
+      <p style="margin-top:12px;color:var(--muted);">Can you hear the difference from Stage 1? What improved? What still needs work?</p>
+    </div>
+
+    <div class="card yellow">
+      <h3>REFLECTION — Speak out loud</h3>
+      <ul>
+        <li>Which TH word still feels unnatural?</li>
+        <li>Which R word felt the clearest today?</li>
+        <li>What physical sensation do you associate with TH now?</li>
+        <li>In real conversation, when do you think TH will slip?</li>
+      </ul>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">// HOMEWORK — DAILY DRILL</div>
+      <p><strong style="color:var(--yellow)">5 minutes every day this week:</strong><br><br>
+      1. Read the 3 Stage 1 sentences out loud — record yourself<br>
+      2. Listen back and identify 1 sound to improve<br>
+      3. Say the Level 3 tongue twister 3 times<br>
+      4. While playing Roblox, narrate 3 actions out loud in English using TH or R words<br><br>
+      <em style="color:var(--muted);">Example: "I'm running through the third checkpoint and I think the route is rather long."</em></p>
+    </div>
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      <button class="btn" onclick="restartGame()">PLAY AGAIN</button>
+      <button class="btn primary" onclick="sendPrompt('I just finished a phonetics lesson on TH and R sounds. Can you have a short conversation with me about Roblox where you occasionally gently correct my TH and R pronunciation if I make mistakes?')">PRACTICE MORE ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-nav">
+  <button class="btn" id="prevBtn" onclick="nav(-1)" disabled>← BACK</button>
+  <span class="step-counter" id="stepCount">1 / 5</span>
+  <button class="btn primary" id="nextBtn" onclick="nav(1)">NEXT →</button>
+</div>
+
+<script>
+const TH_WORDS = [
+  { ipa: '/θɪŋk/', word: 'think', ctx: 'I think this strategy works', hint: 'tongue between teeth → air out' },
+  { ipa: '/θriː/', word: 'three', ctx: 'Three players left in the game', hint: 'NOT "free" — tongue touches teeth' },
+  { ipa: '/θrɛt/', word: 'threat', ctx: 'The threat level is rising', hint: 'TH + R together — tricky!' },
+  { ipa: '/θruː/', word: 'through', ctx: 'Run through the checkpoint', hint: 'TH at start, then retroflex R' },
+  { ipa: '/θɔːrə/', word: 'thorough', ctx: 'A thorough search of the map', hint: 'two TH syllables — careful' },
+  { ipa: '/wɜːrθ/', word: 'worth', ctx: 'This trade is worth it', hint: 'TH at the END — don\'t drop it' },
+];
+
+const R_WORDS = [
+  { ipa: '/ræðər/', word: 'rather', ctx: 'Rather difficult obby', hint: 'two R sounds — both retroflex' },
+  { ipa: '/θrɛd/', word: 'thread', ctx: 'The thread runs through fabric', hint: 'TH + R = two sounds in a row' },
+  { ipa: '/θrɛt/', word: 'threat', ctx: 'Real threat in round three', hint: 'the hardest combo: THR' },
+  { ipa: '/rɪəli/', word: 'really', ctx: 'Really good run', hint: 'R at the start — don\'t soften it' },
+  { ipa: '/θɜːrə/', word: 'thoroughly', ctx: 'Check the map thoroughly', hint: 'R in the middle — keep it clear' },
+  { ipa: '/rʌn/', word: 'running', ctx: 'Running through the third level', hint: 'strong R at the start' },
+];
+
+const PAIRS = [
+  { th: ['think', '/θɪŋk/'], other: ['fink', '/fɪŋk/'], label: 'TH vs F' },
+  { th: ['three', '/θriː/'], other: ['free', '/friː/'], label: 'TH vs F' },
+  { th: ['through', '/θruː/'], other: ['true', '/truː/'], label: 'TH vs T' },
+  { th: ['worth', '/wɜːrθ/'], other: ['worse', '/wɜːrs/'], label: 'TH vs S' },
+];
+
+// ── BUILD GRIDS ───────────────────────────────────
+
+function buildWordGrid(data, containerId) {
+  const g = document.getElementById(containerId);
+  g.innerHTML = '';
+  data.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'word-card';
+    el.innerHTML = `
+      <span class="wc-ipa">${item.ipa}</span>
+      <span class="wc-word">${item.word}</span>
+      <span class="wc-roblox">"${item.ctx}"</span>
+      <span class="wc-hint">${item.hint}</span>`;
+    let revealed = false;
+    el.addEventListener('click', () => {
+      if(!revealed) { revealed = true; }
+      else { el.classList.toggle('done'); }
+    });
+    g.appendChild(el);
+  });
+}
+
+function buildPairs() {
+  const area = document.getElementById('pairArea');
+  area.innerHTML = '';
+  PAIRS.forEach(p => {
+    const row = document.createElement('div');
+    row.className = 'pair-row';
+    row.innerHTML = `
+      <div class="pair-word th-word">
+        <span class="pw-ipa">${p.th[1]}</span>
+        <span class="pw-word">${p.th[0]}</span>
+      </div>
+      <span class="pair-arrow">⟷</span>
+      <div class="pair-word other-word">
+        <span class="pw-ipa">${p.other[1]}</span>
+        <span class="pw-word">${p.other[0]}</span>
+      </div>
+      <span style="font-family:var(--pixel);font-size:0.65rem;color:var(--muted);min-width:60px;">${p.label}</span>`;
+    area.appendChild(row);
+  });
+}
+
+// ── NAV ──────────────────────────────────────────
+
+let cur = 0;
+const total = 5;
+const pcts = [20,40,60,80,100];
+const labels = ['STAGE 1/5','STAGE 2/5','STAGE 3/5','STAGE 4/5','STAGE 5/5'];
+
+function go(idx) {
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.remove('active');
+    if(i===idx) b.classList.add('active');
+  });
+  cur = idx;
+  document.getElementById('pFill').style.width = pcts[idx] + '%';
+  document.getElementById('pPct').textContent = labels[idx];
+  document.getElementById('stepCount').textContent = `${idx+1} / ${total}`;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  const nb = document.getElementById('nextBtn');
+  nb.disabled = idx === total - 1;
+  nb.textContent = idx === total - 1 ? 'FINISH ✓' : 'NEXT →';
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  if(idx === 3 && chatHistory.length === 0) buildChat();
+}
+
+function nav(d) { const n=cur+d; if(n>=0&&n<total) go(n); }
+
+// ── AI CHAT ──────────────────────────────────────
+
+let chatHistory = [];
+let chatTurns = 0;
+const MAX_CHAT = 6;
+
+function buildChat() {
+  chatHistory = [];
+  chatTurns = 0;
+  document.getElementById('chatBox').innerHTML = '';
+  const opening = "Hey! Nice to meet you in-game. So, are you in the middle of a match right now, or just exploring? What server are you on?";
+  addBubble('ai', opening);
+  chatHistory.push({ role:'user', content: `You are a friendly English-speaking Roblox player chatting via voice chat. The student is a C1 English speaker who is working on their TH and R sounds. Have a natural, enthusiastic conversation about Roblox — ask about their favorite games, strategies, recent matches, builds, etc. Keep your messages to 1-2 sentences. After each response, ask one follow-up question. Don't mention pronunciation — just chat naturally. Make it feel like a real gaming conversation. Start now.` });
+  chatHistory.push({ role:'assistant', content: opening });
+}
+
+function addBubble(role, text) {
+  const box = document.getElementById('chatBox');
+  const b = document.createElement('div');
+  b.className = `bubble ${role}`;
+  b.textContent = text;
+  box.appendChild(b);
+  box.scrollTop = box.scrollHeight;
+  return b;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text || input.disabled) return;
+  input.value = '';
+  addBubble('user', text);
+  chatTurns++;
+
+  const left = MAX_CHAT - chatTurns;
+  document.getElementById('chatNote').textContent = left > 0 ? `${left} EXCHANGES LEFT // KEEP USING TH + R` : 'LAST EXCHANGE!';
+
+  chatHistory.push({ role:'user', content: text });
+  const load = addBubble('ai', '...');
+  load.classList.add('loading');
+
+  const sys = `You are a friendly English-speaking Roblox player. Have a natural gaming conversation. Keep responses to 1-2 sentences. Always end with a question. Be enthusiastic about Roblox. ${chatTurns >= MAX_CHAT ? 'This is the last message. Wrap up warmly and say it was great chatting.' : ''}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: sys, messages: chatHistory })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'That\'s awesome! What else do you like about Roblox?';
+    load.textContent = reply;
+    load.classList.remove('loading');
+    chatHistory.push({ role:'assistant', content: reply });
+  } catch(e) {
+    load.textContent = 'Connection lost! Keep talking!';
+    load.classList.remove('loading');
+  }
+
+  if(chatTurns >= MAX_CHAT) {
+    input.disabled = true;
+    input.placeholder = 'Chat complete! Proceed to debrief.';
+    showDebrief();
+  }
+}
+
+function showDebrief() {
+  document.getElementById('debriefSection').style.display = 'block';
+  document.getElementById('debriefSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function restartGame() {
+  chatHistory = [];
+  chatTurns = 0;
+  document.getElementById('chatInput').disabled = false;
+  document.getElementById('chatInput').placeholder = 'Type your response — focus on TH and R words...';
+  document.getElementById('debriefSection').style.display = 'none';
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('done'));
+  buildWordGrid(TH_WORDS, 'thGrid');
+  buildWordGrid(R_WORDS, 'rGrid');
+  buildPairs();
+  go(0);
+}
+
+// ── INIT ─────────────────────────────────────────
+buildWordGrid(TH_WORDS, 'thGrid');
+buildWordGrid(R_WORDS, 'rGrid');
+buildPairs();
+</script>
+</body>
+</html>

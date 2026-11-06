@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You're in LA — Thiago Lesson 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky: #2A7FD4;
+  --sky-d: #1A5FA0;
+  --sky-l: #7AB8F0;
+  --sky-dim: rgba(42,127,212,0.12);
+  --sky-border: rgba(42,127,212,0.28);
+  --sun: #E8A020;
+  --sun-dim: rgba(232,160,32,0.12);
+  --sun-border: rgba(232,160,32,0.3);
+  --sun-l: #F5C860;
+  --palm: #2D7A4A;
+  --palm-dim: rgba(45,122,74,0.12);
+  --palm-border: rgba(45,122,74,0.3);
+  --bg: #0A0F14;
+  --surface: #111820;
+  --surface2: #172030;
+  --surface3: #1E2A3A;
+  --ink: #EAF0F8;
+  --muted: #6A7A8A;
+  --muted2: #3A4A5A;
+  --white: #FFFFFF;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  background: var(--surface);
+  border-bottom: 1px solid var(--sky-border);
+  padding: 3rem 2rem 2.5rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 100% at 100% 100%, rgba(42,127,212,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 0% 0%, rgba(232,160,32,0.06) 0%, transparent 60%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(42,127,212,0.03) 59px,
+      rgba(42,127,212,0.03) 60px
+    );
+  pointer-events: none;
+}
+
+.hero-bg-text {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 200px;
+  color: rgba(42,127,212,0.05);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sky);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--sky);
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 9vw, 80px);
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 0.92;
+  margin-bottom: 1rem;
+}
+
+.hero-title .accent { color: var(--sky); }
+.hero-title .accent2 { color: var(--sun); }
+
+.hero-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-meta {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.meta-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid var(--sky-border);
+  color: var(--sky);
+  border-radius: 2px;
+}
+
+.meta-pill.sun { border-color: var(--sun-border); color: var(--sun); }
+
+/* ── PROGRESS ── */
+.progress-track {
+  height: 2px;
+  background: var(--surface3);
+  max-width: 720px;
+  margin: 0 auto;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--sky-d), var(--sky));
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* ── CONTENT ── */
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+}
+
+/* ── BLOCK ── */
+.block {
+  margin-bottom: 10px;
+  border: 1px solid var(--surface3);
+  background: var(--surface);
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.block::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--surface3);
+  transition: background 0.2s;
+}
+
+.block.active-block { border-color: var(--sky-border); }
+.block.active-block::before { background: var(--sky); }
+
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.125rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.block-header:hover { background: var(--surface2); }
+
+.block-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 34px;
+  color: var(--muted2);
+  line-height: 1;
+  min-width: 34px;
+  transition: color 0.2s;
+}
+.block.active-block .block-num { color: var(--sky); }
+
+.block-info { flex: 1; }
+.block-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.block-time {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.block-arrow {
+  width: 24px; height: 24px;
+  border: 1px solid var(--surface3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--muted);
+  transition: all 0.2s; flex-shrink: 0;
+}
+.block-arrow.open { border-color: var(--sky-border); color: var(--sky); transform: rotate(90deg); }
+
+.block-body {
+  display: none;
+  border-top: 1px solid var(--surface3);
+  padding: 1.5rem;
+}
+.block-body.open { display: block; }
+
+/* ── INNER ELEMENTS ── */
+.sec-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sky);
+  margin: 1.25rem 0 0.625rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--surface3); }
+
+.body-text {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+/* ── LOOP FORMULA ── */
+.loop-formula {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.loop-step {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  padding: 1rem 0.75rem;
+  background: var(--surface2);
+  border: 1px solid var(--surface3);
+  position: relative;
+}
+
+.loop-step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.loop-step-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+}
+
+.loop-step.s1 { border-left: 3px solid var(--sky); }
+.loop-step.s2 { border-left: none; border-left: 1px solid var(--surface3); }
+.loop-step.s3 { border-left: 3px solid var(--sun); }
+
+.loop-arrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  color: var(--muted2);
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ── LOOP DRILL CARDS ── */
+.drill-set { margin: 0.75rem 0; }
+.drill-header {
+  background: var(--surface2);
+  border: 1px solid var(--surface3);
+  border-bottom: none;
+  padding: 0.625rem 1rem;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.drill-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  border: 1px solid var(--surface3);
+  border-top: none;
+}
+
+.drill-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid var(--surface3);
+}
+
+.drill-tag.react { color: var(--sky); background: var(--sky-dim); }
+.drill-tag.ask { color: var(--muted); background: var(--surface2); }
+.drill-tag.share { color: var(--sun); background: var(--sun-dim); }
+.drill-tag.you { color: var(--muted); background: var(--surface3); }
+
+.drill-content {
+  padding: 0.75rem 1rem;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.drill-content em { font-style: italic; opacity: 0.7; }
+.drill-content strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.01em;
+  font-style: normal;
+}
+
+/* ── STATEMENT CARDS ── */
+.statement-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0.75rem 0;
+}
+
+.statement-card {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--surface3);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.statement-card:hover { border-color: var(--sky-border); }
+.statement-card.used { border-color: var(--palm-border); background: var(--palm-dim); }
+
+.statement-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--surface2);
+  border-right: 1px solid var(--surface3);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.statement-card.used .statement-icon { background: var(--palm-dim); }
+
+.statement-text {
+  font-size: 14px;
+  color: var(--ink);
+  font-style: italic;
+  padding: 0.75rem 1rem;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.statement-check {
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: transparent;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.statement-card.used .statement-check { color: var(--palm); }
+
+/* ── CONTEXT TAGS ── */
+.context-tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 0.75rem 0; }
+.ctx-tag {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid var(--surface3);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ctx-tag:hover { border-color: var(--sky-border); color: var(--sky); }
+.ctx-tag.active { border-color: var(--sky); color: var(--sky); background: var(--sky-dim); }
+
+/* ── SITUATION CARD ── */
+.sit-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--surface3);
+  margin: 0.5rem 0;
+  overflow: hidden;
+}
+
+.sit-who {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sky);
+  background: var(--sky-dim);
+  padding: 0.875rem 0.75rem;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  border-right: 1px solid var(--sky-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sit-says {
+  font-size: 14px;
+  color: var(--ink);
+  font-style: italic;
+  line-height: 1.55;
+  padding: 0.875rem 1rem;
+  opacity: 0.9;
+}
+
+/* ── TOPIC EXTENSION ── */
+.topic-block {
+  border: 1px solid var(--surface3);
+  margin: 0.75rem 0;
+  overflow: hidden;
+}
+
+.topic-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.875rem 1rem;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--surface3);
+}
+
+.topic-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.topic-context {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.topic-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.topic-trigger {
+  padding: 0.875rem 1rem;
+  font-size: 14px;
+  color: var(--ink);
+  font-style: italic;
+  line-height: 1.55;
+  opacity: 0.85;
+  border-bottom: 1px solid var(--surface3);
+}
+
+.topic-angles {
+  padding: 0.875rem 1rem;
+}
+
+.topic-angles-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.angle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.8;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.angle-item:hover { opacity: 1; }
+
+.angle-item.checked { opacity: 0.45; text-decoration: line-through; }
+
+.angle-dot {
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--surface3);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: transparent;
+  transition: all 0.15s;
+}
+
+.angle-item.checked .angle-dot {
+  background: var(--sky-dim);
+  border-color: var(--sky-border);
+  color: var(--sky);
+}
+
+/* ── NOTE BOX ── */
+.note-box {
+  border-left: 3px solid var(--sun);
+  background: var(--sun-dim);
+  padding: 0.875rem 1.125rem;
+  margin: 0.875rem 0;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.65;
+  opacity: 0.9;
+}
+
+.note-box strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sun);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── TIMER ── */
+.timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sky);
+  border: 1px solid var(--sky-border);
+  padding: 5px 12px;
+  background: var(--sky-dim);
+  margin: 0.75rem 0;
+}
+
+.timer-widget {
+  background: var(--surface2);
+  border: 1px solid var(--surface3);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 0.875rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-widget::before {
+  content: 'LOS ANGELES';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 72px;
+  color: rgba(42,127,212,0.04);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: 0.05em;
+}
+
+.timer-display {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  color: var(--sky);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: color 0.3s;
+}
+.timer-display.done { color: #4CAF82; }
+
+.timer-btns { display: flex; justify-content: center; gap: 8px; position: relative; }
+
+.timer-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 8px 22px;
+  border: 1px solid var(--sky-border);
+  color: var(--sky);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.timer-btn:hover { background: var(--sky-dim); }
+.timer-btn.primary { background: var(--sky); color: var(--bg); border-color: var(--sky); }
+.timer-btn.primary:hover { background: var(--sky-l); }
+
+.success-msg {
+  display: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #4CAF82;
+  padding: 0.5rem;
+  margin-top: 0.75rem;
+  position: relative;
+}
+
+/* ── WRITE ── */
+.write-space {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--surface3);
+  border-bottom: 2px solid var(--sky-border);
+  padding: 0.875rem 1rem;
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 80px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.write-space:focus { border-bottom-color: var(--sky); }
+.write-space::placeholder { color: var(--muted2); font-style: italic; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--surface3); margin: 1.25rem 0; }
+
+/* ── HW ── */
+.hw-block {
+  border: 1px solid var(--sky-border);
+  background: var(--surface);
+  margin-top: 1.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.hw-block::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(42,127,212,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hw-top {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--sky-border);
+}
+
+.hw-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sky);
+  margin-bottom: 4px;
+}
+
+.hw-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+}
+
+.hw-body {
+  padding: 1.25rem 1.5rem;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  opacity: 0.85;
+  position: relative;
+}
+
+@media (max-width: 520px) {
+  .loop-formula { flex-direction: column; }
+  .loop-arrow { transform: rotate(90deg); align-self: center; }
+  .hero-bg-text { display: none; }
+  .timer-display { font-size: 64px; }
+  .drill-row { grid-template-columns: 64px 1fr; }
+  .sit-who { writing-mode: horizontal-tb; transform: none; padding: 0.5rem 0.75rem; border-right: none; border-bottom: 1px solid var(--sky-border); }
+  .sit-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">LA</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Thiago · Lesson 3</div>
+    <div class="hero-title">
+      You're<br>
+      <span class="accent">in</span><br>
+      <span class="accent2">LA</span>
+    </div>
+    <div class="hero-sub">Loop conversacional · Personal statements · Topic extension</div>
+    <div class="hero-meta">
+      <div class="meta-pill">45 min</div>
+      <div class="meta-pill">Speaking focus</div>
+      <div class="meta-pill sun">Los Angeles</div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-track">
+  <div class="progress-fill" id="prog"></div>
+</div>
+
+<div class="content">
+
+  <!-- BLOCK 01 -->
+  <div class="block" id="blk0">
+    <div class="block-header" onclick="toggle(0)">
+      <div class="block-num">01</div>
+      <div class="block-info">
+        <div class="block-title">O Loop — A Fórmula da Conversa</div>
+        <div class="block-time">10 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr0">›</div>
+    </div>
+    <div class="block-body" id="bd0">
+
+      <div class="body-text">Uma conversa que se sustenta funciona sempre em 3 passos. Aprende a fórmula — depois ela vira automático.</div>
+
+      <div class="sec-label">A fórmula</div>
+      <div class="loop-formula">
+        <div class="loop-step s1">
+          <div class="loop-step-num">Step 1</div>
+          <div class="loop-step-text">React</div>
+        </div>
+        <div class="loop-arrow">›</div>
+        <div class="loop-step s2">
+          <div class="loop-step-num">Step 2</div>
+          <div class="loop-step-text">Ask</div>
+        </div>
+        <div class="loop-arrow">›</div>
+        <div class="loop-step s3">
+          <div class="loop-step-num">Step 3</div>
+          <div class="loop-step-text">Share something</div>
+        </div>
+      </div>
+
+      <div class="note-box"><strong>Por que funciona</strong>React mostra que você está ouvindo. Ask mantém a conversa. Share traz você pra dentro — a conversa não para.</div>
+
+      <div class="sec-label">O loop em ação</div>
+
+      <div class="drill-set">
+        <div class="drill-header">Situação — gym em Venice Beach</div>
+        <div class="drill-row">
+          <div class="drill-tag you">Ele diz</div>
+          <div class="drill-content"><em>"I've been training here for 5 years. Best gym in LA."</em></div>
+        </div>
+        <div class="drill-row">
+          <div class="drill-tag react">React</div>
+          <div class="drill-content"><strong>"That's sick!"</strong></div>
+        </div>
+        <div class="drill-row">
+          <div class="drill-tag ask">Ask</div>
+          <div class="drill-content"><strong>"Do you compete or just train?"</strong></div>
+        </div>
+        <div class="drill-row">
+          <div class="drill-tag share">Share</div>
+          <div class="drill-content"><strong>"I'm a personal trainer back in Brazil — always wanted to train here."</strong></div>
+        </div>
+      </div>
+
+      <div class="sec-label">Sua vez — use o loop</div>
+
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I moved to LA two months ago. I love it here."</div></div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I train three times a week. Mostly weights."</div></div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I eat chicken and rice every day. It's boring but it works."</div></div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 02 -->
+  <div class="block" id="blk1">
+    <div class="block-header" onclick="toggle(1)">
+      <div class="block-num">02</div>
+      <div class="block-info">
+        <div class="block-title">Personal Statements — Sua Munição em LA</div>
+        <div class="block-time">10 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr1">›</div>
+    </div>
+    <div class="block-body" id="bd1">
+
+      <div class="body-text">Essas são frases sobre você — prontas pra usar no loop no momento do <strong style="color:var(--sun)">Share</strong>. Treina falando em voz alta. Clica nas que você já praticou.</div>
+
+      <div class="sec-label">As frases — clique quando treinar</div>
+      <div class="statement-grid" id="stmts">
+        <div class="statement-card" onclick="toggleStmt(this)">
+          <div class="statement-icon">💪</div>
+          <div class="statement-text">"I'm a personal trainer back in Brazil."</div>
+          <div class="statement-check">✓</div>
+        </div>
+        <div class="statement-card" onclick="toggleStmt(this)">
+          <div class="statement-icon">✈️</div>
+          <div class="statement-text">"I'm here for the first time — always wanted to come to LA."</div>
+          <div class="statement-check">✓</div>
+        </div>
+        <div class="statement-card" onclick="toggleStmt(this)">
+          <div class="statement-icon">🏋️</div>
+          <div class="statement-text">"I train every day, even on vacation. It's just part of my routine."</div>
+          <div class="statement-check">✓</div>
+        </div>
+        <div class="statement-card" onclick="toggleStmt(this)">
+          <div class="statement-icon">🎯</div>
+          <div class="statement-text">"I follow a lot of athletes from here — CBum, Ramon Dino."</div>
+          <div class="statement-check">✓</div>
+        </div>
+        <div class="statement-card" onclick="toggleStmt(this)">
+          <div class="statement-icon">🔍</div>
+          <div class="statement-text">"I'm looking for gyms to visit while I'm here."</div>
+          <div class="statement-check">✓</div>
+        </div>
+        <div class="statement-card" onclick="toggleStmt(this)">
+          <div class="statement-icon">🇧🇷</div>
+          <div class="statement-text">"Brazil has a huge fitness culture — it's getting bigger every year."</div>
+          <div class="statement-check">✓</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sec-label">Drill — contexto + statement</div>
+      <div class="body-text">Ouça. Escolha um statement. Use no loop.</div>
+
+      <div class="context-tags">
+        <div class="ctx-tag active" onclick="setCtx(this,'uber')">🚗 Uber</div>
+        <div class="ctx-tag" onclick="setCtx(this,'hotel')">🏨 Hotel</div>
+        <div class="ctx-tag" onclick="setCtx(this,'gym')">🏋️ Gym</div>
+      </div>
+
+      <div id="ctx-uber" class="sit-card"><div class="sit-who">Motorista</div><div class="sit-says">"You here on vacation? First time in LA?"</div></div>
+      <div id="ctx-hotel" class="sit-card" style="display:none"><div class="sit-who">Recepcionista</div><div class="sit-says">"Welcome! What brings you to Los Angeles?"</div></div>
+      <div id="ctx-gym" class="sit-card" style="display:none"><div class="sit-who">At the gym</div><div class="sit-says">"Hey man, you visiting? Haven't seen you here before."</div></div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 03 -->
+  <div class="block" id="blk2">
+    <div class="block-header" onclick="toggle(2)">
+      <div class="block-num">03</div>
+      <div class="block-info">
+        <div class="block-title">Topic Extension — Fica no Assunto</div>
+        <div class="block-time">15 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr2">›</div>
+    </div>
+    <div class="block-body" id="bd2">
+
+      <div class="body-text">Quando não sabe o que falar, a tendência é mudar de assunto. Esse drill treina você a ficar no mesmo tópico — explorando ângulos diferentes.</div>
+
+      <div class="note-box"><strong>Regra</strong>Não muda de tópico. Se travar, usa um dos ângulos abaixo pra continuar.</div>
+
+      <div class="sec-label">Situação 1 — hotel em LA</div>
+      <div class="topic-block">
+        <div class="topic-header">
+          <div class="topic-icon">🏨</div>
+          <div>
+            <div class="topic-context">Recepcionista do hotel</div>
+            <div class="topic-sub">Tópico: o que você veio fazer em LA</div>
+          </div>
+        </div>
+        <div class="topic-trigger">"What are you going to do in LA?"</div>
+        <div class="topic-angles">
+          <div class="topic-angles-label">Ângulos pra explorar — clique quando usar</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Gyms que quer visitar</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Venice Beach — praia e academia</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Por que você escolheu LA</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>O que você faz no Brasil</div>
+        </div>
+      </div>
+
+      <div class="sec-label">Situação 2 — gym em Venice Beach</div>
+      <div class="topic-block">
+        <div class="topic-header">
+          <div class="topic-icon">🏋️</div>
+          <div>
+            <div class="topic-context">Cara no gym</div>
+            <div class="topic-sub">Tópico: de onde você é</div>
+          </div>
+        </div>
+        <div class="topic-trigger">"Wait, you're from Brazil? Cool! What's Brazil like?"</div>
+        <div class="topic-angles">
+          <div class="topic-angles-label">Ângulos pra explorar — clique quando usar</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Sua cidade — São Paulo</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Fitness no Brasil — é muito popular</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>O que você está achando de LA</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Por que você veio aqui</div>
+        </div>
+      </div>
+
+      <div class="sec-label">Situação 3 — Uber</div>
+      <div class="topic-block">
+        <div class="topic-header">
+          <div class="topic-icon">🚗</div>
+          <div>
+            <div class="topic-context">Motorista do Uber</div>
+            <div class="topic-sub">Tópico: o Brasil</div>
+          </div>
+        </div>
+        <div class="topic-trigger">"Brazil! Carnival, soccer, beaches... I want to go one day!"</div>
+        <div class="topic-angles">
+          <div class="topic-angles-label">Ângulos pra explorar — clique quando usar</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Concorda + fala algo sobre o Brasil</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Algo que surpreende as pessoas sobre o Brasil</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>O que você mais gosta no Brasil</div>
+          <div class="angle-item" onclick="checkAngle(this)"><div class="angle-dot">✓</div>Pergunta se ele já viajou pra fora dos EUA</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 04 -->
+  <div class="block" id="blk3">
+    <div class="block-header" onclick="toggle(3)">
+      <div class="block-num">04</div>
+      <div class="block-info">
+        <div class="block-title">Roleplay — Venice Beach Gym</div>
+        <div class="block-time">10 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr3">›</div>
+    </div>
+    <div class="block-body" id="bd3">
+
+      <div class="sit-card" style="margin-top:0.75rem"><div class="sit-who">Como começa</div><div class="sit-says">"Hey, you visiting or you live here?"</div></div>
+
+      <div class="sec-label">Use tudo — 2 minutos sem parar</div>
+
+      <div class="loop-formula" style="margin-bottom:1rem">
+        <div class="loop-step s1" style="padding:0.625rem 0.5rem"><div class="loop-step-num" style="font-size:9px">Passo 1</div><div class="loop-step-text" style="font-size:16px">React</div></div>
+        <div class="loop-arrow">›</div>
+        <div class="loop-step s2" style="padding:0.625rem 0.5rem"><div class="loop-step-num" style="font-size:9px">Passo 2</div><div class="loop-step-text" style="font-size:16px">Ask</div></div>
+        <div class="loop-arrow">›</div>
+        <div class="loop-step s3" style="padding:0.625rem 0.5rem"><div class="loop-step-num" style="font-size:9px">Passo 3</div><div class="loop-step-text" style="font-size:16px">Share</div></div>
+      </div>
+
+      <div class="note-box"><strong>Regra</strong>Errou? Continua. Travou? Usa um personal statement. Não para.</div>
+
+      <div class="sec-label">Timer — 2 minutos</div>
+      <div class="timer-widget">
+        <div class="timer-display" id="tdisp">2:00</div>
+        <div class="timer-btns">
+          <button class="timer-btn primary" id="tbtn" onclick="startTimer()">Começar</button>
+          <button class="timer-btn" onclick="resetTimer()">Resetar</button>
+        </div>
+        <div class="success-msg" id="succ">2 minutos. Você fez isso.</div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="sec-label">Como foi — escreva depois de falar</div>
+      <textarea class="write-space" placeholder="O que funcionou? Onde você travou? O que você usou?..." rows="4"></textarea>
+
+    </div>
+  </div>
+
+  <!-- HW -->
+  <div class="hw-block">
+    <div class="hw-top">
+      <div class="hw-eyebrow">Independent Activity</div>
+      <div class="hw-title">Voice Note — 30 Segundos</div>
+    </div>
+    <div class="hw-body">
+      Grava um áudio de 30 segundos respondendo:<br><br>
+      <em style="color:var(--sky-l); font-size:15px;">"Tell me about one thing you want to do in LA."</em><br><br>
+      Não escreve, não prepara. Só pensa por 5 segundos e grava.<br><br>
+      <strong style="color:var(--sky); font-family:'Barlow Condensed',sans-serif; letter-spacing:0.05em; font-size:15px;">Erros são ok. Parar não é.</strong>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(i) {
+  const bd = document.getElementById('bd'+i);
+  const arr = document.getElementById('arr'+i);
+  const blk = document.getElementById('blk'+i);
+  const open = bd.classList.toggle('open');
+  arr.classList.toggle('open', open);
+  blk.classList.toggle('active-block', open);
+  document.getElementById('prog').style.width = (document.querySelectorAll('.block-body.open').length / 4 * 100) + '%';
+}
+
+function toggleStmt(el) { el.classList.toggle('used'); }
+
+function checkAngle(el) { el.classList.toggle('checked'); }
+
+function setCtx(el, id) {
+  document.querySelectorAll('.ctx-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  ['uber','hotel','gym'].forEach(c => {
+    document.getElementById('ctx-'+c).style.display = c === id ? 'grid' : 'none';
+  });
+}
+
+// Timer
+let interval = null, secs = 120, running = false;
+
+function fmt(s) {
+  return Math.floor(s/60) + ':' + (s%60 < 10 ? '0' : '') + (s%60);
+}
+
+function startTimer() {
+  if (running) return;
+  running = true;
+  document.getElementById('tbtn').textContent = 'Falando...';
+  document.getElementById('tbtn').classList.remove('primary');
+  document.getElementById('succ').style.display = 'none';
+  document.getElementById('tdisp').classList.remove('done');
+
+  interval = setInterval(() => {
+    secs--;
+    document.getElementById('tdisp').textContent = fmt(secs);
+    if (secs <= 0) {
+      clearInterval(interval);
+      running = false;
+      document.getElementById('tdisp').classList.add('done');
+      document.getElementById('tdisp').textContent = '0:00';
+      document.getElementById('tbtn').textContent = 'Começar';
+      document.getElementById('tbtn').classList.add('primary');
+      document.getElementById('succ').style.display = 'block';
+      secs = 120;
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  running = false;
+  secs = 120;
+  document.getElementById('tdisp').textContent = '2:00';
+  document.getElementById('tdisp').classList.remove('done');
+  document.getElementById('tbtn').textContent = 'Começar';
+  document.getElementById('tbtn').classList.add('primary');
+  document.getElementById('succ').style.display = 'none';
+}
+</script>
+</body>
+</html>

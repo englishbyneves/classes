@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Carol's Big Week — English Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f4ede4;font-family:'DM Sans',sans-serif;padding:1.5rem;min-height:100vh;}
+.wrap{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+
+.hero{background:#9bbfd4;border-radius:18px;padding:2rem 2rem 1.5rem;display:flex;align-items:flex-end;justify-content:space-between;}
+.hero-eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#1a3d52;font-weight:500;margin-bottom:.4rem;}
+.hero-title{font-family:'Playfair Display',serif;font-size:2.2rem;color:#0c2535;line-height:1.15;margin-bottom:.3rem;}
+.hero-sub{font-size:12px;color:#2a5570;letter-spacing:.04em;}
+.hero-pills{display:flex;gap:6px;margin-top:.9rem;flex-wrap:wrap;}
+.pill{font-size:10px;padding:3px 12px;border-radius:20px;font-weight:500;background:rgba(12,37,53,.15);color:#0c2535;border:0.5px solid rgba(12,37,53,.2);}
+.hero-deco{display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0;margin-left:1rem;}
+.passport-book{width:54px;height:70px;background:#80b5c8;border-radius:4px 10px 10px 4px;border:1.5px solid #5a8fa8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+.passport-inner{width:38px;height:28px;border:1px solid #5a8fa8;border-radius:2px;background:#a8ccda;}
+.passport-line{width:30px;height:1.5px;background:#5a8fa8;border-radius:1px;}
+.camera-icon{width:46px;height:33px;background:#6b5040;border-radius:6px;display:flex;align-items:center;justify-content:center;}
+.camera-lens{width:17px;height:17px;border-radius:50%;background:#3d2c20;border:2.5px solid #9b7e6a;}
+
+.map-wrap{background:#c8dde8;border-radius:18px;padding:.85rem;overflow:hidden;}
+.map-wrap svg{width:100%;display:block;}
+
+.dest-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.dest-btn{background:#f7f2ec;border:1.5px solid #c4a882;border-radius:14px;padding:.85rem .6rem;text-align:center;cursor:pointer;transition:border-color .18s,transform .15s;user-select:none;}
+.dest-btn:hover{border-color:#8b6f5a;transform:translateY(-2px);}
+.dest-btn.on{border-color:#8b6f5a;background:#e8d8c8;}
+.pin-icon{width:20px;height:26px;margin:0 auto 7px;display:block;}
+.dest-name{font-size:11px;font-weight:500;color:#3d2c20;}
+.dest-tag{font-size:10px;color:#8b6f5a;margin-top:2px;}
+
+.qs-box{background:#f7f2ec;border:1px solid #c4a882;border-radius:16px;padding:1.1rem 1.4rem;}
+.qs-city{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:#8b6f5a;margin-bottom:.7rem;display:flex;align-items:center;gap:9px;}
+.qs-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.qs-list li{font-size:14px;color:#2c1e14;padding:8px 13px 8px 14px;background:#fff;border-radius:9px;border-left:2.5px solid #9bbfd4;line-height:1.5;}
+.op-btn{margin-top:11px;font-size:12px;font-weight:500;padding:7px 18px;border-radius:20px;background:#d4a0a8;color:#3d1a20;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s;display:inline-block;}
+.op-btn:hover{opacity:.82;}
+
+.section{background:#fff;border:0.5px solid #d9c9b4;border-radius:16px;overflow:hidden;}
+.sec-head{display:flex;align-items:center;gap:11px;padding:.9rem 1.25rem;cursor:pointer;user-select:none;}
+.sec-head:hover{background:#f7f2ec;}
+.sec-num{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;background:#9bbfd4;color:#0c2535;}
+.sec-label{flex:1;font-size:13px;font-weight:500;color:#2c1e14;}
+.sec-time{font-size:11px;color:#8b7060;margin-right:5px;}
+.sec-ch{font-size:10px;color:#8b7060;transition:transform .2s;}
+.sec-ch.open{transform:rotate(180deg);}
+.sec-body{padding:0 1.25rem 1.1rem;display:none;}
+.sec-body.open{display:block;}
+
+.rank-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.rank-card{background:#f7f2ec;border:0.5px solid #c4a882;border-radius:9px;padding:10px 13px;}
+.rank-lbl{font-size:10px;color:#8b6f5a;font-weight:500;letter-spacing:.05em;text-transform:uppercase;margin-bottom:4px;}
+.rank-q{font-size:13px;color:#2c1e14;line-height:1.4;}
+
+.photo-qs{display:flex;flex-direction:column;gap:7px;list-style:none;}
+.photo-qs li{font-size:14px;color:#2c1e14;padding:8px 13px;background:#f7f2ec;border-radius:9px;line-height:1.45;}
+
+.bday-sec{background:#e8c8cc;border:1px solid #c49098;border-radius:16px;padding:1.25rem 1.4rem;}
+.bday-head{font-family:'Playfair Display',serif;font-style:italic;font-size:1.1rem;color:#3d1a20;margin-bottom:.75rem;display:flex;align-items:center;gap:9px;}
+.bday-qs{display:flex;flex-direction:column;gap:7px;list-style:none;}
+.bday-qs li{font-size:14px;color:#3d1a20;padding:8px 13px;background:rgba(255,255,255,.55);border-radius:9px;line-height:1.45;}
+.bday-flip{font-size:11px;color:#7a3a42;margin-top:10px;}
+.bday-btn{margin-top:11px;font-size:12px;font-weight:500;padding:7px 18px;border-radius:20px;background:#8b6f5a;color:#f7f2ec;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .15s;display:inline-block;}
+.bday-btn:hover{opacity:.82;}
+
+.vocab-chips{display:flex;flex-wrap:wrap;gap:7px;padding:0 1.25rem 1.1rem;}
+.chip{font-size:12px;padding:5px 13px;border-radius:20px;background:#f0e8df;border:0.5px solid #c4a882;color:#3d2c20;}
+
+.close-bar{background:#f0e8df;border:1px solid #c4a882;border-radius:16px;padding:1.1rem 1.4rem;text-align:center;}
+.close-label{font-family:'Playfair Display',serif;font-style:italic;font-size:.95rem;color:#8b6f5a;margin-bottom:.6rem;}
+.close-input{width:100%;font-size:14px;font-family:'DM Sans',sans-serif;background:#fff;border:0.5px solid #c4a882;border-radius:9px;color:#2c1e14;padding:9px 14px;outline:none;}
+.close-input:focus{border-color:#8b6f5a;}
+.close-input::placeholder{color:#b9a48a;}
+
+.opinion-popup{display:none;position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:#2c1e14;color:#f7f2ec;font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;padding:1rem 1.75rem;border-radius:30px;max-width:90%;text-align:center;z-index:999;animation:fadeup .3s ease;}
+.opinion-popup.show{display:block;}
+@keyframes fadeup{from{opacity:0;transform:translateX(-50%) translateY(10px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow">English lesson · A2 speaking</p>
+    <h1 class="hero-title">Carol's Big Week</h1>
+    <p class="hero-sub">Europe · Disney Paris · Birthday</p>
+    <div class="hero-pills">
+      <span class="pill">~60 min</span>
+      <span class="pill">90% speaking</span>
+      <span class="pill">A2</span>
+    </div>
+  </div>
+  <div class="hero-deco">
+    <div class="passport-book">
+      <div class="passport-inner"></div>
+      <div class="passport-line"></div>
+      <div class="passport-line"></div>
+    </div>
+    <div class="camera-icon"><div class="camera-lens"></div></div>
+  </div>
+</div>
+
+<div class="map-wrap">
+  <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg">
+    <rect width="640" height="220" fill="#c8dde8" rx="8"/>
+    <path d="M60 80 Q80 60 120 65 Q150 58 170 70 Q200 55 230 68 Q260 50 300 62 Q340 48 380 60 Q420 45 460 58 Q500 42 540 55 Q580 48 620 60 L620 150 Q580 160 540 155 Q500 162 460 158 Q420 165 380 160 Q340 168 300 162 Q260 170 230 165 Q200 172 170 166 Q150 174 120 168 Q80 175 60 170 Z" fill="#e8d8c8" stroke="#c4a882" stroke-width="0.5"/>
+    <path d="M180 70 Q220 58 260 65 Q290 55 310 68 Q290 90 280 110 Q270 130 260 145 Q240 160 220 165 Q200 172 185 160 Q170 145 165 120 Q160 95 180 70Z" fill="#d4c4b0" stroke="#c4a882" stroke-width="0.5"/>
+    <path d="M310 62 Q350 50 390 60 Q420 55 440 68 Q430 90 420 108 Q410 125 400 140 Q385 158 370 162 Q350 168 335 155 Q318 140 312 118 Q305 90 310 62Z" fill="#d4c4b0" stroke="#c4a882" stroke-width="0.5"/>
+    <path d="M440 58 Q480 45 520 55 Q550 48 580 58 Q575 75 565 90 Q555 108 545 120 Q530 138 515 148 Q498 158 480 155 Q462 162 450 148 Q438 130 435 108 Q430 82 440 58Z" fill="#d4c4b0" stroke="#c4a882" stroke-width="0.5"/>
+    <path d="M130 72 Q155 60 175 70 Q165 92 158 112 Q148 135 138 150 Q120 168 108 160 Q94 148 92 128 Q88 105 100 85 Q112 70 130 72Z" fill="#d4c4b0" stroke="#c4a882" stroke-width="0.5"/>
+    <path d="M242 125 Q252 118 262 122 Q270 118 278 124 Q275 138 268 148 Q260 158 252 162 Q244 156 238 145 Q234 133 242 125Z" fill="#9bbfd4" stroke="#7aa0b8" stroke-width="0.5"/>
+    <rect x="40" y="30" width="560" height="1" fill="#9bbfd4" opacity="0.35"/>
+    <rect x="40" y="60" width="560" height="1" fill="#9bbfd4" opacity="0.25"/>
+    <rect x="40" y="90" width="560" height="1" fill="#9bbfd4" opacity="0.25"/>
+    <rect x="40" y="120" width="560" height="1" fill="#9bbfd4" opacity="0.25"/>
+    <rect x="40" y="150" width="560" height="1" fill="#9bbfd4" opacity="0.25"/>
+    <rect x="40" y="180" width="560" height="1" fill="#9bbfd4" opacity="0.25"/>
+    <rect x="100" y="10" width="1" height="200" fill="#9bbfd4" opacity="0.2"/>
+    <rect x="200" y="10" width="1" height="200" fill="#9bbfd4" opacity="0.2"/>
+    <rect x="300" y="10" width="1" height="200" fill="#9bbfd4" opacity="0.2"/>
+    <rect x="400" y="10" width="1" height="200" fill="#9bbfd4" opacity="0.2"/>
+    <rect x="500" y="10" width="1" height="200" fill="#9bbfd4" opacity="0.2"/>
+    <path d="M178 108 Q238 95 298 148" fill="none" stroke="#d4a0a8" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.8"/>
+    <path d="M298 148 Q328 120 358 95" fill="none" stroke="#d4a0a8" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.8"/>
+    <path d="M358 95 Q424 97 490 100" fill="none" stroke="#d4a0a8" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.8"/>
+    <g id="pin-paris" onclick="selectFromMap('paris')" style="cursor:pointer">
+      <circle cx="178" cy="108" r="9" fill="#d4a0a8" stroke="#fff" stroke-width="2"/>
+      <circle cx="178" cy="108" r="3.5" fill="#fff"/>
+      <text x="178" y="132" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" fill="#3d1a20" font-weight="500">Paris</text>
+    </g>
+    <g id="pin-germany" onclick="selectFromMap('germany')" style="cursor:pointer">
+      <circle cx="358" cy="95" r="9" fill="#d4a0a8" stroke="#fff" stroke-width="2"/>
+      <circle cx="358" cy="95" r="3.5" fill="#fff"/>
+      <text x="358" y="119" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" fill="#3d1a20" font-weight="500">Germany</text>
+    </g>
+    <g id="pin-rome" onclick="selectFromMap('rome')" style="cursor:pointer">
+      <circle cx="298" cy="148" r="9" fill="#d4a0a8" stroke="#fff" stroke-width="2"/>
+      <circle cx="298" cy="148" r="3.5" fill="#fff"/>
+      <text x="298" y="172" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" fill="#3d1a20" font-weight="500">Rome</text>
+    </g>
+    <g id="pin-other" onclick="selectFromMap('other')" style="cursor:pointer">
+      <circle cx="490" cy="100" r="9" fill="#8b6f5a" stroke="#fff" stroke-width="2"/>
+      <circle cx="490" cy="100" r="3.5" fill="#fff"/>
+      <text x="490" y="124" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" fill="#3d2010" font-weight="500">+ others</text>
+    </g>
+    <text x="320" y="16" text-anchor="middle" font-family="Playfair Display,serif" font-size="13" fill="#3d2c20" font-style="italic" opacity="0.65">Carol's Europe Trip</text>
+  </svg>
+</div>
+
+<div class="dest-row">
+  <div class="dest-btn on" onclick="pick('paris')" id="d-paris">
+    <svg class="pin-icon" viewBox="0 0 20 26"><path d="M10 0C5.58 0 2 3.58 2 8c0 5.5 8 18 8 18s8-12.5 8-18c0-4.42-3.58-8-8-8z" fill="#d4a0a8" stroke="#c49098" stroke-width="1"/><circle cx="10" cy="8" r="3" fill="#fff"/></svg>
+    <p class="dest-name">Paris</p><p class="dest-tag">+ Disney</p>
+  </div>
+  <div class="dest-btn" onclick="pick('germany')" id="d-germany">
+    <svg class="pin-icon" viewBox="0 0 20 26"><path d="M10 0C5.58 0 2 3.58 2 8c0 5.5 8 18 8 18s8-12.5 8-18c0-4.42-3.58-8-8-8z" fill="#d4a0a8" stroke="#c49098" stroke-width="1"/><circle cx="10" cy="8" r="3" fill="#fff"/></svg>
+    <p class="dest-name">Germany</p><p class="dest-tag">castles</p>
+  </div>
+  <div class="dest-btn" onclick="pick('rome')" id="d-rome">
+    <svg class="pin-icon" viewBox="0 0 20 26"><path d="M10 0C5.58 0 2 3.58 2 8c0 5.5 8 18 8 18s8-12.5 8-18c0-4.42-3.58-8-8-8z" fill="#d4a0a8" stroke="#c49098" stroke-width="1"/><circle cx="10" cy="8" r="3" fill="#fff"/></svg>
+    <p class="dest-name">Rome</p><p class="dest-tag">food & history</p>
+  </div>
+  <div class="dest-btn" onclick="pick('other')" id="d-other">
+    <svg class="pin-icon" viewBox="0 0 20 26"><path d="M10 0C5.58 0 2 3.58 2 8c0 5.5 8 18 8 18s8-12.5 8-18c0-4.42-3.58-8-8-8z" fill="#8b6f5a" stroke="#7a5a42" stroke-width="1"/><circle cx="10" cy="8" r="3" fill="#fff"/></svg>
+    <p class="dest-name">Other stops</p><p class="dest-tag">hidden gems</p>
+  </div>
+</div>
+
+<div class="qs-box">
+  <p class="qs-city"><span id="city-flag">🇫🇷</span> <span id="qs-city-name">Paris & Disney Paris</span></p>
+  <ul class="qs-list" id="qs-list"></ul>
+  <button class="op-btn" onclick="showOpinion()">Your opinion</button>
+</div>
+
+<div class="section">
+  <div class="sec-head" onclick="tog('rank')">
+    <div class="sec-num">2</div>
+    <span class="sec-label">Rank it</span>
+    <span class="sec-time">~10 min</span>
+    <span class="sec-ch" id="ch-rank">▼</span>
+  </div>
+  <div class="sec-body" id="b-rank">
+    <div class="rank-grid">
+      <div class="rank-card"><p class="rank-lbl">Best city</p><p class="rank-q">1st to 4th — why?</p></div>
+      <div class="rank-card"><p class="rank-lbl">Best food</p><p class="rank-q">What did you eat? Would you eat it again?</p></div>
+      <div class="rank-card"><p class="rank-lbl">Most different</p><p class="rank-q">What was new for you?</p></div>
+      <div class="rank-card"><p class="rank-lbl">Disney Paris</p><p class="rank-q">Good or not so good?</p></div>
+    </div>
+    <button class="op-btn" style="margin-top:11px" onclick="showMsg('Which city was the best and why?')">Your opinion</button>
+  </div>
+</div>
+
+<div class="section">
+  <div class="sec-head" onclick="tog('photo')">
+    <div class="sec-num">3</div>
+    <span class="sec-label">Photo story — 3 photos, 3 moments</span>
+    <span class="sec-time">~10 min</span>
+    <span class="sec-ch" id="ch-photo">▼</span>
+  </div>
+  <div class="sec-body" id="b-photo">
+    <ul class="photo-qs">
+      <li>Where is this photo?</li>
+      <li>What happened here?</li>
+      <li>How did you feel?</li>
+    </ul>
+    <button class="op-btn" style="margin-top:11px" onclick="showMsg('Which photo is your favorite from the trip?')">Your opinion</button>
+  </div>
+</div>
+
+<div class="bday-sec">
+  <p class="bday-head">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0"><rect x="3" y="11" width="18" height="10" rx="2" fill="#d4a0a8" stroke="#c49098" stroke-width="1"/><rect x="3" y="10" width="18" height="3" rx="1" fill="#e8c0c4" stroke="#c49098" stroke-width="1"/><line x1="8" y1="11" x2="8" y2="21" stroke="#c49098" stroke-width="1"/><line x1="16" y1="11" x2="16" y2="21" stroke="#c49098" stroke-width="1"/><line x1="3" y1="16" x2="21" y2="16" stroke="#c49098" stroke-width="1"/></svg>
+    Happy Birthday, Carol!
+  </p>
+  <ul class="bday-qs">
+    <li>How did you celebrate yesterday?</li>
+    <li>Who was there?</li>
+    <li>What was your best gift?</li>
+    <li>Was this your best birthday ever?</li>
+  </ul>
+  <p class="bday-flip">Then flip it — you ask the same questions back.</p>
+  <button class="bday-btn" onclick="showMsg('Was this your best birthday ever?')">Your opinion</button>
+</div>
+
+<div class="section">
+  <div class="sec-head" onclick="tog('vocab')">
+    <div class="sec-num" style="background:#e8c8cc;color:#3d1a20;">4</div>
+    <span class="sec-label">If you freeze — words to help</span>
+    <span class="sec-ch" id="ch-vocab">▼</span>
+  </div>
+  <div class="sec-body" id="b-vocab">
+    <div class="vocab-chips">
+      <span class="chip">amazing</span>
+      <span class="chip">different</span>
+      <span class="chip">beautiful</span>
+      <span class="chip">busy / crowded</span>
+      <span class="chip">I loved it</span>
+      <span class="chip">I didn't like it</span>
+      <span class="chip">it was good</span>
+      <span class="chip">I was tired</span>
+      <span class="chip">I didn't know</span>
+      <span class="chip">so good!</span>
+    </div>
+  </div>
+</div>
+
+<div class="close-bar">
+  <p class="close-label">Best sentence of the day</p>
+  <input class="close-input" type="text" placeholder="Write your best sentence here — repeat it with confidence!"/>
+</div>
+
+</div>
+
+<div class="opinion-popup" id="popup"></div>
+
+<script>
+const cities={
+  paris:{name:'Paris & Disney Paris',flag:'🇫🇷',qs:['What was Paris like?','The Eiffel Tower — big or small?','What was your favorite thing at Disney?','Did you eat French food? Was it good?','Did anything go wrong?'],op:'Paris or Disney — which one did you like more?'},
+  germany:{name:'Germany',flag:'🇩🇪',qs:['What did Germany look like?','What was beautiful there?','Did you try German food? What did you think?','Was it cold? How did you feel?','What was most different from Brazil?'],op:'Germany — did you like it? What was your favorite part?'},
+  rome:{name:'Rome',flag:'🇮🇹',qs:['Did you see the Colosseum? How was it?','Did you throw a coin in the fountain?','Was the food good? What did you eat?','Was Rome busy or calm?','What was your favorite moment there?'],op:'Rome — was it your favorite city? Why?'},
+  other:{name:'Other stops',flag:'✈️',qs:['What other places did you visit?','Was there a place you loved?','Where do you want to go back?','What was your best surprise?','Where did you need more time?'],op:'Which hidden place was the best?'}
+};
+let cur='paris';
+let popTimer=null;
+
+function pick(id){
+  document.querySelectorAll('.dest-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('d-'+id).classList.add('on');
+  cur=id;
+  const c=cities[id];
+  document.getElementById('city-flag').textContent=c.flag;
+  document.getElementById('qs-city-name').textContent=c.name;
+  document.getElementById('qs-list').innerHTML=c.qs.map(q=>'<li>'+q+'</li>').join('');
+}
+
+function selectFromMap(id){pick(id);}
+
+function showOpinion(){showMsg(cities[cur].op);}
+
+function showMsg(msg){
+  const p=document.getElementById('popup');
+  p.textContent=msg;
+  p.classList.add('show');
+  clearTimeout(popTimer);
+  popTimer=setTimeout(()=>p.classList.remove('show'),3500);
+}
+
+function tog(id){
+  const b=document.getElementById('b-'+id);
+  const ch=document.getElementById('ch-'+id);
+  const open=b.classList.toggle('open');
+  ch.classList.toggle('open',open);
+}
+
+pick('paris');
+</script>
+</body>
+</html>

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RimWorld English Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111519;
+    --card: #181e24;
+    --amber: #e8a030;
+    --steel: #5b9bd5;
+    --red: #c0392b;
+    --green: #27ae60;
+    --purple: #8e44ad;
+    --white: #e8e0d0;
+    --muted: #7a8a96;
+    --border: #2a3540;
+    --green-bg: #0d1f14;
+    --green-brd: #27ae60;
+    --red-bg: #1f0d0d;
+    --red-brd: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  .header {
+    background: var(--surface);
+    padding: 20px 32px;
+    border-bottom: 2px solid var(--amber);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .header h1 span { color: var(--amber); }
+
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    background: rgba(232,160,48,0.15);
+    border: 1px solid rgba(232,160,48,0.4);
+    color: var(--amber);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: #0d1117;
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .progress-label { color: var(--muted); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+  .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+  .progress-pct { color: var(--amber); font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+
+  /* NAV */
+  .nav {
+    background: var(--surface);
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 12px 18px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+    top: 1px;
+  }
+  .nav-btn:hover { color: var(--white); }
+  .nav-btn.active { color: var(--white); border-bottom-color: var(--amber); }
+  .nav-btn.done { color: var(--green); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 28px 32px 110px; max-width: 820px; margin: 0 auto; animation: rise 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .sec-title { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
+  .sec-icon { font-size: 2.2rem; line-height: 1; flex-shrink: 0; }
+  .sec-title h2 { font-family: 'Fraunces', serif; font-size: 1.55rem; font-weight: 900; line-height: 1.15; }
+  .sec-title .timing { color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+  .card h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--white); margin-bottom: 11px; font-weight: 700; }
+  .card p, .card li { font-size: 0.9rem; color: #b0bcc8; line-height: 1.7; }
+  .card ul, .card ol { padding-left: 18px; margin-top: 8px; }
+  .card li { margin-bottom: 5px; }
+
+  /* VOCAB GRID */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .vcard {
+    background: var(--card);
+    border: 1.5px solid var(--amber);
+    border-radius: 12px;
+    padding: 14px 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .vcard:hover { transform: translateY(-2px); border-color: #f0c060; }
+
+  .vcard.revealed {
+    background: var(--green-bg);
+    border-color: var(--green-brd);
+    cursor: default;
+  }
+
+  .v-term { font-size: 13px; font-weight: 700; color: var(--white); }
+  .v-hint { font-size: 10px; color: var(--amber); font-weight: 600; }
+  .v-def { font-size: 11px; color: #7dce9a; line-height: 1.4; display: none; }
+  .v-example { font-size: 10px; color: var(--muted); font-style: italic; display: none; margin-top: 3px; line-height: 1.3; }
+  .vcard.revealed .v-hint { display: none; }
+  .vcard.revealed .v-def { display: block; }
+  .vcard.revealed .v-example { display: block; }
+  .vcard.revealed .v-term { color: var(--muted); font-size: 11px; }
+
+  .flip-counter { font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; }
+  .flip-counter span { color: var(--amber); font-weight: 700; }
+
+  /* GRAMMAR MATCH */
+  .gmatch-q {
+    background: var(--card);
+    border: 1.5px solid var(--steel);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    display: none;
+    animation: rise 0.3s ease;
+  }
+  .gmatch-q.active { display: block; }
+
+  .gm-scenario {
+    font-size: 11px;
+    color: var(--steel);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .gm-q-text { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.55; }
+  .gm-q-text .blank { color: var(--amber); border-bottom: 2px solid var(--amber); padding: 0 6px; font-style: italic; }
+  .gm-tip { font-size: 11px; color: var(--muted); margin-bottom: 12px; font-style: italic; }
+
+  .options-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+
+  .opt-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .opt-btn .opt-letter { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+  .opt-btn .opt-word { font-size: 14px; font-weight: 600; color: var(--white); line-height: 1.3; }
+  .opt-btn:hover { border-color: var(--steel); transform: translateY(-2px); }
+  .opt-btn.correct { background: var(--green-bg); border-color: var(--green-brd); }
+  .opt-btn.correct .opt-letter { color: var(--green); }
+  .opt-btn.wrong { background: var(--red-bg); border-color: var(--red-brd); }
+  .opt-btn.wrong .opt-letter { color: var(--red); }
+  .opt-btn:disabled { cursor: not-allowed; transform: none; }
+
+  .gm-feedback { font-size: 0.88rem; min-height: 20px; margin-bottom: 6px; }
+  .gm-feedback.ok { color: var(--green); font-weight: 700; }
+  .gm-feedback.no { color: var(--red); font-weight: 700; }
+  .gm-explain { font-size: 0.82rem; color: var(--muted); margin-top: 4px; display: none; line-height: 1.5; }
+  .gm-explain.show { display: block; }
+
+  /* PROGRESS DOTS */
+  .match-progress-row { display: flex; gap: 7px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+  .q-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: all 0.3s; }
+  .q-dot.done-ok { background: var(--green); }
+  .q-dot.done-no { background: var(--red); }
+  .q-dot.current { background: var(--amber); }
+
+  .score-row { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+  .score-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; font-size: 0.82rem; color: var(--muted); }
+  .score-pill span { font-weight: 700; color: var(--white); }
+
+  /* SPEAK CARDS */
+  .speak-card {
+    background: var(--card);
+    border: 1.5px solid var(--green);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 14px;
+    animation: rise 0.3s ease;
+  }
+
+  .speak-tag {
+    display: inline-block;
+    background: var(--green);
+    color: #0a1a0f;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .speak-type {
+    display: inline-block;
+    margin-left: 6px;
+    background: rgba(91,155,213,0.2);
+    border: 1px solid var(--steel);
+    color: var(--steel);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  .speak-q { font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.55; margin-bottom: 12px; }
+  .speak-context { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 12px; line-height: 1.5; }
+
+  .hint-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+  .hint-chip {
+    background: rgba(232,160,48,0.1);
+    border: 1px solid rgba(232,160,48,0.3);
+    border-radius: 20px;
+    padding: 4px 11px;
+    font-size: 0.78rem;
+    color: var(--amber);
+  }
+
+  .speak-nav { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .speak-counter { font-size: 0.82rem; color: var(--muted); }
+
+  /* TIMER */
+  .timer-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .timer-display { font-family: 'Fraunces', serif; font-size: 1.6rem; font-weight: 900; color: var(--amber); min-width: 60px; }
+  .timer-display.urgent { color: var(--red); }
+
+  /* AI CHAT */
+  .chat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    min-height: 260px;
+    max-height: 360px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bubble { max-width: 82%; padding: 11px 15px; border-radius: 14px; font-size: 0.9rem; line-height: 1.65; }
+  .bubble.ai { align-self: flex-start; background: var(--card); border: 1px solid var(--border); color: var(--white); border-bottom-left-radius: 4px; }
+  .bubble.user { align-self: flex-end; background: var(--amber); color: #1a0f00; font-weight: 600; border-bottom-right-radius: 4px; }
+  .bubble.loading { color: var(--muted); font-style: italic; }
+
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input-row input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 0.9rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--white);
+    outline: none;
+  }
+  .chat-input-row input:focus { border-color: var(--amber); }
+  .chat-input-row input::placeholder { color: var(--muted); }
+  .chat-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+
+  /* BUTTONS */
+  .btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:hover { border-color: var(--muted); }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary { background: var(--amber); border-color: var(--amber); color: #1a0f00; }
+  .btn.primary:hover { background: #d49028; }
+  .btn.steel { background: rgba(91,155,213,0.15); border-color: var(--steel); color: var(--steel); }
+  .btn.steel:hover { background: rgba(91,155,213,0.25); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+  /* FINAL */
+  .final-wrap { text-align: center; padding: 16px 0; }
+  .final-title { font-family: 'Fraunces', serif; font-size: 2.4rem; font-weight: 900; color: var(--amber); margin-bottom: 6px; }
+  .final-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 22px; }
+  .final-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+  .final-badge { background: var(--card); border-radius: 12px; padding: 14px 16px; text-align: center; border: 1px solid var(--border); min-width: 120px; }
+  .final-badge .fb-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+  .final-badge .fb-label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 2px; }
+  .final-badge .fb-score { font-size: 15px; font-weight: 700; color: var(--white); }
+
+  .hw-box { background: rgba(232,160,48,0.08); border: 1px solid rgba(232,160,48,0.3); border-radius: 12px; padding: 16px 20px; margin: 0 auto 20px; max-width: 540px; text-align: left; }
+  .hw-box .hw-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--amber); margin-bottom: 8px; }
+  .hw-box p { font-size: 0.9rem; color: #b0bcc8; line-height: 1.65; }
+
+  /* FOOTER */
+  .footer-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+  .step-counter { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+
+  @media (max-width: 580px) {
+    .section { padding: 20px 14px 110px; }
+    .header, .progress-bar-wrap, .footer-nav { padding-left: 14px; padding-right: 14px; }
+    .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+    .options-grid { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>RimWorld <span>English</span></h1>
+  <div class="badges">
+    <span class="badge">Advanced</span>
+    <span class="badge">4 Rounds</span>
+    <span class="badge">AI Chat</span>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Colony progress</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="pFill" style="width:20%;background:linear-gradient(90deg,#e8a030,#5b9bd5)"></div>
+  </div>
+  <span class="progress-pct" id="pPct">Round 1 of 4</span>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="go(0)">① Vocabulary</button>
+  <button class="nav-btn" onclick="go(1)">② Grammar</button>
+  <button class="nav-btn" onclick="go(2)">③ Debate!</button>
+  <button class="nav-btn" onclick="go(3)">④ AI Storyteller</button>
+  <button class="nav-btn" onclick="go(4)">🏆 Debrief</button>
+</nav>
+
+<!-- ═══════════════ ROUND 1: VOCABULARY ═══════════════ -->
+<div class="section active" id="s0">
+  <div class="sec-title">
+    <div class="sec-icon">📖</div>
+    <div>
+      <h2 style="color:var(--amber)">Round 1 — Vocabulary</h2>
+      <div class="timing">Tap each card. Define it in English before revealing. Then use it in a sentence!</div>
+    </div>
+  </div>
+
+  <p class="flip-counter">Revealed: <span id="flipCount">0</span> / 15 — say a sentence for each one</p>
+
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <div class="card">
+    <h3>🎙️ Vocab challenge — pick 3 words and connect them</h3>
+    <p>Choose any 3 words you just revealed and build a single sentence using all of them. Example: <em>"The colonist had a mental break after the mechanoid raid destroyed the research bench."</em></p>
+  </div>
+
+  <button class="btn primary" id="s0next" onclick="go(1)" disabled>Next round →</button>
+</div>
+
+<!-- ═══════════════ ROUND 2: GRAMMAR ═══════════════ -->
+<div class="section" id="s1">
+  <div class="sec-title">
+    <div class="sec-icon">⚙️</div>
+    <div>
+      <h2 style="color:var(--steel)">Round 2 — Grammar in Context</h2>
+      <div class="timing">Advanced structures in RimWorld scenarios. Read the explanation after each answer!</div>
+    </div>
+  </div>
+
+  <div class="score-row">
+    <div class="score-pill">Score: <span id="matchScore">0</span> / 9</div>
+    <div class="score-pill">Question: <span id="matchQNum">1</span> / 9</div>
+  </div>
+
+  <div class="match-progress-row" id="matchDots"></div>
+  <div id="matchArea"></div>
+
+  <button class="btn primary" id="s1next" onclick="go(2)" style="display:none;">Next round →</button>
+</div>
+
+<!-- ═══════════════ ROUND 3: DEBATE ═══════════════ -->
+<div class="section" id="s2">
+  <div class="sec-title">
+    <div class="sec-icon">🗣️</div>
+    <div>
+      <h2 style="color:var(--green)">Round 3 — Debate &amp; Discuss</h2>
+      <div class="timing">Speak for 45–90 seconds. No notes. Defend your position!</div>
+    </div>
+  </div>
+
+  <div id="speakCardArea"></div>
+
+  <div class="speak-nav">
+    <button class="btn" onclick="prevSpeak()" id="spPrev" disabled>← Prev</button>
+    <span class="speak-counter" id="spCount">1 / 9</span>
+    <button class="btn steel" onclick="nextSpeak()" id="spNext">Next →</button>
+  </div>
+
+  <button class="btn primary" id="s2next" onclick="go(3)" style="display:none;">Round 4: AI Storyteller →</button>
+</div>
+
+<!-- ═══════════════ ROUND 4: AI STORYTELLER ═══════════════ -->
+<div class="section" id="s3">
+  <div class="sec-title">
+    <div class="sec-icon">🤖</div>
+    <div>
+      <h2 style="color:var(--purple)">Round 4 — AI Storyteller</h2>
+      <div class="timing">The AI is your RimWorld game master. Respond, survive, and speak English!</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:var(--purple);background:rgba(142,68,173,0.08);">
+    <h3 style="color:var(--purple)">Your colony is stranded on the rim</h3>
+    <p>The AI will present you with events, crises, and decisions. Respond in detail — explain your choices, justify your strategy, describe what happens. Use advanced English to tell your colony's story.</p>
+  </div>
+
+  <p class="chat-note" id="chatNote">8 exchanges — talk like a RimWorld narrator!</p>
+  <div class="chat-box" id="chatBox"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Describe your decision, strategy, or reaction..." onkeydown="if(event.key==='Enter')sendChat()" />
+    <button class="btn primary" onclick="sendChat()">Send</button>
+  </div>
+  <div style="margin-top:12px;">
+    <button class="btn" onclick="go(4)">See debrief →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ FINAL ═══════════════ -->
+<div class="section" id="s4">
+  <div class="final-wrap">
+    <div class="final-title">Colony Survived 🏆</div>
+    <p class="final-sub">You completed all 4 rounds. Your English endgame is strong.</p>
+
+    <div class="final-badges">
+      <div class="final-badge">
+        <span class="fb-icon">📖</span>
+        <span class="fb-label">Vocabulary</span>
+        <span class="fb-score">15 terms</span>
+      </div>
+      <div class="final-badge">
+        <span class="fb-icon">⚙️</span>
+        <span class="fb-label">Grammar</span>
+        <span class="fb-score" id="fb2">— / 9</span>
+      </div>
+      <div class="final-badge">
+        <span class="fb-icon">🗣️</span>
+        <span class="fb-label">Debate</span>
+        <span class="fb-score">9 topics</span>
+      </div>
+      <div class="final-badge">
+        <span class="fb-icon">🤖</span>
+        <span class="fb-label">AI Storyteller</span>
+        <span class="fb-score">Done!</span>
+      </div>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Mission debrief (homework)</div>
+      <p>Record a 2-minute audio: narrate your best or worst RimWorld run as if it were a story — past tense, vivid detail, advanced vocabulary. Include at least one dramatic turning point and one thing you'd do differently.</p>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn" onclick="restartGame()">Play again</button>
+      <button class="btn primary" onclick="sendPrompt('I just finished the RimWorld English game. Can you ask me 3 advanced discussion questions about game design, survival strategy, or storytelling in RimWorld?')">More discussion ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-nav">
+  <button class="btn" id="prevBtn" onclick="nav(-1)" disabled>← Back</button>
+  <span class="step-counter" id="stepCount">1 / 5</span>
+  <button class="btn primary" id="nextBtn" onclick="nav(1)">Next →</button>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────
+
+const VOCAB = [
+  { term: 'colonist',    def: 'a survivor who joins and lives in your colony',           ex: '"My best colonist was a doctor with a passion for medicine."' },
+  { term: 'storyteller', def: 'the AI that controls events and difficulty in the game',  ex: '"Cassandra Classic is the most brutal storyteller."' },
+  { term: 'mental break', def: 'when a pawn loses sanity and acts uncontrollably',       ex: '"She had a mental break and started wandering after the raid."' },
+  { term: 'mechanoid',   def: 'a hostile robot enemy found on the rim',                  ex: '"A centipede mechanoid wiped out half my colony."' },
+  { term: 'biome',       def: 'the type of terrain and climate of the map',              ex: '"I started on a tundra biome — food was scarce in winter."' },
+  { term: 'incapacitated', def: 'unable to move, knocked down in combat',               ex: '"Three colonists were incapacitated during the siege."' },
+  { term: 'caravan',     def: 'a group traveling between settlements to trade or raid',  ex: '"I sent a caravan to trade silver for medicine."' },
+  { term: 'drafted',     def: 'a pawn put under direct player control for combat',       ex: '"I drafted everyone when the tribal raid began."' },
+  { term: 'mood debuff', def: 'a negative effect reducing a pawn\'s happiness',         ex: '"Sleeping in the cold gave him a mood debuff for two days."' },
+  { term: 'siege',       def: 'an attack where enemies set up mortars and bombard you',  ex: '"The siege lasted three days before I flanked them."' },
+  { term: 'trade beacon', def: 'a device that allows orbital trading ships to drop goods', ex: '"Without a trade beacon, I couldn\'t buy steel from passing ships."' },
+  { term: 'passion',     def: 'a pawn\'s enthusiasm for a skill, affecting learning speed', ex: '"She had a burning passion for shooting — she leveled up fast."' },
+  { term: 'tribal raid',  def: 'an attack from primitive human factions using melee weapons', ex: '"Tribal raids are dangerous early game because of their numbers."' },
+  { term: 'food poisoning', def: 'illness caused by eating poorly-prepared food',        ex: '"My entire colony got food poisoning because the cook was terrible."' },
+  { term: 'dev mode',    def: 'a developer tool mode used for testing or cheating',      ex: '"I used dev mode to see how many raiders were coming."' },
+];
+
+const GRAMMAR_QS = [
+  {
+    scenario: 'Conditional — past unreal',
+    q: 'If I ___ built a killbox earlier, the raid wouldn\'t have destroyed my base.',
+    correct: 'had',
+    opts: ['have','had','would have'],
+    explain: '"If I had [done]..." = past unreal conditional. We use past perfect to talk about something that didn\'t happen in the past.',
+    tip: 'Grammar focus: 3rd conditional (if + past perfect, would have + past participle)'
+  },
+  {
+    scenario: 'Passive voice — present perfect',
+    q: 'Three colonists ___ incapacitated during the mechanoid assault.',
+    correct: 'have been',
+    opts: ['have been','were being','had'],
+    explain: '"Have been incapacitated" = present perfect passive. The action (incapacitating) happened and affects the current situation.',
+    tip: 'Grammar focus: passive voice with present perfect'
+  },
+  {
+    scenario: 'Reported speech',
+    q: 'She said she ___ a mental break if the temperature dropped below -10°C.',
+    correct: 'would have',
+    opts: ['will have','would have','had had'],
+    explain: 'In reported speech, "will" shifts to "would". "She said she would have a break" = reporting what she said.',
+    tip: 'Grammar focus: reported speech — tense backshift'
+  },
+  {
+    scenario: 'Relative clause',
+    q: 'The colonist ___ passion for medicine was burning leveled up faster than anyone else.',
+    correct: 'whose',
+    opts: ['who','whose','whom'],
+    explain: '"Whose" shows possession — the passion belongs to the colonist. Who = subject; whom = object; whose = possessive.',
+    tip: 'Grammar focus: relative clauses — who / whose / whom'
+  },
+  {
+    scenario: 'Modal verb — deduction',
+    q: 'The food supplies are gone. Someone ___ been raiding the stockpile.',
+    correct: 'must have',
+    opts: ['should have','must have','might'],
+    explain: '"Must have" = strong deduction about the past. We\'re almost certain something happened based on evidence.',
+    tip: 'Grammar focus: modal verbs for deduction — must have / might have / can\'t have'
+  },
+  {
+    scenario: 'Emphasis — inversion',
+    q: 'Never ___ I seen a mechanoid cluster that large in the early game.',
+    correct: 'have',
+    opts: ['had','have','did'],
+    explain: 'When "never" starts a sentence, the subject and auxiliary invert: "Never have I seen…" This creates formal emphasis.',
+    tip: 'Grammar focus: negative inversion for emphasis'
+  },
+  {
+    scenario: 'Gerund vs infinitive',
+    q: 'I regretted ___ all my steel on turrets instead of a hospital.',
+    correct: 'spending',
+    opts: ['spend','to spend','spending'],
+    explain: '"Regret + gerund (-ing)" refers to something you already did. "Regret to + infinitive" is for announcing bad news.',
+    tip: 'Grammar focus: regret + gerund vs. regret + infinitive'
+  },
+  {
+    scenario: 'Participle clause',
+    q: '___ by superior numbers, the colonists retreated to the inner bunker.',
+    correct: 'Outnumbered',
+    opts: ['Outnumbered','Being outnumber','Having outnumber'],
+    explain: '"Outnumbered" = past participle used as a reduced passive clause. It replaces "Because they were outnumbered...".',
+    tip: 'Grammar focus: reduced adverbial clauses with participles'
+  },
+  {
+    scenario: 'Cleft sentence — emphasis',
+    q: '___ the storyteller you choose that determines how brutal the game becomes.',
+    correct: 'It is',
+    opts: ['It is','There is','What is'],
+    explain: '"It is X that…" = cleft sentence. Used to emphasize a specific piece of information.',
+    tip: 'Grammar focus: cleft sentences for emphasis'
+  },
+];
+
+const SPEAK_QS = [
+  {
+    tag: 'Strategy', type: 'Opinion',
+    q: 'Is it better to expand your colony quickly or build slowly and consolidate? Defend your position.',
+    context: 'Think about resource management, raid scaling, and pawn capacity.',
+    hints: ['On the one hand…', 'The key advantage of… is…', 'That said, the risk is…', 'Ultimately, I believe…']
+  },
+  {
+    tag: 'Ethics', type: 'Debate',
+    q: 'Is it acceptable to harvest organs from prisoners in RimWorld? Apply real-world ethics to a game scenario.',
+    context: 'Consider the argument that it\'s just a game vs. the argument that simulated choices reflect real values.',
+    hints: ['One could argue that…', 'However, from an ethical standpoint…', 'The line between fiction and…', 'In my view…']
+  },
+  {
+    tag: 'Storytelling', type: 'Narrative',
+    q: 'Describe the most dramatic event that ever happened in one of your colonies. Use vivid language and past tense.',
+    context: 'Build tension. Describe what happened, what you felt, what you decided, and what the consequence was.',
+    hints: ['It all started when…', 'At that point, I realized…', 'The turning point was…', 'In the end…']
+  },
+  {
+    tag: 'Comparison', type: 'Analysis',
+    q: 'Compare the three storytellers: Cassandra Classic, Phoebe Chillax, and Randy Random. Which is best and why?',
+    context: 'Consider difficulty, unpredictability, player experience, and skill level required.',
+    hints: ['While Cassandra… Randy tends to…', 'In contrast to…', 'The defining characteristic of… is…', 'For a player who…']
+  },
+  {
+    tag: 'Design', type: 'Critical Thinking',
+    q: 'What does RimWorld do better than other survival games in terms of storytelling and emergent gameplay?',
+    context: 'Think about the AI storyteller system, pawn personalities, and how stories emerge from systems rather than scripts.',
+    hints: ['What sets RimWorld apart is…', 'Unlike [game], RimWorld…', 'The genius of the system is…', 'This creates a sense of…']
+  },
+  {
+    tag: 'Survival', type: 'Problem-Solving',
+    q: 'You\'re in year 2, winter has started, food is critically low, and a raid just triggered. What do you do? Walk me through every decision.',
+    context: 'Prioritize out loud. Explain your logic for each action in sequence.',
+    hints: ['The first thing I\'d do is…', 'The reason I prioritize… is…', 'At the same time…', 'The biggest risk here is…']
+  },
+  {
+    tag: 'Psychology', type: 'Analysis',
+    q: 'Why do players get emotionally attached to their colonists even though they\'re just pixels? What does this say about storytelling?',
+    context: 'Think about names, backstories, traits, and the psychological concept of "investment through loss".',
+    hints: ['When you give something a name…', 'The backstory system creates…', 'This connects to the psychological concept of…', 'Losing a colonist feels… because…']
+  },
+  {
+    tag: 'Vocabulary', type: 'Fluency',
+    q: 'Explain RimWorld to someone who has never played any video game, using only everyday language. No jargon!',
+    context: 'Practice paraphrasing and simplification — an advanced skill in any language.',
+    hints: ['Imagine you\'re…', 'It\'s similar to…', 'The goal is to…', 'What makes it interesting is…']
+  },
+  {
+    tag: 'Meta', type: 'Reflection',
+    q: 'What has playing RimWorld taught you, if anything? Could be about strategy, human nature, priorities, or something else entirely.',
+    context: 'Open-ended. Make connections to real life. Use abstract vocabulary.',
+    hints: ['In a strange way, the game…', 'I\'ve come to appreciate…', 'What surprised me was…', 'If I apply that to real life…']
+  },
+];
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+
+let cur = 0;
+let flipRevealed = 0;
+let matchIdx = 0;
+let matchScore = 0;
+let speakIdx = 0;
+let chatHistory = [];
+let chatTurns = 0;
+const MAX_CHAT = 8;
+
+const PROG_COLORS = [
+  ['#e8a030','#5b9bd5'],
+  ['#5b9bd5','#27ae60'],
+  ['#27ae60','#8e44ad'],
+  ['#8e44ad','#e8a030'],
+  ['#e8a030','#e8a030'],
+];
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+// ── NAVIGATION ─────────────────────────────────────────────────────────────
+
+function go(idx) {
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.remove('active');
+    if(i===idx) b.classList.add('active');
+  });
+  cur = idx;
+  const pcts = [20,40,60,80,100];
+  const labels = ['Round 1 — Vocabulary','Round 2 — Grammar','Round 3 — Debate','Round 4 — AI Storyteller','Debrief'];
+  const fill = document.getElementById('pFill');
+  fill.style.width = pcts[idx] + '%';
+  const c = PROG_COLORS[idx];
+  fill.style.background = `linear-gradient(90deg, ${c[0]}, ${c[1]})`;
+  document.getElementById('pPct').textContent = labels[idx];
+  document.getElementById('stepCount').textContent = `${idx+1} / 5`;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  const nb = document.getElementById('nextBtn');
+  nb.disabled = idx === 4;
+  nb.textContent = idx === 4 ? 'Finish ✓' : 'Next →';
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  if(idx===1 && matchIdx===0 && document.getElementById('matchArea').innerHTML==='') buildMatch();
+  if(idx===2 && speakIdx===0) renderSpeak();
+  if(idx===3 && chatHistory.length===0) buildChat();
+}
+
+function nav(d) { const n=cur+d; if(n>=0&&n<=4) go(n); }
+
+// ── ROUND 1: VOCAB ─────────────────────────────────────────────────────────
+
+function buildVocabGrid() {
+  const g = document.getElementById('vocabGrid');
+  g.innerHTML = '';
+  flipRevealed = 0;
+  VOCAB.forEach(v => {
+    const el = document.createElement('div');
+    el.className = 'vcard';
+    el.innerHTML = `
+      <span class="v-term">${v.term}</span>
+      <span class="v-hint">define it → tap</span>
+      <span class="v-def">${v.def}</span>
+      <span class="v-example">${v.ex}</span>`;
+    let done = false;
+    el.addEventListener('click', () => {
+      if(!done) {
+        el.classList.add('revealed');
+        done = true;
+        flipRevealed++;
+        document.getElementById('flipCount').textContent = flipRevealed;
+        if(flipRevealed >= VOCAB.length) {
+          document.getElementById('s0next').disabled = false;
+          document.querySelectorAll('.nav-btn')[0].classList.add('done');
+        }
+      }
+    });
+    g.appendChild(el);
+  });
+}
+
+// ── ROUND 2: GRAMMAR ───────────────────────────────────────────────────────
+
+function buildMatch() {
+  matchIdx = 0; matchScore = 0;
+  document.getElementById('matchScore').textContent = '0';
+  document.getElementById('matchQNum').textContent = '1';
+
+  const dots = document.getElementById('matchDots');
+  dots.innerHTML = GRAMMAR_QS.map((_,i) =>
+    `<div class="q-dot${i===0?' current':''}" id="dot${i}"></div>`
+  ).join('') + '<span style="font-size:0.75rem;color:var(--muted);margin-left:4px;">progress</span>';
+
+  const area = document.getElementById('matchArea');
+  area.innerHTML = GRAMMAR_QS.map((item,i) => {
+    const opts = shuffle([...item.opts]);
+    const qFormatted = item.q.replace('___', '<span class="blank">___</span>');
+    return `
+    <div class="gmatch-q${i===0?' active':''}" id="mq${i}">
+      <div class="gm-scenario">${item.scenario}</div>
+      <div class="gm-q-text">${qFormatted}</div>
+      <div class="gm-tip">${item.tip}</div>
+      <div class="options-grid">
+        ${opts.map((o,j) => {
+          const letts = ['A','B','C'];
+          const lColors = ['#e8a030','#5b9bd5','#27ae60'];
+          return `<button class="opt-btn" onclick="checkOpt(${i},'${o}','${item.correct}',this)">
+            <div class="opt-letter" style="color:${lColors[j]}">${letts[j]}</div>
+            <div class="opt-word">${o}</div>
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="gm-feedback" id="gfb${i}"></div>
+      <div class="gm-explain" id="gex${i}">${item.explain}</div>
+    </div>`;
+  }).join('');
+}
+
+function checkOpt(i, chosen, correct, btn) {
+  const allBtns = document.querySelectorAll(`#mq${i} .opt-btn`);
+  allBtns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`gfb${i}`);
+  const ex = document.getElementById(`gex${i}`);
+  const dot = document.getElementById(`dot${i}`);
+
+  if(chosen === correct) {
+    btn.classList.add('correct');
+    fb.textContent = `✓ Correct! "${chosen}" is right.`;
+    fb.className = 'gm-feedback ok';
+    matchScore++;
+    dot.classList.replace('current','done-ok');
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if(b.querySelector('.opt-word').textContent.trim()===correct) b.classList.add('correct'); });
+    fb.textContent = `The answer is "${correct}". Read the explanation:`;
+    fb.className = 'gm-feedback no';
+    dot.classList.replace('current','done-no');
+  }
+
+  ex.classList.add('show');
+  document.getElementById('matchScore').textContent = matchScore;
+
+  setTimeout(() => {
+    const next = i + 1;
+    if(next < GRAMMAR_QS.length) {
+      document.getElementById(`mq${i}`).classList.remove('active');
+      document.getElementById(`mq${next}`).classList.add('active');
+      document.getElementById(`dot${next}`).classList.add('current');
+      document.getElementById('matchQNum').textContent = next + 1;
+      matchIdx = next;
+    } else {
+      document.getElementById('s1next').style.display = '';
+      document.querySelectorAll('.nav-btn')[1].classList.add('done');
+      document.getElementById('fb2').textContent = `${matchScore} / 9`;
+    }
+  }, 2200);
+}
+
+// ── ROUND 3: DEBATE ────────────────────────────────────────────────────────
+
+function renderSpeak() {
+  const q = SPEAK_QS[speakIdx];
+  document.getElementById('spCount').textContent = `${speakIdx+1} / ${SPEAK_QS.length}`;
+  document.getElementById('spPrev').disabled = speakIdx === 0;
+  const isLast = speakIdx === SPEAK_QS.length - 1;
+  document.getElementById('spNext').style.display = isLast ? 'none' : '';
+  document.getElementById('s2next').style.display = isLast ? '' : 'none';
+
+  document.getElementById('speakCardArea').innerHTML = `
+    <div class="speak-card">
+      <div>
+        <span class="speak-tag">${q.tag}</span>
+        <span class="speak-type">${q.type}</span>
+      </div>
+      <div class="speak-q">${q.q}</div>
+      <div class="speak-context">${q.context}</div>
+      <div class="hint-row">
+        ${q.hints.map(h => `<span class="hint-chip">${h}</span>`).join('')}
+      </div>
+    </div>`;
+
+  if(isLast) document.querySelectorAll('.nav-btn')[2].classList.add('done');
+}
+
+function nextSpeak() { if(speakIdx < SPEAK_QS.length-1) { speakIdx++; renderSpeak(); } }
+function prevSpeak() { if(speakIdx > 0) { speakIdx--; renderSpeak(); } }
+
+// ── ROUND 4: AI STORYTELLER ────────────────────────────────────────────────
+
+function buildChat() {
+  chatHistory = [];
+  chatTurns = 0;
+  document.getElementById('chatBox').innerHTML = '';
+  document.getElementById('chatNote').textContent = `${MAX_CHAT} exchanges — narrate, justify, survive!`;
+
+  const opening = "You land on the rimworld. Your three colonists — a doctor, a cook, and a soldier — have crash-landed in a temperate forest. It's early spring. You have 5 days of food and no shelter. What's your first order of business, and why?";
+  addBubble('ai', opening);
+  chatHistory.push({
+    role:'user',
+    content:'You are a RimWorld game master and advanced English conversation partner. Present the player with a fresh colony scenario. Ask one clear question to start. Keep your messages to 2-3 sentences max. After each player response, advance the story with a new event or complication, and ask a follow-up that requires strategic thinking and detailed explanation. Use rich vocabulary. Encourage the player to elaborate and justify their decisions in English. Start now.'
+  });
+  chatHistory.push({role:'assistant', content: opening});
+}
+
+function addBubble(role, text) {
+  const box = document.getElementById('chatBox');
+  const b = document.createElement('div');
+  b.className = `bubble ${role}`;
+  b.textContent = text;
+  box.appendChild(b);
+  box.scrollTop = box.scrollHeight;
+  return b;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text || input.disabled) return;
+  input.value = '';
+  addBubble('user', text);
+  chatTurns++;
+
+  const left = MAX_CHAT - chatTurns;
+  document.getElementById('chatNote').textContent = left > 0 ? `${left} exchanges left` : 'Final exchange!';
+
+  chatHistory.push({role:'user', content: text});
+  const loadBubble = addBubble('ai', '...');
+  loadBubble.classList.add('loading');
+
+  const sys = `You are a RimWorld game master AND an advanced English conversation partner for a fluent student.
+Your role: present engaging colony survival scenarios, react to the student's decisions with new complications, and ask thoughtful follow-up questions.
+Rules: Keep your responses to 2-4 sentences. Always end with a question that requires the student to think, justify, or describe in detail.
+Use rich English vocabulary naturally. If the student uses a word or structure imprecisely, incorporate the correct version naturally in your reply.
+Make the story feel alive — introduce raids, weather events, morale crises, trade ships, animal attacks, or moral dilemmas.
+${chatTurns >= MAX_CHAT ? 'This is the final exchange. Wrap up the colony\'s story dramatically and give the student a short, genuine compliment on their English expression.' : ''}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: sys,
+        messages: chatHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'What happens next?';
+    loadBubble.textContent = reply;
+    loadBubble.classList.remove('loading');
+    chatHistory.push({role:'assistant', content: reply});
+  } catch(e) {
+    loadBubble.textContent = 'Something went wrong. Keep narrating!';
+    loadBubble.classList.remove('loading');
+  }
+
+  if(chatTurns >= MAX_CHAT) {
+    input.disabled = true;
+    input.placeholder = 'Debrief complete!';
+    document.querySelectorAll('.nav-btn')[3].classList.add('done');
+  }
+}
+
+// ── RESTART ────────────────────────────────────────────────────────────────
+
+function restartGame() {
+  matchIdx = 0; matchScore = 0;
+  speakIdx = 0;
+  chatHistory = []; chatTurns = 0;
+  document.getElementById('chatInput').disabled = false;
+  document.getElementById('chatInput').placeholder = 'Describe your decision, strategy, or reaction...';
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('done'));
+  document.getElementById('s0next').disabled = true;
+  document.getElementById('s1next').style.display = 'none';
+  document.getElementById('s2next').style.display = 'none';
+  document.getElementById('matchArea').innerHTML = '';
+  buildVocabGrid();
+  go(0);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+buildVocabGrid();
+</script>
+</body>
+</html>

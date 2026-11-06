@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numbers in Real Life — Vic</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,600;0,900;1,300&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fdf5ee;
+    --card: #fff9f4;
+    --pink: #e8637a;
+    --brown: #7a3b1e;
+    --caramel: #c97d3a;
+    --cream: #f5e6d3;
+    --dark: #2e1a0e;
+    --muted: #9e7b60;
+    --mint: #4a9e8a;
+    --border: #edd9c4;
+    --shadow: rgba(122,59,30,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--brown);
+    padding: 28px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header-left h1 {
+    font-family: 'Fraunces', serif;
+    color: #fff0e0;
+    font-size: 1.75rem;
+    font-weight: 900;
+    letter-spacing: -0.3px;
+  }
+
+  .header-left p {
+    color: #c8a07a;
+    font-size: 0.8rem;
+    margin-top: 3px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .badge {
+    background: rgba(255,240,224,0.15);
+    border: 1px solid rgba(255,240,224,0.3);
+    color: #f5dfc0;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    background: #5e2b10;
+    padding: 10px 36px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-label { color: #c8a07a; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; white-space: nowrap; }
+  .progress-track { flex: 1; height: 5px; background: rgba(255,240,224,0.15); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--pink), var(--caramel)); border-radius: 3px; transition: width 0.5s ease; }
+  .progress-pct { color: var(--caramel); font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+
+  /* ── NAV ── */
+  .nav {
+    background: #fff0e4;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-bottom: 2px solid var(--border);
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 13px 18px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+    top: 2px;
+  }
+
+  .nav-btn:hover { color: var(--brown); }
+  .nav-btn.active { color: var(--brown); border-bottom-color: var(--pink); }
+
+  .dot {
+    display: inline-block;
+    width: 7px; height: 7px;
+    background: var(--pink);
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── SECTIONS ── */
+  .section { display: none; padding: 28px 36px 100px; max-width: 820px; margin: 0 auto; animation: rise 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION TITLE ── */
+  .sec-title {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    margin-bottom: 24px;
+  }
+
+  .sec-icon { font-size: 2.6rem; line-height: 1; flex-shrink: 0; }
+
+  .sec-title h2 {
+    font-family: 'Fraunces', serif;
+    color: var(--brown);
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1.15;
+  }
+
+  .sec-title .timing {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    color: var(--brown);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  .card p, .card li {
+    font-size: 0.92rem;
+    color: #4a2e1a;
+    line-height: 1.7;
+  }
+
+  .card ul, .card ol { padding-left: 20px; margin-top: 8px; }
+  .card li { margin-bottom: 6px; }
+
+  /* ── SPEAK PROMPT ── */
+  .speak-prompt {
+    background: linear-gradient(135deg, #fce8f0 0%, #fdf2e4 100%);
+    border: 2px solid var(--pink);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+
+  .speak-prompt .sp-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--pink);
+    margin-bottom: 10px;
+  }
+
+  .speak-prompt p {
+    font-size: 1rem;
+    color: var(--dark);
+    line-height: 1.65;
+    font-weight: 500;
+  }
+
+  .speak-prompt em {
+    display: block;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.87rem;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* ── NUMBER BUBBLES ── */
+  .num-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .num-bubble {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.18s;
+    user-select: none;
+  }
+
+  .num-bubble:hover { border-color: var(--pink); transform: scale(1.04); }
+  .num-bubble.done { background: #e8f5ef; border-color: var(--mint); }
+
+  .num-bubble .n-number {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--brown);
+    display: block;
+  }
+
+  .num-bubble .n-word {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 3px;
+    display: block;
+    font-weight: 600;
+    min-height: 1.1em;
+  }
+
+  .num-bubble.done .n-word { color: var(--mint); }
+
+  .tap-hint {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ── RECIPE CARD ── */
+  .recipe-card {
+    background: #fffdf8;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .recipe-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--pink), var(--caramel));
+  }
+
+  .recipe-card h3 {
+    font-family: 'Fraunces', serif;
+    color: var(--brown);
+    font-size: 1rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .ingredient-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .ingredient-row:last-child { border-bottom: none; }
+
+  .ing-name {
+    font-size: 0.9rem;
+    color: var(--dark);
+    font-weight: 500;
+  }
+
+  .ing-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--pink);
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .ing-blank {
+    min-width: 120px;
+    border-bottom: 2px solid var(--caramel);
+    height: 24px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 24px;
+  }
+
+  /* ── PRICE TAGS ── */
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .price-tag {
+    background: white;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    padding: 16px 14px;
+    text-align: center;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+
+  .price-tag .pt-emoji { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+  .price-tag .pt-item { font-size: 0.78rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+  .price-tag .pt-price { font-family: 'Fraunces', serif; font-size: 1.25rem; font-weight: 900; color: var(--brown); display: block; }
+
+  /* ── SCENARIO BOX ── */
+  .scenario {
+    background: linear-gradient(135deg, #fff5f0, #fff9f4);
+    border-radius: 14px;
+    border: 1.5px solid #f0c8a0;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+  }
+
+  .scenario .sc-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--caramel);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .scenario p {
+    font-size: 0.95rem;
+    color: var(--dark);
+    line-height: 1.65;
+    font-weight: 500;
+  }
+
+  .dialog {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .dialog-line {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+  }
+
+  .dialog-line:last-child { margin-bottom: 0; }
+
+  .dl-speaker {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-width: 70px;
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+
+  .dl-speaker.you { color: var(--pink); }
+  .dl-speaker.customer { color: var(--mint); }
+
+  .dl-text { font-size: 0.9rem; color: var(--dark); line-height: 1.55; }
+
+  .blank-line {
+    display: inline-block;
+    min-width: 90px;
+    border-bottom: 2px solid var(--caramel);
+    height: 18px;
+    vertical-align: bottom;
+    margin: 0 3px;
+  }
+
+  /* ── CHIPS ── */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+  .chip {
+    background: var(--cream);
+    color: var(--brown);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.83rem;
+    font-weight: 600;
+  }
+
+  /* ── CHALLENGE BOX ── */
+  .challenge {
+    background: var(--brown);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .challenge .ch-emoji { font-size: 2.8rem; display: block; margin-bottom: 10px; }
+
+  .challenge h3 {
+    font-family: 'Fraunces', serif;
+    color: #fff0d8;
+    font-size: 1.35rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+
+  .challenge p { color: #c8a07a; font-size: 0.92rem; line-height: 1.6; }
+
+  /* ── HIGHLIGHT ── */
+  .highlight {
+    background: #e8f5ef;
+    border-left: 3px solid var(--mint);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+  }
+
+  .highlight p { font-size: 0.88rem; color: #2d6a4f; line-height: 1.6; }
+
+  /* ── REFLECTION ── */
+  .reflect-item {
+    background: white;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .reflect-item .ri-num {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--pink);
+    flex-shrink: 0;
+    width: 28px;
+  }
+
+  .reflect-item p { font-size: 0.9rem; color: var(--dark); line-height: 1.6; }
+
+  /* ── TIMER BUTTON ── */
+  .timer-btn {
+    background: none;
+    border: 2px solid var(--pink);
+    color: var(--pink);
+    padding: 9px 18px;
+    border-radius: 22px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .timer-btn:hover { background: var(--pink); color: white; }
+  .timer-btn.running { background: var(--pink); color: white; }
+
+  /* ── FOOTER NAV ── */
+  .footer-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 2px solid var(--border);
+    padding: 14px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    box-shadow: 0 -4px 16px rgba(122,59,30,0.1);
+  }
+
+  .footer-btn {
+    background: none;
+    border: 2px solid var(--brown);
+    color: var(--brown);
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .footer-btn:hover { background: var(--cream); }
+  .footer-btn.primary { background: var(--pink); border-color: var(--pink); color: white; }
+  .footer-btn.primary:hover { background: #d44e65; }
+  .footer-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .step-counter { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+
+  @media (max-width: 560px) {
+    .section { padding: 20px 16px 100px; }
+    .header, .progress-bar-wrap, .footer-nav { padding-left: 16px; padding-right: 16px; }
+    .price-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>🔢 Numbers in Real Life</h1>
+    <p>Continuation · Vic · A1 Level</p>
+  </div>
+  <div class="badges">
+    <span class="badge">45 min</span>
+    <span class="badge">Speaking</span>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progress</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="pFill" style="width:20%"></div>
+  </div>
+  <span class="progress-pct" id="pPct">Part 1 · 5 of 5</span>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="go(0)"><span class="dot"></span>Warm-up</button>
+  <button class="nav-btn" onclick="go(1)"><span class="dot"></span>Say It!</button>
+  <button class="nav-btn" onclick="go(2)"><span class="dot"></span>Your Work</button>
+  <button class="nav-btn" onclick="go(3)"><span class="dot"></span>Real Life</button>
+  <button class="nav-btn" onclick="go(4)"><span class="dot"></span>Challenge</button>
+</nav>
+
+<!-- ════════════════════════════════ SECTION 1: WARM-UP ════════════════════════════════ -->
+<div class="section active" id="s0">
+
+  <div class="sec-title">
+    <div class="sec-icon">⚡</div>
+    <div>
+      <h2>Warm-up — Quick Numbers</h2>
+      <div class="timing">⏱ About 7 minutes</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Say these numbers OUT LOUD — fast! 🎙️</h3>
+    <p>Tap each number to see the answer. <strong>Say it before you tap!</strong></p>
+    <div class="num-grid" id="warmupGrid"></div>
+    <p class="tap-hint">Tap to reveal · tap again to mark as done ✓</p>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label">🎙️ Speak now</div>
+    <p>Count out loud — backwards from 20 to 1. No stopping!</p>
+    <em>20, 19, 18... can you do it in less than 15 seconds?</em>
+  </div>
+
+  <div class="card">
+    <h3>⚡ Number dictation — listen and say</h3>
+    <p>Your teacher says a number. You say it in English. Ready?</p>
+    <ul>
+      <li>Teacher says: <strong>47</strong> → You say: <em>"forty-seven"</em></li>
+      <li>Teacher says: <strong>213</strong> → You say: <em>"two hundred thirteen"</em></li>
+      <li>Teacher says: <strong>890</strong> → You say: it!</li>
+      <li>Teacher says: <strong>556</strong> → You say: it!</li>
+      <li>Teacher says: <strong>1,000</strong> → You say: it!</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ SECTION 2: SAY IT ════════════════════════════════ -->
+<div class="section" id="s1">
+
+  <div class="sec-title">
+    <div class="sec-icon">📦</div>
+    <div>
+      <h2>Numbers You Use Every Day</h2>
+      <div class="timing">⏱ About 8 minutes</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Numbers are everywhere 👀</h3>
+    <p>Look at these real numbers. Say each one out loud — then answer the question below.</p>
+    <div class="num-grid" id="realGrid"></div>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label">🎙️ Your turn</div>
+    <p>Tell me 5 real numbers from <strong>your life</strong>.</p>
+    <em>Your phone number · Your address number · Your age · A price you remember · How many minutes you sleep</em>
+  </div>
+
+  <div class="card">
+    <h3>How do we say these? 🤔</h3>
+    <p>Say the sentences out loud — fill in the number in English:</p>
+    <ul>
+      <li>"My phone number starts with <span style="color:var(--pink); font-weight:700;">___</span>." </li>
+      <li>"I sleep about <span style="color:var(--pink); font-weight:700;">___</span> hours."</li>
+      <li>"I wake up at <span style="color:var(--pink); font-weight:700;">___</span> o'clock."</li>
+      <li>"My address number is <span style="color:var(--pink); font-weight:700;">___</span>."</li>
+      <li>"I work about <span style="color:var(--pink); font-weight:700;">___</span> hours a day."</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ SECTION 3: YOUR WORK ════════════════════════════════ -->
+<div class="section" id="s2">
+
+  <div class="sec-title">
+    <div class="sec-icon">🎂</div>
+    <div>
+      <h2>Numbers at the Bakery</h2>
+      <div class="timing">⏱ About 12 minutes</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>A recipe has numbers everywhere! 📋</h3>
+    <p>Look at the recipe below. Say each ingredient out loud in English — number AND word.</p>
+  </div>
+
+  <div class="recipe-card">
+    <h3>🎂 Simple Cake — Ingredients</h3>
+    <div class="ingredient-row">
+      <span class="ing-name">🌾 Flour</span>
+      <span class="ing-num">250g</span>
+      <div class="ing-blank">two hundred fifty grams</div>
+    </div>
+    <div class="ingredient-row">
+      <span class="ing-name">🍬 Sugar</span>
+      <span class="ing-num">180g</span>
+      <div class="ing-blank" style="color:transparent">___</div>
+    </div>
+    <div class="ingredient-row">
+      <span class="ing-name">🥚 Eggs</span>
+      <span class="ing-num">3</span>
+      <div class="ing-blank" style="color:transparent">___</div>
+    </div>
+    <div class="ingredient-row">
+      <span class="ing-name">🧈 Butter</span>
+      <span class="ing-num">100g</span>
+      <div class="ing-blank" style="color:transparent">___</div>
+    </div>
+    <div class="ingredient-row">
+      <span class="ing-name">🥛 Milk</span>
+      <span class="ing-num">200ml</span>
+      <div class="ing-blank" style="color:transparent">___</div>
+    </div>
+    <div class="ingredient-row">
+      <span class="ing-name">🌡️ Oven temperature</span>
+      <span class="ing-num">180°</span>
+      <div class="ing-blank" style="color:transparent">___</div>
+    </div>
+    <div class="ingredient-row">
+      <span class="ing-name">⏱️ Baking time</span>
+      <span class="ing-num">35 min</span>
+      <div class="ing-blank" style="color:transparent">___</div>
+    </div>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label">🎙️ Speak now</div>
+    <p>Tell me the recipe of something <strong>you actually make</strong>. Use real numbers — grams, minutes, temperature. Don't worry about perfect English. Just say the numbers!</p>
+    <em>"I use ___ grams of ___ and ___ grams of ___. I bake for ___ minutes at ___."</em>
+  </div>
+
+  <div class="card">
+    <h3>Numbers in your work — say these sentences</h3>
+    <p>Complete and say out loud:</p>
+    <ul>
+      <li>"I bake about <span style="color:var(--pink); font-weight:700;">___</span> cakes per week."</li>
+      <li>"My oven is usually at <span style="color:var(--pink); font-weight:700;">___</span> degrees."</li>
+      <li>"I wake up at <span style="color:var(--pink); font-weight:700;">___</span> to start baking."</li>
+      <li>"One cake takes about <span style="color:var(--pink); font-weight:700;">___</span> minutes."</li>
+      <li>"I use about <span style="color:var(--pink); font-weight:700;">___</span> eggs a week."</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ SECTION 4: REAL LIFE ════════════════════════════════ -->
+<div class="section" id="s3">
+
+  <div class="sec-title">
+    <div class="sec-icon">💰</div>
+    <div>
+      <h2>Numbers & Prices</h2>
+      <div class="timing">⏱ About 10 minutes</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Say these prices OUT LOUD 🏷️</h3>
+    <p>Like a real shop. Example: <strong>R$45 → "forty-five reais"</strong></p>
+    <div class="price-grid">
+      <div class="price-tag">
+        <span class="pt-emoji">🎂</span>
+        <span class="pt-item">Birthday cake</span>
+        <span class="pt-price">R$120</span>
+      </div>
+      <div class="price-tag">
+        <span class="pt-emoji">🧁</span>
+        <span class="pt-item">Cupcake (6)</span>
+        <span class="pt-price">R$65</span>
+      </div>
+      <div class="price-tag">
+        <span class="pt-emoji">🍰</span>
+        <span class="pt-item">Slice</span>
+        <span class="pt-price">R$18</span>
+      </div>
+      <div class="price-tag">
+        <span class="pt-emoji">🍫</span>
+        <span class="pt-item">Chocolate cake</span>
+        <span class="pt-price">R$95</span>
+      </div>
+      <div class="price-tag">
+        <span class="pt-emoji">🍩</span>
+        <span class="pt-item">Donuts (12)</span>
+        <span class="pt-price">R$48</span>
+      </div>
+      <div class="price-tag">
+        <span class="pt-emoji">🎉</span>
+        <span class="pt-item">Party kit</span>
+        <span class="pt-price">R$350</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="scenario">
+    <div class="sc-label">🎭 Roleplay — At the bakery</div>
+    <p>A customer calls your bakery. You answer. Use real prices and numbers from your work!</p>
+    <div class="dialog">
+      <div class="dialog-line">
+        <span class="dl-speaker customer">Customer</span>
+        <span class="dl-text">"Hello! How much is a birthday cake?"</span>
+      </div>
+      <div class="dialog-line">
+        <span class="dl-speaker you">You</span>
+        <span class="dl-text">"A birthday cake is <span class="blank-line"></span> reais."</span>
+      </div>
+      <div class="dialog-line">
+        <span class="dl-speaker customer">Customer</span>
+        <span class="dl-text">"How many days do I need to order before?"</span>
+      </div>
+      <div class="dialog-line">
+        <span class="dl-speaker you">You</span>
+        <span class="dl-text">"<span class="blank-line"></span> days before, please."</span>
+      </div>
+      <div class="dialog-line">
+        <span class="dl-speaker customer">Customer</span>
+        <span class="dl-text">"How many portions does it serve?"</span>
+      </div>
+      <div class="dialog-line">
+        <span class="dl-speaker you">You</span>
+        <span class="dl-text">"It serves about <span class="blank-line"></span> people."</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="speak-prompt">
+    <div class="sp-label">🎙️ Free speaking — 45 seconds</div>
+    <p>Tell me about <strong>a real order</strong> you had recently. Use as many numbers as you can — price, portions, days, grams, anything!</p>
+    <em>Don't stop. Don't worry about mistakes. Just talk!</em>
+  </div>
+
+  <div class="chip-row">
+    <span class="chip">It was ___ reais</span>
+    <span class="chip">___ portions</span>
+    <span class="chip">___ days to make</span>
+    <span class="chip">I used ___ grams</span>
+    <span class="chip">The customer wanted ___</span>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════ SECTION 5: CHALLENGE ════════════════════════════════ -->
+<div class="section" id="s4">
+
+  <div class="sec-title">
+    <div class="sec-icon">🏆</div>
+    <div>
+      <h2>Final Challenge</h2>
+      <div class="timing">⏱ About 8 minutes</div>
+    </div>
+  </div>
+
+  <div class="challenge">
+    <span class="ch-emoji">🎂</span>
+    <h3>My Bakery Day</h3>
+    <p>Talk for <strong>60 seconds</strong> about a normal day in your bakery.<br>Use at least <strong>6 numbers</strong>. No stopping!</p>
+  </div>
+
+  <div class="card">
+    <h3>Use these number categories — check as you go</h3>
+    <ul>
+      <li>⏰ What time do you start?</li>
+      <li>🌡️ What temperature is your oven?</li>
+      <li>🥚 How many eggs do you use?</li>
+      <li>🎂 How many cakes do you make?</li>
+      <li>💰 What is your most popular price?</li>
+      <li>⏱️ How many hours do you work?</li>
+    </ul>
+  </div>
+
+  <div class="highlight">
+    <p>✨ <strong>You don't need perfect sentences.</strong> Just say real numbers from your real life. That's already English!</p>
+  </div>
+
+  <div class="card" style="background: #fffdf8;">
+    <h3>🪞 How did you do today?</h3>
+    <p>Answer out loud — in English or Portuguese:</p>
+    <div style="margin-top: 12px;">
+      <div class="reflect-item">
+        <span class="ri-num">1</span>
+        <p>What number was hard to say today?</p>
+      </div>
+      <div class="reflect-item">
+        <span class="ri-num">2</span>
+        <p>What number do you say a lot in your work?</p>
+      </div>
+      <div class="reflect-item">
+        <span class="ri-num">3</span>
+        <p>What is one thing that was easier than you thought?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left: 4px solid var(--caramel);">
+    <h3>📝 Homework — keep it fun!</h3>
+    <ul>
+      <li><strong>Record a 45-second audio:</strong> describe your next baking day using at least 5 numbers</li>
+      <li><strong>Real life task:</strong> this week, say out loud (in English) every number you see — oven temperature, recipe grams, prices</li>
+      <li><strong>Bonus:</strong> what's the price of your favorite ingredient? Say it in English!</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer-nav">
+  <button class="footer-btn" id="prevBtn" onclick="nav(-1)" disabled>← Back</button>
+  <span class="step-counter" id="stepCount">1 / 5</span>
+  <button class="footer-btn primary" id="nextBtn" onclick="nav(1)">Next →</button>
+</div>
+
+<script>
+  // WARM-UP NUMBERS
+  const warmupNums = [
+    {n:'12', w:'twelve'}, {n:'25', w:'twenty-five'}, {n:'40', w:'forty'},
+    {n:'67', w:'sixty-seven'}, {n:'89', w:'eighty-nine'}, {n:'100', w:'one hundred'},
+    {n:'134', w:'one hundred thirty-four'}, {n:'278', w:'two hundred seventy-eight'},
+    {n:'505', w:'five hundred five'}, {n:'999', w:'nine hundred ninety-nine'},
+    {n:'556', w:'five hundred fifty-six'}, {n:'787', w:'seven hundred eighty-seven'},
+  ];
+
+  const realNums = [
+    {n:'7am', w:'seven a.m.'}, {n:'180°', w:'one eighty degrees'},
+    {n:'250g', w:'two fifty grams'}, {n:'R$45', w:'forty-five reais'},
+    {n:'30min', w:'thirty minutes'}, {n:'12', w:'twelve portions'},
+    {n:'500ml', w:'five hundred ml'}, {n:'3h', w:'three hours'},
+  ];
+
+  function buildGrid(data, containerId) {
+    const g = document.getElementById(containerId);
+    data.forEach((item, i) => {
+      const el = document.createElement('div');
+      el.className = 'num-bubble';
+      el.innerHTML = `<span class="n-number">${item.n}</span><span class="n-word" id="w${containerId}${i}" style="opacity:0">${item.w}</span>`;
+      let revealed = false;
+      el.addEventListener('click', () => {
+        if (!revealed) {
+          document.getElementById(`w${containerId}${i}`).style.opacity = '1';
+          revealed = true;
+        } else {
+          el.classList.toggle('done');
+        }
+      });
+      g.appendChild(el);
+    });
+  }
+
+  buildGrid(warmupNums, 'warmupGrid');
+  buildGrid(realNums, 'realGrid');
+
+  // NAVIGATION
+  let cur = 0;
+  const total = 5;
+  const labels = ['Part 1','Part 2','Part 3','Part 4','Part 5'];
+  const pcts = [20,40,60,80,100];
+
+  function go(idx) {
+    document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
+    document.querySelectorAll('.nav-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+    cur = idx;
+    document.getElementById('pFill').style.width = pcts[idx]+'%';
+    document.getElementById('pPct').textContent = `${labels[idx]} of 5`;
+    document.getElementById('stepCount').textContent = `${idx+1} / ${total}`;
+    document.getElementById('prevBtn').disabled = idx===0;
+    const nb = document.getElementById('nextBtn');
+    nb.disabled = idx===total-1;
+    nb.textContent = idx===total-1 ? 'Done! ✓' : 'Next →';
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function nav(d) { const n=cur+d; if(n>=0&&n<total) go(n); }
+</script>
+</body>
+</html>

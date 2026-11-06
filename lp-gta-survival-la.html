@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LP + GTA: Survival English — HARD MODE</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Barlow', sans-serif; background: #0a0a0a; color: #f0ede8; min-height: 100vh; padding: 20px; }
+  #game { max-width: 640px; margin: 0 auto; }
+
+  .game-header { text-align: center; margin-bottom: 20px; }
+  .game-title { font-size: 13px; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; color: #cc2200; margin-bottom: 2px; }
+  .game-sub { font-size: 10px; color: #444; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  .hud { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 10px 14px; background: #111; border: 1px solid #1e1e1e; border-radius: 8px; }
+  .lives { display: flex; gap: 5px; }
+  .heart { width: 13px; height: 13px; background: #cc2200; clip-path: polygon(50% 100%, 0% 30%, 20% 0%, 50% 20%, 80% 0%, 100% 30%); transition: background 0.3s; }
+  .heart.lost { background: #2a2a2a; }
+  .progress-wrap { flex: 1; height: 3px; background: #1e1e1e; border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: #cc2200; transition: width 0.5s ease; }
+  .score-display { font-size: 13px; font-weight: 900; color: #f5a623; min-width: 56px; text-align: right; }
+
+  /* TIMER */
+  .timer-wrap { height: 3px; background: #1e1e1e; border-radius: 2px; overflow: hidden; margin-bottom: 16px; }
+  .timer-bar { height: 100%; background: #f5a623; transition: width 0.1s linear; }
+  .timer-bar.urgent { background: #cc2200; }
+
+  .card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 20px; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
+  .card.shake { animation: shake 0.35s ease; }
+
+  .round-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #333; margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .timer-text { color: #f5a623; }
+  .timer-text.urgent { color: #cc2200; }
+
+  .phase-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; margin-bottom: 10px; }
+  .phase-lp   { background: #1a0505; color: #cc2200; border: 1px solid #cc2200; }
+  .phase-gta  { background: #050f1a; color: #4a9eff; border: 1px solid #4a9eff; }
+  .phase-la   { background: #05150e; color: #2dd4a0; border: 1px solid #2dd4a0; }
+  .phase-boss { background: #1a1000; color: #f5a623; border: 1px solid #f5a623; }
+  .phase-trap { background: #150520; color: #c084fc; border: 1px solid #c084fc; }
+
+  .context { font-size: 12px; color: #777; margin-bottom: 12px; padding: 8px 12px; background: #161616; border-left: 2px solid #cc2200; border-radius: 4px; line-height: 1.5; }
+  .question { font-size: 15px; font-weight: 600; color: #f0ede8; line-height: 1.6; margin-bottom: 16px; }
+  .question em { font-style: normal; color: #f5a623; }
+
+  /* TYPE-IN MODE */
+  .type-input { width: 100%; padding: 11px 14px; background: #161616; border: 1px solid #2a2a2a; border-radius: 8px; color: #f0ede8; font-size: 14px; font-family: 'Barlow', sans-serif; outline: none; transition: border-color 0.15s; }
+  .type-input:focus { border-color: #cc2200; }
+  .type-hint { font-size: 11px; color: #444; margin-top: 6px; }
+
+  .options { display: flex; flex-direction: column; gap: 7px; }
+  .opt { padding: 11px 15px; border: 1px solid #222; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; color: #aaa; background: #161616; text-align: left; transition: all 0.12s; line-height: 1.4; }
+  .opt:hover:not(:disabled) { background: #1e1e1e; border-color: #333; color: #f0ede8; }
+  .opt.correct { background: #061a0f; border-color: #2dd4a0; color: #2dd4a0; }
+  .opt.wrong   { background: #1a0606; border-color: #cc2200; color: #cc4444; }
+  .opt:disabled { cursor: default; }
+
+  /* TRAP label */
+  .trap-label { display: inline-block; font-size: 9px; font-weight: 700; background: #1a0a2a; color: #c084fc; border-radius: 4px; padding: 1px 5px; margin-left: 8px; vertical-align: middle; letter-spacing: 0.08em; }
+
+  .feedback { margin-top: 12px; padding: 10px 14px; border-radius: 8px; font-size: 13px; line-height: 1.6; display: none; }
+  .feedback.show { display: block; }
+  .feedback.ok  { background: #061a0f; color: #2dd4a0; border: 1px solid #0d3020; }
+  .feedback.bad { background: #1a0606; color: #ff6b6b; border: 1px solid #3a1010; }
+
+  .next-btn { margin-top: 12px; padding: 10px 20px; background: #cc2200; color: #fff; border: none; border-radius: 8px; font-size: 12px; font-weight: 900; font-family: 'Barlow', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; display: none; transition: background 0.15s; }
+  .next-btn:hover { background: #e02800; }
+  .next-btn.show { display: inline-block; }
+
+  /* STREAK */
+  .streak-banner { text-align: center; padding: 8px; background: #1a1000; border: 1px solid #f5a623; border-radius: 8px; color: #f5a623; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 12px; display: none; }
+  .streak-banner.show { display: block; }
+
+  /* END */
+  .end-screen { text-align: center; padding: 2rem 1rem; }
+  .end-big   { font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .end-sub   { font-size: 14px; color: #777; margin-bottom: 20px; line-height: 1.6; }
+  .end-score { font-size: 40px; font-weight: 900; color: #f5a623; }
+  .end-max   { font-size: 12px; color: #444; margin-bottom: 6px; }
+  .end-pct   { font-size: 13px; color: #555; margin-bottom: 20px; }
+  .stats-row { display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; }
+  .stat { text-align: center; }
+  .stat-val { font-size: 20px; font-weight: 900; color: #f0ede8; }
+  .stat-lbl { font-size: 10px; color: #444; text-transform: uppercase; letter-spacing: 0.1em; }
+  .restart-btn { padding: 11px 26px; background: transparent; color: #cc2200; border: 1px solid #cc2200; border-radius: 8px; font-size: 12px; font-weight: 900; font-family: 'Barlow', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
+  .restart-btn:hover { background: #cc2200; color: #fff; }
+
+  .difficulty-badge { display: inline-block; font-size: 9px; font-weight: 900; letter-spacing: 0.15em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: #1a0a00; color: #f5a623; border: 1px solid #f5a623; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div id="game">
+  <div class="game-header">
+    <div class="game-title">LP + GTA: Survival English</div>
+    <div class="game-sub">Hard Mode — Los Angeles</div>
+  </div>
+  <div class="hud">
+    <div class="lives" id="lives"></div>
+    <div class="progress-wrap"><div class="progress-fill" id="progress"></div></div>
+    <div class="score-display" id="score-display">0 pts</div>
+  </div>
+  <div class="timer-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+  <div class="streak-banner" id="streak"></div>
+  <div id="question-area"></div>
+</div>
+
+<script>
+const TIMER_SECS = 12;
+
+const questions = [
+  // --- LINKIN PARK ROUNDS ---
+  {
+    phase:"lp", phaseLabel:"Linkin Park Round", round:"Round 1",
+    context:"A new friend in LA asks about your music taste.",
+    q:"She asks: <em>\"Have you always been into rock, or is it something new for you?\"</em>",
+    opts:[
+      {t:"I've liked rock since I was a teenager. Linkin Park got me into it.", ok:true},
+      {t:"I am like rock since I have teenager.", ok:false},
+      {t:"Since teenager I like rock always.", ok:false},
+      {t:"Rock yes, I like since many time.", ok:false}
+    ],
+    ok:"✓ \"I've liked\" = present perfect for something that started in the past and continues now. Perfect use.",
+    bad:"For something that started in the past and still continues, use: I've liked / I've been into. Not 'I am like'."
+  },
+  {
+    phase:"lp", phaseLabel:"Linkin Park Round", round:"Round 2",
+    context:"Talking about Chester Bennington.",
+    q:"Someone says Chester died in 2017. You want to express how sad that was. You say...",
+    opts:[
+      {t:"It was devastating. He was an incredible artist.", ok:true},
+      {t:"It was devasted. He were an incredible artist.", ok:false},
+      {t:"That was devastate. He was incredible artist.", ok:false},
+      {t:"Is very sad. He is incredible artist.", ok:false}
+    ],
+    ok:"✓ Correct tense (past), correct adjective form. 'Was an incredible artist' — article included. Spot on.",
+    bad:"Use past tense for facts about someone who passed away: He WAS. The adjective is 'devastating', not 'devasted'. And don't forget the article: 'an incredible artist'."
+  },
+  {
+    phase:"lp", phaseLabel:"Linkin Park Round", round:"Round 3 — TRAP",
+    trap:true,
+    context:"Your friend says: \"Linkin Park's new album is amazing!\"",
+    q:"You want to say you haven't heard it yet. Which is correct?",
+    opts:[
+      {t:"I haven't heard it yet — is it good?", ok:true},
+      {t:"I didn't hear it yet — is it good?", ok:false, trap:true},
+      {t:"I don't heard it yet — is it good?", ok:false},
+      {t:"I not hear it yet — is it good?", ok:false}
+    ],
+    ok:"✓ 'Haven't heard yet' = present perfect for something that hasn't happened up to now. This is the rule.",
+    bad:"With 'yet', use present perfect: I HAVEN'T heard it yet. 'I didn't hear yet' is a very common mistake — 'yet' signals present perfect, not simple past."
+  },
+  // --- GTA / LA ROUNDS ---
+  {
+    phase:"gta", phaseLabel:"GTA / Los Angeles Round", round:"Round 4",
+    context:"You're lost in downtown LA. You stopped a stranger.",
+    q:"The stranger says: <em>\"It's about a 10-minute walk north.\"</em> You didn't catch 'north'. You say...",
+    opts:[
+      {t:"Sorry, could you repeat that last part? I didn't catch it.", ok:true},
+      {t:"Sorry, I not catch the last. Say again?", ok:false},
+      {t:"Excuse, repeat please the last word.", ok:false},
+      {t:"What? More slow please say again.", ok:false}
+    ],
+    ok:"✓ 'Could you repeat that?' + 'I didn't catch it' = very natural, native-sounding combination.",
+    bad:"The key phrase: 'I didn't catch that / I didn't catch it.' Polite version: 'Could you repeat that last part?'"
+  },
+  {
+    phase:"gta", phaseLabel:"GTA / Los Angeles Round", round:"Round 5 — TRAP",
+    trap:true,
+    context:"You're in a café. You want to ask if the food is good.",
+    q:"Which sounds most natural to a stranger?",
+    opts:[
+      {t:"Hey, do you know if the burgers here are any good?", ok:true},
+      {t:"Hey, are the burgers here good, do you know?", ok:false, trap:true},
+      {t:"Hey, the burgers here — good?", ok:false},
+      {t:"Hey, burgers is good here, you know?", ok:false}
+    ],
+    ok:"✓ 'Do you know if...' = indirect question, very polite and natural for strangers. Great register.",
+    bad:"Option B is not wrong exactly, but sounds slightly awkward in LA casual speech. The most natural opener for strangers is 'Do you know if...' — it softens the question."
+  },
+  {
+    phase:"la", phaseLabel:"Exploring LA Round", round:"Round 6",
+    context:"At the hotel check-in. The receptionist hands you the key.",
+    q:"Receptionist: <em>\"Checkout is at 11am. Would you need a late checkout?\"</em> You say...",
+    opts:[
+      {t:"Actually, yes — is it possible to check out at noon instead?", ok:true},
+      {t:"Yes please I want checkout in 12 hours.", ok:false},
+      {t:"Yes, I need late — 12 o'clock it is possible?", ok:false},
+      {t:"Can I make checkout more late to 12?", ok:false}
+    ],
+    ok:"✓ 'Is it possible to...' + 'instead' = polished, real hotel English. Sounds confident.",
+    bad:"The key phrase: 'Is it possible to [action]?' OR 'Could I possibly...?' These are the natural ways to make requests in service situations."
+  },
+  {
+    phase:"la", phaseLabel:"Exploring LA Round", round:"Round 7 — TRAP",
+    trap:true,
+    context:"Someone invites you to a party tonight but you're exhausted from the flight.",
+    q:"You want to decline politely. Which sounds most natural?",
+    opts:[
+      {t:"I'd love to, but I'm still jet-lagged from the flight. Maybe next time?", ok:true},
+      {t:"I would love but I am jet-lagged. Next time maybe?", ok:false, trap:true},
+      {t:"I love to go but I have jet lag very much.", ok:false},
+      {t:"Thanks but I am too tired of the flight.", ok:false}
+    ],
+    ok:"✓ 'I'd love to, but...' = the softest, most natural way to decline in English. The 'but' does all the work.",
+    bad:"'I'd love to, but...' is the formula. Don't say 'I would love but' without 'to'. And 'still jet-lagged' is more natural than 'I have jet lag very much'."
+  },
+  // --- BOSS ROUNDS ---
+  {
+    phase:"boss", phaseLabel:"BOSS ROUND", round:"Round 8",
+    context:"You meet a musician at a Linkin Park tribute show. He asks about your English.",
+    q:"He says: <em>\"Your English is really good! How long have you been studying?\"</em>",
+    opts:[
+      {t:"Thank you! I've been studying for about two years, but I'm still learning.", ok:true},
+      {t:"Thank you! I study English for two years ago.", ok:false},
+      {t:"Thanks! I am study English since two years.", ok:false},
+      {t:"Thanks! Two years I study English already.", ok:false}
+    ],
+    ok:"✓ 'I've been studying for [time]' = present perfect continuous for an ongoing action. Textbook-perfect AND natural.",
+    bad:"For ongoing actions, use: I've been [verb]-ing for [time]. NOT 'two years ago' (that's a finished point in time) and NOT 'I am study'."
+  },
+  {
+    phase:"boss", phaseLabel:"BOSS ROUND", round:"Round 9",
+    context:"Same musician asks you to describe what LA feels like so far.",
+    q:"He asks: <em>\"First impressions of LA — what do you think?\"</em> Best answer?",
+    opts:[
+      {t:"It's bigger than I expected, honestly. The energy here is completely different from Brazil.", ok:true},
+      {t:"It is more big than I expected. The energy is different of Brazil.", ok:false},
+      {t:"Is bigger I think from what I waited. Very different energy.", ok:false},
+      {t:"More big than expected. Brazil energy is different of this.", ok:false}
+    ],
+    ok:"✓ 'Bigger than I expected' (comparative + than), 'different from Brazil' (different FROM, not 'of'). Both correct. Sounds fluent.",
+    bad:"Two common errors here: 1) 'more big' → use 'bigger' (short adjectives take -er). 2) 'different OF' → it's always 'different FROM' in standard English."
+  },
+  {
+    phase:"boss", phaseLabel:"FINAL BOSS", round:"Round 10 — Final",
+    context:"End of the night. The musician gives you his Instagram. He says:",
+    q:"<em>\"It was great meeting you. If you're ever back in LA, hit me up!\"</em> You respond...",
+    opts:[
+      {t:"Likewise! This was unexpected — I'll definitely reach out next time I'm here.", ok:true},
+      {t:"Same to you! This was unexpected — I will reach you next time I am here.", ok:false},
+      {t:"Equal for me! Was unexpected — I reach out when I come here next.", ok:false},
+      {t:"Me too! I hit you when I come back in LA.", ok:false}
+    ],
+    ok:"✓ FINAL BOSS DOWN. 'Likewise' = native response to 'nice meeting you'. 'Reach out' = contact someone. 'Next time I'm here' = correct conditional. Flawless.",
+    bad:"'Likewise' or 'You too!' respond to 'nice meeting you'. 'Reach out' = contact me. 'I'll reach YOU' is wrong — you reach OUT or reach OUT TO someone. And 'back IN LA' not 'in LA'."
+  }
+];
+
+let current=0, score=0, lives=3, answered=false, streak=0, bestStreak=0, wrongCount=0;
+let timerInterval=null, timeLeft=TIMER_SECS;
+
+function renderLives(){
+  document.getElementById('lives').innerHTML=
+    Array.from({length:3},(_,i)=>`<div class="heart${i>=lives?' lost':''}"></div>`).join('');
+}
+function renderProgress(){
+  document.getElementById('progress').style.width=(current/questions.length*100)+'%';
+}
+function renderScore(){
+  document.getElementById('score-display').textContent=score+' pts';
+}
+
+function startTimer(){
+  clearInterval(timerInterval);
+  timeLeft=TIMER_SECS;
+  const bar=document.getElementById('timer-bar');
+  bar.style.width='100%';
+  bar.className='timer-bar';
+  timerInterval=setInterval(()=>{
+    timeLeft-=0.1;
+    const pct=Math.max(0,timeLeft/TIMER_SECS*100);
+    bar.style.width=pct+'%';
+    const ttext=document.getElementById('ttime');
+    if(ttext){ ttext.textContent=Math.ceil(timeLeft)+'s'; ttext.className='timer-text'+(timeLeft<=4?' urgent':''); }
+    if(timeLeft<=4) bar.className='timer-bar urgent';
+    if(timeLeft<=0){ clearInterval(timerInterval); timeExpired(); }
+  },100);
+}
+
+function timeExpired(){
+  if(answered) return;
+  answered=true;
+  lives=Math.max(0,lives-1);
+  streak=0;
+  wrongCount++;
+  const opts=document.querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  const q=questions[current];
+  q.opts.forEach((o,j)=>{ if(o.ok) opts[j].classList.add('correct'); });
+  const fb=document.getElementById('fb');
+  fb.className='feedback show bad';
+  fb.textContent="⏱ Time's up! "+ q.bad;
+  document.getElementById('nb').classList.add('show');
+  document.getElementById('streak').classList.remove('show');
+  const card=document.querySelector('.card');
+  card.classList.add('shake');
+  setTimeout(()=>card.classList.remove('shake'),400);
+  renderLives(); renderScore();
+}
+
+function renderQuestion(){
+  if(current>=questions.length){renderEnd();return;}
+  answered=false;
+  const q=questions[current];
+  const phaseClass={lp:'phase-lp',gta:'phase-gta',la:'phase-la',boss:'phase-boss',trap:'phase-trap'}[q.trap?'trap':q.phase];
+  const streakEl=document.getElementById('streak');
+  if(streak>=3){
+    streakEl.className='streak-banner show';
+    streakEl.textContent='🔥 '+streak+' in a row! +BONUS ACTIVE';
+  } else { streakEl.classList.remove('show'); }
+
+  const shuffled=[...q.opts].sort(()=>Math.random()-0.5);
+
+  document.getElementById('question-area').innerHTML=`
+    <div class="card">
+      <div class="round-label">
+        <span>${q.round} of ${questions.length}</span>
+        <span class="timer-text" id="ttime">${TIMER_SECS}s</span>
+      </div>
+      <span class="phase-tag ${phaseClass}">${q.phaseLabel}${q.trap?' ⚠ TRAP':''}</span>
+      <div class="context">${q.context}</div>
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${shuffled.map((o,i)=>`<button class="opt" data-ok="${o.ok}" onclick="pick(this)">${o.t}${o.trap?'<span class="trap-label">looks right</span>':''}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <button class="next-btn" id="nb" onclick="nextQ()">Next →</button>
+    </div>`;
+  renderLives(); renderProgress(); renderScore();
+  startTimer();
+}
+
+function pick(btn){
+  if(answered) return;
+  answered=true;
+  clearInterval(timerInterval);
+  const correct=btn.dataset.ok==='true';
+  const opts=document.querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  btn.classList.add(correct?'correct':'wrong');
+  if(!correct){
+    lives=Math.max(0,lives-1);
+    streak=0; wrongCount++;
+    opts.forEach(o=>{ if(o.dataset.ok==='true') o.classList.add('correct'); });
+  } else {
+    const bonus=streak>=3?5:0;
+    const timeBonus=Math.floor(timeLeft/TIMER_SECS*10);
+    const pts=(lives===3?15:lives===2?10:5)+bonus+timeBonus;
+    score+=pts;
+    streak++; bestStreak=Math.max(bestStreak,streak);
+  }
+  const q=questions[current];
+  const fb=document.getElementById('fb');
+  fb.className='feedback show '+(correct?'ok':'bad');
+  fb.textContent=correct?q.ok:q.bad;
+  document.getElementById('nb').classList.add('show');
+  if(!correct){
+    const card=document.querySelector('.card');
+    card.classList.add('shake');
+    setTimeout(()=>card.classList.remove('shake'),400);
+  }
+  if(streak>=3){
+    const s=document.getElementById('streak');
+    s.className='streak-banner show';
+    s.textContent='🔥 '+streak+' streak! +5 bonus per correct answer';
+  }
+  renderLives(); renderScore();
+}
+
+function nextQ(){ current++; renderQuestion(); }
+
+function renderEnd(){
+  clearInterval(timerInterval);
+  document.getElementById('progress').style.width='100%';
+  document.getElementById('timer-bar').style.width='0%';
+  document.getElementById('streak').classList.remove('show');
+  const max=questions.length*15+questions.length*10+questions.length*5;
+  const pct=Math.round(score/(questions.length*30)*100);
+  const msg=pct>=85?"Mission Complete.":pct>=60?"Survived.":"Game Over.";
+  const sub=pct>=85
+    ?"Your English is ready for LA. You handled the traps and the clock. Chester approved."
+    :pct>=60
+    ?"Good effort — but LA won't wait 12 seconds for you to answer. Review the red phrases."
+    :"The streets of LA are brutal. Study the feedback and go again.";
+
+  document.getElementById('question-area').innerHTML=`
+    <div class="card end-screen">
+      <div class="end-big">${msg}</div>
+      <div class="end-sub">${sub}</div>
+      <div class="end-score">${score}</div>
+      <div class="end-max">points</div>
+      <div class="end-pct">${pct}% accuracy</div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-val">${bestStreak}</div><div class="stat-lbl">Best streak</div></div>
+        <div class="stat"><div class="stat-val">${questions.length-wrongCount}</div><div class="stat-lbl">Correct</div></div>
+        <div class="stat"><div class="stat-val">${wrongCount}</div><div class="stat-lbl">Missed</div></div>
+      </div>
+      <button class="restart-btn" onclick="restart()">↺ Try Again</button>
+    </div>`;
+}
+
+function restart(){ current=0;score=0;lives=3;answered=false;streak=0;bestStreak=0;wrongCount=0; renderQuestion(); }
+renderQuestion();
+</script>
+</body>
+</html>

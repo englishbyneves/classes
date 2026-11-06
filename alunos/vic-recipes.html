@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vic's Recipes in English</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FDF8F0;
+    --warm: #F5EDD8;
+    --brown: #3D2B1F;
+    --brown-light: #6B4C3B;
+    --accent: #C8533A;
+    --accent-soft: #F2D0C8;
+    --green: #4A7C59;
+    --green-soft: #D4EBD9;
+    --gold: #D4960A;
+    --gold-soft: #FBF0CC;
+    --text: #2C1A12;
+    --muted: #8B6B5A;
+    --border: #E8D5C0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--brown);
+    padding: 1.5rem 1.25rem 1.25rem;
+    text-align: center;
+    position: relative;
+  }
+  .header-tag {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #C8A888;
+    margin-bottom: 6px;
+  }
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 6vw, 34px);
+    color: #FDF8F0;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+  .header-sub {
+    font-size: 13px;
+    color: #C8A888;
+    margin-top: 6px;
+  }
+  .pills {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 99px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #E8D5C0;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    background: var(--warm);
+    padding: 10px 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-label { font-size: 12px; color: var(--muted); flex-shrink: 0; }
+  .progress-track {
+    flex: 1;
+    height: 5px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    width: 0%;
+    transition: width 0.6s ease;
+  }
+
+  /* ── NAV TABS ── */
+  .tabs {
+    display: flex;
+    overflow-x: auto;
+    background: var(--warm);
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+    gap: 0;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    flex-shrink: 0;
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: rgba(200,83,58,0.05);
+  }
+
+  /* ── SECTIONS ── */
+  .section { display: none; padding: 1.25rem; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── CARDS ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--brown);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ── INGREDIENT ROW ── */
+  .ingredient-grid {
+    display: grid;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .ingredient-row {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    background: var(--warm);
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .ingredient-row:hover { background: var(--accent-soft); }
+  .ingredient-row.done { background: var(--green-soft); border-color: #B8DBBF; }
+  .ingr-icon { font-size: 20px; text-align: center; }
+  .ingr-info {}
+  .ingr-name { font-size: 14px; font-weight: 600; color: var(--brown); }
+  .ingr-amount { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .ingr-english {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: right;
+    display: none;
+  }
+  .ingredient-row.done .ingr-english { display: block; color: var(--green); }
+  .ingr-check { font-size: 16px; }
+
+  /* ── SPEAK BOX ── */
+  .speak-box {
+    background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 100%);
+    border-radius: 14px;
+    padding: 1.25rem;
+    color: #FDF8F0;
+    margin: 1rem 0;
+  }
+  .speak-box .speak-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C8A888;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .speak-box p {
+    font-size: 14px;
+    color: #E8D5C0;
+    line-height: 1.65;
+  }
+  .speak-box .prompt {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    color: #FDF8F0;
+    margin: 10px 0 6px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .speak-box .template {
+    background: rgba(255,255,255,0.1);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    color: #E8D5C0;
+    margin-top: 10px;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* ── FILL IN ── */
+  .fill-item {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--brown);
+    line-height: 1.6;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .fill-item:hover { background: var(--accent-soft); border-color: #E8B8AA; }
+  .fill-item .answer {
+    display: none;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    font-weight: 600;
+    color: var(--green);
+    font-size: 13px;
+  }
+  .fill-item.revealed .answer { display: block; }
+  .fill-blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--accent);
+    min-width: 60px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── STEPS ── */
+  .steps { display: grid; gap: 8px; margin: 12px 0; }
+  .step {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background: var(--warm);
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .step:hover { background: var(--accent-soft); }
+  .step.done { background: var(--green-soft); border-color: #B8DBBF; }
+  .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step.done .step-num { background: var(--green); }
+  .step-text { font-size: 14px; color: var(--brown); line-height: 1.55; }
+
+  /* ── VOCAB ── */
+  .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .vocab-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+  }
+  .vocab-card:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .vocab-card.flipped { background: var(--brown); border-color: var(--brown); }
+  .vocab-pt { font-size: 11px; color: var(--muted); }
+  .vocab-en { font-size: 14px; font-weight: 600; color: var(--brown); margin-top: 2px; }
+  .vocab-card.flipped .vocab-pt { color: #C8A888; }
+  .vocab-card.flipped .vocab-en { color: #FDF8F0; }
+  .vocab-hidden { display: none; }
+  .vocab-card.flipped .vocab-hidden { display: block; }
+  .vocab-card:not(.flipped) .vocab-shown { display: block; }
+
+  /* ── ROLEPLAY ── */
+  .roleplay-bubble {
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 85%;
+  }
+  .bubble-teacher {
+    background: var(--warm);
+    border: 1px solid var(--border);
+    color: var(--brown);
+    border-radius: 14px 14px 14px 4px;
+    align-self: flex-start;
+  }
+  .bubble-you {
+    background: var(--brown);
+    color: #FDF8F0;
+    border-radius: 14px 14px 4px 14px;
+    align-self: flex-end;
+    margin-left: auto;
+  }
+  .bubble-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .bubble-teacher .bubble-label { color: var(--muted); }
+  .bubble-you .bubble-label { color: #C8A888; }
+  .roleplay-chat { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+  .bubble-input {
+    border: 2px dashed var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-style: italic;
+  }
+  .bubble-input .bubble-label { color: var(--accent); }
+
+  /* ── TIMER ── */
+  .timer-box {
+    background: var(--gold-soft);
+    border: 1px solid #E8C85A;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+  }
+  .timer-icon { font-size: 22px; }
+  .timer-text { flex: 1; }
+  .timer-text strong { font-size: 14px; color: var(--gold); display: block; font-weight: 600; }
+  .timer-text span { font-size: 12px; color: #A07820; }
+  .timer-display {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 56px;
+    text-align: center;
+  }
+  .timer-btn {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .timer-btn:hover { opacity: 0.85; }
+
+  /* ── CHALLENGE ── */
+  .challenge-box {
+    background: var(--accent);
+    border-radius: 14px;
+    padding: 1.25rem;
+    color: #fff;
+    margin: 1rem 0;
+  }
+  .challenge-box h3 { font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; }
+  .challenge-box p { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.65; }
+  .checklist { list-style: none; margin-top: 12px; display: grid; gap: 8px; }
+  .checklist li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .checklist li:hover { background: rgba(255,255,255,0.25); }
+  .checklist li.done { background: rgba(255,255,255,0.3); text-decoration: line-through; opacity: 0.7; }
+  .check-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* ── REFLECTION ── */
+  .reflect-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .reflect-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .reflect-q { font-size: 14px; font-weight: 600; color: var(--brown); margin-bottom: 8px; }
+  .reflect-hint { font-size: 12px; color: var(--muted); font-style: italic; }
+
+  /* ── HOMEWORK ── */
+  .hw-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .hw-item:last-child { border-bottom: none; }
+  .hw-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .hw-icon.red { background: var(--accent-soft); }
+  .hw-icon.green { background: var(--green-soft); }
+  .hw-icon.gold { background: var(--gold-soft); }
+  .hw-title { font-size: 14px; font-weight: 600; color: var(--brown); margin-bottom: 2px; }
+  .hw-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ── NAV BUTTONS ── */
+  .nav-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-back { background: var(--warm); color: var(--muted); border: 1px solid var(--border); }
+  .btn-back:hover { background: var(--border); }
+  .btn-next { background: var(--accent); color: white; }
+  .btn-next:hover { opacity: 0.9; transform: translateY(-1px); }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1.25rem 0 0.75rem;
+  }
+  .section-divider span { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap; }
+  .section-divider::before, .section-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .tip-box {
+    background: var(--green-soft);
+    border: 1px solid #B8DBBF;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--green);
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  .tip-box strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <p class="header-tag">Continuation · A1+ Level</p>
+  <h1>🍽️ Vic's Recipes<br>in English</h1>
+  <p class="header-sub">Part 2 of Numbers in Real Life · 45 min</p>
+  <div class="pills">
+    <span class="pill">⏱ 45 min</span>
+    <span class="pill">🎙️ Speaking focus</span>
+    <span class="pill">🍰 Your real recipes</span>
+  </div>
+</div>
+
+<div class="progress-bar">
+  <span class="progress-label" id="prog-label">Section 1 of 5</span>
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" onclick="goTo(0)">🔥 Warm-up</button>
+  <button class="tab" onclick="goTo(1)">🍰 Simple Cake</button>
+  <button class="tab" onclick="goTo(2)">🥙 Esfiha</button>
+  <button class="tab" onclick="goTo(3)">🎭 Roleplay</button>
+  <button class="tab" onclick="goTo(4)">🏆 Challenge</button>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 0 · WARM-UP
+════════════════════════════════════ -->
+<div class="section active" id="s0">
+
+  <div class="card">
+    <div class="card-label">⚡ Quick review</div>
+    <h3>Last class — what do you remember?</h3>
+    <p>Say the answers OUT LOUD before reading on. Don't look — just try!</p>
+  </div>
+
+  <div class="section-divider"><span>Say it out loud</span></div>
+
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    🔢 How do you say <strong>250</strong> in English?
+    <div class="answer">✅ "Two hundred and fifty"</div>
+  </div>
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    🔢 How do you say <strong>R$120</strong> in English?
+    <div class="answer">✅ "One hundred and twenty reais"</div>
+  </div>
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    🌡️ How do you say <strong>180°C</strong> in English?
+    <div class="answer">✅ "One hundred and eighty degrees"</div>
+  </div>
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    ⏱️ How do you say <strong>45 minutes</strong> in English?
+    <div class="answer">✅ "Forty-five minutes"</div>
+  </div>
+
+  <div class="speak-box" style="margin-top: 1rem;">
+    <div class="speak-label">🎙️ Speak now — 30 seconds</div>
+    <p class="prompt">What did you bake or cook this week?</p>
+    <div class="template">
+      "This week I made ___. I used ___ grams of ___ and ___ grams of ___. It takes ___ minutes."
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>Today's goal:</strong> describe your two real recipes fully in English — numbers, ingredients, and steps. By the end you'll be able to explain your work to any English-speaking customer. 🎯
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-next" onclick="goTo(1)">Start — Simple Cake 🍰 →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 1 · SIMPLE CAKE
+════════════════════════════════════ -->
+<div class="section" id="s1">
+
+  <div class="card">
+    <div class="card-label">🍰 Recipe 1</div>
+    <h3>Simple Cake — Bolo Simples</h3>
+    <p>Tap each ingredient to reveal how to say it in English. Say it OUT LOUD before you tap!</p>
+  </div>
+
+  <div class="section-divider"><span>Ingredients — tap to reveal</span></div>
+
+  <div class="ingredient-grid">
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🌾</div>
+      <div class="ingr-info">
+        <div class="ingr-name">Farinha de trigo</div>
+        <div class="ingr-amount">2 cups</div>
+      </div>
+      <div class="ingr-english">2 cups of flour</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🍬</div>
+      <div class="ingr-info">
+        <div class="ingr-name">Açúcar</div>
+        <div class="ingr-amount">2 cups</div>
+      </div>
+      <div class="ingr-english">2 cups of sugar</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🥚</div>
+      <div class="ingr-info">
+        <div class="ingr-name">Ovos</div>
+        <div class="ingr-amount">5 eggs</div>
+      </div>
+      <div class="ingr-english">5 eggs</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🥛</div>
+      <div class="ingr-info">
+        <div class="ingr-name">Leite morno</div>
+        <div class="ingr-amount">1 cup</div>
+      </div>
+      <div class="ingr-english">1 cup of warm milk</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🫙</div>
+      <div class="ingr-info">
+        <div class="ingr-name">Fermento</div>
+        <div class="ingr-amount">1 spoon</div>
+      </div>
+      <div class="ingr-english">1 spoon of baking powder</div>
+      <span class="ingr-check">👆</span>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Steps — tap when done</span></div>
+
+  <div class="steps">
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Mix</strong> the eggs for <strong>5 minutes</strong>.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Add</strong> the sugar, then mix again.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Add</strong> the warm milk and mix.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">4</div>
+      <div class="step-text"><strong>Add</strong> the flour and baking powder. Incorporate well.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">5</div>
+      <div class="step-text"><strong>Bake</strong> for <strong>45 minutes</strong> at <strong>180°C</strong>.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Key verbs — say out loud</span></div>
+
+  <div class="vocab-grid">
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Misturar</div>
+      <div class="vocab-en vocab-shown">Mix / Stir</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Mix the eggs for 5 minutes"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Adicionar</div>
+      <div class="vocab-en vocab-shown">Add</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Add the sugar, then mix"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Assar</div>
+      <div class="vocab-en vocab-shown">Bake</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Bake for 45 minutes"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Incorporar</div>
+      <div class="vocab-en vocab-shown">Incorporate / Fold in</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Fold in the flour gently"</div>
+    </div>
+  </div>
+
+  <div class="speak-box" style="margin-top: 1rem;">
+    <div class="speak-label">🎙️ Speak — 45 seconds</div>
+    <p class="prompt">Describe the Simple Cake recipe from memory.</p>
+    <div class="template">
+      "For this cake, I use ___ cups of flour, ___ cups of sugar and ___ eggs. I also add ___ cup of warm milk and ___ spoon of baking powder. First I mix the eggs for ___ minutes... then I add... I bake for ___ minutes at ___."
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-back" onclick="goTo(0)">← Back</button>
+    <button class="btn btn-next" onclick="goTo(2)">Next — Esfiha 🥙 →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 2 · ESFIHA
+════════════════════════════════════ -->
+<div class="section" id="s2">
+
+  <div class="card">
+    <div class="card-label">🥙 Recipe 2</div>
+    <h3>Meat Esfiha — Esfiha de Carne</h3>
+    <p>This recipe is more complex. We'll do the filling and the dough separately. Tap each ingredient!</p>
+  </div>
+
+  <div class="section-divider"><span>Filling ingredients</span></div>
+
+  <div class="ingredient-grid">
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🥩</div>
+      <div class="ingr-info"><div class="ingr-name">Carne moída</div><div class="ingr-amount">500g</div></div>
+      <div class="ingr-english">500 grams of ground meat</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🍋</div>
+      <div class="ingr-info"><div class="ingr-name">Suco de limão</div><div class="ingr-amount">8 lemons</div></div>
+      <div class="ingr-english">Juice of 8 lemons</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🧅</div>
+      <div class="ingr-info"><div class="ingr-name">Cebola</div><div class="ingr-amount">half</div></div>
+      <div class="ingr-english">Half an onion</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🧄</div>
+      <div class="ingr-info"><div class="ingr-name">Alho / sal / pimenta</div><div class="ingr-amount">to taste</div></div>
+      <div class="ingr-english">Garlic, salt and pepper to taste</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🌶️</div>
+      <div class="ingr-info"><div class="ingr-name">Páprica defumada</div><div class="ingr-amount">to taste</div></div>
+      <div class="ingr-english">Smoked paprika to taste</div>
+      <span class="ingr-check">👆</span>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Dough ingredients</span></div>
+
+  <div class="ingredient-grid">
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🥛</div>
+      <div class="ingr-info"><div class="ingr-name">Leite</div><div class="ingr-amount">250ml</div></div>
+      <div class="ingr-english">250ml of milk</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🥚</div>
+      <div class="ingr-info"><div class="ingr-name">Ovos</div><div class="ingr-amount">2</div></div>
+      <div class="ingr-english">2 eggs</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🧈</div>
+      <div class="ingr-info"><div class="ingr-name">Manteiga</div><div class="ingr-amount">60g</div></div>
+      <div class="ingr-english">60 grams of butter</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🛢️</div>
+      <div class="ingr-info"><div class="ingr-name">Óleo</div><div class="ingr-amount">4 spoons</div></div>
+      <div class="ingr-english">4 spoons of oil</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🍬</div>
+      <div class="ingr-info"><div class="ingr-name">Açúcar</div><div class="ingr-amount">2 spoons</div></div>
+      <div class="ingr-english">2 spoons of sugar</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🫧</div>
+      <div class="ingr-info"><div class="ingr-name">Fermento biológico</div><div class="ingr-amount">12g</div></div>
+      <div class="ingr-english">12 grams of biological yeast</div>
+      <span class="ingr-check">👆</span>
+    </div>
+    <div class="ingredient-row" onclick="this.classList.toggle('done')">
+      <div class="ingr-icon">🌾</div>
+      <div class="ingr-info"><div class="ingr-name">Farinha</div><div class="ingr-amount">750g</div></div>
+      <div class="ingr-english">750 grams of flour</div>
+      <span class="ingr-check">👆</span>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Steps — tap when done</span></div>
+
+  <div class="steps">
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">1</div>
+      <div class="step-text">Mix the meat with onion, garlic, salt, pepper and smoked paprika.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">2</div>
+      <div class="step-text">Add the <strong>juice of 8 lemons</strong>. Incorporate and set aside.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">3</div>
+      <div class="step-text">In a bowl, mix the milk, eggs, butter, oil, sugar and biological yeast.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">4</div>
+      <div class="step-text">Add the flour and salt little by little. <strong>Knead for 15 minutes</strong>.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">5</div>
+      <div class="step-text">Leave the dough to <strong>rest for 1 hour</strong>.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">6</div>
+      <div class="step-text">Shape with the filling. Brush with egg yolk on top.</div>
+    </div>
+    <div class="step" onclick="this.classList.toggle('done')">
+      <div class="step-num">7</div>
+      <div class="step-text"><strong>Bake for 20 minutes</strong> at <strong>180°C</strong>.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>New key verbs</span></div>
+
+  <div class="vocab-grid">
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Sovar</div>
+      <div class="vocab-en vocab-shown">Knead</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Knead for 15 minutes"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Descansar</div>
+      <div class="vocab-en vocab-shown">Rest / Leave to rest</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Leave to rest 1 hour"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Modelar / Moldar</div>
+      <div class="vocab-en vocab-shown">Shape</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Shape with the filling"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Pincelar</div>
+      <div class="vocab-en vocab-shown">Brush</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Brush with egg yolk"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Recheio</div>
+      <div class="vocab-en vocab-shown">Filling</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"Shape with the filling"</div>
+    </div>
+    <div class="vocab-card" onclick="this.classList.toggle('flipped')">
+      <div class="vocab-pt vocab-shown">Massa</div>
+      <div class="vocab-en vocab-shown">Dough</div>
+      <div class="vocab-hidden" style="font-size:12px;color:#C8A888;margin-top:4px;">"The dough rests for 1 hour"</div>
+    </div>
+  </div>
+
+  <div class="speak-box" style="margin-top: 1rem;">
+    <div class="speak-label">🎙️ Speak — 60 seconds</div>
+    <p class="prompt">Describe the Esfiha recipe from memory — filling first, then the dough.</p>
+    <div class="template">
+      "For the filling, I mix ___ grams of ground meat with ___. I add the juice of ___ lemons. For the dough, I use ___ ml of milk, ___ eggs, ___ grams of butter... I knead for ___ minutes and leave to rest for ___ hour. Then I shape and bake for ___ minutes at ___."
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-back" onclick="goTo(1)">← Cake</button>
+    <button class="btn btn-next" onclick="goTo(3)">Next — Roleplay 🎭 →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 3 · ROLEPLAY
+════════════════════════════════════ -->
+<div class="section" id="s3">
+
+  <div class="card">
+    <div class="card-label">🎭 Real conversation</div>
+    <h3>A customer wants to order — in English!</h3>
+    <p>Your teacher plays the customer. You play yourself — the baker. Answer using real numbers and ingredients from your recipes.</p>
+  </div>
+
+  <div class="section-divider"><span>Situation 1 — Phone order</span></div>
+
+  <div class="roleplay-chat">
+    <div class="roleplay-bubble bubble-teacher">
+      <div class="bubble-label">Customer</div>
+      "Hello! I'd like to order a birthday cake. How many eggs do you use?"
+    </div>
+    <div class="roleplay-bubble bubble-you bubble-input">
+      <div class="bubble-label">You 🎙️</div>
+      I use ___ eggs in my cake recipe...
+    </div>
+    <div class="roleplay-bubble bubble-teacher">
+      <div class="bubble-label">Customer</div>
+      "Interesting! And how long does it take to bake?"
+    </div>
+    <div class="roleplay-bubble bubble-you bubble-input">
+      <div class="bubble-label">You 🎙️</div>
+      It bakes for ___ minutes at ___ degrees...
+    </div>
+    <div class="roleplay-bubble bubble-teacher">
+      <div class="bubble-label">Customer</div>
+      "How much flour do you use? Is it a big recipe?"
+    </div>
+    <div class="roleplay-bubble bubble-you bubble-input">
+      <div class="bubble-label">You 🎙️</div>
+      I use ___ cups of flour...
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Situation 2 — Esfiha inquiry</span></div>
+
+  <div class="roleplay-chat">
+    <div class="roleplay-bubble bubble-teacher">
+      <div class="bubble-label">Customer</div>
+      "Hi! I saw your esfiha. What's in the filling?"
+    </div>
+    <div class="roleplay-bubble bubble-you bubble-input">
+      <div class="bubble-label">You 🎙️</div>
+      The filling has ___ grams of ground meat, onion, garlic...
+    </div>
+    <div class="roleplay-bubble bubble-teacher">
+      <div class="bubble-label">Customer</div>
+      "How long does the dough need to rest?"
+    </div>
+    <div class="roleplay-bubble bubble-you bubble-input">
+      <div class="bubble-label">You 🎙️</div>
+      The dough rests for ___ hour...
+    </div>
+    <div class="roleplay-bubble bubble-teacher">
+      <div class="bubble-label">Customer</div>
+      "How many esfihas does one batch make?"
+    </div>
+    <div class="roleplay-bubble bubble-you bubble-input">
+      <div class="bubble-label">You 🎙️</div>
+      With this recipe I make about ___ esfihas...
+    </div>
+  </div>
+
+  <div class="section-divider"><span>Useful phrases — say out loud</span></div>
+
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    How do you say "leva 45 minutos"?
+    <div class="answer">✅ "It takes forty-five minutes"</div>
+  </div>
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    How do you say "uso 500 gramas de carne"?
+    <div class="answer">✅ "I use five hundred grams of ground meat"</div>
+  </div>
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    How do you say "a massa descansa por 1 hora"?
+    <div class="answer">✅ "The dough rests for one hour"</div>
+  </div>
+  <div class="fill-item" onclick="this.classList.toggle('revealed')">
+    How do you say "forno a 180 graus"?
+    <div class="answer">✅ "Oven at one hundred and eighty degrees"</div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-back" onclick="goTo(2)">← Esfiha</button>
+    <button class="btn btn-next" onclick="goTo(4)">Final Challenge 🏆 →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 4 · CHALLENGE + REFLECTION
+════════════════════════════════════ -->
+<div class="section" id="s4">
+
+  <div class="challenge-box">
+    <h3>🏆 Final Challenge</h3>
+    <p>Choose ONE recipe. Describe it fully in English — 90 seconds. No stopping. Use real numbers!</p>
+    <ul class="checklist">
+      <li onclick="this.classList.toggle('done')"><span class="check-icon">⏰</span> Say at least 4 ingredient amounts (grams, cups, spoons)</li>
+      <li onclick="this.classList.toggle('done')"><span class="check-icon">🔢</span> Use at least 3 numbers correctly</li>
+      <li onclick="this.classList.toggle('done')"><span class="check-icon">🔧</span> Use: mix, add, bake + 2 other verbs</li>
+      <li onclick="this.classList.toggle('done')"><span class="check-icon">🌡️</span> Say the oven temperature</li>
+      <li onclick="this.classList.toggle('done')"><span class="check-icon">⏱️</span> Say the baking time</li>
+      <li onclick="this.classList.toggle('done')"><span class="check-icon">😊</span> Don't stop — mistakes are okay!</li>
+    </ul>
+  </div>
+
+  <div class="timer-box">
+    <div class="timer-icon">⏱️</div>
+    <div class="timer-text">
+      <strong>90-second timer</strong>
+      <span>Start talking, then tap</span>
+    </div>
+    <div class="timer-display" id="timer-display">1:30</div>
+    <button class="timer-btn" id="timer-btn" onclick="toggleTimer()">Start</button>
+  </div>
+
+  <div class="section-divider"><span>Reflection — say out loud</span></div>
+
+  <div class="reflect-item">
+    <div class="reflect-num">1</div>
+    <div class="reflect-q">What was the hardest ingredient to say in English today?</div>
+    <div class="reflect-hint">Think about: biological yeast? smoked paprika? flour?</div>
+  </div>
+  <div class="reflect-item">
+    <div class="reflect-num">2</div>
+    <div class="reflect-q">Which recipe did you prefer to describe — the cake or the esfiha? Why?</div>
+    <div class="reflect-hint">Try to answer in English: "I prefer the ___ because..."</div>
+  </div>
+  <div class="reflect-item">
+    <div class="reflect-num">3</div>
+    <div class="reflect-q">Do you feel ready to explain your recipes to a customer in English?</div>
+    <div class="reflect-hint">Be honest! "I feel... / I need more practice with..."</div>
+  </div>
+
+  <div class="section-divider"><span>Homework</span></div>
+
+  <div class="card">
+    <div class="hw-item">
+      <div class="hw-icon red">🎙️</div>
+      <div>
+        <div class="hw-title">Record an audio — 60 seconds</div>
+        <div class="hw-desc">Describe one of your recipes fully in English. Send to your teacher. Focus on numbers and verbs.</div>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-icon green">📋</div>
+      <div>
+        <div class="hw-title">Write your recipe in English</div>
+        <div class="hw-desc">Take one of your real recipes and write the ingredients list in English. Amounts included!</div>
+      </div>
+    </div>
+    <div class="hw-item">
+      <div class="hw-icon gold">⭐ Bonus</div>
+      <div>
+        <div class="hw-title">Describe another recipe</div>
+        <div class="hw-desc">Choose a third recipe you make. Practice describing it out loud — what are the ingredients and steps?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="btn btn-back" onclick="goTo(3)">← Roleplay</button>
+    <button class="btn btn-next" onclick="alert('Aula concluída! 🎉 Ótimo trabalho, Vic!')">Finish class 🎉</button>
+  </div>
+</div>
+
+<script>
+  let currentSection = 0;
+  const totalSections = 5;
+  let timerInterval = null;
+  let timerSeconds = 90;
+  let timerRunning = false;
+
+  function goTo(n) {
+    document.querySelectorAll('.section').forEach((s, i) => {
+      s.classList.toggle('active', i === n);
+    });
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', i === n);
+    });
+    currentSection = n;
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function updateProgress() {
+    const pct = ((currentSection + 1) / totalSections) * 100;
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = `Section ${currentSection + 1} of ${totalSections}`;
+  }
+
+  function toggleTimer() {
+    if (!timerRunning) {
+      timerRunning = true;
+      document.getElementById('timer-btn').textContent = 'Stop';
+      timerInterval = setInterval(() => {
+        timerSeconds--;
+        const m = Math.floor(timerSeconds / 60);
+        const s = timerSeconds % 60;
+        document.getElementById('timer-display').textContent = m + ':' + String(s).padStart(2, '0');
+        if (timerSeconds <= 0) {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          document.getElementById('timer-display').textContent = '0:00';
+          document.getElementById('timer-btn').textContent = 'Reset';
+          timerSeconds = 90;
+        }
+      }, 1000);
+    } else {
+      clearInterval(timerInterval);
+      timerRunning = false;
+      timerSeconds = 90;
+      document.getElementById('timer-display').textContent = '1:30';
+      document.getElementById('timer-btn').textContent = 'Start';
+    }
+  }
+
+  updateProgress();
+</script>
+</body>
+</html>

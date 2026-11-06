@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Sim's Perfect Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --green-dark: #14532d;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --teal: #0891b2;
+    --teal-light: #cffafe;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --pink: #db2777;
+    --pink-light: #fce7f3;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --indigo: #4338ca;
+    --indigo-light: #e0e7ff;
+    --bg: #fffbf5;
+    --card: #ffffff;
+    --text: #1e1b4b;
+    --muted: #6b7280;
+    --line: #d1d5db;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(circle at 10% 20%, rgba(124,58,237,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(22,163,74,0.06) 0%, transparent 50%);
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #14532d 0%, #16a34a 50%, #4ade80 100%);
+    padding: 48px 32px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .plumbob {
+    display: inline-block;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    line-height: 1.1;
+  }
+  .hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.1rem;
+    margin-top: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero-badges {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  /* ── WAVE ── */
+  .wave { display: block; margin-top: -1px; }
+
+  /* ── LAYOUT ── */
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── SECTION CARD ── */
+  .section-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .section-card:hover { transform: translateY(-2px); }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 24px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #fff;
+  }
+  .section-header .icon {
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  .section-body {
+    padding: 20px 24px 24px;
+  }
+
+  /* Color themes */
+  .green  .section-header { background: var(--green); }
+  .purple .section-header { background: var(--purple); }
+  .teal   .section-header { background: var(--teal); }
+  .orange .section-header { background: var(--orange); }
+  .pink   .section-header { background: var(--pink); }
+  .blue   .section-header { background: var(--blue); }
+  .indigo .section-header { background: var(--indigo); }
+
+  /* ── INPUT LINES ── */
+  .input-group {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .input-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    min-width: fit-content;
+  }
+  .fill-line {
+    flex: 1;
+    border: none;
+    border-bottom: 2.5px solid var(--line);
+    background: transparent;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    padding: 4px 6px;
+    outline: none;
+    transition: border-color 0.2s;
+    min-width: 80px;
+  }
+  .fill-line:focus { border-bottom-color: currentColor; }
+  .green  .fill-line:focus { border-color: var(--green); }
+  .purple .fill-line:focus { border-color: var(--purple); }
+  .teal   .fill-line:focus { border-color: var(--teal); }
+  .orange .fill-line:focus { border-color: var(--orange); }
+  .pink   .fill-line:focus { border-color: var(--pink); }
+  .blue   .fill-line:focus { border-color: var(--blue); }
+  .indigo .fill-line:focus { border-color: var(--indigo); }
+
+  /* ── FLOW SENTENCE ── */
+  .flow-box {
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--text);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 16px;
+  }
+  .green  .flow-box { background: var(--green-light); }
+  .purple .flow-box { background: var(--purple-light); }
+  .teal   .flow-box { background: var(--teal-light); }
+  .orange .flow-box { background: var(--orange-light); }
+  .flow-box span { font-style: normal; font-weight: 400; }
+  .flow-input {
+    border: none;
+    border-bottom: 2px dashed #9ca3af;
+    background: transparent;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: var(--text);
+    padding: 2px 4px;
+    outline: none;
+    min-width: 80px;
+    width: 100px;
+  }
+
+  /* ── HINT TEXT ── */
+  .hint {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+
+  /* ── VOCAB CHIPS ── */
+  .vocab-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .chip {
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    font-family: 'Nunito', sans-serif;
+    cursor: default;
+    transition: transform 0.15s;
+  }
+  .chip:hover { transform: scale(1.05); }
+  .blue   .chip { background: var(--blue-light); color: var(--blue); }
+
+  /* ── BULLET LIST ── */
+  .prompt-list {
+    list-style: none;
+    padding: 0;
+  }
+  .prompt-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 0.95rem;
+    border-bottom: 1px dashed #e5e7eb;
+  }
+  .prompt-list li:last-child { border-bottom: none; }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .green  .dot { background: var(--green); }
+  .purple .dot { background: var(--purple); }
+  .teal   .dot { background: var(--teal); }
+  .orange .dot { background: var(--orange); }
+  .pink   .dot { background: var(--pink); }
+
+  /* ── TWO-COL CONTRAST ── */
+  .contrast-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 14px 0;
+  }
+  .contrast-col {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .contrast-col-header {
+    padding: 10px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #fff;
+  }
+  .contrast-col-body {
+    padding: 14px 16px;
+  }
+  .col-orange .contrast-col-header { background: var(--orange); }
+  .col-orange .contrast-col-body { background: var(--orange-light); }
+  .col-purple .contrast-col-header { background: var(--purple); }
+  .col-purple .contrast-col-body { background: var(--purple-light); }
+
+  .col-fill-group {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .col-fill-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .col-fill {
+    flex: 1;
+    border: none;
+    border-bottom: 2px solid #d1d5db;
+    background: transparent;
+    font-size: 0.88rem;
+    font-family: 'Nunito Sans', sans-serif;
+    padding: 3px 4px;
+    outline: none;
+    min-width: 40px;
+    color: var(--text);
+  }
+  .col-fill:focus { border-color: var(--orange); }
+
+  /* ── ACTIVITY CARDS ── */
+  .activity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 600px) {
+    .activity-grid { grid-template-columns: 1fr; }
+    .contrast-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2rem; }
+  }
+  .activity-mini {
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .activity-mini-header {
+    padding: 12px 14px 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .activity-mini-body {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+  .activity-mini-body ul { list-style: none; padding: 0; }
+  .activity-mini-body li {
+    padding: 4px 0;
+    border-bottom: 1px dashed #e5e7eb;
+    color: var(--text);
+    font-style: italic;
+  }
+  .activity-mini-body li:last-child { border-bottom: none; }
+
+  /* ── REFLECTION BOX ── */
+  .reflect-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .reflect-card {
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .reflect-card .icon-big { font-size: 2rem; display: block; margin-bottom: 8px; }
+  .reflect-card label { font-size: 0.8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 8px; }
+  .reflect-card input {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #d1d5db;
+    background: transparent;
+    text-align: center;
+    font-size: 0.95rem;
+    font-family: 'Nunito Sans', sans-serif;
+    padding: 4px;
+    outline: none;
+    color: var(--text);
+  }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: #f0f0f0; margin: 6px 0 20px; }
+
+  /* ── TIMER BADGE ── */
+  .timer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 14px;
+  }
+  .green .timer-badge { background: var(--green-light); color: var(--green-dark); }
+
+  /* ── ROLEPLAY ANSWER ── */
+  .rp-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .rp-question {
+    background: var(--pink-light);
+    border-radius: 10px 10px 10px 2px;
+    padding: 9px 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--pink);
+    min-width: 200px;
+    max-width: 260px;
+  }
+  .rp-input {
+    flex: 1;
+    border: none;
+    border-bottom: 2px solid var(--line);
+    background: transparent;
+    font-size: 0.9rem;
+    font-family: 'Nunito Sans', sans-serif;
+    padding: 6px 4px;
+    outline: none;
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .rp-input:focus { border-color: var(--pink); }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="plumbob">
+    <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="30,0 60,30 30,60 0,30" fill="#4ade80" opacity="0.9"/>
+      <polygon points="30,0 60,30 30,60 0,30" fill="url(#shine)" opacity="0.5"/>
+      <polygon points="30,60 60,30 30,80" fill="#16a34a"/>
+      <polygon points="30,60 0,30 30,80" fill="#15803d"/>
+      <polygon points="30,0 60,30 30,30" fill="#bbf7d0" opacity="0.6"/>
+      <defs>
+        <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="white" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+  <h1>My Sim's Perfect Day</h1>
+  <p>Daily Routine · Speaking Practice</p>
+  <div class="hero-badges">
+    <span class="badge">🎯 Speaking Focus</span>
+    <span class="badge">🎮 The Sims</span>
+    <span class="badge">⏱️ 45 min</span>
+  </div>
+</div>
+<svg class="wave" viewBox="0 0 1440 40" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,40 C360,0 1080,0 1440,40 L1440,0 L0,0 Z" fill="#16a34a"/>
+</svg>
+
+<div class="container">
+
+  <!-- SECTION 1: QUICK REVIEW -->
+  <div class="section-card teal">
+    <div class="section-header">
+      <span class="icon">🔁</span>
+      Quick Review
+    </div>
+    <div class="section-body">
+      <p class="hint">Say each sentence out loud — then put them all together!</p>
+
+      <div class="input-group">
+        <span class="input-label">I wake up at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">I go to work at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">I have lunch at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">I go home at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+
+      <div class="flow-box">
+        <span>"I wake up at</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>, then</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>, after that</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>, and</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>."</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: MY SIM'S ROUTINE -->
+  <div class="section-card purple">
+    <div class="section-header">
+      <span class="icon">🎮</span>
+      My Sim's Perfect Routine
+    </div>
+    <div class="section-body">
+      <p class="hint">Imagine your Sim has a PERFECT life. Complete each line and say it out loud!</p>
+
+      <div class="input-group">
+        <span class="input-label">My Sim wakes up at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">My Sim eats</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">My Sim goes to</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">My Sim works as</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">My Sim goes home at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">My Sim watches</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">My Sim sleeps at</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+
+      <div class="flow-box">
+        <span>"My Sim wakes up at</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>, then</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>, after that</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>, and at night</span>
+        <input class="flow-input" type="text" placeholder="_____">
+        <span>."</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: REAL vs SIM -->
+  <div class="section-card orange">
+    <div class="section-header">
+      <span class="icon">⚡</span>
+      Real Life vs Sim Life
+    </div>
+    <div class="section-body">
+      <p class="hint">Compare your real day with your Sim's dream life!</p>
+
+      <div class="contrast-grid">
+        <div class="contrast-col col-orange">
+          <div class="contrast-col-header">🌍 Real Life</div>
+          <div class="contrast-col-body">
+            <div class="col-fill-group">
+              <span class="col-fill-label">I wake up at</span>
+              <input class="col-fill" type="text" placeholder="…">
+            </div>
+            <div class="col-fill-group">
+              <span class="col-fill-label">I eat</span>
+              <input class="col-fill" type="text" placeholder="…">
+            </div>
+            <div class="col-fill-group">
+              <span class="col-fill-label">I go to</span>
+              <input class="col-fill" type="text" placeholder="…">
+            </div>
+          </div>
+        </div>
+        <div class="contrast-col col-purple">
+          <div class="contrast-col-header">🎮 The Sims</div>
+          <div class="contrast-col-body">
+            <div class="col-fill-group">
+              <span class="col-fill-label">My Sim wakes up at</span>
+              <input class="col-fill" type="text" placeholder="…">
+            </div>
+            <div class="col-fill-group">
+              <span class="col-fill-label">My Sim eats</span>
+              <input class="col-fill" type="text" placeholder="…">
+            </div>
+            <div class="col-fill-group">
+              <span class="col-fill-label">My Sim goes to</span>
+              <input class="col-fill" type="text" placeholder="…">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-box">
+        <span>"My real life is</span>
+        <input class="flow-input" type="text" placeholder="_____" style="width:130px">
+        <span>, but my Sim's life is</span>
+        <input class="flow-input" type="text" placeholder="_____" style="width:130px">
+        <span>."</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: MINI EXPANSION -->
+  <div class="section-card blue">
+    <div class="section-header">
+      <span class="icon">🧠</span>
+      Mini Expansion — New Actions
+    </div>
+    <div class="section-body">
+      <p class="hint">Learn these new verbs and add them to your routine!</p>
+      <div class="vocab-row">
+        <span class="chip">🏋️ go to the gym</span>
+        <span class="chip">🍳 cook dinner</span>
+        <span class="chip">🧹 clean the house</span>
+        <span class="chip">🎮 play games</span>
+        <span class="chip">💬 talk to friends</span>
+      </div>
+      <div class="divider"></div>
+      <p class="hint">Now say 3 sentences using these new words:</p>
+      <div class="input-group">
+        <span class="input-label">"I usually</span>
+        <input class="fill-line" type="text" placeholder="go to the gym">
+        <span class="input-label">at</span>
+        <input class="fill-line" type="text" placeholder="7pm" style="max-width:80px">
+        <span class="input-label">."</span>
+      </div>
+      <div class="input-group">
+        <span class="input-label">"I usually</span>
+        <input class="fill-line" type="text" placeholder="cook dinner">
+        <span class="input-label">at</span>
+        <input class="fill-line" type="text" placeholder="7pm" style="max-width:80px">
+        <span class="input-label">."</span>
+      </div>
+      <div class="input-group">
+        <span class="input-label">"I usually</span>
+        <input class="fill-line" type="text" placeholder="talk to friends">
+        <span class="input-label">at</span>
+        <input class="fill-line" type="text" placeholder="7pm" style="max-width:80px">
+        <span class="input-label">."</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: SPEAKING CHALLENGE -->
+  <div class="section-card green">
+    <div class="section-header">
+      <span class="icon">🗣️</span>
+      Speaking Challenge — Flow Mode
+    </div>
+    <div class="section-body">
+      <div class="timer-badge">⏱️ 30 – 60 seconds</div>
+      <p class="hint">Speak non-stop using these prompts as a guide:</p>
+      <ul class="prompt-list">
+        <li><span class="dot"></span> My daily routine is…</li>
+        <li><span class="dot"></span> In the morning, I…</li>
+        <li><span class="dot"></span> In the afternoon, I…</li>
+        <li><span class="dot"></span> At night, I…</li>
+        <li><span class="dot"></span> My Sim is different because…</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 6: ROLEPLAY -->
+  <div class="section-card pink">
+    <div class="section-header">
+      <span class="icon">🎭</span>
+      Roleplay — You Are Your Sim
+    </div>
+    <div class="section-body">
+      <p class="hint">Answer as your Sim — be expressive and have fun! 😄</p>
+
+      <div class="rp-row">
+        <div class="rp-question">What time do you wake up?</div>
+        <input class="rp-input" type="text" placeholder="As your Sim…">
+      </div>
+      <div class="rp-row">
+        <div class="rp-question">What do you do in the morning?</div>
+        <input class="rp-input" type="text" placeholder="As your Sim…">
+      </div>
+      <div class="rp-row">
+        <div class="rp-question">Do you work or study?</div>
+        <input class="rp-input" type="text" placeholder="As your Sim…">
+      </div>
+      <div class="rp-row">
+        <div class="rp-question">What do you do at night?</div>
+        <input class="rp-input" type="text" placeholder="As your Sim…">
+      </div>
+      <div class="rp-row">
+        <div class="rp-question">Are you happy with your life?</div>
+        <input class="rp-input" type="text" placeholder="As your Sim…">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: EMOTIONAL CONNECTION -->
+  <div class="section-card indigo">
+    <div class="section-header">
+      <span class="icon">💬</span>
+      Emotional Connection
+    </div>
+    <div class="section-body">
+      <p class="hint">Connect the language to your real feelings:</p>
+      <div class="input-group">
+        <span class="input-label">I like my routine because</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">I don't like</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+      <div class="input-group">
+        <span class="input-label">I want to change</span>
+        <input class="fill-line" type="text" placeholder="type here…">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: REFLECTION -->
+  <div class="section-card teal">
+    <div class="section-header">
+      <span class="icon">🪞</span>
+      Reflection
+    </div>
+    <div class="section-body">
+      <div class="reflect-row">
+        <div class="reflect-card" style="background: var(--teal-light);">
+          <span class="icon-big">✨</span>
+          <label>One new word I learned</label>
+          <input type="text" placeholder="type here…">
+        </div>
+        <div class="reflect-card" style="background: var(--purple-light);">
+          <span class="icon-big">🙋</span>
+          <label>One sentence about me</label>
+          <input type="text" placeholder="type here…">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: INDEPENDENT ACTIVITY -->
+  <div class="section-card green">
+    <div class="section-header">
+      <span class="icon">🏠</span>
+      Independent Activity — For This Week
+    </div>
+    <div class="section-body">
+      <div class="activity-grid">
+        <div class="activity-mini">
+          <div class="activity-mini-header" style="background: var(--teal);">🎧 Audio</div>
+          <div class="activity-mini-body" style="background: var(--teal-light);">
+            <p style="font-weight:700; margin-bottom:8px; font-size:0.82rem; color: var(--teal);">Send a voice note on WhatsApp:</p>
+            <ul>
+              <li>"My real routine is…"</li>
+              <li>"My Sim routine is…"</li>
+              <li>"The difference is…"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="activity-mini">
+          <div class="activity-mini-header" style="background: var(--purple);">🎮 While Playing</div>
+          <div class="activity-mini-body" style="background: var(--purple-light);">
+            <p style="font-weight:700; margin-bottom:8px; font-size:0.82rem; color: var(--purple);">Say out loud as you play:</p>
+            <ul>
+              <li>"He is cooking."</li>
+              <li>"She is sleeping."</li>
+              <li>"He is working."</li>
+            </ul>
+          </div>
+        </div>
+        <div class="activity-mini">
+          <div class="activity-mini-header" style="background: var(--orange);">🔁 Daily Habit</div>
+          <div class="activity-mini-body" style="background: var(--orange-light);">
+            <p style="font-weight:700; margin-bottom:8px; font-size:0.82rem; color: var(--orange);">Every single day, say:</p>
+            <ul>
+              <li>"I wake up at…"</li>
+              <li>"I work at…"</li>
+              <li>"I sleep at…"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  ✨ Great work today! You're one step closer to fluency. 🎮
+</div>
+
+</body>
+</html>

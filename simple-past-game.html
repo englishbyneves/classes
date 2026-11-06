@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Past Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0a1e;
+    --surface: #1a1233;
+    --card: #231b3a;
+    --coral: #f96167;
+    --gold: #f9c74f;
+    --mint: #43d9ad;
+    --lavender: #a78bfa;
+    --white: #f4f0ff;
+    --muted: #8a7aaa;
+    --border: #3a2f55;
+    --green-bg: #0d2b1f;
+    --green-border: #43d9ad;
+    --red-bg: #2b0d11;
+    --red-border: #f96167;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--surface);
+    padding: 20px 32px;
+    border-bottom: 2px solid var(--coral);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--white);
+  }
+
+  .header h1 span { color: var(--coral); }
+
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .badge {
+    background: rgba(249,97,103,0.15);
+    border: 1px solid rgba(249,97,103,0.4);
+    color: var(--coral);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  /* ── PROGRESS ── */
+  .progress-bar-wrap {
+    background: #150f25;
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-label { color: var(--muted); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; white-space: nowrap; }
+  .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+  .progress-pct { color: var(--gold); font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+
+  /* ── NAV ── */
+  .nav {
+    background: var(--surface);
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border);
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    padding: 12px 18px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    position: relative;
+    top: 1px;
+  }
+
+  .nav-btn:hover { color: var(--white); }
+  .nav-btn.active { color: var(--white); }
+  .nav-btn.done { color: var(--mint); }
+
+  /* ── SECTIONS ── */
+  .section { display: none; padding: 28px 32px 110px; max-width: 820px; margin: 0 auto; animation: rise 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION TITLE ── */
+  .sec-title { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 22px; }
+  .sec-icon { font-size: 2.4rem; line-height: 1; flex-shrink: 0; }
+  .sec-title h2 { font-family: 'Fraunces', serif; font-size: 1.55rem; font-weight: 900; line-height: 1.15; }
+  .sec-title .timing { color: var(--muted); font-size: 0.78rem; margin-top: 3px; font-weight: 500; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .card h3 { font-family: 'Fraunces', serif; font-size: 1rem; color: var(--white); margin-bottom: 12px; font-weight: 700; }
+  .card p, .card li { font-size: 0.9rem; color: #ccc0e8; line-height: 1.7; }
+  .card ul, .card ol { padding-left: 18px; margin-top: 8px; }
+  .card li { margin-bottom: 5px; }
+
+  /* ── VERB GRID ── */
+  .verb-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .vcard {
+    background: var(--card);
+    border: 1.5px solid var(--coral);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+    min-height: 78px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .vcard:hover { transform: translateY(-2px); border-color: var(--gold); }
+
+  .vcard.revealed {
+    background: var(--green-bg);
+    border-color: var(--mint);
+  }
+
+  .v-base { font-size: 15px; font-weight: 700; color: var(--white); }
+  .v-hint { font-size: 11px; color: var(--coral); font-weight: 600; }
+  .v-past { font-size: 14px; color: var(--mint); font-weight: 700; display: none; }
+  .v-type { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .vcard.revealed .v-hint { display: none; }
+  .vcard.revealed .v-past { display: block; }
+  .vcard.revealed .v-base { color: var(--muted); font-size: 12px; }
+
+  .flip-counter { font-size: 0.82rem; color: var(--muted); margin-bottom: 12px; }
+  .flip-counter span { color: var(--gold); font-weight: 700; }
+
+  /* ── MATCH GAME ── */
+  .match-question {
+    background: var(--card);
+    border: 1.5px solid var(--gold);
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+    display: none;
+    animation: rise 0.3s ease;
+  }
+
+  .match-question.active { display: block; }
+
+  .match-q-text { font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 14px; line-height: 1.5; }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .opt-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .opt-btn .opt-letter { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .opt-btn .opt-word { font-size: 17px; font-weight: 700; color: var(--white); }
+  .opt-btn:hover { border-color: var(--gold); transform: translateY(-2px); }
+  .opt-btn.correct { background: var(--green-bg); border-color: var(--mint); }
+  .opt-btn.correct .opt-letter { color: var(--mint); }
+  .opt-btn.wrong { background: var(--red-bg); border-color: var(--coral); }
+  .opt-btn.wrong .opt-letter { color: var(--coral); }
+  .opt-btn:disabled { cursor: not-allowed; transform: none; }
+
+  .match-feedback { font-size: 0.9rem; color: var(--muted); min-height: 22px; }
+  .match-feedback.ok { color: var(--mint); font-weight: 700; }
+  .match-feedback.no { color: var(--coral); font-weight: 700; }
+
+  .match-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .q-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .q-dot.done-ok { background: var(--mint); }
+  .q-dot.done-no { background: var(--coral); }
+  .q-dot.current { background: var(--gold); }
+
+  .score-row { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .score-pill {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .score-pill span { font-weight: 700; color: var(--white); }
+
+  /* ── SPEAK CARDS ── */
+  .speak-card {
+    background: var(--card);
+    border: 1.5px solid var(--mint);
+    border-radius: 14px;
+    padding: 22px 22px;
+    margin-bottom: 14px;
+    animation: rise 0.3s ease;
+  }
+
+  .speak-tag {
+    display: inline-block;
+    background: var(--mint);
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+
+  .speak-q { font-size: 1.15rem; font-weight: 700; color: var(--white); line-height: 1.5; margin-bottom: 12px; }
+
+  .hint-row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+  .hint-chip {
+    background: #1a1233;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .speak-nav { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; }
+  .speak-counter { font-size: 0.82rem; color: var(--muted); }
+
+  /* ── AI CHAT ── */
+  .chat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    min-height: 240px;
+    max-height: 340px;
+    overflow-y: auto;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .bubble { max-width: 82%; padding: 10px 14px; border-radius: 14px; font-size: 0.9rem; line-height: 1.6; }
+  .bubble.ai { align-self: flex-start; background: var(--card); border: 1px solid var(--border); color: var(--white); border-bottom-left-radius: 4px; }
+  .bubble.user { align-self: flex-end; background: var(--coral); color: white; border-bottom-right-radius: 4px; }
+  .bubble.loading { color: var(--muted); font-style: italic; }
+
+  .chat-input-row { display: flex; gap: 8px; }
+  .chat-input-row input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 0.9rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--white);
+    outline: none;
+  }
+  .chat-input-row input:focus { border-color: var(--lavender); }
+  .chat-input-row input::placeholder { color: var(--muted); }
+
+  .chat-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    color: var(--white);
+    font-size: 0.85rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn:hover { border-color: var(--muted); }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary { background: var(--coral); border-color: var(--coral); color: white; }
+  .btn.primary:hover { background: #e04f55; }
+  .btn.mint { background: rgba(67,217,173,0.15); border-color: var(--mint); color: var(--mint); }
+  .btn.mint:hover { background: rgba(67,217,173,0.25); }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+
+  /* ── HOME SCREEN ── */
+  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+
+  .home-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .home-card:hover { border-color: var(--muted); transform: translateY(-2px); }
+  .home-card .hc-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .home-card .hc-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 3px; }
+  .home-card .hc-sub { font-size: 12px; color: var(--muted); }
+
+  /* ── FINAL SCREEN ── */
+  .final-wrap { text-align: center; padding: 20px 0; }
+  .final-title { font-family: 'Fraunces', serif; font-size: 2.5rem; font-weight: 900; color: var(--gold); margin-bottom: 8px; }
+  .final-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+  .final-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+  .final-badge {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 14px 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    min-width: 110px;
+  }
+  .final-badge .fb-icon { font-size: 1.6rem; display: block; margin-bottom: 4px; }
+  .final-badge .fb-label { font-size: 12px; color: var(--muted); }
+  .final-badge .fb-score { font-size: 15px; font-weight: 700; color: var(--white); }
+
+  .hw-box {
+    background: rgba(167,139,250,0.1);
+    border: 1px solid var(--lavender);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 0 auto 20px;
+    max-width: 520px;
+    text-align: left;
+  }
+
+  .hw-box .hw-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--lavender); margin-bottom: 8px; }
+  .hw-box p { font-size: 0.9rem; color: #ccc0e8; line-height: 1.6; }
+
+  /* ── FOOTER NAV ── */
+  .footer-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .step-counter { font-size: 0.82rem; color: var(--muted); font-weight: 600; }
+
+  @media (max-width: 580px) {
+    .section { padding: 20px 14px 110px; }
+    .header, .progress-bar-wrap, .footer-nav { padding-left: 14px; padding-right: 14px; }
+    .verb-grid { grid-template-columns: repeat(3, 1fr); }
+    .options-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .home-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Simple Past <span>Game</span></h1>
+  <div class="badges">
+    <span class="badge">4 rounds</span>
+    <span class="badge">Speaking</span>
+    <span class="badge">AI Chat</span>
+  </div>
+</div>
+
+<div class="progress-bar-wrap">
+  <span class="progress-label">Progress</span>
+  <div class="progress-track">
+    <div class="progress-fill" id="pFill" style="width:20%"></div>
+  </div>
+  <span class="progress-pct" id="pPct">Round 1 of 4</span>
+</div>
+
+<nav class="nav" id="mainNav">
+  <button class="nav-btn active" onclick="go(0)">① Verb Flip</button>
+  <button class="nav-btn" onclick="go(1)">② Match It</button>
+  <button class="nav-btn" onclick="go(2)">③ Speak!</button>
+  <button class="nav-btn" onclick="go(3)">④ AI Chat</button>
+  <button class="nav-btn" onclick="go(4)">🏆 Final</button>
+</nav>
+
+<!-- ══════════════ SECTION 1: VERB FLIP ══════════════ -->
+<div class="section active" id="s0">
+  <div class="sec-title">
+    <div class="sec-icon">🃏</div>
+    <div>
+      <h2 style="color: var(--coral);">Round 1 — Verb Flip</h2>
+      <div class="timing">Tap a card. Say the past form OUT LOUD — then check!</div>
+    </div>
+  </div>
+
+  <p class="flip-counter">Revealed: <span id="flipCount">0</span> / 12 — say each one out loud!</p>
+
+  <div class="verb-grid" id="verbGrid"></div>
+
+  <div class="card">
+    <h3>Now use them in a sentence!</h3>
+    <p>Say 3 sentences out loud using verbs you just flipped. Start with <em>"Yesterday, I..."</em></p>
+  </div>
+
+  <button class="btn primary" id="s0next" onclick="go(1)" disabled>Next round →</button>
+</div>
+
+<!-- ══════════════ SECTION 2: MATCH IT ══════════════ -->
+<div class="section" id="s1">
+  <div class="sec-title">
+    <div class="sec-icon">🎯</div>
+    <div>
+      <h2 style="color: var(--gold);">Round 2 — Match It</h2>
+      <div class="timing">Choose the correct past form. Say the full sentence after!</div>
+    </div>
+  </div>
+
+  <div class="score-row">
+    <div class="score-pill">Score: <span id="matchScore">0</span> / 8</div>
+    <div class="score-pill">Question: <span id="matchQNum">1</span> / 8</div>
+  </div>
+
+  <div class="match-progress-row" id="matchDots"></div>
+
+  <div id="matchArea"></div>
+
+  <button class="btn primary" id="s1next" onclick="go(2)" style="display:none;">Next round →</button>
+</div>
+
+<!-- ══════════════ SECTION 3: SPEAK! ══════════════ -->
+<div class="section" id="s2">
+  <div class="sec-title">
+    <div class="sec-icon">🎙️</div>
+    <div>
+      <h2 style="color: var(--mint);">Round 3 — Speak!</h2>
+      <div class="timing">Answer out loud. No writing — just talk!</div>
+    </div>
+  </div>
+
+  <div id="speakCardArea"></div>
+
+  <div class="speak-nav">
+    <button class="btn" onclick="prevSpeak()" id="spPrev" disabled>← Prev</button>
+    <span class="speak-counter" id="spCount">1 / 8</span>
+    <button class="btn mint" onclick="nextSpeak()" id="spNext">Next →</button>
+  </div>
+
+  <button class="btn primary" id="s2next" onclick="go(3)" style="display:none;">Round 4: AI Chat →</button>
+</div>
+
+<!-- ══════════════ SECTION 4: AI CHAT ══════════════ -->
+<div class="section" id="s3">
+  <div class="sec-title">
+    <div class="sec-icon">🤖</div>
+    <div>
+      <h2 style="color: var(--lavender);">Round 4 — AI Chat</h2>
+      <div class="timing">Talk about your yesterday with an AI. In English!</div>
+    </div>
+  </div>
+
+  <p class="chat-note" id="chatNote">6 exchanges — type your answers in English!</p>
+  <div class="chat-box" id="chatBox"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Type your answer in English..." onkeydown="if(event.key==='Enter')sendChat()" />
+    <button class="btn primary" onclick="sendChat()">Send</button>
+  </div>
+  <div style="margin-top: 12px;">
+    <button class="btn" onclick="go(4)">See final score →</button>
+  </div>
+</div>
+
+<!-- ══════════════ SECTION 5: FINAL ══════════════ -->
+<div class="section" id="s4">
+  <div class="final-wrap">
+    <div class="final-title">Well done! 🏆</div>
+    <p class="final-sub">You completed all 4 rounds of Simple Past Game!</p>
+
+    <div class="final-badges">
+      <div class="final-badge">
+        <span class="fb-icon">🃏</span>
+        <div class="fb-label">Verb Flip</div>
+        <div class="fb-score" id="fb1">12 verbs</div>
+      </div>
+      <div class="final-badge">
+        <span class="fb-icon">🎯</span>
+        <div class="fb-label">Match It</div>
+        <div class="fb-score" id="fb2">— / 8</div>
+      </div>
+      <div class="final-badge">
+        <span class="fb-icon">🎙️</span>
+        <div class="fb-label">Speak!</div>
+        <div class="fb-score" id="fb3">8 questions</div>
+      </div>
+      <div class="final-badge">
+        <span class="fb-icon">🤖</span>
+        <div class="fb-label">AI Chat</div>
+        <div class="fb-score" id="fb4">Done!</div>
+      </div>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Record a 45-second audio: talk about your yesterday using at least 5 verbs in the past tense. Send to your teacher!</p>
+    </div>
+
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn" onclick="restartGame()">Play again</button>
+      <button class="btn primary" onclick="sendPrompt('I finished the simple past game! Can you ask me 3 more questions about what I did last week?')">More practice ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-nav">
+  <button class="btn" id="prevBtn" onclick="nav(-1)" disabled>← Back</button>
+  <span class="step-counter" id="stepCount">1 / 5</span>
+  <button class="btn primary" id="nextBtn" onclick="nav(1)">Next →</button>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────
+const VERBS = [
+  {b:'go', p:'went', t:'irregular'},
+  {b:'eat', p:'ate', t:'irregular'},
+  {b:'wake up', p:'woke up', t:'irregular'},
+  {b:'have', p:'had', t:'irregular'},
+  {b:'make', p:'made', t:'irregular'},
+  {b:'sleep', p:'slept', t:'irregular'},
+  {b:'work', p:'worked', t:'regular'},
+  {b:'cook', p:'cooked', t:'regular'},
+  {b:'watch', p:'watched', t:'regular'},
+  {b:'buy', p:'bought', t:'irregular'},
+  {b:'see', p:'saw', t:'irregular'},
+  {b:'talk', p:'talked', t:'regular'},
+];
+
+const MATCH_QS = [
+  {q: 'She ___ breakfast early this morning.', correct: 'ate', opts: ['eated','eat','ate']},
+  {q: 'He ___ to the supermarket yesterday.', correct: 'went', opts: ['go','went','goed']},
+  {q: 'I ___ a great movie last night.', correct: 'watched', opts: ['watch','watchen','watched']},
+  {q: 'They ___ a beautiful cake together.', correct: 'made', opts: ['maked','made','make']},
+  {q: 'She ___ until 9am on Sunday.', correct: 'slept', opts: ['sleeped','sleep','slept']},
+  {q: 'I ___ to my best friend for an hour.', correct: 'talked', opts: ['talked','talk','talken']},
+  {q: 'He ___ a new phone last week.', correct: 'bought', opts: ['buy','buyed','bought']},
+  {q: 'We ___ an amazing concert on Friday.', correct: 'saw', opts: ['see','seen','saw']},
+];
+
+const SPEAK_QS = [
+  {tag:'Yesterday', q:'What time did you wake up yesterday?', hints:['I woke up at…','I got up around…']},
+  {tag:'Food', q:'What did you eat for breakfast?', hints:['I ate…','I had…',"I didn't eat…"]},
+  {tag:'Work', q:'Did you work yesterday? What did you do?', hints:['I worked…','I made…',"I didn't work…"]},
+  {tag:'Evening', q:'What did you do last night?', hints:['I watched…','I cooked…','I went to…']},
+  {tag:'Weekend', q:'Where did you go last weekend?', hints:['I went to…','I stayed home…','I visited…']},
+  {tag:'Cooking', q:'Did you cook anything this week? What did you make?', hints:['I made…','I cooked…','I used…']},
+  {tag:'People', q:'Who did you talk to yesterday?', hints:['I talked to…','I called…','I saw…']},
+  {tag:'Feeling', q:'How did you feel yesterday?', hints:['I felt…','I was very…','It was a ___ day.']},
+];
+
+// ── STATE ─────────────────────────────────────────
+let cur = 0;
+let flipRevealed = 0;
+let matchIdx = 0;
+let matchScore = 0;
+let matchResults = [];
+let speakIdx = 0;
+let chatHistory = [];
+let chatTurns = 0;
+const MAX_CHAT = 6;
+const COLORS = ['#f96167','#f9c74f','#43d9ad','#a78bfa'];
+const PROGRESS_PCTS = [20,40,60,80,100];
+const PROGRESS_LABELS = ['Round 1','Round 2','Round 3','Round 4','Final'];
+const PROGRESS_COLORS = ['#f96167','#f9c74f','#43d9ad','#a78bfa','#f9c74f'];
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+// ── NAVIGATION ────────────────────────────────────
+function go(idx) {
+  document.querySelectorAll('.section').forEach((s,i) => s.classList.toggle('active', i===idx));
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.remove('active');
+    if(i===idx) b.classList.add('active');
+  });
+  cur = idx;
+  const fill = document.getElementById('pFill');
+  fill.style.width = PROGRESS_PCTS[idx] + '%';
+  fill.style.background = `linear-gradient(90deg, ${PROGRESS_COLORS[idx]}, ${PROGRESS_COLORS[Math.min(idx+1,4)]})`;
+  document.getElementById('pPct').textContent = `${PROGRESS_LABELS[idx]} of 4`;
+  document.getElementById('stepCount').textContent = `${idx+1} / 5`;
+  document.getElementById('prevBtn').disabled = idx === 0;
+  const nb = document.getElementById('nextBtn');
+  nb.disabled = idx === 4;
+  nb.textContent = idx === 4 ? 'Finish ✓' : 'Next →';
+  window.scrollTo({top:0, behavior:'smooth'});
+
+  if(idx===1 && matchResults.length===0) buildMatch();
+  if(idx===2 && speakIdx===0) renderSpeak();
+  if(idx===3 && chatHistory.length===0) buildChat();
+}
+
+function nav(d) { const n=cur+d; if(n>=0&&n<=4) go(n); }
+
+// ── ROUND 1: VERB FLIP ────────────────────────────
+function buildVerbGrid() {
+  const g = document.getElementById('verbGrid');
+  g.innerHTML = '';
+  flipRevealed = 0;
+  VERBS.forEach((v) => {
+    const el = document.createElement('div');
+    el.className = 'vcard';
+    el.innerHTML = `
+      <span class="v-base">${v.b}</span>
+      <span class="v-hint">tap to reveal</span>
+      <span class="v-past">${v.p}</span>
+      <span class="v-type">${v.t}</span>`;
+    let done = false;
+    el.addEventListener('click', () => {
+      if(!done) {
+        el.classList.add('revealed');
+        done = true;
+        flipRevealed++;
+        document.getElementById('flipCount').textContent = flipRevealed;
+        if(flipRevealed >= VERBS.length) {
+          document.getElementById('s0next').disabled = false;
+          document.querySelectorAll('.nav-btn')[0].classList.add('done');
+        }
+      }
+    });
+    g.appendChild(el);
+  });
+}
+
+// ── ROUND 2: MATCH IT ─────────────────────────────
+function buildMatch() {
+  matchIdx = 0; matchScore = 0; matchResults = [];
+  document.getElementById('matchScore').textContent = '0';
+  document.getElementById('matchQNum').textContent = '1';
+
+  // dots
+  const dots = document.getElementById('matchDots');
+  dots.innerHTML = MATCH_QS.map((_,i) => `<div class="q-dot${i===0?' current':''}" id="dot${i}"></div>`).join('') +
+    '<span style="font-size:0.78rem;color:var(--muted);margin-left:4px;">question progress</span>';
+
+  // questions
+  const area = document.getElementById('matchArea');
+  area.innerHTML = MATCH_QS.map((item,i) => {
+    const opts = shuffle([...item.opts]);
+    return `
+    <div class="match-question${i===0?' active':''}" id="mq${i}">
+      <div class="match-q-text">${item.q.replace('___','<span style="color:var(--gold);border-bottom:2px solid var(--gold);padding:0 4px;">___</span>')}</div>
+      <div class="options-grid">
+        ${opts.map((o,j) => {
+          const letters = ['A','B','C'];
+          const lColors = ['#f96167','#f9c74f','#43d9ad'];
+          return `<button class="opt-btn" onclick="checkOpt(${i},'${o}','${item.correct}',this)" id="opt${i}_${j}">
+            <div class="opt-letter" style="color:${lColors[j]}">${letters[j]}</div>
+            <div class="opt-word">${o}</div>
+          </button>`;
+        }).join('')}
+      </div>
+      <div class="match-feedback" id="mfb${i}"></div>
+    </div>`;
+  }).join('');
+}
+
+function checkOpt(i, chosen, correct, btn) {
+  const allBtns = document.querySelectorAll(`#mq${i} .opt-btn`);
+  allBtns.forEach(b => b.disabled = true);
+  const fb = document.getElementById(`mfb${i}`);
+  const dot = document.getElementById(`dot${i}`);
+
+  if(chosen === correct) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Correct! Say the sentence out loud.';
+    fb.className = 'match-feedback ok';
+    matchScore++;
+    dot.classList.replace('current','done-ok');
+  } else {
+    btn.classList.add('wrong');
+    allBtns.forEach(b => { if(b.querySelector('.opt-word').textContent === correct) b.classList.add('correct'); });
+    fb.textContent = `The answer is "${correct}". Say the full sentence!`;
+    fb.className = 'match-feedback no';
+    dot.classList.replace('current','done-no');
+  }
+
+  matchResults.push(chosen === correct);
+  document.getElementById('matchScore').textContent = matchScore;
+
+  setTimeout(() => {
+    const next = i + 1;
+    if(next < MATCH_QS.length) {
+      document.getElementById(`mq${i}`).classList.remove('active');
+      document.getElementById(`mq${next}`).classList.add('active');
+      document.getElementById(`dot${next}`).classList.add('current');
+      document.getElementById('matchQNum').textContent = next + 1;
+      matchIdx = next;
+    } else {
+      document.getElementById('s1next').style.display = '';
+      document.querySelectorAll('.nav-btn')[1].classList.add('done');
+      document.getElementById('fb2').textContent = `${matchScore} / 8`;
+    }
+  }, 1400);
+}
+
+// ── ROUND 3: SPEAK ────────────────────────────────
+function renderSpeak() {
+  const q = SPEAK_QS[speakIdx];
+  document.getElementById('spCount').textContent = `${speakIdx+1} / ${SPEAK_QS.length}`;
+  document.getElementById('spPrev').disabled = speakIdx === 0;
+  const isLast = speakIdx === SPEAK_QS.length - 1;
+  document.getElementById('spNext').style.display = isLast ? 'none' : '';
+  document.getElementById('s2next').style.display = isLast ? '' : 'none';
+
+  document.getElementById('speakCardArea').innerHTML = `
+    <div class="speak-card">
+      <span class="speak-tag">${q.tag}</span>
+      <div class="speak-q">${q.q}</div>
+      <div class="hint-row">
+        ${q.hints.map(h => `<span class="hint-chip">${h}</span>`).join('')}
+      </div>
+    </div>`;
+
+  if(isLast) document.querySelectorAll('.nav-btn')[2].classList.add('done');
+}
+
+function nextSpeak() { if(speakIdx < SPEAK_QS.length-1) { speakIdx++; renderSpeak(); } }
+function prevSpeak() { if(speakIdx > 0) { speakIdx--; renderSpeak(); } }
+
+// ── ROUND 4: AI CHAT ──────────────────────────────
+function buildChat() {
+  chatHistory = [];
+  chatTurns = 0;
+  document.getElementById('chatBox').innerHTML = '';
+  document.getElementById('chatNote').textContent = `${MAX_CHAT} exchanges — answer in English!`;
+
+  const opening = "Hi! Let's talk about your yesterday. What did you do in the morning?";
+  addBubble('ai', opening);
+  chatHistory.push({role:'user', content:'Start a friendly conversation. Say hi and ask one short question in simple past about what I did yesterday. Keep it simple, A1 English level.'});
+  chatHistory.push({role:'assistant', content: opening});
+}
+
+function addBubble(role, text) {
+  const box = document.getElementById('chatBox');
+  const b = document.createElement('div');
+  b.className = `bubble ${role}`;
+  b.textContent = text;
+  box.appendChild(b);
+  box.scrollTop = box.scrollHeight;
+  return b;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text || input.disabled) return;
+  input.value = '';
+  addBubble('user', text);
+  chatTurns++;
+
+  const left = MAX_CHAT - chatTurns;
+  document.getElementById('chatNote').textContent = left > 0 ? `${left} exchanges left` : 'Last exchange!';
+
+  chatHistory.push({role:'user', content: text});
+  const loadBubble = addBubble('ai', '...');
+  loadBubble.classList.add('loading');
+
+  const sys = `You are a friendly English conversation partner for an A1 beginner student practicing simple past tense.
+Rules: Keep all responses to 1-2 short sentences max. Ask follow-up questions using simple past (did you, what did you, where did you).
+If the student makes a grammar mistake, gently model the correct form naturally in your reply — don't point it out.
+Speak warmly and naturally like a friendly person.
+${chatTurns >= MAX_CHAT ? 'This is the last exchange. Give a short, warm, encouraging closing about their English practice.' : ''}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: sys,
+        messages: chatHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Great! Tell me more!';
+    loadBubble.textContent = reply;
+    loadBubble.classList.remove('loading');
+    chatHistory.push({role:'assistant', content: reply});
+  } catch(e) {
+    loadBubble.textContent = 'Something went wrong. Keep practicing!';
+    loadBubble.classList.remove('loading');
+  }
+
+  if(chatTurns >= MAX_CHAT) {
+    input.disabled = true;
+    input.placeholder = 'Chat complete!';
+    document.querySelectorAll('.nav-btn')[3].classList.add('done');
+  }
+}
+
+// ── FINAL / RESTART ───────────────────────────────
+function restartGame() {
+  matchResults = [];
+  speakIdx = 0;
+  chatHistory = [];
+  chatTurns = 0;
+  document.getElementById('chatInput').disabled = false;
+  document.getElementById('chatInput').placeholder = 'Type your answer in English...';
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('done'));
+  document.getElementById('s0next').disabled = true;
+  document.getElementById('s1next').style.display = 'none';
+  document.getElementById('s2next').style.display = 'none';
+  buildVerbGrid();
+  go(0);
+}
+
+// ── INIT ─────────────────────────────────────────
+buildVerbGrid();
+
+// set initial progress bar color
+document.getElementById('pFill').style.background = 'linear-gradient(90deg, #f96167, #f9c74f)';
+</script>
+</body>
+</html>
