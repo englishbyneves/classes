@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keep the Conversation Going — Thiago</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --gold: #C9A84C;
+  --gold-d: #A07830;
+  --gold-l: #F0D080;
+  --gold-dim: rgba(201,168,76,0.12);
+  --gold-border: rgba(201,168,76,0.3);
+  --bg: #0D0D0D;
+  --surface: #141414;
+  --surface2: #1C1C1C;
+  --surface3: #242424;
+  --ink: #F0EDE6;
+  --muted: #7A7570;
+  --muted2: #4A4540;
+  --white: #FFFFFF;
+  --red: #C0392B;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HERO HEADER ── */
+.hero {
+  position: relative;
+  background: var(--surface);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 3rem 2rem 2.5rem;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 90% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(201,168,76,0.04) 39px,
+      rgba(201,168,76,0.04) 40px
+    );
+  pointer-events: none;
+}
+
+.hero-bg-text {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 180px;
+  color: rgba(201,168,76,0.04);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-inner { position: relative; max-width: 720px; margin: 0 auto; }
+
+.hero-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 72px);
+  color: var(--white);
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  margin-bottom: 1rem;
+}
+
+.hero-title span { color: var(--gold); }
+
+.hero-sub {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hero-meta {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.meta-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+  border-radius: 2px;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.progress-track {
+  height: 2px;
+  background: var(--surface3);
+  margin: 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold-d), var(--gold));
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* ── MAIN CONTENT ── */
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+}
+
+/* ── BLOCK ── */
+.block {
+  margin-bottom: 1rem;
+  border: 1px solid var(--surface3);
+  background: var(--surface);
+  overflow: hidden;
+  position: relative;
+}
+
+.block::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--surface3);
+  transition: background 0.2s;
+}
+
+.block.active-block::before { background: var(--gold); }
+
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.125rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.block-header:hover { background: var(--surface2); }
+
+.block-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  color: var(--muted2);
+  line-height: 1;
+  min-width: 32px;
+  transition: color 0.2s;
+}
+
+.block.active-block .block-num { color: var(--gold); }
+
+.block-info { flex: 1; }
+
+.block-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.block-time {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.block-arrow {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--surface3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--muted);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.block-arrow.open {
+  border-color: var(--gold-border);
+  color: var(--gold);
+  transform: rotate(90deg);
+}
+
+/* ── BLOCK BODY ── */
+.block-body {
+  display: none;
+  border-top: 1px solid var(--surface3);
+  padding: 1.5rem;
+}
+
+.block-body.open { display: block; }
+
+/* ── INNER ELEMENTS ── */
+.sec-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 1.25rem 0 0.625rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--surface3);
+}
+
+.body-text {
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
+}
+
+/* ── CHUNKS ── */
+.chunks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0.75rem 0;
+}
+
+.chunk {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  padding: 5px 14px;
+  cursor: default;
+  transition: all 0.15s;
+}
+
+.chunk:hover {
+  background: rgba(201,168,76,0.2);
+  color: var(--gold-l);
+}
+
+/* ── ROUNDS ── */
+.rounds {
+  display: flex;
+  gap: 4px;
+  margin: 0.75rem 0;
+  flex-wrap: wrap;
+}
+
+.round-pill {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border: 1px solid var(--surface3);
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.round-pill:hover { border-color: var(--gold-border); color: var(--gold); }
+.round-pill.active { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+
+/* ── SITUATION CARD ── */
+.sit-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--surface3);
+  margin: 0.5rem 0;
+  overflow: hidden;
+}
+
+.sit-who {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  padding: 0.875rem 0.875rem;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  border-right: 1px solid var(--gold-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sit-says {
+  font-size: 15px;
+  color: var(--ink);
+  font-style: italic;
+  line-height: 1.55;
+  padding: 0.875rem 1rem;
+}
+
+/* ── EXAMPLE CARD (response) ── */
+.resp-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border: 1px solid var(--surface3);
+  margin: 0.5rem 0;
+  overflow: hidden;
+}
+
+.resp-who {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface2);
+  padding: 0.875rem 0.875rem;
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  border-right: 1px solid var(--surface3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resp-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.4;
+  padding: 0.875rem 1rem;
+  letter-spacing: 0.02em;
+}
+
+/* ── PAIR GRID ── */
+.pair-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0.75rem 0;
+}
+
+.pair-card {
+  border: 1px solid var(--surface3);
+  background: var(--surface2);
+  padding: 1rem;
+}
+
+.pair-who {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.pair-says {
+  font-size: 13px;
+  color: var(--ink);
+  font-style: italic;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* ── ANCHOR GRID ── */
+.anchor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0.75rem 0;
+}
+
+.anchor-card {
+  border: 1px solid var(--gold-border);
+  background: var(--gold-dim);
+  padding: 0.875rem 1rem;
+}
+
+.anchor-q {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: var(--gold-l);
+  letter-spacing: 0.03em;
+  margin-bottom: 3px;
+}
+
+.anchor-pt {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ── NOTE BOX ── */
+.note-box {
+  border-left: 3px solid var(--gold);
+  background: var(--gold-dim);
+  padding: 0.875rem 1.125rem;
+  margin: 0.875rem 0;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.65;
+  opacity: 0.9;
+}
+
+.note-box strong {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ── TIMER BADGE ── */
+.timer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  padding: 5px 12px;
+  background: var(--gold-dim);
+  margin: 0.75rem 0;
+}
+
+/* ── WRITE SPACE ── */
+.write-space {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--surface3);
+  border-bottom: 2px solid var(--gold-border);
+  padding: 0.875rem 1rem;
+  color: var(--ink);
+  font-family: 'Barlow', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 80px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.write-space:focus { border-bottom-color: var(--gold); }
+.write-space::placeholder { color: var(--muted2); font-style: italic; }
+
+/* ── TIMER WIDGET ── */
+.timer-widget {
+  background: var(--surface2);
+  border: 1px solid var(--surface3);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  margin: 0.875rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-widget::before {
+  content: 'OLYMPIA';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 100px;
+  color: rgba(201,168,76,0.04);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.timer-display {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 80px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 1rem;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.timer-display.done { color: #5cb85c; }
+
+.timer-btns { display: flex; justify-content: center; gap: 8px; position: relative; }
+
+.timer-btn {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 8px 22px;
+  border: 1px solid var(--gold-border);
+  color: var(--gold);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.timer-btn:hover { background: var(--gold-dim); }
+.timer-btn.primary { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.timer-btn.primary:hover { background: var(--gold-l); }
+
+/* ── SUCCESS ── */
+.success-msg {
+  display: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #5cb85c;
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: var(--surface3);
+  margin: 1.25rem 0;
+}
+
+/* ── HW BLOCK ── */
+.hw-block {
+  border: 1px solid var(--gold-border);
+  background: var(--surface);
+  margin-top: 2rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.hw-block::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hw-top {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--gold-border);
+}
+
+.hw-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+.hw-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--white);
+  letter-spacing: 0.03em;
+}
+
+.hw-body {
+  padding: 1.25rem 1.5rem;
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.7;
+  opacity: 0.85;
+  position: relative;
+}
+
+/* ── HINT BOX ── */
+.hint-box {
+  display: none;
+  border-left: 3px solid var(--gold);
+  background: var(--gold-dim);
+  padding: 0.75rem 1rem;
+  margin: 0.625rem 0;
+  font-size: 13px;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+.hint-box.show { display: block; }
+.hint-box b { color: var(--gold); }
+
+@media (max-width: 520px) {
+  .pair-grid { grid-template-columns: 1fr; }
+  .anchor-grid { grid-template-columns: 1fr; }
+  .hero-bg-text { display: none; }
+  .timer-display { font-size: 64px; }
+  .sit-who, .resp-who { writing-mode: horizontal-tb; transform: none; padding: 0.5rem 0.75rem; border-right: none; border-bottom: 1px solid var(--gold-border); }
+  .sit-card, .resp-card { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">OLYMPIA</div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Thiago · Lesson 2</div>
+    <div class="hero-title">Keep the<br><span>Conversation</span><br>Going</div>
+    <div class="hero-sub">Chunks · Anchor questions · Fala contínua</div>
+    <div class="hero-meta">
+      <div class="meta-pill">60 min</div>
+      <div class="meta-pill">Speaking focus</div>
+    </div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- BLOCK 01 -->
+  <div class="block" id="blk0">
+    <div class="block-header" onclick="toggle(0)">
+      <div class="block-num">01</div>
+      <div class="block-info">
+        <div class="block-title">Chunk Drill — Reações no Automático</div>
+        <div class="block-time">10 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr0">›</div>
+    </div>
+    <div class="block-body" id="bd0">
+
+      <div class="sec-label">Os chunks</div>
+      <div class="chunks">
+        <span class="chunk">Oh wow!</span>
+        <span class="chunk">That's insane!</span>
+        <span class="chunk">No way!</span>
+        <span class="chunk">Really?</span>
+        <span class="chunk">Same here!</span>
+        <span class="chunk">That's sick!</span>
+      </div>
+
+      <div class="sec-label">Rodadas</div>
+      <div class="rounds">
+        <div class="round-pill active" onclick="setRound(0,this)">Rodada 1 — com apoio</div>
+        <div class="round-pill" onclick="setRound(1,this)">Rodada 2 — de memória</div>
+        <div class="round-pill" onclick="setRound(2,this)">Rodada 3 — automático</div>
+      </div>
+
+      <div class="hint-box show" id="rh0"><b>Rodada 1:</b> Chunks visíveis. Ouça e reaja usando um deles.</div>
+      <div class="hint-box" id="rh1"><b>Rodada 2:</b> Role os chunks para cima. Tente de memória.</div>
+      <div class="hint-box" id="rh2"><b>Rodada 3:</b> Sem olhar. A reação tem que sair antes de você pensar.</div>
+
+      <div class="sec-label">Ouça e reaja</div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I train twice a day, six days a week."</div></div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"CBum eats 5,000 calories a day."</div></div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I lost 8kg in two months."</div></div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I wake up at 4am to train before work."</div></div>
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"Ramon won his fifth competition this year."</div></div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 02 -->
+  <div class="block" id="blk1">
+    <div class="block-header" onclick="toggle(1)">
+      <div class="block-num">02</div>
+      <div class="block-info">
+        <div class="block-title">Anchor Questions — As 5 Perguntas-Muleta</div>
+        <div class="block-time">12 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr1">›</div>
+    </div>
+    <div class="block-body" id="bd1">
+
+      <div class="sec-label">Repita cada uma 3x em voz alta</div>
+      <div class="anchor-grid">
+        <div class="anchor-card"><div class="anchor-q">Do you like it?</div><div class="anchor-pt">Funciona pra qualquer tópico</div></div>
+        <div class="anchor-card"><div class="anchor-q">How long?</div><div class="anchor-pt">Chunk curto — direto ao ponto</div></div>
+        <div class="anchor-card"><div class="anchor-q">When did you start?</div><div class="anchor-pt">Abre histórias</div></div>
+        <div class="anchor-card"><div class="anchor-q">What do you eat?</div><div class="anchor-pt">Ouro no universo fitness</div></div>
+        <div class="anchor-card" style="grid-column:1/-1"><div class="anchor-q">Do you have a coach?</div><div class="anchor-pt">Natural pra personal trainer fazer</div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="sec-label">Drill — react + ask</div>
+      <div class="body-text">Ouça, reaja com um chunk e emende uma anchor question. Sem pausa entre os dois.</div>
+
+      <div class="sit-card"><div class="sit-who">Você ouve</div><div class="sit-says">"I've been training for 10 years."</div></div>
+      <div class="resp-card"><div class="resp-who">Você fala</div><div class="resp-text">"That's insane! When did you start?"</div></div>
+
+      <div class="note-box"><strong>Lembre</strong>"How long?" pode sair sozinho — não precisa da frase completa. Chunk menor = menos travamento.</div>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 03 -->
+  <div class="block" id="blk2">
+    <div class="block-header" onclick="toggle(2)">
+      <div class="block-num">03</div>
+      <div class="block-info">
+        <div class="block-title">Mini Situações-Problema</div>
+        <div class="block-time">15 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr2">›</div>
+    </div>
+    <div class="block-body" id="bd2">
+
+      <div class="timer-badge">⏱ 10 segundos por resposta</div>
+
+      <div class="sec-label">Reaja e pergunte algo — sem script</div>
+      <div class="pair-grid">
+        <div class="pair-card"><div class="pair-who">CBum</div><div class="pair-says">"I prep my meals every Sunday. Chicken, rice, eggs — six containers."</div></div>
+        <div class="pair-card"><div class="pair-who">Ramon Dino</div><div class="pair-says">"I train legs three times a week. People think I'm crazy."</div></div>
+        <div class="pair-card"><div class="pair-who">Renato Cariani</div><div class="pair-says">"I've been vegan for two years. My performance didn't drop at all."</div></div>
+        <div class="pair-card"><div class="pair-who">CBum</div><div class="pair-says">"I got injured last year. Took three months off. It was really hard."</div></div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="sec-label">Sua resposta — escreva depois de falar</div>
+      <textarea class="write-space" placeholder="Fale em voz alta primeiro. Depois escreva aqui..."></textarea>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 04 -->
+  <div class="block" id="blk3">
+    <div class="block-header" onclick="toggle(3)">
+      <div class="block-num">04</div>
+      <div class="block-info">
+        <div class="block-title">Roleplay — Gym em Orlando</div>
+        <div class="block-time">15 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr3">›</div>
+    </div>
+    <div class="block-body" id="bd3">
+
+      <div class="body-text">Você está no gym em Orlando. CBum acabou de terminar a série dele. Vocês se encontram.</div>
+
+      <div class="sit-card" style="margin-top:0.75rem"><div class="sit-who">Como começa</div><div class="sit-says">CBum: "Hey, how's it going?"</div></div>
+
+      <div class="sec-label">Continue a conversa — 2 minutos sem parar</div>
+      <div class="note-box"><strong>Regra</strong>Errou? Continua. Travou? Usa um chunk ou repete a última frase. Sem parar.</div>
+
+      <div class="divider"></div>
+      <div class="sec-label">Como foi? Escreva depois</div>
+      <textarea class="write-space" placeholder="O que você disse? O que ele perguntou? Como a conversa foi?..." rows="5"></textarea>
+
+    </div>
+  </div>
+
+  <!-- BLOCK 05 -->
+  <div class="block" id="blk4">
+    <div class="block-header" onclick="toggle(4)">
+      <div class="block-num">05</div>
+      <div class="block-info">
+        <div class="block-title">Fala Contínua — 60 Segundos</div>
+        <div class="block-time">8 min · Speaking</div>
+      </div>
+      <div class="block-arrow" id="arr4">›</div>
+    </div>
+    <div class="block-body" id="bd4">
+
+      <div class="sit-card"><div class="sit-who">Fale sobre</div><div class="sit-says">"Imagine you just met CBum at the gym in Orlando. Tell me everything about that conversation."</div></div>
+
+      <div class="sec-label">Timer — aperte e fale sem parar</div>
+      <div class="timer-widget">
+        <div class="timer-display" id="tdisp">1:00</div>
+        <div class="timer-btns">
+          <button class="timer-btn primary" id="tbtn" onclick="startTimer()">Começar</button>
+          <button class="timer-btn" onclick="resetTimer()">Resetar</button>
+        </div>
+        <div class="success-msg" id="succ">Você chegou em 60 segundos. Isso é progresso real.</div>
+      </div>
+
+      <div class="note-box"><strong>Regra</strong>Errou? Continua. Travou? Usa "um..." e segue. O objetivo é não parar — não é ser perfeito.</div>
+
+    </div>
+  </div>
+
+  <!-- HW -->
+  <div class="hw-block">
+    <div class="hw-top">
+      <div class="hw-eyebrow">Independent Activity</div>
+      <div class="hw-title">Voice Note — 30 Segundos</div>
+    </div>
+    <div class="hw-body">
+      Imagina que você acabou de encontrar o Ramon Dino numa competição.<br><br>
+      Grava um áudio de 30 segundos contando como foi — em inglês.<br>
+      Não escreve, não prepara. Só grava e manda.<br><br>
+      <strong style="color:var(--gold); font-family:'Barlow Condensed',sans-serif; letter-spacing:0.05em;">Erros são ok.</strong>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggle(i) {
+  const bd = document.getElementById('bd' + i);
+  const arr = document.getElementById('arr' + i);
+  const blk = document.getElementById('blk' + i);
+  const open = bd.classList.toggle('open');
+  arr.classList.toggle('open', open);
+  blk.classList.toggle('active-block', open);
+  updateProg();
+}
+
+function updateProg() {
+  const open = document.querySelectorAll('.block-body.open').length;
+  document.getElementById('prog').style.width = (open / 5 * 100) + '%';
+}
+
+function setRound(i, el) {
+  document.querySelectorAll('.round-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  [0,1,2].forEach(n => {
+    document.getElementById('rh'+n).classList.toggle('show', n===i);
+  });
+}
+
+let interval = null, secs = 60, running = false;
+
+function fmt(s) { return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60); }
+
+function startTimer() {
+  if (running) return;
+  running = true;
+  document.getElementById('tbtn').textContent = 'Falando...';
+  document.getElementById('tbtn').classList.remove('primary');
+  document.getElementById('succ').style.display = 'none';
+  document.getElementById('tdisp').classList.remove('done');
+
+  interval = setInterval(() => {
+    secs--;
+    document.getElementById('tdisp').textContent = fmt(secs);
+    if (secs <= 0) {
+      clearInterval(interval);
+      running = false;
+      document.getElementById('tdisp').classList.add('done');
+      document.getElementById('tdisp').textContent = '0:00';
+      document.getElementById('tbtn').textContent = 'Começar';
+      document.getElementById('tbtn').classList.add('primary');
+      document.getElementById('succ').style.display = 'block';
+      secs = 60;
+    }
+  }, 1000);
+}
+
+function resetTimer() {
+  clearInterval(interval);
+  running = false;
+  secs = 60;
+  document.getElementById('tdisp').textContent = '1:00';
+  document.getElementById('tdisp').classList.remove('done');
+  document.getElementById('tbtn').textContent = 'Começar';
+  document.getElementById('tbtn').classList.add('primary');
+  document.getElementById('succ').style.display = 'none';
+}
+</script>
+</body>
+</html>

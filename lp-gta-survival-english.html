@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LP + GTA: Survival English</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: #0d0d0d;
+    color: #f0ede8;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  #game {
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  /* HEADER */
+  .game-header {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .game-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #cc2200;
+    margin-bottom: 4px;
+  }
+  .game-sub {
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* HUD */
+  .hud {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 10px 14px;
+    background: #161616;
+    border: 1px solid #222;
+    border-radius: 8px;
+  }
+  .lives { display: flex; gap: 5px; }
+  .heart {
+    width: 14px; height: 14px;
+    background: #cc2200;
+    clip-path: polygon(50% 100%, 0% 30%, 20% 0%, 50% 20%, 80% 0%, 100% 30%);
+    transition: background 0.3s;
+  }
+  .heart.lost { background: #333; }
+  .progress-wrap {
+    flex: 1;
+    height: 4px;
+    background: #222;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #cc2200;
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+  .score-display {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f5a623;
+    min-width: 52px;
+    text-align: right;
+  }
+
+  /* CARD */
+  .card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 20px;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .round-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #444;
+    margin-bottom: 8px;
+  }
+
+  .phase-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-bottom: 12px;
+  }
+  .phase-lp   { background: #2a0a0a; color: #cc2200; border: 1px solid #cc2200; }
+  .phase-gta  { background: #0a1a2a; color: #4a9eff; border: 1px solid #4a9eff; }
+  .phase-la   { background: #0a2a1a; color: #2dd4a0; border: 1px solid #2dd4a0; }
+  .phase-boss { background: #2a1a00; color: #f5a623; border: 1px solid #f5a623; }
+
+  .context {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    background: #1e1e1e;
+    border-left: 2px solid #cc2200;
+    border-radius: 4px;
+    line-height: 1.5;
+  }
+
+  .question {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f0ede8;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .question em {
+    font-style: normal;
+    color: #f5a623;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    padding: 12px 16px;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Barlow', sans-serif;
+    color: #ccc;
+    background: #1e1e1e;
+    text-align: left;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .opt:hover:not(:disabled) { background: #252525; border-color: #444; color: #f0ede8; }
+  .opt.correct { background: #0d2a1a; border-color: #2dd4a0; color: #2dd4a0; }
+  .opt.wrong   { background: #2a0d0d; border-color: #cc2200; color: #cc4444; }
+  .opt:disabled { cursor: default; }
+
+  /* FEEDBACK */
+  .feedback {
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok  { background: #0d2a1a; color: #2dd4a0; border: 1px solid #1a4a2a; }
+  .feedback.bad { background: #2a0d0d; color: #ff6b6b; border: 1px solid #4a1a1a; }
+
+  /* NEXT BUTTON */
+  .next-btn {
+    margin-top: 14px;
+    padding: 11px 22px;
+    background: #cc2200;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Barlow', sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: none;
+    transition: background 0.15s;
+  }
+  .next-btn:hover { background: #e02800; }
+  .next-btn.show { display: inline-block; }
+
+  /* END SCREEN */
+  .end-screen { text-align: center; padding: 2rem 1rem; }
+  .end-big   { font-size: 30px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .end-sub   { font-size: 14px; color: #888; margin-bottom: 24px; line-height: 1.5; }
+  .end-score { font-size: 36px; font-weight: 900; color: #f5a623; margin-bottom: 4px; }
+  .end-pct   { font-size: 13px; color: #555; margin-bottom: 24px; }
+  .restart-btn {
+    padding: 12px 28px;
+    background: transparent;
+    color: #cc2200;
+    border: 1px solid #cc2200;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Barlow', sans-serif;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .restart-btn:hover { background: #cc2200; color: #fff; }
+</style>
+</head>
+<body>
+<div id="game">
+  <div class="game-header">
+    <div class="game-title">LP + GTA: Survival English</div>
+    <div class="game-sub">Los Angeles Edition</div>
+  </div>
+  <div class="hud">
+    <div class="lives" id="lives"></div>
+    <div class="progress-wrap"><div class="progress-fill" id="progress"></div></div>
+    <div class="score-display" id="score-display">0 pts</div>
+  </div>
+  <div id="question-area"></div>
+</div>
+
+<script>
+const questions = [
+  {
+    phase: "lp", phaseLabel: "Linkin Park Round",
+    round: "Round 1 of 7",
+    context: "You're talking about music with a new friend in LA.",
+    q: "Your friend asks: <em>\"What kind of music do you like?\"</em> You answer...",
+    opts: [
+      { t: "I like rock music. Linkin Park is my favorite.", ok: true },
+      { t: "I am like rock music very much.", ok: false },
+      { t: "Rock music I like it yes.", ok: false },
+      { t: "Yes, music.", ok: false }
+    ],
+    ok: "✓ Great! \"I like + noun\" is the natural pattern. Clean and correct.",
+    bad: "The correct structure: I like [noun]. Avoid 'I am like' — super common mistake!"
+  },
+  {
+    phase: "lp", phaseLabel: "Linkin Park Round",
+    round: "Round 2 of 7",
+    context: "Talking about feelings and a song.",
+    q: "Linkin Park's music makes you emotional. How do you say that?",
+    opts: [
+      { t: "This song makes me feel sad but also strong.", ok: true },
+      { t: "This song does me feel sad.", ok: false },
+      { t: "This music is make me emotion.", ok: false },
+      { t: "I am feel emotion with this.", ok: false }
+    ],
+    ok: "✓ Perfect! \"makes me feel + adjective\" is the structure. Natural and powerful.",
+    bad: "Key structure: [something] MAKES ME FEEL [adjective]. Not 'does me feel' or 'am feel'."
+  },
+  {
+    phase: "gta", phaseLabel: "GTA / Los Angeles Round",
+    round: "Round 3 of 7",
+    context: "You just landed in LA. You need to get to Hollywood. You see a local.",
+    q: "You walk up and say: <em>\"Excuse me...\"</em> — what comes next?",
+    opts: [
+      { t: "Excuse me, how do I get to Hollywood?", ok: true },
+      { t: "Excuse me, where is the Hollywood how?", ok: false },
+      { t: "Excuse me, I want Hollywood where?", ok: false },
+      { t: "Excuse me, Hollywood please.", ok: false }
+    ],
+    ok: "✓ Yes! \"How do I get to [place]?\" — classic direction phrase. Memorize this one.",
+    bad: "Correct: How do I get to [place]? OR: Where is [place]? Don't mix the two structures."
+  },
+  {
+    phase: "gta", phaseLabel: "GTA / Los Angeles Round",
+    round: "Round 4 of 7",
+    context: "The local speaks fast. You don't understand a word.",
+    q: "The person answers quickly. What do you say?",
+    opts: [
+      { t: "I'm sorry, can you speak more slowly, please?", ok: true },
+      { t: "Please slow your mouth.", ok: false },
+      { t: "More slow speak, I no understand.", ok: false },
+      { t: "Sorry I am not understand fast.", ok: false }
+    ],
+    ok: "✓ Essential survival phrase! \"Can you speak more slowly, please?\" — use this everywhere.",
+    bad: "Correct: Can you speak more slowly, please? OR: Sorry, could you repeat that?"
+  },
+  {
+    phase: "la", phaseLabel: "Exploring LA Round",
+    round: "Round 5 of 7",
+    context: "You're at a restaurant on Sunset Blvd. The waiter comes over.",
+    q: "The waiter says: <em>\"Are you ready to order?\"</em> You need more time. You say...",
+    opts: [
+      { t: "Not yet, sorry. Can I have a few more minutes?", ok: true },
+      { t: "No I am not ready still.", ok: false },
+      { t: "Wait please I think yet.", ok: false },
+      { t: "One moment I need think.", ok: false }
+    ],
+    ok: "✓ Very natural! \"Can I have a few more minutes?\" is exactly what natives say.",
+    bad: "Best response: Can I have a few more minutes? OR: Not yet — give me a moment, please."
+  },
+  {
+    phase: "la", phaseLabel: "Exploring LA Round",
+    round: "Round 6 of 7",
+    context: "You want a taxi to Santa Monica beach.",
+    q: "You get in the taxi. What do you say first?",
+    opts: [
+      { t: "Hi! Can you take me to Santa Monica beach, please?", ok: true },
+      { t: "I go Santa Monica beach.", ok: false },
+      { t: "Santa Monica, drive me.", ok: false },
+      { t: "Please, to going Santa Monica.", ok: false }
+    ],
+    ok: "✓ Polite and clear! \"Can you take me to [place]?\" — perfect taxi phrase.",
+    bad: "Use: Can you take me to [place]? Always add 'please' — it makes a big difference."
+  },
+  {
+    phase: "boss", phaseLabel: "BOSS ROUND",
+    round: "Final Round 7 of 7",
+    context: "You're at a Linkin Park tribute concert in LA. You meet a fan from the UK.",
+    q: "He asks: <em>\"Where are you from? What brings you to LA?\"</em> Best answer?",
+    opts: [
+      { t: "I'm from Brazil. I came to visit LA and this concert was perfect timing!", ok: true },
+      { t: "Brazil I am. I come here for visit and concert.", ok: false },
+      { t: "I am of Brazil. I come to here for see the city.", ok: false },
+      { t: "From Brazil I. Visit LA I am here.", ok: false }
+    ],
+    ok: "✓ BOSS DOWN! Natural, confident, complete. That's real English right there. Chester approved.",
+    bad: "Structure: I'm from [place]. I came to [reason]. Keep it simple and complete."
+  }
+];
+
+let current = 0, score = 0, lives = 3, answered = false;
+
+function renderLives() {
+  const el = document.getElementById('lives');
+  el.innerHTML = Array.from({length:3}, (_,i) =>
+    `<div class="heart${i >= lives ? ' lost' : ''}"></div>`
+  ).join('');
+}
+
+function renderProgress() {
+  document.getElementById('progress').style.width = (current / questions.length * 100) + '%';
+}
+
+function renderScore() {
+  document.getElementById('score-display').textContent = score + ' pts';
+}
+
+function renderQuestion() {
+  if (current >= questions.length) { renderEnd(); return; }
+  answered = false;
+  const q = questions[current];
+  const phaseClass = {lp:'phase-lp',gta:'phase-gta',la:'phase-la',boss:'phase-boss'}[q.phase];
+
+  document.getElementById('question-area').innerHTML = `
+    <div class="card">
+      <div class="round-label">${q.round}</div>
+      <span class="phase-tag ${phaseClass}">${q.phaseLabel}</span>
+      <div class="context">${q.context}</div>
+      <div class="question">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,i) => `<button class="opt" data-i="${i}" onclick="pick(${i})">${o.t}</button>`).join('')}
+      </div>
+      <div class="feedback" id="fb"></div>
+      <button class="next-btn" id="nb" onclick="nextQ()">Next round →</button>
+    </div>`;
+  renderLives(); renderProgress(); renderScore();
+}
+
+function pick(i) {
+  if (answered) return;
+  answered = true;
+  const q = questions[current];
+  const opts = document.querySelectorAll('.opt');
+  opts.forEach(o => o.disabled = true);
+  const correct = q.opts[i].ok;
+  opts[i].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) {
+    lives = Math.max(0, lives - 1);
+    q.opts.forEach((o,j) => { if(o.ok) opts[j].classList.add('correct'); });
+  } else {
+    score += lives === 3 ? 15 : lives === 2 ? 10 : 5;
+  }
+  const fb = document.getElementById('fb');
+  fb.className = 'feedback show ' + (correct ? 'ok' : 'bad');
+  fb.textContent = correct ? q.ok : q.bad;
+  document.getElementById('nb').classList.add('show');
+  renderLives(); renderScore();
+}
+
+function nextQ() { current++; renderQuestion(); }
+
+function renderEnd() {
+  document.getElementById('progress').style.width = '100%';
+  const max = questions.length * 15;
+  const pct = Math.round(score / max * 100);
+  const msg = pct >= 85 ? "Mission Complete." : pct >= 60 ? "Good Run." : "Keep Grinding.";
+  const sub = pct >= 85
+    ? "Your English is ready for Los Angeles. Chester would be proud."
+    : pct >= 60
+    ? "Solid base — review the red phrases before the trip."
+    : "Replay the game. Each round builds the muscle memory you need.";
+
+  document.getElementById('question-area').innerHTML = `
+    <div class="card end-screen">
+      <div class="end-big">${msg}</div>
+      <div class="end-sub">${sub}</div>
+      <div class="end-score">${score} / ${max}</div>
+      <div class="end-pct">${pct}% accuracy</div>
+      <button class="restart-btn" onclick="restart()">↺ Play Again</button>
+    </div>`;
+}
+
+function restart() { current = 0; score = 0; lives = 3; renderQuestion(); }
+renderQuestion();
+</script>
+</body>
+</html>

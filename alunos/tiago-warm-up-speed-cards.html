@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speed Cards — Warm-up</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0C0C0E;
+  --surface:#161619;
+  --surface2:#1E1E22;
+  --surface3:#28282E;
+  --ink:#F0EEE8;
+  --muted:#5A585A;
+  --accent:#FF5733;
+  --accent2:#FF8C33;
+  --accent-dim:rgba(255,87,51,0.12);
+  --green:#3CB371;
+  --green-dim:rgba(60,179,113,0.15);
+}
+
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:2rem 1rem 4rem;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ── */
+.header{text-align:center;margin-bottom:2rem;position:relative}
+
+.header-tag{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+
+.header-title{
+  font-size:clamp(36px,8vw,56px);
+  font-weight:900;
+  letter-spacing:-0.03em;
+  line-height:0.95;
+  color:var(--ink);
+}
+
+.header-title span{color:var(--accent)}
+
+.header-sub{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:0.75rem;
+  font-weight:400;
+}
+
+/* ── PROGRESS ── */
+.progress-row{
+  display:flex;
+  gap:4px;
+  margin-bottom:2rem;
+  width:100%;
+  max-width:500px;
+}
+
+.prog-dot{
+  flex:1;
+  height:4px;
+  background:var(--surface3);
+  border-radius:2px;
+  transition:background 0.3s ease;
+}
+
+.prog-dot.done{background:var(--accent)}
+.prog-dot.current{background:var(--accent2);animation:pulse-bar 1s infinite alternate}
+
+@keyframes pulse-bar{
+  0%{opacity:0.5}
+  100%{opacity:1}
+}
+
+/* ── CARD ── */
+.card-area{
+  width:100%;
+  max-width:500px;
+  perspective:800px;
+  min-height:320px;
+  position:relative;
+  margin-bottom:1.5rem;
+}
+
+.card{
+  width:100%;
+  min-height:300px;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  cursor:pointer;
+}
+
+.card.flipped{transform:rotateY(180deg)}
+
+.card-face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  border-radius:4px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:2rem;
+}
+
+/* FRONT */
+.card-front{
+  background:var(--surface);
+  border:1px solid var(--surface3);
+}
+
+.card-front::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 50%, var(--accent-dim) 0%, transparent 70%);
+  pointer-events:none;
+  border-radius:4px;
+}
+
+.card-number{
+  font-family:'Space Mono',monospace;
+  font-size:64px;
+  font-weight:700;
+  color:var(--accent);
+  opacity:0.3;
+  position:relative;
+}
+
+.card-tap{
+  font-size:14px;
+  color:var(--muted);
+  margin-top:1rem;
+  position:relative;
+  animation:breathe 2s infinite alternate;
+}
+
+@keyframes breathe{
+  0%{opacity:0.4}
+  100%{opacity:1}
+}
+
+/* BACK */
+.card-back{
+  background:var(--surface);
+  border:1px solid var(--accent);
+  border-left:4px solid var(--accent);
+  transform:rotateY(180deg);
+  text-align:left;
+  align-items:flex-start;
+  justify-content:flex-start;
+}
+
+.card-category{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:1.5rem;
+}
+
+.card-question{
+  font-size:clamp(22px,5vw,32px);
+  font-weight:800;
+  line-height:1.2;
+  letter-spacing:-0.02em;
+  color:var(--ink);
+  flex:1;
+  display:flex;
+  align-items:center;
+}
+
+.card-timer-row{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:1.5rem;
+}
+
+.card-timer{
+  font-family:'Space Mono',monospace;
+  font-size:28px;
+  font-weight:700;
+  color:var(--accent);
+  transition:color 0.3s;
+}
+
+.card-timer.low{color:#FF3333;animation:shake 0.3s infinite alternate}
+
+@keyframes shake{
+  0%{transform:translateX(-1px)}
+  100%{transform:translateX(1px)}
+}
+
+.card-timer.done-t{color:var(--green)}
+
+/* ── BUTTONS ── */
+.btn-row{
+  display:flex;
+  gap:8px;
+  width:100%;
+  max-width:500px;
+}
+
+.btn{
+  flex:1;
+  font-family:'Outfit',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  padding:14px 20px;
+  border:none;
+  cursor:pointer;
+  transition:all 0.15s;
+  border-radius:2px;
+}
+
+.btn-next{
+  background:var(--accent);
+  color:var(--bg);
+}
+.btn-next:hover{background:var(--accent2)}
+.btn-next:disabled{background:var(--surface3);color:var(--muted);cursor:not-allowed}
+
+.btn-skip{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid var(--surface3);
+  flex:0.4;
+}
+.btn-skip:hover{border-color:var(--muted);color:var(--ink)}
+
+/* ── FINISH SCREEN ── */
+.finish{
+  display:none;
+  text-align:center;
+  width:100%;
+  max-width:500px;
+}
+
+.finish.show{display:block}
+
+.finish-icon{font-size:64px;margin-bottom:1rem}
+
+.finish-title{
+  font-size:32px;
+  font-weight:900;
+  letter-spacing:-0.02em;
+  margin-bottom:0.5rem;
+}
+
+.finish-sub{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:2rem;
+}
+
+.finish-stats{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+}
+
+.stat-box{
+  background:var(--surface);
+  border:1px solid var(--surface3);
+  padding:1rem 1.5rem;
+  border-radius:4px;
+  text-align:center;
+}
+
+.stat-num{
+  font-family:'Space Mono',monospace;
+  font-size:28px;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.stat-label{
+  font-size:10px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  margin-top:4px;
+}
+
+.btn-restart{
+  margin-top:1.5rem;
+  background:var(--accent);
+  color:var(--bg);
+  padding:12px 32px;
+  border:none;
+  font-family:'Outfit',sans-serif;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:2px;
+}
+
+.btn-restart:hover{background:var(--accent2)}
+
+.hide{display:none!important}
+
+@media(max-width:500px){
+  .card-face{padding:1.5rem}
+  .card-question{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">Warm-up Game</div>
+  <div class="header-title">Speed<br><span>Cards</span></div>
+  <div class="header-sub">Tap the card. Speak. Move on.</div>
+</div>
+
+<div class="progress-row" id="progress"></div>
+
+<div class="card-area" id="cardArea">
+  <div class="card" id="card" onclick="flipCard()">
+    <div class="card-face card-front">
+      <div class="card-number" id="cardNum">1</div>
+      <div class="card-tap">Tap to reveal</div>
+    </div>
+    <div class="card-face card-back">
+      <div class="card-category" id="cardCat">—</div>
+      <div class="card-question" id="cardQ">—</div>
+      <div class="card-timer-row">
+        <div class="card-timer" id="cardTimer">15</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="btn-row" id="btnRow">
+  <button class="btn btn-skip" onclick="skipCard()">Skip</button>
+  <button class="btn btn-next" id="btnNext" onclick="nextCard()" disabled>I spoke ✓</button>
+</div>
+
+<div class="finish" id="finish">
+  <div class="finish-icon">🔥</div>
+  <div class="finish-title">Warm-up done.</div>
+  <div class="finish-sub">You're ready for the lesson.</div>
+  <div class="finish-stats">
+    <div class="stat-box">
+      <div class="stat-num" id="statAnswered">0</div>
+      <div class="stat-label">Answered</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num" id="statSkipped">0</div>
+      <div class="stat-label">Skipped</div>
+    </div>
+  </div>
+  <button class="btn-restart" onclick="restart()">Play Again</button>
+</div>
+
+<script>
+const cards = [
+  { cat: "About you", q: "What's your name and where are you from?", time: 10 },
+  { cat: "About you", q: "What do you do for work?", time: 10 },
+  { cat: "About you", q: "How old are you?", time: 8 },
+  { cat: "Your day", q: "What time do you wake up?", time: 10 },
+  { cat: "Your day", q: "What's the first thing you do in the morning?", time: 12 },
+  { cat: "Your work", q: "How many clients do you train every day?", time: 12 },
+  { cat: "Your day", q: "What do you eat for lunch?", time: 12 },
+  { cat: "Your work", q: "What time do you finish work?", time: 10 },
+  { cat: "After work", q: "What do you do after work?", time: 12 },
+  { cat: "About you", q: "What time do you go to bed?", time: 10 },
+];
+
+let current = 0;
+let flipped = false;
+let timer = null;
+let secs = 0;
+let answered = 0;
+let skipped = 0;
+
+function buildProgress() {
+  const p = document.getElementById('progress');
+  p.innerHTML = '';
+  cards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'prog-dot' + (i === 0 ? ' current' : '');
+    d.id = 'pd' + i;
+    p.appendChild(d);
+  });
+}
+
+function loadCard() {
+  const c = cards[current];
+  document.getElementById('cardNum').textContent = current + 1;
+  document.getElementById('cardCat').textContent = c.cat;
+  document.getElementById('cardQ').textContent = c.q;
+  document.getElementById('cardTimer').textContent = c.time;
+  document.getElementById('cardTimer').className = 'card-timer';
+  document.getElementById('card').classList.remove('flipped');
+  document.getElementById('btnNext').disabled = true;
+  flipped = false;
+  clearInterval(timer);
+  secs = c.time;
+
+  // Update progress
+  cards.forEach((_, i) => {
+    const d = document.getElementById('pd' + i);
+    if (i < current) d.className = 'prog-dot done';
+    else if (i === current) d.className = 'prog-dot current';
+    else d.className = 'prog-dot';
+  });
+}
+
+function flipCard() {
+  if (flipped) return;
+  flipped = true;
+  document.getElementById('card').classList.add('flipped');
+  document.getElementById('btnNext').disabled = false;
+
+  secs = cards[current].time;
+  const el = document.getElementById('cardTimer');
+  el.textContent = secs;
+
+  timer = setInterval(() => {
+    secs--;
+    el.textContent = secs;
+    if (secs <= 5 && secs > 0) el.className = 'card-timer low';
+    if (secs <= 0) {
+      clearInterval(timer);
+      el.textContent = '0';
+      el.className = 'card-timer done-t';
+    }
+  }, 1000);
+}
+
+function nextCard() {
+  clearInterval(timer);
+  answered++;
+  advance();
+}
+
+function skipCard() {
+  clearInterval(timer);
+  skipped++;
+  advance();
+}
+
+function advance() {
+  current++;
+  if (current >= cards.length) {
+    showFinish();
+    return;
+  }
+  loadCard();
+}
+
+function showFinish() {
+  document.getElementById('cardArea').classList.add('hide');
+  document.getElementById('btnRow').classList.add('hide');
+  document.getElementById('progress').classList.add('hide');
+  const f = document.getElementById('finish');
+  f.classList.add('show');
+  document.getElementById('statAnswered').textContent = answered;
+  document.getElementById('statSkipped').textContent = skipped;
+}
+
+function restart() {
+  current = 0;
+  answered = 0;
+  skipped = 0;
+  document.getElementById('cardArea').classList.remove('hide');
+  document.getElementById('btnRow').classList.remove('hide');
+  document.getElementById('progress').classList.remove('hide');
+  document.getElementById('finish').classList.remove('show');
+  buildProgress();
+  loadCard();
+}
+
+buildProgress();
+loadCard();
+</script>
+</body>
+</html>
