@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heroes &amp; Villains (B2) | English by Neves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Raleway:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#E62429; --red2:#C1141A; --red3:#8E0F13; --red4:#5E090C;
+  --ink:#140C0C; --cream:#F6F1E7; --bone:#EBE3D3; --gold:#C9A24B; --steel:#AAB2BC;
+  --teal:#1E8E7E; --muted:#7a6f6b;
+  --shadow:6px 6px 0 rgba(20,12,12,.45); --shadow-sm:3px 3px 0 rgba(20,12,12,.3);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; font-family:'Raleway',system-ui,sans-serif; color:var(--ink);
+  background:var(--red3); line-height:1.55; -webkit-text-size-adjust:100%}
+img,svg{max-width:100%; display:block}
+h1,h2,h3,h4{margin:0; line-height:1}
+.wrap{max-width:900px; margin:0 auto; padding:0 20px}
+.anton{font-family:'Anton',sans-serif; letter-spacing:.5px; text-transform:uppercase}
+.kick{font-family:'Oswald'; text-transform:uppercase; letter-spacing:3px; font-weight:600; font-size:.72rem}
+
+/* top bar */
+.bar{position:sticky; top:0; z-index:50; background:var(--ink); border-bottom:3px solid var(--red)}
+.bar .wrap{display:flex; align-items:center; justify-content:space-between; height:58px}
+.brand{display:flex; align-items:center; gap:11px}
+.logo{width:40px; height:40px; flex:none}
+.brand .bt{font-family:'Anton'; font-size:1rem; color:#fff; letter-spacing:.5px; text-transform:uppercase; line-height:1}
+.brand .bt small{display:block; font-family:'Oswald'; font-weight:500; font-size:.58rem; letter-spacing:2px; color:var(--red); text-transform:uppercase; margin-top:2px}
+.jump{background:var(--red); color:#fff; border:2px solid #fff; font-family:'Oswald'; font-weight:600; text-transform:uppercase; letter-spacing:1.5px; font-size:.72rem; padding:8px 14px; cursor:pointer; white-space:nowrap}
+.jump:active{transform:translate(1px,1px)}
+
+/* ===== HERO ===== */
+.hero{position:relative; background:linear-gradient(170deg,var(--red) 0%,var(--red2) 45%,var(--red3) 100%); overflow:hidden; padding:30px 0 0}
+.collage{position:absolute; inset:0; opacity:.16; mix-blend-mode:multiply}
+.halftone{position:absolute; inset:0; background-image:radial-gradient(rgba(0,0,0,.25) 1.4px, transparent 1.5px); background-size:12px 12px; opacity:.4}
+.hero .wrap{position:relative; z-index:3}
+.logobox{display:inline-block; background:var(--red); border:5px solid #fff; padding:14px 22px 10px; box-shadow:var(--shadow); position:relative}
+.logobox .top{font-family:'Oswald'; font-weight:600; letter-spacing:4px; font-size:.7rem; color:#fff; text-transform:uppercase; margin-bottom:2px; opacity:.9}
+.logobox h1{font-family:'Anton'; text-transform:uppercase; color:#fff; letter-spacing:1px; line-height:.86;
+  font-size:clamp(2.6rem,12vw,5.2rem); text-shadow:3px 3px 0 rgba(0,0,0,.25)}
+.tag{font-family:'Oswald'; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#fff; font-size:clamp(.85rem,3.6vw,1.1rem); margin-top:16px}
+.tag b{color:var(--gold)}
+.goal{margin-top:16px; max-width:640px; background:var(--cream); border:3px solid var(--ink); padding:14px 16px; box-shadow:var(--shadow-sm); font-size:1rem; color:var(--ink); font-weight:500}
+.goal b{color:var(--red2); font-weight:800}
+/* props shelf */
+.props{position:relative; z-index:3; margin-top:24px; display:flex; align-items:flex-end; justify-content:center; gap:4px; padding:0 10px}
+.props svg{filter:drop-shadow(3px 4px 3px rgba(0,0,0,.4))}
+.prop-shield{width:118px} .prop-hammer{width:72px} .prop-gaunt{width:92px} .prop-helmet{width:88px}
+.ledge{position:relative; z-index:3; height:26px; background:linear-gradient(180deg,#2a1a17,#140c0c); border-top:3px solid var(--gold)}
+.ledge::after{content:""; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px); background-size:8px 8px}
+
+/* ===== sections ===== */
+section{padding:34px 0}
+.band-sec{background:var(--red3)}
+.band-alt{background:var(--red4)}
+.sec-logo{display:inline-flex; align-items:stretch; margin-bottom:8px; box-shadow:var(--shadow-sm)}
+.sec-logo .n{font-family:'Anton'; background:var(--ink); color:var(--gold); font-size:1.5rem; padding:8px 13px; display:flex; align-items:center}
+.sec-logo .t{background:var(--red); border:3px solid #fff; border-left:none; padding:7px 16px; display:flex; flex-direction:column; justify-content:center}
+.sec-logo .t .kick{color:#fff; opacity:.85; font-size:.6rem; letter-spacing:2px; margin-bottom:1px}
+.sec-logo .t h2{font-family:'Anton'; text-transform:uppercase; color:#fff; font-size:clamp(1.3rem,5.5vw,1.9rem); letter-spacing:.5px}
+.sec-sub{color:#f3dcc0; font-size:.98rem; margin:4px 0 20px; font-weight:500; max-width:640px}
+
+/* speak list */
+.speak{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+.speak li{background:var(--cream); border:3px solid var(--ink); padding:14px 16px 14px 50px; position:relative; box-shadow:var(--shadow-sm); font-size:1.05rem; font-weight:700; color:var(--ink)}
+.speak li::before{content:""; position:absolute; left:16px; top:18px; width:14px; height:14px; background:var(--red); transform:rotate(45deg); border:2px solid var(--ink)}
+.note{background:var(--ink); color:var(--cream); border:3px solid var(--gold); padding:13px 16px; font-size:.94rem; font-weight:600; margin-top:18px; box-shadow:var(--shadow-sm)}
+.note b{color:var(--gold)}
+
+/* flip cards */
+.cards{display:grid; grid-template-columns:repeat(auto-fill,minmax(148px,1fr)); gap:12px}
+.card{perspective:1000px; cursor:pointer; height:148px}
+.card-in{position:relative; width:100%; height:100%; transition:transform .55s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d}
+.card.flipped .card-in{transform:rotateY(180deg)}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:12px; text-align:center; border:3px solid var(--ink); box-shadow:var(--shadow-sm)}
+.face.front{background:var(--cream)}
+.face.front .ic{width:42px; height:42px; margin-bottom:10px}
+.face.front .w{font-family:'Oswald'; font-weight:700; font-size:1rem; color:var(--ink); line-height:1.15; text-transform:uppercase; letter-spacing:.5px}
+.face.back{background:var(--red); color:#fff; transform:rotateY(180deg); border-color:var(--ink)}
+.face.back .df{font-size:.84rem; color:#fff; font-weight:700; line-height:1.3}
+.face.back .ex{font-size:.76rem; color:var(--gold); font-style:italic; margin-top:8px; line-height:1.3}
+.flip-hint{text-align:center; color:#f3dcc0; font-size:.84rem; margin:14px 0 0; font-weight:600}
+
+/* phrase list */
+.pcat{font-family:'Oswald'; text-transform:uppercase; letter-spacing:2px; font-weight:700; font-size:.78rem; color:var(--gold); margin:22px 0 9px}
+.plist{display:grid; gap:9px}
+.pitem{background:var(--cream); border:3px solid var(--ink); border-left:8px solid var(--red); padding:13px 16px; font-weight:700; font-size:1.02rem; color:var(--ink); box-shadow:var(--shadow-sm)}
+
+/* debate arena */
+.arena{display:grid; gap:16px}
+.motion{background:var(--cream); border:3px solid var(--ink); overflow:hidden; box-shadow:var(--shadow)}
+.motion-top{padding:16px; display:flex; gap:13px; align-items:center; background:var(--ink)}
+.motion-n{font-family:'Anton'; font-size:1.5rem; color:var(--ink); background:var(--gold); width:42px; height:42px; display:flex; align-items:center; justify-content:center; flex:none}
+.motion-q{font-family:'Oswald'; font-weight:700; font-size:1.12rem; color:#fff; line-height:1.2; text-transform:uppercase; letter-spacing:.5px}
+.sides{display:flex; border-top:3px solid var(--ink)}
+.side{flex:1; border:none; padding:14px; font-family:'Anton'; font-size:1.05rem; text-transform:uppercase; letter-spacing:1px; cursor:pointer; background:var(--cream); color:var(--ink); transition:.15s}
+.side.agree{border-right:3px solid var(--ink)}
+.side.on.agree{background:var(--teal); color:#fff}
+.side.on.disagree{background:var(--red); color:#fff}
+.side:active{transform:scale(.98)}
+.reveal{display:none; padding:16px; background:var(--ink); border-top:3px solid var(--gold)}
+.reveal.show{display:block}
+.reveal .lbl{font-family:'Oswald'; text-transform:uppercase; letter-spacing:2px; font-size:.68rem; color:var(--gold); margin-bottom:8px}
+.reveal .frame{background:rgba(255,255,255,.07); border-left:3px solid var(--cream); padding:11px 14px; margin-bottom:8px; font-weight:600; font-size:.98rem; color:#f1ece2}
+.reveal .counter{background:rgba(230,36,41,.22); border:2px solid var(--red); padding:11px 14px; font-weight:600; font-size:.95rem; margin-top:10px; color:#ffd9da}
+.reveal .counter b{color:var(--gold)}
+.timer-btn{background:var(--gold); color:var(--ink); border:none; font-family:'Anton'; letter-spacing:1px; text-transform:uppercase; font-size:1rem; padding:12px 18px; cursor:pointer; width:100%; margin-top:14px; border:2px solid var(--ink)}
+.timer-btn:active{transform:translate(1px,1px)}
+.tdisplay{font-family:'Oswald'; font-weight:600; color:var(--gold); font-size:.95rem; margin-top:12px; text-align:center; display:none; letter-spacing:1px}
+.tdisplay.show{display:block}
+
+/* discussion */
+.disc{display:grid; gap:12px}
+.qcard{background:var(--cream); border:3px solid var(--ink); padding:16px; display:flex; gap:14px; align-items:flex-start; box-shadow:var(--shadow-sm)}
+.qcard .ic{width:34px; height:34px; flex:none; margin-top:1px}
+.qcard .q{font-weight:700; font-size:1.04rem; color:var(--ink)}
+
+/* versus */
+.versus{display:grid; grid-template-columns:1fr auto 1fr; gap:10px; align-items:stretch}
+.team{padding:18px; color:#fff; border:3px solid var(--ink); position:relative; box-shadow:var(--shadow-sm)}
+.team.cap{background:#1b3a6b} .team.iron{background:var(--red2)}
+.team h4{font-family:'Anton'; font-size:1.3rem; margin-bottom:10px; text-transform:uppercase; letter-spacing:.5px}
+.team.cap h4{color:#9ec3f0} .team.iron h4{color:var(--gold)}
+.team p{font-size:.9rem; font-weight:500; margin:0 0 7px; color:#f3f1ec}
+.team .pos{font-family:'Oswald'; text-transform:uppercase; letter-spacing:1px; font-size:.72rem; font-weight:700; background:rgba(0,0,0,.28); padding:4px 9px; display:inline-block; margin-top:5px}
+.vs{font-family:'Anton'; font-size:1.7rem; color:var(--gold); align-self:center}
+.prep{margin-top:16px; background:var(--cream); border:3px solid var(--ink); padding:18px; box-shadow:var(--shadow-sm)}
+.prep h4{font-family:'Anton'; text-transform:uppercase; letter-spacing:1px; font-size:1.1rem; color:var(--red2); margin-bottom:10px}
+.prep ol{margin:0; padding-left:20px; font-weight:600; font-size:.98rem; color:var(--ink)} .prep li{margin-bottom:6px}
+
+/* checklist / homework */
+.check{list-style:none; padding:0; margin:0; display:grid; gap:10px}
+.check li{background:var(--cream); border:3px solid var(--ink); padding:14px 15px 14px 48px; position:relative; font-weight:700; font-size:1rem; cursor:pointer; color:var(--ink); box-shadow:var(--shadow-sm)}
+.check li::before{content:""; position:absolute; left:15px; top:14px; width:18px; height:18px; border:3px solid var(--ink)}
+.check li.done::before{content:"✓"; background:var(--teal); color:#fff; font-size:.85rem; text-align:center; line-height:13px; font-weight:800}
+.check li.done{opacity:.6; text-decoration:line-through}
+.hw{display:grid; gap:12px; margin-top:8px}
+.hwcard{background:var(--cream); border:3px solid var(--ink); border-left:8px solid var(--red); padding:16px; display:flex; gap:13px; align-items:flex-start; box-shadow:var(--shadow-sm)}
+.hwcard .ico{font-size:1.5rem; flex:none}
+.hwcard b{display:block; font-family:'Anton'; text-transform:uppercase; letter-spacing:.5px; font-size:.9rem; margin-bottom:3px; color:var(--red2)}
+.hwcard span{font-size:.94rem; font-weight:500; color:var(--ink)}
+
+/* grammar */
+details.gram{margin-top:26px; border:3px solid var(--ink); background:var(--ink)}
+details.gram summary{cursor:pointer; padding:14px 16px; font-family:'Anton'; text-transform:uppercase; letter-spacing:1px; font-size:.95rem; color:var(--gold); list-style:none}
+details.gram summary::-webkit-details-marker{display:none}
+details.gram summary::before{content:"▸ "; color:var(--red)}
+details.gram[open] summary::before{content:"▾ "}
+details.gram .gbody{padding:0 16px 16px; font-size:.9rem; color:#e3ddd1; font-style:italic; line-height:1.7}
+details.gram code{font-style:normal; background:rgba(201,162,75,.2); color:var(--gold); padding:1px 6px; font-weight:600}
+
+/* footer */
+footer{background:var(--ink); color:#fff; text-align:center; padding:40px 18px 46px; border-top:4px solid var(--red)}
+footer .logo{margin:0 auto 14px}
+footer .fb{font-family:'Anton'; font-size:1.5rem; text-transform:uppercase; letter-spacing:1px}
+footer .fs{color:var(--gold); font-weight:600; font-size:.8rem; margin-top:6px; font-family:'Oswald'; letter-spacing:2px; text-transform:uppercase}
+footer .cr{color:#8a7f7b; font-size:.74rem; margin-top:16px; font-family:'Oswald'; letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<!-- ===== EN logo mark (swap for your real logo file) ===== -->
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="enmark" viewBox="0 0 48 48">
+    <rect x="1" y="1" width="46" height="46" fill="#E62429" stroke="#fff" stroke-width="3"/>
+    <text x="24" y="33" font-family="Anton, sans-serif" font-size="22" fill="#fff" text-anchor="middle">EN</text>
+  </symbol>
+  <!-- hero silhouette used in the background collage -->
+  <symbol id="figA" viewBox="0 0 60 120"><g fill="currentColor"><circle cx="30" cy="16" r="10"/><path d="M14 30 Q30 24 46 30 L42 70 L18 70 Z"/><path d="M18 70 L15 120 L26 120 L28 74 L32 74 L34 120 L45 120 L42 70 Z"/><path d="M14 32 L4 58 L12 62 L20 40 Z"/><path d="M46 32 L56 58 L48 62 L40 40 Z"/></g></symbol>
+</defs></svg>
+
+<div class="bar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="logo" aria-label="English by Neves"><use href="#enmark"/></svg>
+      <div class="bt">Heroes &amp; Villains<small>English by Neves</small></div>
+    </div>
+    <button class="jump" onclick="document.getElementById('arena').scrollIntoView()">⚡ Debate Arena</button>
+  </div>
+</div>
+
+<!-- ===== HERO (Marvel-style; original art — swap props/collage for licensed images if you have them) ===== -->
+<header class="hero">
+  <div class="halftone"></div>
+  <svg class="collage" viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="color:#3a0608">
+    <use href="#figA" x="20" y="70" width="70"/><use href="#figA" x="120" y="40" width="90"/><use href="#figA" x="240" y="80" width="64"/>
+    <use href="#figA" x="330" y="30" width="96"/><use href="#figA" x="470" y="70" width="72"/><use href="#figA" x="560" y="40" width="90"/>
+    <use href="#figA" x="690" y="80" width="64"/><use href="#figA" x="780" y="36" width="96"/>
+  </svg>
+  <div class="wrap">
+    <div class="logobox">
+      <div class="top">B2 · Conversation</div>
+      <h1>Heroes &amp;<br>Villains</h1>
+    </div>
+    <div class="tag">Debate · Defend · <b>Dismantle every argument</b></div>
+    <div class="goal">Today is all about <b>talking</b>. You'll <b>argue a case</b>, <b>disagree politely</b>, and <b>defend your opinion</b> on the big questions the Avengers raise.</div>
+  </div>
+  <!-- props shelf -->
+  <div class="props">
+    <!-- shield -->
+    <svg class="prop-shield" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="56" fill="#B5181D"/><circle cx="60" cy="60" r="56" fill="none" stroke="#7d0e12" stroke-width="3"/>
+      <circle cx="60" cy="60" r="44" fill="#E9E1CE"/><circle cx="60" cy="60" r="32" fill="#B5181D"/><circle cx="60" cy="60" r="20" fill="#1b3a6b"/>
+      <path d="M60 44 l5 11 12 1 -9 8 3 12 -11-6 -11 6 3-12 -9-8 12-1z" fill="#C9A24B"/>
+      <path d="M30 40 q20 10 44 6" stroke="#fff" stroke-width="2" fill="none" opacity=".25"/>
+      <circle cx="45" cy="30" r="2" fill="#000" opacity=".3"/><circle cx="82" cy="78" r="2.5" fill="#000" opacity=".3"/>
+    </svg>
+    <!-- hammer -->
+    <svg class="prop-hammer" viewBox="0 0 80 150" aria-hidden="true">
+      <rect x="30" y="52" width="20" height="92" rx="4" fill="#6c5636"/><rect x="30" y="52" width="20" height="92" rx="4" fill="none" stroke="#3e301d" stroke-width="2"/>
+      <rect x="8" y="20" width="64" height="40" rx="5" fill="#9aa3ad"/><rect x="8" y="20" width="64" height="40" rx="5" fill="none" stroke="#5f6771" stroke-width="3"/>
+      <rect x="12" y="26" width="56" height="8" fill="#c3cad3" opacity=".6"/>
+      <path d="M40 32 l6 6 -6 6 -6-6z" fill="none" stroke="#3e4650" stroke-width="2"/>
+      <rect x="34" y="138" width="12" height="10" rx="3" fill="#8a6a3a"/>
+    </svg>
+    <!-- gauntlet -->
+    <svg class="prop-gaunt" viewBox="0 0 100 130" aria-hidden="true">
+      <path d="M26 54 q-2-30 10-30 q8 0 8 14 l0 10z" fill="#C9A24B"/>
+      <path d="M44 42 q0-24 9-24 q8 0 8 16 l0 12z" fill="#C9A24B"/>
+      <path d="M61 46 q2-22 10-20 q7 2 5 18 l-2 10z" fill="#C9A24B"/>
+      <path d="M76 56 q6-16 12-10 q5 6 -2 18z" fill="#C9A24B"/>
+      <path d="M20 58 q-16 6 -10 22 q4 10 16 8z" fill="#b48c38"/>
+      <rect x="18" y="52" width="64" height="54" rx="12" fill="#D8AE52"/><rect x="18" y="52" width="64" height="54" rx="12" fill="none" stroke="#8a6a2a" stroke-width="3"/>
+      <circle cx="33" cy="70" r="5" fill="#7CC6E0"/><circle cx="48" cy="66" r="5" fill="#8E5BA6"/><circle cx="63" cy="68" r="5" fill="#E2574C"/><circle cx="74" cy="76" r="5" fill="#E8A020"/>
+      <circle cx="50" cy="90" r="6" fill="#4FA64F"/>
+    </svg>
+    <!-- helmet -->
+    <svg class="prop-helmet" viewBox="0 0 100 120" aria-hidden="true">
+      <path d="M50 10 q34 0 34 46 q0 40 -34 56 q-34-16 -34-56 q0-46 34-46z" fill="#C1141A"/>
+      <path d="M50 10 q34 0 34 46 q0 40 -34 56 q-34-16 -34-56 q0-46 34-46z" fill="none" stroke="#7d0e12" stroke-width="3"/>
+      <path d="M26 54 q24-10 48 0 l-6 20 q-18-7 -36 0z" fill="#D8AE52"/>
+      <path d="M34 60 l12 2 0 8 -12-2z" fill="#9EE6FF"/><path d="M66 60 l-12 2 0 8 12-2z" fill="#9EE6FF"/>
+      <path d="M44 84 h12 l-2 8 h-8z" fill="#8a6a2a"/>
+      <path d="M30 40 q20-8 40 0" stroke="#fff" stroke-width="2" fill="none" opacity=".2"/>
+    </svg>
+  </div>
+  <div class="ledge"></div>
+</header>
+
+<!-- 1 warm up -->
+<section class="band-sec">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">01</span><span class="t"><span class="kick">Round One</span><h2>Warm Up</h2></span></div>
+    <p class="sec-sub">Quickfire. Say the first thing that comes to mind, then back it up.</p>
+    <ul class="speak">
+      <li>Are you into superhero films, or are you tired of them? Be honest.</li>
+      <li>Who's the greatest superhero of all time, and why?</li>
+      <li>Would you actually want superpowers, or is normal life better?</li>
+      <li>Can you think of a villain who kind of had a point?</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2 vocab -->
+<section class="band-alt">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">02</span><span class="t"><span class="kick">The Arsenal</span><h2>Talking Points</h2></span></div>
+    <p class="sec-sub">Useful language for arguing about heroes and morality. Tap a card to flip it.</p>
+    <div class="cards" id="cards"></div>
+    <p class="flip-hint">Pick three and use each one in a sentence about a film you know.</p>
+  </div>
+</section>
+
+<!-- 3 debate language -->
+<section class="band-sec">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">03</span><span class="t"><span class="kick">Combat Training</span><h2>How to Argue</h2></span></div>
+    <p class="sec-sub">The phrases that keep a debate flowing. Say each one out loud.</p>
+    <div id="phrases"></div>
+    <div class="note">🔑 The strongest move in English debate: <b>concede, then counter</b>. "That may be true, but..." You sound fair and still win the point.</div>
+  </div>
+</section>
+
+<!-- 4 debate arena -->
+<section class="band-alt" id="arena">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">04</span><span class="t"><span class="kick">Main Event</span><h2>The Debate Arena</h2></span></div>
+    <p class="sec-sub">Read the motion. Tap your side. Use the openers, answer the counter-attack, and hold the floor for 60 seconds.</p>
+    <div class="arena" id="arenaBox"></div>
+  </div>
+</section>
+
+<!-- 5 big questions -->
+<section class="band-sec">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">05</span><span class="t"><span class="kick">Deep Dive</span><h2>The Big Questions</h2></span></div>
+    <p class="sec-sub">No right answers. Take your time, think out loud, and change your mind if you want.</p>
+    <div class="disc" id="disc"></div>
+  </div>
+</section>
+
+<!-- 6 versus -->
+<section class="band-alt">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">06</span><span class="t"><span class="kick">Civil War</span><h2>Pick a Side</h2></span></div>
+    <p class="sec-sub">The classic split. Security or freedom? Choose your team and defend it.</p>
+    <div class="versus">
+      <div class="team cap"><h4>Team Cap</h4><p>Heroes must stay free to act on their conscience.</p><p>Governments can't be trusted with that power.</p><span class="pos">Freedom first</span></div>
+      <div class="vs">VS</div>
+      <div class="team iron"><h4>Team Iron Man</h4><p>With great power must come oversight.</p><p>Someone has to answer for the damage.</p><span class="pos">Accountability first</span></div>
+    </div>
+    <div class="prep">
+      <h4>Your mission</h4>
+      <ol>
+        <li>Choose the side you <b>disagree</b> with. Harder, more useful.</li>
+        <li>Prepare three solid arguments for it.</li>
+        <li>Debate for three minutes. No switching sides!</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 7 real heroes -->
+<section class="band-sec">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">07</span><span class="t"><span class="kick">Final Round</span><h2>Back to Reality</h2></span></div>
+    <p class="sec-sub">Forget the capes. Pick a card and talk for a full minute.</p>
+    <div class="disc" id="real"></div>
+  </div>
+</section>
+
+<!-- 8 wrap -->
+<section class="band-alt">
+  <div class="wrap">
+    <div class="sec-logo"><span class="n">08</span><span class="t"><span class="kick">Debrief</span><h2>Mission Complete</h2></span></div>
+    <p class="sec-sub">Tap each one you can do now.</p>
+    <ul class="check" id="check">
+      <li>I can give and justify a strong opinion.</li>
+      <li>I can disagree politely and concede a point.</li>
+      <li>I can argue a side I don't even believe in.</li>
+      <li>I can use talking points like "the greater good" and "morally grey".</li>
+    </ul>
+
+    <h3 class="anton" style="color:#fff;font-size:1.5rem;margin:30px 0 14px">Homework</h3>
+    <div class="hw">
+      <div class="hwcard"><span class="ico">📱</span><div><b>DuoCards</b><span>Add 8 talking points from today and one example sentence each.</span></div></div>
+      <div class="hwcard"><span class="ico">🎙️</span><div><b>Hot take</b><span>Record a 2-minute argument for one Debate Arena motion. Concede one point, then counter it.</span></div></div>
+      <div class="hwcard"><span class="ico">🎬</span><div><b>Watch &amp; steal</b><span>Watch any film clip in English and note 5 useful expressions you hear.</span></div></div>
+    </div>
+
+    <details class="gram">
+      <summary>Grammar reference</summary>
+      <div class="gbody">
+        • <b>3rd conditional</b> (unreal past) → <code>If Tony hadn't done it, everyone would have died.</code><br>
+        • <b>Modals of deduction</b> → He <code>must have</code> known. She <code>can't have</code> survived. They <code>might have</code> escaped.<br>
+        • <b>Concession</b> → <code>Although / Even though</code> he's a villain, he has a point. <code>Despite</code> his crimes, people like him.<br>
+        • <b>Softening opinions</b> → <code>I'd argue that</code>... <code>It could be said that</code>...
+      </div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <svg class="logo" style="width:56px;height:56px"><use href="#enmark"/></svg>
+  <div class="fb">English by Neves</div>
+  <div class="fs">See you in class ⚡</div>
+  <div class="cr">Heroes &amp; Villains · B2 Conversation</div>
+</footer>
+
+<script>
+const I = {
+  mask:'<svg class="ic" viewBox="0 0 48 48"><path d="M8 16c5-2 11-3 16-3s11 1 16 3c0 10-4 15-8 15-3 0-4-3-8-3s-5 3-8 3c-4 0-8-5-8-15z" fill="#C1141A"/><path d="M13 20c2-1 4-1 6 0M29 20c2-1 4-1 6 0" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  shield:'<svg class="ic" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#B5181D"/><circle cx="24" cy="24" r="14" fill="#E9E1CE"/><circle cx="24" cy="24" r="8" fill="#B5181D"/><path d="M24 15l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" fill="#C9A24B"/></svg>',
+  bolt:'<svg class="ic" viewBox="0 0 48 48"><path d="M26 4L10 27h10l-4 17 20-25H24l6-15z" fill="#C9A24B" stroke="#140C0C" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+  star:'<svg class="ic" viewBox="0 0 48 48"><path d="M24 4l6 12 13 2-9 9 2 13-12-6-12 6 2-13-9-9 13-2z" fill="#C9A24B" stroke="#140C0C" stroke-width="1.5" stroke-linejoin="round"/></svg>',
+  fist:'<svg class="ic" viewBox="0 0 48 48"><rect x="13" y="18" width="22" height="16" rx="4" fill="#1b3a6b"/><rect x="15" y="12" width="5" height="9" rx="2.5" fill="#1b3a6b"/><rect x="21" y="10" width="5" height="11" rx="2.5" fill="#1b3a6b"/><rect x="27" y="12" width="5" height="9" rx="2.5" fill="#1b3a6b"/><rect x="11" y="22" width="6" height="5" rx="2.5" fill="#1b3a6b"/></svg>',
+  flame:'<svg class="ic" viewBox="0 0 48 48"><path d="M24 4s12 10 12 22a12 12 0 0 1-24 0c0-5 3-9 3-9s2 3 4 3c3 0 1-8 5-16z" fill="#C1141A"/><path d="M24 38a6 6 0 0 1-4-10c0 4 4 4 4 8z" fill="#C9A24B"/></svg>',
+  scales:'<svg class="ic" viewBox="0 0 48 48"><line x1="24" y1="8" x2="24" y2="40" stroke="#140C0C" stroke-width="2.5"/><line x1="10" y1="14" x2="38" y2="14" stroke="#140C0C" stroke-width="2.5"/><path d="M6 26a8 4 0 0 0 8 0z" fill="#1b3a6b"/><path d="M34 26a8 4 0 0 0 8 0z" fill="#C1141A"/><rect x="18" y="40" width="12" height="4" rx="2" fill="#140C0C"/></svg>',
+  skull:'<svg class="ic" viewBox="0 0 48 48"><path d="M24 6c-9 0-15 6-15 15 0 5 2 8 5 10v6h20v-6c3-2 5-5 5-10 0-9-6-15-15-15z" fill="#8a7f7b"/><circle cx="18" cy="21" r="3.5" fill="#140C0C"/><circle cx="30" cy="21" r="3.5" fill="#140C0C"/><path d="M22 28l2 4 2-4z" fill="#140C0C"/></svg>',
+  globe:'<svg class="ic" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#1b3a6b"/><path d="M24 6c-5 4-5 32 0 36M24 6c5 4 5 32 0 36M7 18h34M7 30h34" stroke="#fff" stroke-width="1.5" fill="none" opacity=".7"/></svg>',
+  heart:'<svg class="ic" viewBox="0 0 48 48"><path d="M24 40S7 30 7 18A9 9 0 0 1 24 14 9 9 0 0 1 41 18c0 12-17 22-17 22z" fill="#C1141A"/></svg>',
+  crown:'<svg class="ic" viewBox="0 0 48 48"><path d="M8 34l-2-18 11 7 7-14 7 14 11-7-2 18z" fill="#C9A24B" stroke="#140C0C" stroke-width="1.5" stroke-linejoin="round"/><rect x="8" y="34" width="32" height="6" rx="2" fill="#140C0C"/></svg>',
+  chat:'<svg class="ic" viewBox="0 0 48 48"><path d="M8 10h32a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H20l-9 7v-7H8a4 4 0 0 1-4-4V14a4 4 0 0 1 4-4z" fill="#1b3a6b"/><circle cx="17" cy="22" r="2.5" fill="#fff"/><circle cx="24" cy="22" r="2.5" fill="#fff"/><circle cx="31" cy="22" r="2.5" fill="#fff"/></svg>'
+};
+
+const VOCAB=[
+  ['morally grey','Not clearly good or bad.','"Loki is a morally grey character."',I.mask],
+  ['the greater good','The benefit of the majority.','"He did it for the greater good."',I.globe],
+  ['a redemption arc','A journey from bad to good.','"That villain gets a redemption arc."',I.flame],
+  ['collateral damage','Unintended harm to others.','"Whole cities become collateral damage."',I.skull],
+  ['self-sacrifice','Giving up your life for others.','"His self-sacrifice saved everyone."',I.heart],
+  ['a vigilante','Someone who fights crime outside the law.','"Is a vigilante a hero or a criminal?"',I.fist],
+  ['a flawed hero','A hero with real weaknesses.','"The best heroes are deeply flawed."',I.shield],
+  ['the ends justify the means','Results excuse bad methods.','"Thanos thought the ends justify the means."',I.scales],
+  ['a moral dilemma','A hard choice between two rights.','"It\'s a genuine moral dilemma."',I.scales],
+  ['power corrupts','Power makes people worse.','"They say power corrupts, and it does."',I.crown],
+];
+document.getElementById('cards').innerHTML = VOCAB.map(([w,df,ex,ic])=>`
+  <div class="card"><div class="card-in">
+    <div class="face front">${ic}<div class="w">${w}</div></div>
+    <div class="face back"><div class="df">${df}</div><div class="ex">${ex}</div></div>
+  </div></div>`).join('');
+document.querySelectorAll('#cards .card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flipped')));
+
+const PHRASES=[
+  ['GIVE AN OPINION',["The way I see it...","If you ask me...","I'd argue that..."]],
+  ['AGREE',["You've got a point there.","That's exactly how I feel.","I couldn't agree more."]],
+  ['DISAGREE POLITELY',["I see what you mean, but...","That's debatable.","I'm not so sure about that."]],
+  ['CONCEDE, THEN COUNTER',["That may be true, but...","Fair enough, however...","I take your point, still..."]],
+];
+document.getElementById('phrases').innerHTML = PHRASES.map(([cat,items])=>`
+  <div class="pcat">${cat}</div>
+  <div class="plist">${items.map(en=>`<div class="pitem">${en}</div>`).join('')}</div>`).join('');
+
+const MOTIONS=[
+  ['Thanos had a point.',
+   ['"When you look at the logic, he was trying to solve a real problem."','"He was willing to do what no one else would."'],
+   ['"But no problem justifies wiping out half of all life. Where\'s the line?"']],
+  ['Iron Man is the real hero of the Avengers.',
+   ['"He\'s the one who pays the price in the end."','"Without his money and mind, there is no team."'],
+   ['"But a hero isn\'t about money or ego. What about the ones who ask for nothing?"']],
+  ['Superheroes do more harm than good.',
+   ['"Every time they fight, a city gets destroyed."','"Ordinary people have no say and no protection."'],
+   ['"But without them, those threats would win. Isn\'t some damage worth it?"']],
+  ['A villain with a good reason is still a villain.',
+   ['"Your reasons don\'t matter if you hurt innocent people."','"Plenty of people suffer and don\'t turn to violence."'],
+   ['"But if the system is broken, isn\'t breaking the rules sometimes right?"']],
+];
+document.getElementById('arenaBox').innerHTML = MOTIONS.map((m,i)=>`
+  <div class="motion" data-i="${i}">
+    <div class="motion-top"><span class="motion-n">${i+1}</span><div class="motion-q">${m[0]}</div></div>
+    <div class="sides">
+      <button class="side agree" data-side="agree">Agree</button>
+      <button class="side disagree" data-side="disagree">Disagree</button>
+    </div>
+    <div class="reveal">
+      <div class="lbl">Open with one of these</div>
+      <div class="frame">${m[1][0]}</div>
+      <div class="frame">${m[1][1]}</div>
+      <div class="counter">⚡ <b>Rebut this:</b> ${m[2][0]}</div>
+      <button class="timer-btn">▶ Hold the floor · 60 sec</button>
+      <div class="tdisplay"></div>
+    </div>
+  </div>`).join('');
+document.querySelectorAll('.motion').forEach(mo=>{
+  const reveal=mo.querySelector('.reveal');
+  mo.querySelectorAll('.side').forEach(btn=>btn.addEventListener('click',()=>{
+    mo.querySelectorAll('.side').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on'); reveal.classList.add('show');
+  }));
+  const tb=mo.querySelector('.timer-btn'), td=mo.querySelector('.tdisplay'); let id=null;
+  tb.addEventListener('click',()=>{
+    clearInterval(id); let n=60; td.classList.add('show'); td.textContent='🎙️ Speaking… 60s';
+    id=setInterval(()=>{ n--; td.textContent = n>0? '🎙️ Speaking… '+n+'s' : '✅ Time! Did you concede one point?'; if(n<=0) clearInterval(id); },1000);
+  });
+});
+
+const DISC=[
+  [I.scales,'Would you sacrifice one innocent person to save a million? Be honest about why.'],
+  [I.bolt,'If you could have one superpower, which would it be, and would it change who you are?'],
+  [I.mask,'Can someone be a hero and a bad person at the same time?'],
+  [I.flame,'Is revenge ever justified, or does it always make things worse?'],
+  [I.crown,'Do you believe power always corrupts, or does it just reveal who someone really is?'],
+];
+document.getElementById('disc').innerHTML = DISC.map(([ic,q])=>`<div class="qcard">${ic}<div class="q">${q}</div></div>`).join('');
+
+const REAL=[
+  [I.heart,'Who is a real-life hero to you? What did they actually do?'],
+  [I.chat,'Are celebrities and influencers the new "heroes"? Should they be?'],
+  [I.star,'What makes someone a hero in real life, when there are no villains to fight?'],
+  [I.shield,'Have you ever done something brave? What happened?'],
+];
+document.getElementById('real').innerHTML = REAL.map(([ic,q])=>`<div class="qcard">${ic}<div class="q">${q}</div></div>`).join('');
+
+document.querySelectorAll('#check li').forEach(li=>li.addEventListener('click',()=>li.classList.toggle('done')));
+</script>
+</body>
+</html>
